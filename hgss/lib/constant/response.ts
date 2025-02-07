@@ -1,5 +1,5 @@
 import { CODE } from './code'
-import { errorHandler } from 'lib/util'
+import { errorHandler } from 'lib/error-handler'
 
 export const RESPONSE = {
   /**
