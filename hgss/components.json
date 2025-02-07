@@ -5,7 +5,7 @@
   "tsx": true,
   "tailwind": {
     "config": "tailwind.config.ts",
-    "css": "asset/css/globals.css",
+    "css": "design/css/globals.css",
     "baseColor": "slate",
     "cssVariables": true,
     "prefix": ""
@@ -15,11 +15,7 @@
     "utils": "lib/util/util.ts",
     "ui": "component/ui",
     "lib": "lib",
-    "hooks": "hook",
-    "cn": {
-      "exportName": "cn",
-      "path": "lib/util"
-    }
+    "hooks": "hook"
   },
   "iconLibrary": "lucide"
 }
