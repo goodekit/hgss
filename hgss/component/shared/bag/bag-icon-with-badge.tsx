@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { ShoppingBagIcon } from 'lucide-react'
+import { PATH_DIR } from 'hgss-dir'
 import { Button, Badge } from 'component/ui'
 import { ProtectedNavLink } from 'component/shared/protect'
-import { PATH_DIR } from 'config'
 
 interface BagIconWithBadgeProps {
   itemCount: number
