@@ -1,12 +1,12 @@
 import { en } from 'public/locale'
+import { PATH_DIR } from 'hgss-dir'
 import { Search as SearchIcon } from 'lucide-react'
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem, Input, Button } from 'component/ui'
-import { getAllCategories } from 'lib'
-import { PATH_DIR } from 'config'
+// import { getAllCategories } from 'lib'
 
 const Search = async () => {
-  const data       = await getAllCategories()
-  const categories = [{ category: en.all.label }, ...data]
+  // const data       = await getAllCategories()
+  const categories = [{ category: en.all.label }]
 
   return (
     <form action={PATH_DIR.SEARCH} method={'GET'}>

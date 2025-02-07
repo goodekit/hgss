@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { en } from 'public/locale'
 import { useTheme } from 'next-themes'
 import { SunIcon, MoonIcon, SunMoon } from 'lucide-react'
 import {
@@ -13,19 +14,20 @@ import {
 } from 'component/ui'
 import { capitalize, KEY } from 'lib'
 
+
 const ThemeToggle = () => {
   const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme }   = useTheme()
 
   useEffect(() => setMounted(true), [])
 
   if (!mounted) return null
 
   const renderIcon = () => {
-    if (theme === 'dark') {
+    if (theme === KEY.DARK) {
       return <MoonIcon />
     }
-    if (theme === 'light') {
+    if (theme === KEY.LIGHT) {
       return <SunIcon />
     }
     return <SunMoon />
@@ -39,7 +41,7 @@ const ThemeToggle = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>{'Appearance'}</DropdownMenuLabel>
+        <DropdownMenuLabel>{capitalize(en.appearance.label)}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem checked={theme === KEY.SYSTEM} onClick={() => setTheme(KEY.SYSTEM)}>
           {capitalize(KEY.SYSTEM)}

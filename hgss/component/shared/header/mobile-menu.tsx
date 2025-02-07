@@ -1,6 +1,8 @@
+import { PATH_DIR } from 'hgss-dir'
 import { EllipsisVertical, ShoppingBagIcon, User2Icon } from 'lucide-react'
-import { LinkBtn, Sheet, SheetContent, SheetDescription, SheetTrigger, ThemeToggle } from 'component'
-import { PATH_DIR } from 'config'
+import { Sheet, SheetContent, SheetDescription, SheetTrigger } from 'component/ui'
+import { LinkBtn } from 'component/shared/btn'
+import { ThemeToggle } from 'component/shared'
 
 const MobileMenu = () => {
   return (
