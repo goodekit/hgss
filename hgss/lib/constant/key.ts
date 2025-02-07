@@ -1,3 +1,5 @@
+import { SORT } from './sort'
+
 
 const LOCALE = {
     EN        : 'en',
@@ -5,10 +7,10 @@ const LOCALE = {
     VIETNAMESE: 'vi-VN'
 }
 
-
 export const KEY = {
     DARK  : 'dark',
     LIGHT : 'light',
     SYSTEM: 'system',
-    ...LOCALE
+    ...LOCALE,
+    ...SORT
 }
