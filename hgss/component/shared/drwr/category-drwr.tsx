@@ -18,7 +18,7 @@ const CategoryDrwr = async () => {
         <DrawerHeader>
           <DrawerTitle>{en.select_by_category.label}</DrawerTitle>
           <div className="space-y-2">
-            {_.map((category, index) => (
+            {[{category: 'some part', _count:5}].map((category, index) => (
               <Button key={index} variant={'ghost'} className={'w-full justify-start'} asChild>
                 <DrawerClose asChild>
                   <Link href={PATH_DIR.SEARCH_CATEGORY(category.category)} className={'w-full justify-between'}>
