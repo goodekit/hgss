@@ -1,6 +1,9 @@
 // ⎿ bag
 export { default as AddToBag } from './bag/add-to-bag'
 export { default as BagIconWithBadge } from './bag/bag-icon-with-badge'
+// ⎿ btn
+export { default as BackBtn } from './btn/back-btn'
+export { default as LinkBtn } from './btn/link-btn'
 // ⎿ drwr
 export { default as CategoryDrwr } from './drwr/category-drwr'
 // ⎿header
@@ -12,6 +15,8 @@ export { default as Toolbar } from './header/toolbar'
 export { default as UserMenu } from './header/user-menu'
 // ⎿ footer
 export { default as Footer } from './footer/footer'
+// ⎿ no
+export { default as NoResult } from './no/no-result'
 // ⎿ protect
 export { default as ProtectNavLink } from './protect/protect-nav-link'
 export { default as ProtectNavDialg } from './protect/protect-nav-dialg'

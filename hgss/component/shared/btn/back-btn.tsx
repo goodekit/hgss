@@ -1,4 +1,5 @@
 "use client"
+
 import { en } from 'public/locale'
 import { ArrowLeft } from 'lucide-react'
 import { Tooltp } from 'component/shared/tooltp'
