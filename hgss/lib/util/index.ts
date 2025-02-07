@@ -1,3 +1,5 @@
-export * from './util'
+export * from './capitalize'
 export * from './connect'
+export * from './delay'
 export * from './get-random-texture'
+export * from './util'
