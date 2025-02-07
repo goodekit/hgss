@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { GLOBAL } from 'hgss'
 import { ThemeProvider } from 'next-themes'
 import { Permanent_Marker, Inter_Tight } from 'next/font/google'
+import { TooltipProvider } from 'component/ui'
 import { KEY } from 'lib/constant'
 import 'design/css/globals.css'
 
@@ -28,8 +29,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang={KEY.EN} suppressHydrationWarning>
       <body className={`${interTight.className} ${permanentMarker.className} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme={KEY.LIGHT} enableSystem disableTransitionOnChange>
-          {children}
+        <ThemeProvider attribute="class" defaultTheme={'dark'} enableSystem disableTransitionOnChange>
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
