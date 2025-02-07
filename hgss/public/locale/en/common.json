@@ -22,6 +22,9 @@
     "any": {
         "label": "Any"
     },
+    "appearance": {
+        "label": "Appearance"
+    },
     "bag": {
         "label": "Bag",
         "description": "Complete the form with your bag information",
@@ -58,6 +61,10 @@
     },
     "confirm": {
         "label": "Confirm"
+    },
+    "contact": {
+        "label": "Contact",
+        "description": "Contact us for any enquiries"
     },
     "continue": {
         "label": "Continue",
