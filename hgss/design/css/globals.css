@@ -8,6 +8,12 @@
   font-style: normal;
 }
 
+.covered-by-your-grace-regular {
+  font-family: 'Covered By Your Grace', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 @layer utilities {
 
   /* config  */
@@ -68,8 +74,8 @@ body {
   :root {
     --background            : hsl(44, 23%, 91%)
     --foreground            : hsl(0, 0%, 10%);
-    --card                  : hsl(0, 0%, 95%);
-    --card-foreground       : hsl(45, 100%, 85%);
+    --card                  : 0 0% 100%;
+    --card-foreground       : 222.2 84% 4.9%;
     --popover               : 0 0% 100%;
     --popover-foreground    : 222.2 84% 4.9%;
     --primary               : 222.2 47.4% 11.2%;
@@ -82,7 +88,7 @@ body {
     --accent-foreground     : 222.2 47.4% 11.2%;
     --destructive           : 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border                : hsl(0, 0%, 10%);
+    --border                : 214.3 31.8% 91.4%;
     --input                 : 214.3 31.8% 91.4%;
     --ring                  : 222.2 84% 4.9%;
     --chart-1               : 12 76% 61%;
@@ -99,8 +105,8 @@ body {
     --foreground            : hsl(45, 100%, 90%);
     --card                  : hsl(0, 0%, 10%);
     --card-foreground       : hsl(45, 100%, 90%);
-    --popover               : hsl(0, 0%, 100%);
-    --popover-foreground    : hsl(45, 100%, 90%);
+    --popover               : 0, 0%, 10%;
+    --popover-foreground    : 45, 100%, 90%;
     --primary               : 210 40% 98%;
     --primary-foreground    : 222.2 47.4% 11.2%;
     --secondary             : 217.2 32.6% 17.5%;
@@ -111,7 +117,7 @@ body {
     --accent-foreground     : 210 40% 98%;
     --destructive           : 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border                : hsl(45, 100%, 90%);
+    --border                : 217.2 32.6% 17.5%;
     --input                 : 217.2 32.6% 17.5%;
     --ring                  : 212.7 26.8% 83.9%;
     --chart-1               : 220 70% 50%;
@@ -200,8 +206,14 @@ html.dark .upload-field .text-white {
   background-image: url('/asset/texture/magazine-bg.png');
   background-size: 100% 100%;
 }
+
 .texture-bg-magazine-2 {
   background-image: url('/asset/texture/magazine-bg-2.png');
+  background-size: 100% 100%;
+}
+
+.texture-bg-magazine-3 {
+  background-image: url('/asset/texture/magazine-bg-3.png');
   background-size: 100% 100%;
 }
 
