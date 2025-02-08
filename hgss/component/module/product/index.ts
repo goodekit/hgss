@@ -1,4 +1,6 @@
-export { default as ProductCarousel } from './product-carousel'
-export { default as ProductCard } from './product-card'
 export { default as ProductBtn } from './product-btn'
+export { default as ProductCard } from './product-card'
+export { default as ProductCarousel } from './product-carousel'
+export { default as ProductImage } from './product-image'
+export { default as ProductPrice } from './product-price'
 export { default as ProductRating } from './product-rating'
