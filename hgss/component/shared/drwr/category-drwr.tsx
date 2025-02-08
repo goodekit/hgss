@@ -14,7 +14,7 @@ const CategoryDrwr = async () => {
           <Logs size={20} />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className={'h-full max-w-sm rounded-sm'}>
+      <DrawerContent className={'h-full max-w-sm rounded-sm bg-transparent texture-bg-magazine-3 border-none'}>
         <DrawerHeader>
           <DrawerTitle>{en.select_by_category.label}</DrawerTitle>
           <div className="space-y-2">
