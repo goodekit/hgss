@@ -8,6 +8,7 @@ const LOCALE = {
 }
 
 export const KEY = {
+    ALL   : 'all',
     DARK  : 'dark',
     LIGHT : 'light',
     SYSTEM: 'system',
