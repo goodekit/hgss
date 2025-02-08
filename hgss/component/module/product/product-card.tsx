@@ -7,7 +7,7 @@ import ProductPrice from './product-price'
 import ProductRating from './product-rating'
 
 interface ProductCardProps {
-  // product: Product
+  product: Product
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {

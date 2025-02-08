@@ -8,7 +8,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from 'component/ui'
 
 interface ProductCarouselProps {
-    // products: Product[]
+    products: Product[]
 }
 
 const ProductCarousel: FC<ProductCarouselProps> = ({ products }) => {

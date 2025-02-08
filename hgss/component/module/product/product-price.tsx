@@ -3,7 +3,7 @@ import { GLOBAL } from 'hgss'
 import { cn } from 'lib/util'
 
 interface ProductPriceProps {
-  value: number
+  value     : number
   className?: string
 }
 const ProductPrice: FC<ProductPriceProps> = ({ value, className }) => {

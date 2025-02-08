@@ -3,7 +3,7 @@ import ProductCard from './product-card'
 import { en } from 'public/locale'
 
 interface ProductListProps {
-  data: Product[]
+  data  : Product[]
   title?: string
   limit?: number
 }
