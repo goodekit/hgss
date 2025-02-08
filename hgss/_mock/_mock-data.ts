@@ -39,26 +39,23 @@ export const _mockData = {
       ],
     products: [
         {
-          id            : 1,
           model         : '[EP70/71] Toyota Starlet',
           name          : 'Starlet Cupholder',
+          slug          : 'starlet-cupholder',
           description   : 'Our tough ABS plastic cupholder utilises the spring and screws from your OEM ashtray and instals in the same manor.  Made to securely hold 2x standard 355ml cans.  500ml cans with the same base diameter will fit but touch against the dashboard.',
-          title         : 'Replace your ashtray with something more useful!',
           price         : 19.99,
           images        : ['/_mock/1/prod1.png', '/_mock/1/prod2.png', '/_mock/1/prod3.png', '/_mock/1/prod4.png', '/_mock/1/prod5.png'],
           specifications: ['Made from premium materials', 'Lasts a lifetime', 'Eco-friendly', 'Comes in multiple colors'],
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         },
         {
-          id            : 2,
           model         : '[EP70/71] Toyota Starlet',
           name          : 'Guage Pod',
-          title         : 'No drilling holes required!',
+          slug          : 'guage-pod',
           description   : 'This gauge pod is specifically designed for EP70/71 Starlets and replaces the OEM clock and bezel.  With it’s tough ABS plastic construction it looks at home atop the dashboard.  Designed for standard 52mm gauges.  Please note that outer gauges may only be able to fasten inner nut to retain, depending on length of gauge.',
           price         : 29.99,
           images        : ['/_mock/2/prod1.png', '/_mock/2/prod2.png', '/_mock/2/prod3.png', '/_mock/2/prod4.png', '/_mock/2/prod5.png'],
@@ -66,15 +63,13 @@ export const _mockData = {
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         },
         {
-          id         : 3,
           model      : '2EE Toyota',
           name       : 'ITB Kit',
-          title      : 'Quad throttle supreme noise!',
+          slug       : 'itb-kit',
           description: `
               This Individual throttle body kit is designed as a bolt on unit for the Toyota 2EE Engine.  It sports all the necessary components to get your 2EE converted to ITBS!
                   -40mm Throttle bodies
@@ -92,15 +87,13 @@ export const _mockData = {
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         },
         {
-          id            : 4,
           model         : '[EP70/71] Toyota Starlet',
           name          : "'INTERCOOLER TURBO' Badge",
-          title         : 'Rare part reimagined!',
+          slug          : 'intercooler-turbo-badge',
           description   : 'This is a reproduction of the rare and coveted ‘Intercooler Turbo’ badge found on some EP71 Turbo S Starlets.  Through redesigning this badge we have added captive threads instead of the screws of the original design to assure it stands the test of time.  Constructed from tough ABS plastic.',
           price         : 1149.99,
           images        : ['/_mock/part1.JPG', '/_mock/part1.JPG', '/_mock/part3.JPG'],
@@ -108,15 +101,13 @@ export const _mockData = {
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         },
         {
-          id            : 5,
           model         : '[EP70/71] Toyota Starlet',
           name          : 'TOYOTA Badge',
-          title         : 'Rare part reimagined!',
+          slug          : 'toyota-badge',
           description   : 'This is a reproduction of the ‘TOYOTA’ badge found on the pre-facelift EP70/71 Starlets.  Through redesigning this badge we have added captive threads instead of the screws of the original design to assure it stands the test of time.  Constructed from tough ABS plastic.',
           price         : 149.99,
           images        : ['/_mock/part1.JPG', '/_mock/part3.JPG', '/_mock/part4.JPG'],
@@ -124,15 +115,13 @@ export const _mockData = {
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         },
         {
-          id            : 6,
           model         : '[EP70/71] Toyota Starlet',
           name          : "'SI' Badge",
-          title         : 'Affordable reproduction badge!',
+          slug          : 'si-badge',
           description   : 'This is a reproduction of the ‘TOYOTA’ badge found on the facelifted EP70/71 Starlets.  Through redesigning this badge we have added captive threads instead of the screws of the original design to assure it stands the test of time.  Constructed from tough ABS plastic.',
           price         : 50.99,
           images        : ['/_mock/part3.JPG', '/_mock/part4.JPG', '/_mock/part5.JPG'],
@@ -140,15 +129,13 @@ export const _mockData = {
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         },
         {
-          id            : 7,
           model         : '[EP70/71] Toyota Starlet',
           name          : "'TEST_SI' Badge",
-          title         : 'Affordable reproduction badge!',
+          slug          : 'test-si-badge',
           description   : 'This is a reproduction of the ‘TOYOTA’ badge found on the facelifted EP70/71 Starlets.  Through redesigning this badge we have added captive threads instead of the screws of the original design to assure it stands the test of time.  Constructed from tough ABS plastic.',
           price         : 50.99,
           images        : ['/_mock/part4.JPG', '/_mock/part5.JPG', '/_mock/part1.JPG'],
@@ -156,15 +143,13 @@ export const _mockData = {
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         },
         {
-          id         : 8,
           model      : '2EE Toyota',
           name       : 'ITB Kit',
-          title      : 'Quad throttle supreme noise!',
+          slug       : 'itb-kit-2',
           description: `
               This Individual throttle body kit is designed as a bolt on unit for the Toyota 2EE Engine.  It sports all the necessary components to get your 2EE converted to ITBS!
                   -40mm Throttle bodies
@@ -182,15 +167,13 @@ export const _mockData = {
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         },
         {
-          id            : 9,
           model         : '[EP70/71] Toyota Starlet',
           name          : "'INTERCOOLER TURBO' Badge",
-          title         : 'Rare part reimagined!',
+          slug          : 'intercooler-turbo-badge-2',
           description   : 'This is a reproduction of the rare and coveted ‘Intercooler Turbo’ badge found on some EP71 Turbo S Starlets.  Through redesigning this badge we have added captive threads instead of the screws of the original design to assure it stands the test of time.  Constructed from tough ABS plastic.',
           price         : 1149.99,
           images        : ['/_mock/part1.JPG', '/_mock/part1.JPG', '/_mock/part3.JPG'],
@@ -198,7 +181,6 @@ export const _mockData = {
           brand         : 'Toyota',
           stock         : 10,
           category      : 'Automotive',
-          reviews       : [],
           rating        : 0,
           numReviews    : 0
         }
