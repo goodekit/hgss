@@ -12,8 +12,8 @@ import { EllipsisLoader } from 'component/shared/loader'
 // import { PATH_DIR } from 'config'
 
 interface AddToBagProps {
-  // item: BagItem
-  // bag?: Bag
+  item: BagItem
+  bag?: Bag
 }
 
 const AddToBag: FC<AddToBagProps> = ({ bag, item }) => {
@@ -53,7 +53,6 @@ const AddToBag: FC<AddToBagProps> = ({ bag, item }) => {
   ) : (
     <Button className="w-full rounded-sm" type={'button'} onClick={()=> {}}>
       {isPending ? (
-        // <Shell className="loader" />
         <EllipsisLoader />
       ) : (
         <Fragment>
