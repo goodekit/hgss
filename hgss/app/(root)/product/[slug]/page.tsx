@@ -2,9 +2,10 @@ import { FC, Fragment } from 'react'
 import { en } from 'public/locale'
 import { notFound } from 'next/navigation'
 // import { auth } from 'auth'
-// import { getProductBySlug, getMyBag } from 'lib'
-import { Card, CardContent, Badge, ProductPrice, ProductImage } from 'component'
-import { AddToBag, ProductRating } from 'component/shared'
+import { getProductBySlug } from 'lib/action'
+import { Card, CardContent, Badge } from 'component/ui'
+import { ProductImage, ProductPrice } from 'component/module'
+// import { AddToBag, ProductRating } from 'component/shared'
 // import { ReviewList } from 'component/shared/review'
 
 interface ProductViewPageProps {
@@ -14,9 +15,9 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
   const { slug } = await params
   const product  = await getProductBySlug(slug)
   if (!product) return notFound()
-  const session = await auth()
+  // const session = await auth()
   // const userId  = session?.user?.id
-  const bag     = await getMyBag()
+  // const bag     = await getMyBag()
 
   const bagProduct = { productId: product.id, name: product.name, slug: product.slug, price: product.price, qty: 1, image: product.images![0] }
 
