@@ -1,5 +1,7 @@
 export * from './capitalize'
 export * from './connect'
+export * from './converter'
 export * from './delay'
+export * from './formatter'
 export * from './get-random-texture'
 export * from './util'
