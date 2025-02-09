@@ -49,7 +49,7 @@ export const refColors = {
       200: '',
       300: '',
       400: '',
-      500: '#FFAAD9',
+      500: '#C1FF11',
       600: '',
       700: '',
       800: '',
@@ -87,7 +87,10 @@ export const refColors = {
     },
     tape: {
       main: '#AAFFDO'
-    }
+    },
+    punk_pink: {
+      main: '#AAFFDO'
+    },
   }
   // const refTypography = {} as const
 
