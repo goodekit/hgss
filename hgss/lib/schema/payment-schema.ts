@@ -1,4 +1,4 @@
-import { GLOBAL } from "vieux-carre"
+import { GLOBAL } from "hgss"
 import { en } from "public/locale"
 import { z } from "zod"
 import { KEY } from "lib/constant"
