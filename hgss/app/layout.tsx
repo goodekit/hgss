@@ -2,12 +2,17 @@ import { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { GLOBAL } from 'hgss'
 import { ThemeProvider } from 'next-themes'
-import { Permanent_Marker, Inter_Tight, Covered_By_Your_Grace } from 'next/font/google'
+import { Permanent_Marker, Inter_Tight, Covered_By_Your_Grace, Yusei_Magic } from 'next/font/google'
 import { TooltipProvider } from 'component/ui'
 import { KEY } from 'lib/constant'
 import 'design/css/globals.css'
 
 const interTight = Inter_Tight({
+  subsets: ['latin']
+})
+
+const yuseiMagic = Yusei_Magic({
+  weight : '400',
   subsets: ['latin']
 })
 
@@ -33,7 +38,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang={KEY.EN} suppressHydrationWarning>
-      <body className={`${interTight.className} ${permanentMarker.className} ${coveredByYourGrace.className} antialiased`}>
+      <body className={`${interTight.className} ${permanentMarker.className} ${coveredByYourGrace.className} ${yuseiMagic.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme={'dark'} enableSystem disableTransitionOnChange>
           <TooltipProvider>
             {children}
