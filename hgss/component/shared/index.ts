@@ -4,6 +4,7 @@ export { default as BagIconWithBadge } from './bag/bag-icon-with-badge'
 // ⎿ btn
 export { default as BackBtn } from './btn/back-btn'
 export { default as LinkBtn } from './btn/link-btn'
+export { default as TapeBtn } from './btn/tape-btn'
 // ⎿ drwr
 export { default as CategoryDrwr } from './drwr/category-drwr'
 // ⎿header
