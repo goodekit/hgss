@@ -1,9 +1,12 @@
 import { FC, Fragment } from 'react'
 import { en } from 'public/locale'
 import Link from 'next/link'
-import { getAllProducts, getAllCategories, PRICE, RATING, KEY, SORT_ORDER } from 'lib'
-import { NoResult, ProductCard, LinkBtn } from 'component/shared'
-import { PATH_DIR } from 'config'
+import { KEY, SORT_ORDER } from 'lib'
+import { getAllProducts } from 'lib/action'
+import { PRICE, RATING } from 'lib/constant'
+import { NoResult, LinkBtn } from 'component/shared'
+import { ProductCard } from 'component/module'
+import { PATH_DIR } from 'hgss-dir'
 import FilterList from './filter-list'
 import FilterTitle from './filter-title'
 
@@ -46,13 +49,13 @@ const SearchPage: FC<SearchPageProps> = async ({ searchParams }) => {
   }
 
   const products   = await getAllProducts({ query, category, price, rating, sort, page: Number(page) })
-  const categories = await getAllCategories()
+  // const categories = await getAllCategories()
 
   return (
     <Fragment>
       <div className="grid md:grid-cols-5 md:gap-5">
         <div className="filter-links">
-         <FilterList
+         {/* <FilterList
           title={en.category.label}
           items={categories}
           selectedValue={category}
@@ -75,7 +78,7 @@ const SearchPage: FC<SearchPageProps> = async ({ searchParams }) => {
           getUrl={(value) => getFilterUrl({ _rating: value })}
           formatLabel={(item) => `${item} stars +`}
           extractValue={(item) => item.toString()}
-        />
+        /> */}
         </div>
         <div className="md:col-span-4 space-y-4">
           <div className="flex-between flex-col md:flex-row my-4">
