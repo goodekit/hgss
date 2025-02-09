@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { ProtectedNavLink } from 'component/shared/protect'
-import { Toolbar } from 'component/shared'
+import { Toolbar } from 'component/shared/header'
 import { CategoryDrwr, Search } from 'component/shared'
 import { GLOBAL } from 'hgss'
 import { ASSET_DIR, PATH_DIR } from 'hgss-dir'

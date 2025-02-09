@@ -2,23 +2,25 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
-// import { auth } from 'auth'
-// import { signOutUser, charAtName, KEY } from 'lib'
+import { auth } from 'auth'
+import { signOutBasic } from 'lib/action'
 import { User2Icon, LogOut } from 'lucide-react'
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger, Separator } from 'component/ui'
 import { ProtectedNavLink } from 'component/shared/protect'
+import { charAtName } from 'lib/util'
+import { KEY } from 'lib/constant'
 
 const UserMenu = async () => {
-  // const session = await auth()
-  // if (!session) {
-  //   return (
-  //     <Button asChild variant="ghost">
-  //       <Link href={PATH_DIR.SIGN_IN}>
-  //         <User2Icon /> {en.sign_in.label}
-  //       </Link>
-  //     </Button>
-  //   )
-  // }
+  const session = await auth()
+  if (!session) {
+    return (
+      <Button asChild variant="ghost">
+        <Link href={PATH_DIR.SIGN_IN}>
+          <User2Icon /> {en.sign_in.label}
+        </Link>
+      </Button>
+    )
+  }
 
   // const isAdmin = session?.user?.role === KEY.ADMIN
 
@@ -28,18 +30,15 @@ const UserMenu = async () => {
         <DropdownMenuTrigger asChild>
           <div className="flex items-center">
             <Button variant="ghost" className="relative w-8 h-8 rounded-sm ml-2 flex items-center hover:font-bold justify-center bg-gray-300">
-              {/* {session?.user?.name ? charAtName(session.user.name) : <User2Icon />} */}
-              <User2Icon />
+              {session?.user?.name ? charAtName(session.user.name) : <User2Icon />}
             </Button>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuContent className="w-64 texture-bg-hero" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-2">
-              {/* <div className="text-sm font-medium leading-none">{session?.user?.name}</div>
-              <div className="text-sm text-muted-foreground leading-none">{session?.user?.email}</div> */}
-              <div className="text-sm font-medium leading-none">{'User'}</div>
-              <div className="text-sm text-muted-foreground leading-none">{'email'}</div>
+              <div className="text-sm font-medium leading-none">{session?.user?.name}</div>
+              <div className="text-sm text-muted-foreground leading-none">{session?.user?.email}</div>
               <Separator className="my-4" />
             </div>
           </DropdownMenuLabel>
@@ -61,7 +60,7 @@ const UserMenu = async () => {
           )} */}
 
           <DropdownMenuItem className="p-1">
-            <form action={() => {}} className="w-full">
+            <form action={signOutBasic} className="w-full">
               <Button className="w-full py-4 px-2 h-4 justify-start" variant={'ghost'}>
                 <LogOut /> {en.sign_out.label}
               </Button>

@@ -1,5 +1,6 @@
 // import { getMyBagCount } from 'lib/action'
-import { ThemeToggle, MobileMenu, UserMenu, BagIconWithBadge } from 'component/shared'
+import { ThemeToggle, MobileMenu, BagIconWithBadge } from 'component/shared'
+import { UserMenu } from 'component/shared/header'
 
 const Toolbar = async () => {
   // const count = await getMyBagCount()
