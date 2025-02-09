@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { XIcon } from 'lucide-react'
 import { Badge } from 'component/ui'
 import { LinkBtn } from 'component/shared'
-import { ICON } from 'config/layout'
+import { ICON } from 'hgss-design'
 
 
 interface FilterTitleProps {
