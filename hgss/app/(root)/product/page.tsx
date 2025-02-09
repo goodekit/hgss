@@ -2,6 +2,7 @@ import { FC, Fragment } from 'react'
 import { PATH_DIR } from 'hgss-dir'
 import { _mockData } from '_mock'
 import { KEY } from 'lib'
+import { getAllProducts } from 'lib/action'
 import { NoResult, BackBtn } from 'component/shared'
 import { ProductCard } from 'component/module/product'
 
@@ -24,8 +25,8 @@ const ProductPage: FC<SearchPageProps> = async ({ searchParams }) => {
     return PATH_DIR.SEARCH_QUERY(new URLSearchParams(params).toString())
   }
 
-//   const products   = await getAllProducts({ query, category, price, rating, sort, page: Number(page) })
-//   const categories = await getAllCategories()
+  const products   = await getAllProducts({ query, category, price, rating, sort, page: Number(page) })
+  // const categories = await getAllCategories()
 
   return (
     <Fragment>
@@ -35,9 +36,9 @@ const ProductPage: FC<SearchPageProps> = async ({ searchParams }) => {
                 <BackBtn/>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-                {_mockData.products.length <= 0  && <NoResult data={_mockData.products.length} />}
-                {_mockData.products.map((product, index) => (
-                    <ProductCard key={index} product={product} />
+                {products.data.length <= 0  && <NoResult data={_mockData.products.length} />}
+                {products.data.map((_product, index) => (
+                    <ProductCard key={index} product={_product} />
                 ))}
             </div>
         </div>
