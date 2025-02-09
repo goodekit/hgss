@@ -1,4 +1,5 @@
 export * from './capitalize'
+export * from './char-at'
 export * from './connect'
 export * from './converter'
 export * from './delay'
