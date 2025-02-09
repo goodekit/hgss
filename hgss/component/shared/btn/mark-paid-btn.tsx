@@ -3,7 +3,7 @@
 import { FC, Fragment, useTransition } from 'react'
 import { en } from 'public/locale'
 import { useToast } from 'hook'
-import { updateCODOrderToPaid } from 'lib'
+// import { updateCODOrderToPaid } from 'lib'
 import { Button } from 'component/ui'
 import { EllipsisLoader } from '../loader'
 
@@ -17,8 +17,8 @@ const MarkPaidBtn: FC<MarkPaidBtnProps> = ({ orderId }) => {
 
   const handleMarkPaid = async () => {
     startTransition(async () => {
-      const response = await updateCODOrderToPaid(orderId)
-      toast({ variant: response.success ? 'default' : 'destructive', description: response.message })
+      // const response = await updateCODOrderToPaid(orderId)
+      // toast({ variant: response.success ? 'default' : 'destructive', description: response.message })
     })
   }
   return (
