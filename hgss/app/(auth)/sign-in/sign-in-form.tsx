@@ -10,7 +10,7 @@ import { signInBasic } from 'lib/action'
 import { signInDefaultValue } from 'lib/schema'
 import { Input } from 'component/ui/input'
 import { Label } from 'component/ui/label'
-import { TapeBtn } from 'component/shared'
+import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
 import { KEY, RESPONSE } from 'lib/constant'
 
@@ -60,9 +60,9 @@ const SignInForm = () => {
         <div className="">
           <SignInButton />
         </div>
-        <div className="text-sm text-center text-muted-foreground">
+        <div className="text-sm text-center">
           {en.dont_have_account.label}
-          <Link href={PATH_DIR.SIGN_UP} target="_self" className="link font-bold">
+          <Link href={PATH_DIR.SIGN_UP} target="_self" className={"link font-bold text-punk"}>
            &nbsp;{en.sign_up.label}
           </Link>
         </div>
