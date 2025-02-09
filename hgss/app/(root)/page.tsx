@@ -4,13 +4,11 @@ import Image from 'next/image'
 import { ASSET_DIR } from 'hgss-dir'
 import { NAV_CONFIG } from 'hgss-nav'
 // import { getLatestProducts, getAllFeaturedProducts } from 'lib'
-import { getRandomTextureClass, delay } from 'lib/util'
+import { TapeBtn } from 'component/shared'
 
 const Homepage = async () => {
 //   const latestProducts   = await getLatestProducts()
 //   const featuredProducts = await getAllFeaturedProducts()
-
-const randomizedClasses = NAV_CONFIG.map(() => getRandomTextureClass())
   return (
     <Fragment>
     <div className="p-4 flex flex-col items-center relative justify-between">
@@ -21,9 +19,7 @@ const randomizedClasses = NAV_CONFIG.map(() => getRandomTextureClass())
 
           <nav className="permanent-marker-regular ">
             {NAV_CONFIG.map(({ title, href }, index) => (
-              <button key={index} className={`w-full  text-4xl xs:text-xl permanent-marker-regular ${randomizedClasses[index]} text-black font-bold transform -rotate-1 hover:rotate-0 transition-transform`}>
-                <a href={href}>{title}</a>
-              </button>
+              <TapeBtn key={index} label={title} href={href} index={index} isLink />
             ))}
           </nav>
         </div>
