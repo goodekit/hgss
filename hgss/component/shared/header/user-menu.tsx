@@ -22,6 +22,12 @@ const UserMenu = async () => {
     )
   }
 
+  // save in the user's avatar in the session
+  // <img src={getAvatarUrl()} alt="User Avatar" className="h-auto" />
+  // const getAvatarUrl = () => {
+  //   const encodedName = encodeURIComponent(session?.user?.name  || 'Anonymous')
+  //   return `https://api.dicebear.com/7.x/croodles/svg?seed=${encodedName}-${Date.now()?.toString()}`
+  // }
   // const isAdmin = session?.user?.role === KEY.ADMIN
 
   return (
@@ -29,13 +35,13 @@ const UserMenu = async () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center">
-            <Button variant="ghost" className="relative w-8 h-8 rounded-sm ml-2 flex items-center hover:font-bold justify-center bg-gray-300">
-              {session?.user?.name ? charAtName(session.user.name) : <User2Icon />}
-            </Button>
+          <button className="relative w-8 h-8 rounded-sm ml-2 flex items-center hover:font-bold justify-center">
+            {session?.user?.name ? charAtName(session?.user?.name): <User2Icon />}
+          </button>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-64 texture-bg-hero" align="end" forceMount>
-          <DropdownMenuLabel className="font-normal">
+        <DropdownMenuContent className={"w-52 text-sm"} align="end" forceMount>
+          <DropdownMenuLabel className={"font-normal"}>
             <div className="flex flex-col space-y-2">
               <div className="text-sm font-medium leading-none">{session?.user?.name}</div>
               <div className="text-sm text-muted-foreground leading-none">{session?.user?.email}</div>
