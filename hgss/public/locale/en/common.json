@@ -265,6 +265,9 @@
             "label": "Images"
         }
     },
+    "in_stock": {
+        "label": "In Stock"
+    },
     "item": {
         "label": "Item",
         "items": {
@@ -351,6 +354,9 @@
     },
     "overview": {
         "label": "Overview"
+    },
+    "out_of_stock": {
+        "label": "Out of Stock"
     },
     "paid_at": {
         "label": "Paid At"
@@ -474,7 +480,7 @@
     },
     "sign_in": {
         "label": "Sign in",
-        "description": "Complete the form with your information"
+        "description": "Sign in to your account"
     },
     "sign_up": {
         "label": "Sign up",
