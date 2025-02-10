@@ -36,7 +36,7 @@ const SignUpForm = () => {
       {renderDataMessage}
       <div className="space-y-6">
         <div>
-          <Label htmlFor={KEY.NAME}>{'Name'}</Label>
+          <Label htmlFor={KEY.NAME}>{en.form.name.label}</Label>
           <Input
             id={KEY.NAME}
             name={KEY.NAME}
@@ -48,7 +48,7 @@ const SignUpForm = () => {
           />
         </div>
         <div>
-          <Label htmlFor="email">{'Email'}</Label>
+          <Label htmlFor="email">{en.form.email.label}</Label>
           <Input
             id={KEY.EMAIL}
             name={KEY.EMAIL}
@@ -60,7 +60,7 @@ const SignUpForm = () => {
           />
         </div>
         <div>
-          <Label htmlFor="password">{'Password'}</Label>
+          <Label htmlFor="password">{en.form.password.label}</Label>
           <Input
             id={KEY.PASSWORD}
             name={KEY.PASSWORD}
@@ -72,7 +72,7 @@ const SignUpForm = () => {
           />
         </div>
         <div>
-          <Label htmlFor={KEY.CONFIRM_PASSWORD}>{'Confirm Password'}</Label>
+          <Label htmlFor={KEY.CONFIRM_PASSWORD}>{en.form.confirm_password.label}</Label>
           <Input
             id={KEY.CONFIRM_PASSWORD}
             name={KEY.CONFIRM_PASSWORD}
