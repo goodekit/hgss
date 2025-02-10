@@ -3,7 +3,9 @@
 import { en } from 'public/locale'
 import { signIn, signOut } from 'auth'
 import { isRedirectError } from 'next/dist/client/components/redirect-error'
-import { SignInSchema } from 'lib/schema'
+import { hash } from 'lib/encrypt'
+import { prisma } from 'db/prisma'
+import { SignInSchema, SignUpSchema } from 'lib/schema'
 import { SystemLogger } from 'lib/app-logger'
 import { CODE } from 'lib/constant'
 
@@ -43,3 +45,33 @@ export async function signInBasic(prevState: unknown, formData: FormData) {
 export async function signOutBasic() {
     await signOut()
 }
+
+/**
+ * Signs up a new user with the provided form data.
+ *
+ * @param prevState - The previous state, which is not used in this function.
+ * @param formData - The form data containing user information.
+ * @returns A promise that resolves to a system logger response indicating the result of the sign-up process.
+ * @throws Will throw an error if the sign-up process encounters a redirect error.
+ */
+export async function signUpUser(prevState: unknown, formData: FormData) {
+  try {
+    const user = SignUpSchema.parse({
+      name           : formData.get('name'),
+      email          : formData.get('email'),
+      password       : formData.get('password'),
+      confirmPassword: formData.get('confirmPassword')
+    })
+    const unhashedPassword = user.password
+    user.password = await hash(user.password)
+    await prisma.user.create({ data: { name: user.name, email: user.email, password: user.password } })
+    await signIn('credentials', { email: user.email, password: unhashedPassword })
+    return SystemLogger.response(en.success.user_signed_up, CODE.CREATED, TAG)
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error
+    }
+    return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
+  }
+}
+

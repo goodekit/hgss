@@ -1,14 +1,11 @@
-'use client'
-
 import Image from 'next/image'
 import { en } from 'public/locale'
-import { ASSET_DIR } from 'hgss-dir'
+import { ASSET_DIR, PATH_DIR } from 'hgss-dir'
 import { HTTP_RESPONSE } from 'lib/constant'
 import { CODE } from 'lib/constant'
-import { getRandomTextureClass } from 'lib/util/get-random-texture'
+import { TapeBtn } from 'component/shared/btn'
 
 const NotFoundPage = () => {
-  const handleNavigateHome = () => (window.location.href = '/')
   return (
     <div className="flex flex-col items-center justify-center min-h-screen shadow-none">
       <Image src={ASSET_DIR.LOGO_ALT} width={60} height={60} alt="logo" priority />
@@ -16,9 +13,7 @@ const NotFoundPage = () => {
         <h4 className="text-4xl mt-2 covered-by-your-grace-regular">{CODE.NOT_FOUND}</h4>
         <h1 className="text-3xl font-bold mb-4">{HTTP_RESPONSE[404].title}</h1>
         <h6 className="mt-8 covered-by-your-grace-regular">{HTTP_RESPONSE[404].description}</h6>
-        <button className={`w-1/4 mt-4 ml-2 text-xl  text-black w-full  ${getRandomTextureClass()} transform -rotate-1 hover:rotate-0 transition-transform`} onClick={handleNavigateHome}>
-          {en.go_back}
-        </button>
+        <TapeBtn label={en.go_back} href={PATH_DIR.ROOT} type={'button'} isLink />
       </div>
     </div>
   )

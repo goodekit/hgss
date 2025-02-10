@@ -2,6 +2,7 @@
         APP_NAME               : process.env.NEXT_PUBLIC_APP_NAME || 'Homegrown-Speedshop',
         APP_VERSION            : process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0',
         APP_DESCRIPTION        : process.env.NEXT_PUBLIC_APP_DESCRIPTION || 'Classic car parts, accessories and requests',
+        AVATAR_API             : process.env.NEXT_PUBLIC_AVATAR_API || 'https://avatars.dicebear.com/api/human/',
         SERVER_URL             : process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
         DATABASE_URL           : process.env.DATABASE_URL || '',
         ENCRYPTION_KEY         : process.env.ENCRYPTION_KEY || '',

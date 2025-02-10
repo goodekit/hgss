@@ -21,7 +21,7 @@ const Search = async () => {
             ))}
           </SelectContent>
         </Select>
-        <Input name={'query'} type={'text'} placeholder={en.search.placeholder} className={'md:w-[100px] lg:w-[300px]'}/>
+        <Input name={'query'} type={'text'} placeholder={en.search.placeholder} className={'md:w-[100px] lg:w-[300px] yusei-magic-regular'}/>
         <Button size={'sm'} variant={'ghost'}>
             <SearchIcon />
         </Button>

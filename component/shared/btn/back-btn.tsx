@@ -7,9 +7,7 @@ import { Button } from 'component/ui'
 
 const BackBtn = () => {
 
- const handleBackButton = () => {
-  window.history.back()
- }
+ const handleBackButton = () => { window.history.back() }
   return (
     <Tooltp content={en.go_back}>
       <Button variant={'ghost'} onClick={handleBackButton}>

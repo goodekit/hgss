@@ -8,5 +8,6 @@ export const UpdateUserSchema = z.object({
 export const UpdateUserAccountSchema = UpdateUserSchema.extend({
   id       : z.string().min(1, 'User id must be at least 1 character'),
   role     : z.string().min(1, 'Role is required'),
+  avatar   : z.string().nullable(),
   updatedAt: z.date().nullable(),
 })

@@ -16,8 +16,8 @@ import { KEY, RESPONSE } from 'lib/constant'
 
 const SignInForm = () => {
   const [data, action] = useActionState(signInBasic, RESPONSE.DEFAULT)
-  const searchParams = useSearchParams()
-  const callbackUrl  = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
+  const searchParams   = useSearchParams()
+  const callbackUrl    = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
 
   const SignInButton = () => {
     const { pending } = useFormStatus()

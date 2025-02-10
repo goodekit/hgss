@@ -3,15 +3,16 @@
 import { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { en } from 'public/locale'
-import { useSearchParams } from 'next/navigation'
-import { signUpUser } from 'lib/action/user.action'
+import { PATH_DIR } from 'hgss-dir'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import { signUpDefaultValue } from 'lib/schema'
+import { signUpUser } from 'lib/action/user.action'
 import { Button } from 'component/ui/button'
 import { Input } from 'component/ui/input'
 import { Label } from 'component/ui/label'
 import { EllipsisLoader } from 'component/shared/loader'
-import { PATH_DIR } from 'config'
-import { KEY, RESPONSE, signUpDefaultValue } from 'lib'
+import { KEY, RESPONSE } from 'lib/constant'
 
 const SignUpForm = () => {
   const [data, action] = useActionState(signUpUser, RESPONSE.DEFAULT)
