@@ -2,39 +2,45 @@ export const _mockData = {
     users: [
         {
           name    : 'Admin User',
-          email   : 'admin@vieux-carre.com',
+          email   : 'admin@homegrown-speed.shop',
           role    : 'admin',
-          password: '123456'
+          password: '123456',
+          avatar  : 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin-2021-09-01'
         },
         {
           name    : 'Hank Hill',
           email   : 'propane.love@strickland.com',
           role    : 'user',
-          password: '123456'
+          password: '123456',
+          avatar  : 'https://api.dicebear.com/7.x/avataaars/svg?seed=hank-2021-09-01'
         },
         {
           name    : 'Dale Gribble',
           email   : 'dale@dale-tech.com',
           role    : 'user',
-          password: '123456'
+          password: '123456',
+          avatar  : 'https://api.dicebear.com/7.x/avataaars/svg?seed=dale-2023-09-06'
         },
         {
           name    : 'Bill Dauterive',
           email   : 'bill.d@usarmy.com',
           role    : 'user',
-          password: '123456'
+          password: '123456',
+          avatar  : 'https://api.dicebear.com/7.x/avataaars/svg?seed=bill-2024-03-23'
         },
         {
           name    : 'Jeff Boomhauer',
           email   : 'boomhauer@yahoo.com',
           role    : 'user',
-          password: '123456'
+          password: '123456',
+          avatar  : 'https://api.dicebear.com/7.x/avataaars/svg?seed=boomhauer-2024-12-31'
         },
         {
           name    : 'Rusty Shackleford',
           email   : 'rusty@godaddy.com',
           role    : 'user',
-          password: '123456'
+          password: '123456',
+          avatar  : 'https://api.dicebear.com/7.x/avataaars/svg?seed=rusty-2025-01-02'
         }
       ],
     products: [
