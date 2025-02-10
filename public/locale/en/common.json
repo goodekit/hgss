@@ -137,6 +137,14 @@
         "label": "Filtered by"
     },
     "form": {
+        "password": {
+            "label": "Password",
+            "placeholder": "Enter your password"
+        },
+        "confirm_password": {
+            "label": "Confirm Password",
+            "placeholder": "Confirm your password"
+        },
         "rating": {
             "label": "Rating",
             "placeholder": "Enter the rating"
