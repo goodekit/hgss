@@ -1,5 +1,4 @@
 import { FC, Fragment } from 'react'
-import { PATH_DIR } from 'hgss-dir'
 import { _mockData } from '_mock'
 import { KEY } from 'lib'
 import { getAllProducts } from 'lib/action'
@@ -13,20 +12,7 @@ interface SearchPageProps {
 
 const ProductPage: FC<SearchPageProps> = async ({ searchParams }) => {
   const { query = DEFAULT_QUERY, category = DEFAULT_QUERY, price = DEFAULT_QUERY, rating = DEFAULT_QUERY, sort = KEY.NEWEST, page = '1' } = await searchParams
-
-  const getFilterUrl = ({ _category , _price, _rating, _sort, _page }:{ _category?: string, _price?: string, _rating?: string, _sort?: string, _page?: string})  => {
-    const params = { query, category, price, rating, sort, page }
-    if (_category) params.category = _category
-    if (_price) params.price       = _price
-    if (_rating) params.rating     = _rating
-    if (_sort) params.sort         = _sort
-    if (_page) params.page         = _page
-
-    return PATH_DIR.SEARCH_QUERY(new URLSearchParams(params).toString())
-  }
-
   const products   = await getAllProducts({ query, category, price, rating, sort, page: Number(page) })
-  // const categories = await getAllCategories()
 
   return (
     <Fragment>
