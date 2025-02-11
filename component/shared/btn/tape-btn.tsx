@@ -10,12 +10,14 @@ interface TapeBtnProps {
   index    ?: number
   disabled ?: boolean
   isLink   ?: boolean
+  textSize ?: string
+  onClick  ?: () => void
 }
 
-const TapeBtn: FC<TapeBtnProps> = ({ href, label, className, index = 2, disabled, type = 'submit', isLink = false }) => {
+const TapeBtn: FC<TapeBtnProps> = ({ href, label, className, index = 2, disabled, type = 'submit', isLink = false, onClick, textSize }) => {
  const randomizedClasses = NAV_CONFIG.map(() => getRandomTextureClass())
   return (
-    <button disabled={disabled} type={type} className={cn(`w-full text-4xl xs:text-xl permanent-marker-regular text-black font-bold transform -rotate-1 hover:rotate-0 transition-transform`, randomizedClasses[index], className)}>
+    <button disabled={disabled} type={type} className={cn(`w-full xs:text-xl permanent-marker-regular text-black font-bold transform -rotate-1 hover:rotate-0 transition-transform`, randomizedClasses[index], textSize ? textSize : 'text-4xl',  className)} onClick={onClick}>
      {isLink ? <a href={href}>{label}</a> : label}
     </button>
   )
