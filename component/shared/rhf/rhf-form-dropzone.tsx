@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { useToast } from 'hook'
 import { FormField, FormLabel, FormMessage, FormItem, FormControl } from 'component/ui/form'
 import { Card, CardContent } from 'component/ui/card'
-import { IMAGE } from 'hgss-design
+import { IMAGE } from 'hgss-design'
 // import { UploadButton } from 'lib/uploadthing'
 
 type FormKeyLocale = keyof typeof en.form
