@@ -71,3 +71,14 @@ export async function getProductBySlug(slug: string) {
     const data = await prisma.product.findFirst({ where: { id: productId } })
     return convertToPlainObject(data)
   }
+
+/**
+ * Retrieves all product categories along with the count of products in each category.
+ *
+ * @returns {Promise<Array<{ category: string, _count: number }>>} A promise that resolves to an array of objects,
+ * each containing a category and the count of products in that category.
+ */
+export async function getAllCategories() {
+  const products = await prisma.product.groupBy({ by: ['category'], _count: true })
+  return products
+}
