@@ -393,6 +393,9 @@
     "price_paid": {
         "label": "Price Paid"
     },
+    "proceed_to_checkout": {
+        "label": "Proceed to Checkout"
+    },
     "product": {
         "label": "Product",
         "products": {
