@@ -1,9 +1,9 @@
 import { FC } from 'react'
+import { PATH_DIR } from 'hgss-dir'
 import Image from 'next/image'
 import Link from 'next/link'
 import { TableBody, TableRow, TableCell } from 'component/ui'
 import { DynamicBagBtn } from 'component/shared/btn'
-import { GLOBAL, PATH_DIR } from 'config'
 import { BagTableCells }  from './bag-table-head'
 
 export interface BagTableBodyProps {
@@ -24,7 +24,7 @@ const BagTableBody: FC<BagTableBodyProps> = ({
   const BODY = (item: BagItem): BagTableCells => ({
     cells: [
       {
-        id: 'item',
+        id   : 'item',
         align: 'text-left',
         value: (
           <Link href={PATH_DIR.PRODUCT_VIEW(item.slug)} className="flex items-center">
@@ -34,7 +34,7 @@ const BagTableBody: FC<BagTableBodyProps> = ({
         )
       },
       {
-        id: 'quantity',
+        id   : 'quantity',
         align: 'text-center',
         value: withQtyController ? (
           <DynamicBagBtn amount={item.qty} isPending={isPending} handleMinus={() => handleMinus(item)} handlePlus={() => handlePlus(item)} />
@@ -43,9 +43,9 @@ const BagTableBody: FC<BagTableBodyProps> = ({
         )
       },
       {
-        id: 'price',
-        align: 'text-right',
-        value: `${GLOBAL.PRICES.CURRENCY} ${item.price}`
+        id   : 'price',
+        align: 'text-right yusei-magic-regular',
+        value: item.price
       }
     ]
   })
