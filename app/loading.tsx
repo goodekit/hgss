@@ -14,7 +14,7 @@ const LoadingPage = () => {
   }, [])
 
   return (
-    <div className="w-full h-screen flex items-center justify-center text-punk-foreground font-mono relative overflow-hidden">
+    <div className="w-full h-screen flex items-center justify-center text-punk font-mono relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/scanlines.png')] opacity-25 pointer-events-none"></div>
       <p className="text-md md:text-md tracking-wide animate-choppy">
         {loadingTexts[textIndex]} <span className="animate-blink">█</span>
