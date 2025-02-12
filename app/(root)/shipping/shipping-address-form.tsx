@@ -21,8 +21,8 @@ interface ShippingAddressFormProps {
 
 const ShippingAddressForm: FC<ShippingAddressFormProps> = ({ address }) => {
   const [isPending, startTransition] = useTransition()
-  const form = useForm<z.infer<typeof ShippingAddressSchema>>({
-    resolver: zodResolver(ShippingAddressSchema),
+  const form                         = useForm<z.infer<typeof ShippingAddressSchema>>({
+    resolver     : zodResolver(ShippingAddressSchema),
     defaultValues: address || shippingAddressDefaultValue
   })
   const router                    = useRouter()
