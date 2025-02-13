@@ -1,11 +1,13 @@
 import { FC } from 'react'
 import { Metadata } from 'next'
 import { en } from 'public/locale'
-import { GLOBAL } from 'vieux-carre'
+import { GLOBAL } from 'hgss'
 import { notFound } from 'next/navigation'
 import { auth } from 'auth'
 import Stripe from 'stripe'
-import { getOrderById, KEY, STRIPE } from 'lib'
+import { STRIPE } from 'lib/schema'
+import { getOrderById } from 'lib/action'
+import { KEY } from 'lib'
 import OrderViewTable from './order-view-table'
 
 export const metadata: Metadata = { title: en.order_overview.label }
