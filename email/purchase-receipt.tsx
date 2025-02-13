@@ -1,10 +1,9 @@
-import { en } from '../public/locale'
+import { en } from 'public/locale'
+import { PATH_DIR, ASSET_DIR } from 'hgss-dir'
+import { _mockData } from '_mock'
 import { Body, Column, Container, Head, Heading, Html, Img, Preview, Row, Section, Tailwind, Hr, Text } from '@react-email/components'
-import { formatCurrency } from '../lib/util/formatter'
-import { PATH_DIR } from '../config/dir/path'
+import { formatCurrency } from 'lib/util'
 import { IMAGE } from 'hgss-design'
-import { _mockData } from '../__mock'
-import { ASSET_DIR } from 'config'
 
 PurchaseReceiptEmail.PreviewProps = {
     order: {

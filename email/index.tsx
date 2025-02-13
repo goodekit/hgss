@@ -1,5 +1,5 @@
 import { Resend } from 'resend'
-import { GLOBAL } from '../config/global'
+import { GLOBAL } from 'hgss'
 import PurchaseReceiptEmail from './purchase-receipt'
 
 const resend = new Resend(GLOBAL.RESEND.RESEND_API_KEY as string)

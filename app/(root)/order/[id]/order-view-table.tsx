@@ -1,7 +1,9 @@
 'use client'
 import { FC, Fragment } from 'react'
 import { en } from 'public/locale'
-import { parseAddress, createPayPalOrder, approvePayPalOrder, CASH_ON_DELIVERY, PAYPAL, STRIPE,  toCents } from 'lib'
+import { createPayPalOrder, approvePayPalOrder } from 'lib/action'
+import {  PAYPAL, STRIPE } from 'lib/schema'
+import { parseAddress, toCents } from 'lib/util'
 import { PayPalButtons, PayPalScriptProvider, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { useToast } from 'hook'
 import { cn } from 'lib'
@@ -11,7 +13,6 @@ import { faPaypal, faCcPaypal, faStripe } from '@fortawesome/free-brands-svg-ico
 import { ArrowLeft } from 'lucide-react'
 import { Badge, Button, Separator } from 'component/ui'
 import { PriceSummaryCard } from 'component/shared/card'
-import { MarkPaidBtn } from 'component/shared/btn'
 import OrderViewCard from './order-view-card'
 import MarkDeliveredBtn from 'component/shared/btn/mark-delivered-btn'
 import StripePayment from './stripe-payment'
@@ -39,7 +40,6 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
 
   const isPayPal         = paymentMethod === PAYPAL
   const isStripe         = paymentMethod === STRIPE
-  const isCashOnDelivery = paymentMethod === CASH_ON_DELIVERY
 
   const handleCreatePayPalOrder = async () => {
     const response = await createPayPalOrder(order.id)
@@ -114,7 +114,6 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
               </div>
             )}
             {isStripe && !isPaid && stripeClientSecret && <StripePayment priceInCents={toCents(order.totalPrice)} orderId={order.id} clientSecret={stripeClientSecret} />}
-            {isAdmin && !isPaid && isCashOnDelivery && <MarkPaidBtn orderId={order.id} />}
             {isAdmin && isPaid  && !isDelivered && <MarkDeliveredBtn orderId={order.id} />}
           </PriceSummaryCard>
         </div>

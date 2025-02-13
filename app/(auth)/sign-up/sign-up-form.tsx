@@ -8,9 +8,9 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { signUpDefaultValue } from 'lib/schema'
 import { signUpUser } from 'lib/action/user.action'
-import { Button } from 'component/ui/button'
 import { Input } from 'component/ui/input'
 import { Label } from 'component/ui/label'
+import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
 import { KEY, RESPONSE } from 'lib/constant'
 
@@ -23,9 +23,7 @@ const SignUpForm = () => {
     const { pending } = useFormStatus()
     return (
       <div className="mb-5">
-        <Button disabled={pending} className="w-full" variant={'default'}>
-          {pending ? <EllipsisLoader /> : en.sign_up.label}
-        </Button>
+        <TapeBtn disabled={pending} label={pending ? <EllipsisLoader /> : en.sign_up.label} />
       </div>
     )
   }
@@ -86,10 +84,10 @@ const SignUpForm = () => {
         <div className="">
           <SignUpButton />
         </div>
-        <div className="text-sm text-center text-muted-foreground">
+        <div className="text-sm text-center">
           {en.already_have_account.label}
-          <Link href={PATH_DIR.SIGN_IN} target="_self" className="link font-bold">
-            {en.sign_in.label}
+          <Link href={PATH_DIR.SIGN_IN} target={"_self"} className={"link font-bold text-punk"}>
+          &nbsp;{en.sign_in.label}
           </Link>
         </div>
       </div>
