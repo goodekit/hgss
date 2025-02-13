@@ -1,17 +1,21 @@
+import { PATH_DIR } from 'hgss-dir'
+import { House } from 'lucide-react'
 import { Toolbar } from 'component/shared/header'
 import { CategoryDrwr, Search } from 'component/shared'
+import { ProtectedNavLink } from 'component/shared/protect'
 
-const Header = () => {
+const Header= () => {
   return (
-    <header className="w-full">
-      <div className="wrapper flex-between">
+    <header className="w-full h-[40px]">
+      <div className="wrapper flex-between h-full overflow-hidden">
         <div className="flex-start">
           <CategoryDrwr />
-          {/* use search params to check if they are in home, then dont show this */}
-          {/* <ProtectedNavLink href={PATH_DIR.ROOT} className={'flex-start ml-4'}>
-            <Image src={ASSET_DIR.LOGO} alt="logo" width={LOGO.HEADER_LOGO_W} height={LOGO.HEADER_LOGO_H} priority />
-            <span className="hidden lg:block ml-3">{GLOBAL.APP_NAME}</span>
-          </ProtectedNavLink> */}
+          <ProtectedNavLink href={PATH_DIR.ROOT} className={`flex-start ml-4`}>
+            <div className="h-full flex items-center overflow-hidden">
+              <House size={10}/>
+              {/* <Image src={ASSET_DIR.LOGO} width={70} height={70} alt={'logo'} className={'object-cover max-h-full'}/> */}
+            </div>
+          </ProtectedNavLink>
         </div>
         <div className="hidden md:block">
           <Search/>
