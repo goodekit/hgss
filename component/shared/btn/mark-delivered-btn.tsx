@@ -3,7 +3,7 @@
 import { FC, Fragment, useTransition } from 'react'
 import { useToast } from 'hook'
 import { Button } from 'component/ui'
-import { updateOrderToDelivered } from 'lib'
+import { updateOrderToDelivered } from 'lib/action'
 import { en } from 'public/locale'
 import { EllipsisLoader } from '../loader'
 
