@@ -1,18 +1,18 @@
 import { Fragment } from 'react'
 import { Metadata } from 'next'
 import { en } from 'public/locale'
+import { PATH_DIR } from 'hgss-dir'
 import { auth } from 'auth'
 import { redirect } from 'next/navigation'
 import { WalletCards, Container, ShoppingBag } from 'lucide-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
 import { faPaypal, faStripe } from '@fortawesome/free-brands-svg-icons'
+import { getMyBag, getUserById } from 'lib/action'
 import { Table } from 'component/ui'
 import { CheckoutCard, PriceSummaryCard } from 'component/shared/card'
 import { PurchaseFlow } from 'component/shared/custom'
 import { BagTableBody, BagTableHead } from 'component/shared/bag'
-import { getMyBag, getUserById, parseAddress } from 'lib'
-import { PATH_DIR } from 'config'
+import { parseAddress } from 'lib/util'
 import CheckoutForm from './checkout-form'
 
 export const metadata: Metadata = { title: en.checkout.label }
@@ -35,8 +35,6 @@ const CheckoutPage = async () => {
     switch (method) {
       case 'PayPal': return <FontAwesomeIcon icon={faPaypal} className={'text-blue-700 default-size_icon'} />
       case 'Stripe': return <FontAwesomeIcon icon={faStripe} className={'text-purple-600 default-size_icon'} />
-      case 'Cash On Delivery': return <FontAwesomeIcon icon={faMoneyBill} className={'text-green-800 default-size_icon'} />
-      default: return <FontAwesomeIcon icon={faMoneyBill} className={'text-green-800 default-size_icon'} />
     }
   }
 
