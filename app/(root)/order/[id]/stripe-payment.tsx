@@ -1,13 +1,14 @@
 import { FC, FormEvent, useState } from 'react'
-import { GLOBAL } from 'vieux-carre'
 import { en } from 'public/locale'
+import { GLOBAL } from 'hgss'
+import { PATH_DIR } from 'hgss-dir'
 import { useTheme } from 'next-themes'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, LinkAuthenticationElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { formatCurrency, themeToggle } from 'lib'
+import { formatCurrency } from 'lib/util'
 import { Button } from 'component/ui'
 import { EllipsisLoader } from 'component/shared/loader'
-import { PATH_DIR } from 'config'
+import { themeToggle } from 'lib/util'
 
 interface StripePaymentProps {
   priceInCents: number
