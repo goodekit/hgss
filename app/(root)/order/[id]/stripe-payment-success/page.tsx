@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { en } from 'public/locale'
-import { GLOBAL } from 'vieux-carre'
+import { GLOBAL } from 'hgss'
+import { PATH_DIR, ASSET_DIR } from 'hgss-dir'
 import { notFound, redirect } from 'next/navigation'
 import Stripe from 'stripe'
 import Image from 'next/image'
-import { getOrderById } from 'lib'
+import { getOrderById } from 'lib/action'
 import { LinkBtn } from 'component/shared'
-import { PATH_DIR, ASSET_DIR } from 'config'
 
 const stripe = new Stripe(GLOBAL.STRIPE.STRIPE_SECRET_KEY)
 
@@ -35,7 +35,7 @@ const SuccessPage: FC<SuccessPageProps> = async ({ params, searchParams }) => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
-            <Image src={ASSET_DIR.LOGO_RED} width={48} height={48} alt="logo" priority />
+            <Image src={ASSET_DIR.LOGO} width={80} height={80} alt="logo" priority />
             <div className="p-6 w-1/2 space-y-4 text-center">
                 <h1 className="h1-bold">{en.message.thanks_for_purchase.title}</h1>
                 <div>{en.message.thanks_for_purchase.description}</div>
