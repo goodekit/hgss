@@ -23,7 +23,7 @@ const _createFormatter = () => {
   } catch (error) {
     SystemLogger.error(error as AppError, TAG, '_createFormatter', 'Error creating formatter')
     const defaultLocale = new Intl.NumberFormat(LOCALE, {
-      currency             : 'USD',
+      currency             : 'NZD',
       style                : 'currency',
       minimumFractionDigits: 2
     })
