@@ -22,8 +22,8 @@ const SignInPage = async ({ searchParams }: SignInPageProps) => {
   }
   return (
     <div className="grid grid-cols-1 md:grid-cols-7 h-screen w-full bg-black">
-      <div className="col-span-4 hidden md:block">
-        <img src={ASSET_DIR.BG}  alt="hgss-background" className={'h-screen'}/>
+      <div className="relative col-span-4 hidden md:block">
+        <Image src={ASSET_DIR.BG}  alt="hgss-background" className={'h-screen'} fill sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 100vw"} />
       </div>
       <div className={"col-span-3 bg-black flex items-center justify-center min-h-screen"}>
         <div className="max-w-2xl w-full px-6">
