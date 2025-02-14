@@ -2,11 +2,11 @@
 import { z, ZodSchema } from 'zod'
 import { en } from 'public/locale'
 import { Control, ControllerRenderProps, Path } from 'react-hook-form'
+import { Textarea } from 'component/ui'
 import { FormField, FormControl, FormLabel, FormMessage, FormItem } from 'component/ui/form'
 import { Input } from 'component/ui/input'
 import { Button } from 'component/ui/button'
 import { cn } from 'lib/util'
-import { Textarea } from 'component/ui'
 
 type FormKeyLocale = keyof typeof en.form
 type FormFieldType = 'input' | 'inputWithButton' | 'textarea'
@@ -29,8 +29,6 @@ interface RHFFormFieldControllerRender<TSchema extends ZodSchema, TName extends 
 }
 
 const RHFFormField = <TSchema extends ZodSchema, TName extends Path<z.infer<TSchema>>>({ control, name, formKey, disabled = false, withWrapper = true, className, type = 'input', buttonLabel, onClick }: RHFFormFieldProps<TSchema, TName>) => {
-
-
   const FormFieldComponent = (
     <FormField
     control={control}
