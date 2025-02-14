@@ -1,11 +1,13 @@
-import Link from 'next/link'
+import { Fragment } from 'react'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
+import Link from 'next/link'
 import { auth } from 'auth'
 import { signOutBasic } from 'lib/action'
 import { User2Icon, LogOut } from 'lucide-react'
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger, Separator } from 'component/ui'
 import { ProtectedNavLink } from 'component/shared/protect'
+import { KEY } from 'lib/constant'
 import { charAtName } from 'lib/util'
 
 const UserMenu = async () => {
@@ -26,7 +28,7 @@ const UserMenu = async () => {
   //   const encodedName = encodeURIComponent(session?.user?.name  || 'Anonymous')
   //   return `https://api.dicebear.com/7.x/croodles/svg?seed=${encodedName}-${Date.now()?.toString()}`
   // }
-  // const isAdmin = session?.user?.role === KEY.ADMIN
+  const isAdmin = session?.user?.role === KEY.ADMIN
 
   return (
     <div className="flex gap-2 items-center">
@@ -54,14 +56,14 @@ const UserMenu = async () => {
           </DropdownMenuItem>
 
           <Separator className="my-2" />
-          {/* {isAdmin && (
+          {isAdmin && (
             <Fragment>
               <DropdownMenuItem className="p-2">
                 <ProtectedNavLink href={PATH_DIR.ADMIN.OVERVIEW}>{en.admin.label}</ProtectedNavLink>
               </DropdownMenuItem>
               <Separator className="my-2" />
             </Fragment>
-          )} */}
+          )}
 
           <DropdownMenuItem className="p-1">
             <form action={signOutBasic} className="w-full">
