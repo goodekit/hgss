@@ -1,20 +1,21 @@
 'use client'
+
 import { FC, Fragment } from 'react'
 import { en } from 'public/locale'
+import { GLOBAL } from 'hgss'
+import { PayPalButtons, PayPalScriptProvider, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { createPayPalOrder, approvePayPalOrder } from 'lib/action'
 import {  PAYPAL, STRIPE } from 'lib/schema'
-import { parseAddress, toCents } from 'lib/util'
-import { PayPalButtons, PayPalScriptProvider, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { useToast } from 'hook'
-import { cn } from 'lib'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
-import { faPaypal, faCcPaypal, faStripe } from '@fortawesome/free-brands-svg-icons'
+import { faPaypal, faStripe } from '@fortawesome/free-brands-svg-icons'
 import { ArrowLeft } from 'lucide-react'
 import { Badge, Button, Separator } from 'component/ui'
 import { PriceSummaryCard } from 'component/shared/card'
-import OrderViewCard from './order-view-card'
 import MarkDeliveredBtn from 'component/shared/btn/mark-delivered-btn'
+import { parseAddress, toCents } from 'lib/util'
+import OrderViewCard from './order-view-card'
 import StripePayment from './stripe-payment'
 
 interface OrderViewTableProps {
@@ -31,9 +32,9 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
     const [{ isPending, isRejected }] = usePayPalScriptReducer()
     let status
     if (isPending) {
-      status = <Button variant={'secondary'} disabled={isPending}><i>{en.loading.processing}</i></Button>
+      status = <Button variant={'ghost'} className={'w-full'} disabled={isPending}><i>{en.loading.processing}</i></Button>
     } else if (isRejected) {
-      status = <Button variant={'destructive'} disabled>{'PayPal: Error Occured'}</Button>
+      status = <Button variant={'destructive'} disabled>{en.error.paypal_default}</Button>
     }
     return status
   }
@@ -102,14 +103,14 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
           {!isPaid && (
             <Fragment>
              <Separator/>
-              <div className={'text-lg font-bold flex items-center'}><FontAwesomeIcon icon={isPayPal ? faCcPaypal : isStripe ? faStripe : faMoneyBill} className={cn('w-10 h-10 mr-2', isPayPal ? 'text-blue-700' : isStripe ? 'text-blue-700' : 'text-green-900')} /><span>{en.checkout.label}</span></div>
+              <div className={'text-lg font-bold flex items-center'}>{en.checkout.label}</div>
             </Fragment>
             )}
             {!isPaid && isPayPal && (
               <div>
-                <PayPalScriptProvider options={{clientId: paypalClientId}}>
+                <PayPalScriptProvider options={{ clientId: paypalClientId, currency: GLOBAL.PRICES.CURRENCY }}>
                   <PrintPendingState/>
-                  <PayPalButtons createOrder={handleCreatePayPalOrder} onApprove={handleApprovePayPalOrder}/>
+                  <PayPalButtons createOrder={handleCreatePayPalOrder} onApprove={handleApprovePayPalOrder}  style={{ layout: "vertical", color: "blue", shape: "sharp", tagline: false }} />
                 </PayPalScriptProvider>
               </div>
             )}
