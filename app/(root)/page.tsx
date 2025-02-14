@@ -1,20 +1,17 @@
 import { Fragment } from 'react'
-// import { GLOBAL } from 'hgss'
 import Image from 'next/image'
 import { ASSET_DIR } from 'hgss-dir'
 import { NAV_CONFIG } from 'hgss-nav'
-// import { getLatestProducts, getAllFeaturedProducts } from 'lib'
 import { TapeBtn } from 'component/shared'
 
 const Homepage = async () => {
-//   const latestProducts   = await getLatestProducts()
-//   const featuredProducts = await getAllFeaturedProducts()
   return (
     <Fragment>
     <div className="p-4 flex flex-col items-center relative justify-between">
         <div className="w-full max-w-4xl mt-20">
+
           <div className="w-full rounded-lg pb-10 p-5 relative mb-24">
-            <Image src={ASSET_DIR.LOGO} priority alt="Homegrown Logo" width={800} height={300} className="m-auto p-12 " />
+            <Image src={ASSET_DIR.LOGO} priority alt="Homegrown Logo" width={800} height={300} className="m-auto p-12" />
           </div>
 
           <nav className="permanent-marker-regular ">
@@ -22,6 +19,7 @@ const Homepage = async () => {
               <TapeBtn key={index} label={title} href={href} index={index} isLink />
             ))}
           </nav>
+
         </div>
       </div>
     </Fragment>
