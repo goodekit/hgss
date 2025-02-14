@@ -38,9 +38,11 @@
                                   DEFAULT_SHIPPING_COST: process.env.NEXT_PUBLIC_DEFAULT_SHIPPING_COST || 10
                                 },
         PROMOTION              : {
-                                  PROMOTION_CODE : process.env.PROMOTION_CODE || 'PROMO',
-                                  PROMOTION_VALUE: process.env.PROMOTION_VALUE || 0.1,
-                                  MONEY_BACK_DAYS: process.env.MONEY_BACK_DAYS || 30
+                                  PROMOTION_CODE        : process.env.PROMOTION_CODE || 'PROMO',
+                                  PROMOTION_VALUE       : process.env.PROMOTION_VALUE || 0.1,
+                                  MONEY_BACK_DAYS       : process.env.MONEY_BACK_DAYS || 30,
+                                  HAS_PROMOTION_TAX     : process.env.HAS_PROMOTION_TAX || false,
+                                  HAS_PROMOTION_SHIPPING: process.env.HAS_PROMOTION_TAX || false
                                 },
         RESEND                :{
                                 RESEND_API_KEY: process.env.RESEND_API_KEY || '',
