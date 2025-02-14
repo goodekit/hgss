@@ -644,6 +644,7 @@
         "order_not_created": "Order not created",
         "order_not_found": "Order not found",
         "order_not_paid": "Order not paid",
+        "paypal_default": "PayPal: Error Occured'",
         "paypal_payment_error": "Error occurred while processing PayPal payment",
         "product_not_found": "Product not found",
         "sesssion_not_found": "Session bag id not found",
