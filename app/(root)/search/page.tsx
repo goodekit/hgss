@@ -1,13 +1,12 @@
 import { FC, Fragment } from 'react'
 import { en } from 'public/locale'
+import { PATH_DIR } from 'hgss-dir'
 import Link from 'next/link'
 import { KEY, SORT_ORDER } from 'lib'
 import { getAllProducts } from 'lib/action'
-import { PRICE, RATING } from 'lib/constant'
 import { NoResult, LinkBtn } from 'component/shared'
 import { ProductCard } from 'component/module'
-import { PATH_DIR } from 'hgss-dir'
-import FilterList from './filter-list'
+// import FilterList from './filter-list'
 import FilterTitle from './filter-title'
 
 const DEFAULT_QUERY = KEY.ALL
