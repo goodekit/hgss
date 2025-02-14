@@ -9,14 +9,14 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from 'c
 type FormKeyLocale = keyof typeof en.form
 
 interface RHFFormSelectProps<TSchema extends ZodSchema, TName extends Path<z.infer<TSchema>>> {
-control       : Control<z.infer<TSchema>>
-name          : TName
-formKey       : FormKeyLocale
-options      ?: string[]
-icon         ?: JSX.Element
-disabled     ?: boolean
-className    ?: string
-defaultOption?: string
+  control       : Control<z.infer<TSchema>>
+  name          : TName
+  formKey       : FormKeyLocale
+  options      ?: string[]
+  icon         ?: JSX.Element
+  disabled     ?: boolean
+  className    ?: string
+  defaultOption?: string
 }
 
 interface RHFFormSelectControllerRender<TSchema extends ZodSchema, TName extends Path<z.infer<TSchema>>> {

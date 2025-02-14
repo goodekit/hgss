@@ -7,7 +7,6 @@ import { convertToPlainObject } from 'lib/util'
 import { KEY } from 'lib/constant'
 
 // const TAG = 'PRODUCT.ACTION'
-
 /**
  * Fetches the latest products from the database.
  *
