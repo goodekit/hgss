@@ -22,12 +22,6 @@ const UserMenu = async () => {
     )
   }
 
-  // save in the user's avatar in the session
-  // <img src={getAvatarUrl()} alt="User Avatar" className="h-auto" />
-  // const getAvatarUrl = () => {
-  //   const encodedName = encodeURIComponent(session?.user?.name  || 'Anonymous')
-  //   return `https://api.dicebear.com/7.x/croodles/svg?seed=${encodedName}-${Date.now()?.toString()}`
-  // }
   const isAdmin = session?.user?.role === KEY.ADMIN
 
   return (
