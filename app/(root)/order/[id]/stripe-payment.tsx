@@ -5,10 +5,8 @@ import { PATH_DIR } from 'hgss-dir'
 import { useTheme } from 'next-themes'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, LinkAuthenticationElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { formatCurrency } from 'lib/util'
-import { Button } from 'component/ui'
-import { EllipsisLoader } from 'component/shared/loader'
-import { themeToggle } from 'lib/util'
+import { TapeBtn } from 'component/shared/btn'
+import { formatCurrency, themeToggle } from 'lib/util'
 
 interface StripePaymentProps {
   priceInCents: number
@@ -53,9 +51,7 @@ const StripePayment: FC<StripePaymentProps> = ({ priceInCents, orderId, clientSe
         <div>
             <LinkAuthenticationElement onChange={(e) => setEmail(e.value.email)}/>
         </div>
-        <Button className={'w-full'} size={'sm'} disabled={stripe === null || elements === null || loading}>
-          {loading ?<div className={'flex items-center'}>{en.loading.processing} <span><EllipsisLoader/></span></div> : `${en.purchase.label} ${formatCurrency(priceInCents / 100)}`}
-        </Button>
+        <TapeBtn textSize={'text-xl'} disabled={stripe === null || elements === null || loading} label={loading ? en.loading.processing : `${en.purchase.label} ${formatCurrency(priceInCents / 100)}`}/>
       </form>
     )
   }
