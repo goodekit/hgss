@@ -6,7 +6,7 @@ import { getUserById } from 'lib/action'
 import { PurchaseFlow } from 'component/shared/custom'
 import PaymentForm from './payment-form'
 
-export const metadata: Metadata = { title: 'Payment' }
+export const metadata: Metadata = { title: en.payment.label }
 
 const PaymentPage = async () => {
   const session = await auth()
