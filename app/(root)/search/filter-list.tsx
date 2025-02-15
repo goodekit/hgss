@@ -12,7 +12,7 @@ interface FilterListProps<T> {
   extractValue: (item: T) => string
 }
 
-const getActiveClass = (isActive: boolean) => (isActive ? 'font-bold' : '')
+const getActiveClass = (isActive: boolean) => (isActive ? 'text-punk' : '')
 
 /**
  * A generic component that renders a list of filter options.
