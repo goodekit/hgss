@@ -13,7 +13,7 @@ import { faPaypal, faStripe } from '@fortawesome/free-brands-svg-icons'
 import { ArrowLeft } from 'lucide-react'
 import { Badge, Button, Separator } from 'component/ui'
 import { PriceSummaryCard } from 'component/shared/card'
-import MarkDeliveredBtn from 'component/shared/btn/mark-delivered-btn'
+import { MarkDeliveredBtn, TapeBtn } from 'component/shared/btn'
 import { parseAddress, toCents } from 'lib/util'
 import OrderViewCard from './order-view-card'
 import StripePayment from './stripe-payment'
@@ -32,9 +32,9 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
     const [{ isPending, isRejected }] = usePayPalScriptReducer()
     let status
     if (isPending) {
-      status = <Button variant={'ghost'} className={'w-full'} disabled={isPending}><i>{en.loading.processing}</i></Button>
+      status = <TapeBtn disabled={isPending} label={en.loading.processing} textSize={'text-xl'} />
     } else if (isRejected) {
-      status = <Button variant={'destructive'} disabled>{en.error.paypal_default}</Button>
+      status = <TapeBtn disabled label={en.error.paypal_default} textSize={'text-xl'} />
     }
     return status
   }
