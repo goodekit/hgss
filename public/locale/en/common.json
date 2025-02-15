@@ -137,6 +137,10 @@
         "label": "Filtered by"
     },
     "form": {
+        "message": {
+            "label": "Message",
+            "placeholder": "Compose your message"
+        },
         "password": {
             "label": "Password",
             "placeholder": "Enter your password"
@@ -369,6 +373,9 @@
     "paid_at": {
         "label": "Paid At"
     },
+    "payment": {
+        "label": "Payment"
+    },
     "payment_method": {
         "label": "Payment Method",
         "description": "Select your preferred payment method"
@@ -466,6 +473,9 @@
     },
     "select_by_category": {
         "label": "Select by Category"
+    },
+    "send_message": {
+        "label": "Send Message"
     },
     "shipping": {
         "label": "Shipping",
