@@ -1,7 +1,7 @@
 import { JSX, ReactNode } from 'react'
 import { z, ZodError } from 'zod'
 import { Prisma } from '@prisma/client'
-import { CODE, ProductSchema, BagSchema, BagItemSchema, BagSchema, ShippingAddressSchema, OrderSchema, PaymentMethodSchema, OrderItemSchema, PaymentResultSchema, UpdateUserSchema, UpdateUserAccountSchema, UpdateProductSchema } from 'lib/schema'
+import { CODE, ProductSchema, BagSchema, BagItemSchema, BagSchema, ShippingAddressSchema, OrderSchema, PaymentMethodSchema, OrderItemSchema, PaymentResultSchema, UpdateUserSchema, UpdateUserAccountSchema, UpdateProductSchema, ContactMessageSchema } from 'lib/schema'
 import { ReviewSchema } from 'lib/schema/review-schema'
 
 declare global {
@@ -47,6 +47,7 @@ declare global {
 
   export type Bag               = z.infer<typeof BagSchema>
   export type BagItem           = z.infer<typeof BagItemSchema>
+  export type ContactMessage    = z.infer<typeof ContactMessageSchema>
   export type ShippingAddress   = z.infer<typeof ShippingAddressSchema>
   export type OrderItem         = z.infer<typeof OrderItemSchema>
   export type PaymentResult     = z.infer<typeof PaymentResultSchema>
