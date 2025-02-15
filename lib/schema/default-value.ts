@@ -18,6 +18,14 @@ export const shippingAddressDefaultValue = {
   country      : '',
 }
 
+export const contactMessageDefaultValue = (user?: UserBase) => {
+  return {
+    name   : user && user.name || '',
+    email  : user && user.email || '',
+    message: ''
+  }
+}
+
 export const updateUserAccountDefaultValue = {
   name: '',
   email: ''

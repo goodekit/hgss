@@ -2,6 +2,7 @@ export * from './default-value'
 
 export * from './bag-item-schema'
 export * from './bag-schema'
+export * from './contact-schema'
 export * from './order-schema'
 export * from './payment-schema'
 export * from './product-schema'
