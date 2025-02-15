@@ -2,7 +2,7 @@ import { FC, Fragment } from 'react'
 import { _mockData } from '_mock'
 import { KEY } from 'lib'
 import { getAllProducts } from 'lib/action'
-import { NoResult, BackBtn } from 'component/shared'
+import { NoResult, BackBtn, Pagination } from 'component/shared'
 import { ProductCard } from 'component/module/product'
 
 const DEFAULT_QUERY = 'all'
@@ -27,6 +27,7 @@ const ProductPage: FC<SearchPageProps> = async ({ searchParams }) => {
                     <ProductCard key={index} product={_product} />
                 ))}
             </div>
+               {products.totalPages > 1 && (<div className={'mt-5 flex justify-end'}><Pagination page={Number(page) || 1} totalPages={products?.totalPages}/></div>)}
         </div>
       </div>
     </Fragment>
