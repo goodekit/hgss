@@ -2,6 +2,9 @@ import { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { GLOBAL } from 'hgss'
 import { ThemeProvider } from 'next-themes'
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
+import { extractRouterConfig } from "uploadthing/server"
+import { ourFileRouter } from "app/api/uploadthing/core"
 import { Permanent_Marker, Inter_Tight, Covered_By_Your_Grace, Yusei_Magic } from 'next/font/google'
 import { TooltipProvider } from 'component/ui'
 import { KEY } from 'lib/constant'
@@ -39,6 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang={KEY.EN} suppressHydrationWarning>
       <body className={`${interTight.className} ${permanentMarker.className} ${coveredByYourGrace.className} ${yuseiMagic.className} antialiased`}>
+      <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)}/>
         <ThemeProvider attribute="class" defaultTheme={'dark'} enableSystem disableTransitionOnChange>
           <TooltipProvider>
             {children}
