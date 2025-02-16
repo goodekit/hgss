@@ -12,7 +12,7 @@ export const ProductSchema = z.object({
   model         : z.string().min(3, 'Model must be at least 5 characters').max(255),
   brand         : z.string().min(3, 'Brand must be at least 5 characters').max(255),
   description   : z.string().min(3, 'Slug must be at least 5 characters').max(255),
-  specifications: z.array(z.string()).nullable(),
+  specifications: z.array(z.string()),
   stock         : z.coerce.number(),
   images        : z.array(z.string()).min(1, 'Product must be at least 1 image'),
   isFeatured    : z.boolean(),
