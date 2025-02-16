@@ -10,7 +10,6 @@ import { useToast } from 'hook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
 import { faPaypal, faStripe } from '@fortawesome/free-brands-svg-icons'
-import { ArrowLeft } from 'lucide-react'
 import { Badge, Button, Separator } from 'component/ui'
 import { PriceSummaryCard } from 'component/shared/card'
 import { MarkDeliveredBtn, TapeBtn } from 'component/shared/btn'
@@ -62,7 +61,7 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
   return (
     <Fragment>
         {/* title and order id */}
-      <Button variant={'ghost'} onClick={handleBackButton}><ArrowLeft className={'default-size_icon'}/></Button>
+      <Button variant={'ghost'} onClick={handleBackButton}><p className={'text-xl'}>{'<-'}</p></Button>
       <div className="flex flex-row items-center justify-start gap-4">
           <h1 className={'py-4 h3-bold'}>{en.order.label}</h1>
           <span>
