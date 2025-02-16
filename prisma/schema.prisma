@@ -20,7 +20,7 @@ model Product {
   slug           String      @unique(map: "product_slug_idx")
   category       String
   description    String
-  specifications String[]
+  specifications String[]    @default([])
   images         String[]
   price          Decimal     @default(0) @db.Decimal(12, 2)
   brand          String
