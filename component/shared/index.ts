@@ -10,6 +10,8 @@ export { default as AdminOverviewCard } from './card/admin-overview-card'
 export { default as CheckoutPage } from './card/checkout-card'
 export { default as GridCard } from './card/grid-card'
 export { default as ServiceCard } from './card/service-card'
+// ⎿ dd-menu
+export { default as DDMenu } from './dd-menu/dd-menu'
 // ⎿ dialg
 export { default as DeleteDialg } from './dialg/delete-dialg'
 export { default as ProtectNavDialg } from './protect/protect-nav-dialg'
@@ -32,3 +34,6 @@ export { default as NoResult } from './no/no-result'
 export { default as Pagination } from './pagination/pagination'
 // ⎿ protect
 export { default as ProtectNavLink } from './protect/protect-nav-link'
+// ⎿ tooltp
+export { default as Tooltp } from './tooltp/tooltp'
+export { default as TooltpGoBadge } from './tooltp/tooltp-go-badge'
