@@ -47,13 +47,17 @@ const config = {
   				foreground: 'hsl(var(--black-foreground))'
   			},
   			tape: {
-  				DEFAULT: '#FFAAD9',
-  				foreground: '#4F11FF'
+  				DEFAULT: '#C1FF11',
+  				foreground: '#C1FF11'
   			},
   			punk: {
   				DEFAULT: '#A697CD',
   				foreground: '#4F11FF'
   			},
+			punkpink: {
+				DEFAULT   : '#FFAAD9',
+				foreground: '#4F11FF'
+			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
