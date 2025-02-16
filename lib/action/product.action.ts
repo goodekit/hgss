@@ -1,12 +1,17 @@
 "use server"
 
+import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
+import { PATH_DIR } from 'hgss-dir'
 import { Prisma } from '@prisma/client'
 import { prisma } from 'db'
+import { revalidatePath } from 'next/cache'
+import { SystemLogger } from 'lib/app-logger'
+import { ProductSchema, UpdateProductSchema } from 'lib/schema'
 import { convertToPlainObject } from 'lib/util'
-import { KEY } from 'lib/constant'
+import { KEY, CODE } from 'lib/constant'
 
-// const TAG = 'PRODUCT.ACTION'
+const TAG = 'PRODUCT.ACTION'
 /**
  * Fetches the latest products from the database.
  *
@@ -80,4 +85,63 @@ export async function getProductBySlug(slug: string) {
 export async function getAllCategories() {
   const products = await prisma.product.groupBy({ by: ['category'], _count: true })
   return products
+}
+
+/**
+ * Creates a new product using the provided data.
+ *
+ * @param {CreateProduct} data - The data for the new product.
+ * @returns {Promise<any>} The created product or an error response.
+ *
+ * @throws {AppError} If there is an error during product creation.
+ */
+export async function createProduct(data: CreateProduct) {
+  try {
+    const product = ProductSchema.parse(data)
+    await prisma.product.create({ data: product })
+    revalidatePath(PATH_DIR.ADMIN.PRODUCT)
+    return SystemLogger.response(en.success.product_created, CODE.CREATED, TAG, '', product)
+  } catch (error) {
+    return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
+  }
+}
+
+
+/**
+ * Updates an existing product in the database.
+ *
+ * @param {UpdateProduct} data - The data to update the product with.
+ * @returns {Promise<SystemLogger>} - A promise that resolves to a SystemLogger response.
+ * @throws {Error} - Throws an error if the product is not found or if there is a validation error.
+ */
+export async function updateProduct(data:UpdateProduct) {
+  try {
+    const product = UpdateProductSchema.parse(data)
+    const productExists = await prisma.product.findFirst({ where: { id: product.id }})
+    if (!productExists) throw new Error(en.error.product_not_found)
+
+    await prisma.product.update({ where: {id: product.id }, data: product })
+    revalidatePath(PATH_DIR.ADMIN.PRODUCT)
+    return SystemLogger.response(en.success.product_created, CODE.CREATED, TAG, '', product)
+  } catch (error) {
+    return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
+  }
+}
+
+/**
+ * Deletes a product by its ID.
+ *
+ * @param {string} productId - The ID of the product to delete.
+ * @returns {Promise<SystemLogger>} - The result of the deletion operation.
+ * @throws {Error} - Throws an error if the product is not found.
+ */
+export async function deleteProduct(productId: string) {
+  try {
+    await prisma.product.delete({ where: { id: productId } })
+
+    revalidatePath(PATH_DIR.ADMIN.PRODUCT)
+    return SystemLogger.response(en.success.product_deleted, CODE.OK, TAG)
+  } catch (error) {
+    return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
+  }
 }
