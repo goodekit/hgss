@@ -11,7 +11,7 @@ import slugify from 'slugify'
 import { Plus, MoveUpRight } from 'lucide-react'
 import { ProductSchema, UpdateProductSchema, productDefaultValue } from 'lib/schema'
 import { createProduct, updateProduct } from 'lib/action'
-import { Form, Button } from 'component/ui'
+import { Form, Button, Input } from 'component/ui'
 import { BannerUploadField } from 'component/admin/custom-field'
 import { LoadingBtn } from 'component/shared/btn'
 import { RHFFormField, RHFFormDropzone, RHFCheckbox } from 'component/shared/rhf'
@@ -21,18 +21,18 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
   const { toast }             = useToast()
   const { isDirty, setDirty } = useFormState()
   const router                = useRouter()
-  const form                  = useForm<Product>({
+  const form                  = useForm<CreateProduct>({
     resolver: type === 'update' ? zodResolver(UpdateProductSchema) : zodResolver(ProductSchema),
     defaultValues: product && type === 'update' ? product : productDefaultValue
   })
 
   const { control, formState, register, handleSubmit } = form
-  const { errors }                           = formState
-  const images                               = form.watch('images')
-  const isFeatured                           = form.watch('isFeatured')
-  const banner                               = form.watch('banner')
+  const { errors }                                     = formState
+  const images                                         = form.watch('images')
+  const isFeatured                                     = form.watch('isFeatured')
+  const banner                                         = form.watch('banner')
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'specifications' })
+  const { fields, append, remove } = useFieldArray<CreateProduct>({ control, name: 'specifications' as never })
 
   usePreventNavigation(isDirty)
 
@@ -45,10 +45,10 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
   }
 
  const onSubmit: SubmitHandler<CreateProduct> = async (data) => {
-  if (Object.keys(errors).length > 0) {
-    toast({ variant: 'destructive', description: 'Please fix form errors before submitting.' });
-    return
-  }
+    if (Object.keys(errors).length > 0) {
+      toast({ variant: 'destructive', description: 'Please fix form errors before submitting.' });
+      return
+    }
     try {
       await delay(500)
       if (type === 'create') {
@@ -110,13 +110,11 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
                 <label>{en.form.specifications.label}</label>
                 {fields.map((field, index) => (
                   <div key={field.id} className={"flex gap-2"}>
-                    <input {...register(`specifications.${index}` as const)}
-                      className="border p-2 rounded w-full"
-                    />
-                    <Button type="button" onClick={() => remove(index)}>{en.remove.label}</Button>
+                    <Input {...register(`specifications.${index}` as const)} className="border p-2 rounded w-full" />
+                    <span><Button type={'button'} variant={'ghost'} className={'bg-punkpink text-black'} onClick={() => remove(index)}>{en.remove.label}</Button></span>
                   </div>
                 ))}
-                <Button type="button" onClick={() => append('')}>{'+ '}{en.form.specifications.placeholder}</Button>
+                <Button type={"button"} variant={'ghost'} onClick={() => append('')}>{'+ '}{en.form.specifications.placeholder}</Button>
               </div>
           </div>
           <div className="upload-field flex flex-col md:flex-row gap-4">
