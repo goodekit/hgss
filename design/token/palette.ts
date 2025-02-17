@@ -7,7 +7,9 @@
  * In your example, the color scales are the reference tokens.
  */
 export const refColors = {
-    grey: {
+    black: '#0D0E0E',
+    white: '#F2EED8',
+    grey : {
       50 : '#EEEFF1',
       100: '#D3D8DE',
       200: '#B6BFC8',
@@ -163,6 +165,11 @@ export const refColors = {
         destructive  : refColors.red[500],
         contrastText : refColors.grey[50],
         complementary: refColorsComplementary.tape.main
+      },
+      common: {
+        black   : refColors.black,
+        white   : refColors.white,
+        contrast: refColors.black
       }
     },
     dark: {
@@ -214,6 +221,11 @@ export const refColors = {
         destructive  : refColors.red[500],
         contrastText : refColors.grey[50],
         complementary: refColorsComplementary.tape.main
+      },
+      common: {
+        black   : refColors.black,
+        white   : refColors.white,
+        contrast: refColors.white
       }
     }
   } as const
