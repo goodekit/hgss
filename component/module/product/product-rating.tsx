@@ -5,17 +5,17 @@ import { useTheme } from 'next-themes'
 import { systemPalette } from 'design'
 
 const ProductRating = ({ value, caption }: { value: number; caption?: string }) => {
-  const { theme } = useTheme()
-
+  const { theme, systemTheme } = useTheme()
+  const _border                = theme === KEY.LIGHT ? systemPalette.dark.common.black : theme === KEY.DARK ? systemPalette.dark.tape.primary : systemTheme === KEY.DARK ? systemPalette.dark.tape.primary : systemPalette.dark.common.black
 
   const Full = () => {
-    return <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill={`${theme === KEY.LIGHT ? 'black' : systemPalette.light.tape.primary}`} stroke={systemPalette.light.tape.primary} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rectangle-horizontal"><rect width="20" height="12" x="2" y="6" rx="2" className='' /></svg>
+    return <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill={_border} stroke={_border} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rectangle-horizontal"><rect width="20" height="12" x="2" y="6" rx="2" className='' /></svg>
   }
   const Half = () => {
-    return <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill={`${theme === KEY.LIGHT ? 'black' : systemPalette.light.tape.primary}`} stroke={systemPalette.light.tape.primary} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rectangle-horizontal"><rect width="20" height="12" x="2" y="6" rx="2" className='' /></svg>
+    return <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill={_border} stroke={_border} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rectangle-horizontal"><rect width="20" height="12" x="2" y="6" rx="2" className='' /></svg>
   }
   const Empty = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={systemPalette.light.tape.primary} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rectangle-horizontal"><rect width="20" height="12" x="2" y="6" rx="2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={_border} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rectangle-horizontal"><rect width="20" height="12" x="2" y="6" rx="2"/></svg>
   )
 
   return (
