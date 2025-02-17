@@ -137,6 +137,14 @@
         "label": "Filtered by"
     },
     "form": {
+        "specifications": {
+            "label": "Specifications",
+            "placeholder": "Add Specification"
+        },
+        "model": {
+            "label": "Model",
+            "placeholder": "Add the Model"
+        },
         "message": {
             "label": "Message",
             "placeholder": "Compose your message"
@@ -448,6 +456,9 @@
     },
     "rating": {
         "label": "Rating"
+    },
+    "remove": {
+        "label": "Remove"
     },
     "review": {
         "label": "Review",
