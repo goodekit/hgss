@@ -38,7 +38,7 @@ export const productDefaultValue = {
   images        : [],
   brand         : '',
   description   : '',
-  specifications: ['hey'],
+  specifications: [],
   price         : '0',
   stock         : 0,
   rating        : '0',
