@@ -24,7 +24,7 @@ const TapeBtn: FC<TapeBtnProps> = ({ href, label, className, index = 2, disabled
  const renderPendingState = isPending ? ( <EllipsisLoader /> ) : ( <Fragment> {label} {icon} </Fragment> )
 
   return (
-    <button disabled={disabled} type={type} className={cn(`w-full xs:text-xl permanent-marker-regular text-black font-bold transform -rotate-1 hover:rotate-0 transition-transform`, randomizedClasses[index], textSize ? textSize : 'text-4xl',  className)} onClick={onClick}>
+    <button disabled={disabled} type={type} className={cn(`w-full xs:text-lg permanent-marker-regular text-black font-bold transform -rotate-1 hover:rotate-0 transition-transform`, randomizedClasses[index], textSize ? textSize : 'text-4xl',  className)} onClick={onClick}>
      {isLink ? <a href={href}>{renderPendingState}</a> : renderPendingState}
     </button>
   )
