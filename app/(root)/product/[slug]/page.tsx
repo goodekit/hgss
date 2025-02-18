@@ -1,12 +1,12 @@
 import { FC, Fragment } from 'react'
 import { en } from 'public/locale'
 import { notFound } from 'next/navigation'
-// import { auth } from 'auth'
+import { auth } from 'auth'
 import { getProductBySlug, getMyBag } from 'lib/action'
 import { Card, CardContent, Badge } from 'component/ui'
 import { ProductImage, ProductPrice, ProductRating } from 'component/module'
 import { AddToBag } from 'component/shared'
-// import { ReviewList } from 'component/shared/review'
+import { ReviewList } from 'component/shared/review'
 
 interface ProductViewPageProps {
   params: Promise<{ slug: string }>
@@ -15,8 +15,8 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
   const { slug } = await params
   const product  = await getProductBySlug(slug)
   if (!product) return notFound()
-  // const session = await auth()
-  // const userId  = session?.user?.id
+  const session = await auth()
+  const userId  = session?.user?.id
   const bag     = await getMyBag()
 
   const bagProduct           = { productId: product.id, name: product.name, slug: product.slug, price: product.price, qty: 1, image: product.images![0] }
@@ -75,7 +75,7 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
       </section>
       <section className={'mt-10'}>
         <h2 className={'h2-bold mb-5'}>{en.customer_review.customer_reviews.label}</h2>
-        {/* <ReviewList userId={userId || ''} productId={product.id} productSlug={product.slug} /> */}
+        <ReviewList userId={userId || ''} productId={product.id} productSlug={product.slug} />
       </section>
     </Fragment>
   )
