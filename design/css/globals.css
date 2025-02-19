@@ -78,12 +78,12 @@ body {
 
 @layer base {
   :root {
-    --background            : hsl(, 23%, 91%)
+    --background            : hsl(42, 23%, 91%);
     --foreground            : hsl(0, 0%, 10%);
     --card                  : hsl(0 0% 100%);
     --card-foreground       : hsl(222.2 84% 4.9%);
-    --popover               : 0 0% 100%;
-    --popover-foreground    : 222.2 84% 4.9%;
+    --popover               : hsl(0, 0%, 100%);
+    --popover-foreground    : hsl(222.2, 84%, 4.9%);
     --primary               : 222.2 47.4% 11.2%;
     --primary-foreground    : 210 40% 98%;
     --secondary             : 210 40% 96.1%;
@@ -111,8 +111,8 @@ body {
     --foreground            : hsl(45, 100%, 90%);
     --card                  : hsl(0, 0%, 10%);
     --card-foreground       : hsl(45, 100%, 90%);
-    --popover               : 0, 0%, 10%;
-    --popover-foreground    : 45, 100%, 90%;
+    --popover               : hsl(0, 0%, 10%);
+    --popover-foreground    : hsl(45, 100%, 90%);
     --primary               : 210 40% 98%;
     --primary-foreground    : 222.2 47.4% 11.2%;
     --secondary             : 217.2 32.6% 17.5%;
