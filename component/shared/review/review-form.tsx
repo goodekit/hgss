@@ -2,17 +2,15 @@
 
 import { FC, useState, useEffect } from 'react'
 import { en } from 'public/locale'
-import { ICON } from 'hgss-design'
 import { useToast } from 'hook'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { reviewDefaultValue, ReviewSchema } from 'lib/schema'
 import { createUpdateReview, getReviewByProductId } from 'lib/action'
-import { StarIcon } from 'lucide-react'
 import { Button, Dialog, DialogContent, DialogTitle, DialogHeader, DialogDescription, Form, DialogFooter } from 'component/ui'
-import { TapeBtn } from 'component/shared/btn'
-import { RHFFormField, RHFFormSelect } from 'component/shared/rhf'
+import { RHFFormField, RHFFormSelectRating } from 'component/shared/rhf'
 import { EllipsisLoader } from 'component/shared/loader'
+import { TapeBtn } from 'component/shared/btn'
 
 interface ReviewFormProps {
     userId           : string
@@ -75,7 +73,7 @@ const ReviewForm: FC<ReviewFormProps> = ({ userId, productId, onReviewSubmitted 
                         <div className="grid gap-4 py-4">
                             <RHFFormField control={control} name={'title'} formKey={'title'} />
                             <RHFFormField control={control} name={'description'} formKey={'description'} />
-                            <RHFFormSelect control={control} name={'rating'} formKey={'rating'} options={RATING_OPTIONS} icon={<StarIcon size={ICON.EXTRA_SMALL} className={'text-muted-foreground'}/>}  disabled={formState.isSubmitting} />
+                            <RHFFormSelectRating control={control} name={'rating'} formKey={'rating'} options={RATING_OPTIONS} disabled={formState.isSubmitting} />
                         </div>
                         <DialogFooter>
                             <TapeBtn textSize={'text-lg'} label={formState.isSubmitting ? <EllipsisLoader /> : en.submit.label} className={'w-full'} disabled={formState.isSubmitting} />
