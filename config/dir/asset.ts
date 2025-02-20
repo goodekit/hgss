@@ -9,7 +9,7 @@ export const ASSET_DIR = {
   LOGO               : connect('asset', 'logo', 'logo.svg'),
   LOGO_ALT           : connect('asset', 'logo', 'logo-alt.svg'),
   LOGO_LIGHT         : connect('image', 'svg', 'vieux-carre-white.svg'),
-  LOGO_PRODUCTION    : connectUrl(GLOBAL.SERVER_URL, 'image/svg/vieux-carre-red.svg'),
-  LOGO_PRODUCTION_PNG: connectUrl(GLOBAL.SERVER_URL, 'image/png/vieux-carre-red.png'),
+  LOGO_PRODUCTION    : connectUrl(GLOBAL.SERVER_URL, 'asset/logo/logo.svg'),
+  LOGO_PRODUCTION_PNG: connectUrl(GLOBAL.SERVER_URL, 'asset/logo/logo.png'),
   PROMO              : connect('image', 'promo', 'promo.png'),
 }
