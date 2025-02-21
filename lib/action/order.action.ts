@@ -218,10 +218,10 @@ export async function getOrderSummary() {
  /**
   * count
   */
-  const orders               = await prisma.order.count()
-  const products             = await prisma.product.count()
-  const users                 = await prisma.user.count()
-  const count                = { orders, products, users }
+  const orders   = await prisma.order.count()
+  const products = await prisma.product.count()
+  const users    = await prisma.user.count()
+  const count    = { orders, products, users }
   /**
    * data
    */
