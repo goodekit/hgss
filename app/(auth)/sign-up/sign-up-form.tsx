@@ -14,10 +14,19 @@ import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
 import { KEY, RESPONSE } from 'lib/constant'
 
+const FORM_KEY = {
+  name           : 'name',
+  email          : 'email',
+  password       : 'password',
+  confirmPassword: 'confirmPassword'
+}
+
 const SignUpForm = () => {
   const [data, action] = useActionState(signUpUser, RESPONSE.DEFAULT)
-  const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
+  const searchParams   = useSearchParams()
+  const callbackUrl    = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
+
+  // enhance password conditions
 
   const SignUpButton = () => {
     const { pending } = useFormStatus()
@@ -37,7 +46,7 @@ const SignUpForm = () => {
           <Label htmlFor={KEY.NAME}>{en.form.name.label}</Label>
           <Input
             id={KEY.NAME}
-            name={KEY.NAME}
+            name={FORM_KEY.name}
             type={KEY.TEXT}
             autoComplete={KEY.NAME}
             defaultValue={signUpDefaultValue.name}
@@ -49,7 +58,7 @@ const SignUpForm = () => {
           <Label htmlFor="email">{en.form.email.label}</Label>
           <Input
             id={KEY.EMAIL}
-            name={KEY.EMAIL}
+            name={FORM_KEY.email}
             type={KEY.EMAIL}
             autoComplete={KEY.EMAIL}
             defaultValue={signUpDefaultValue.email}
@@ -61,7 +70,7 @@ const SignUpForm = () => {
           <Label htmlFor="password">{en.form.password.label}</Label>
           <Input
             id={KEY.PASSWORD}
-            name={KEY.PASSWORD}
+            name={FORM_KEY.password}
             type={KEY.PASSWORD}
             autoComplete={KEY.PASSWORD}
             defaultValue={signUpDefaultValue.password}
@@ -73,7 +82,7 @@ const SignUpForm = () => {
           <Label htmlFor={KEY.CONFIRM_PASSWORD}>{en.form.confirm_password.label}</Label>
           <Input
             id={KEY.CONFIRM_PASSWORD}
-            name={KEY.CONFIRM_PASSWORD}
+            name={FORM_KEY.confirmPassword}
             type={KEY.PASSWORD}
             autoComplete={KEY.PASSWORD}
             defaultValue={signUpDefaultValue.confirmPassword}
