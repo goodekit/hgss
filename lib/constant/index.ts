@@ -1,6 +1,7 @@
 export * from './code'
 export * from './key'
 export * from './http-response'
+export * from './regex'
 export * from './price'
 export * from './rating'
 export * from './response'
