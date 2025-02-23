@@ -1,9 +1,9 @@
 import { en } from 'public/locale'
 import { PATH_DIR, ASSET_DIR } from 'hgss-dir'
+import { IMAGE } from 'hgss-design'
 import { _mockData } from '_mock'
 import { Body, Column, Container, Head, Heading, Html, Img, Preview, Row, Section, Tailwind, Hr, Text } from '@react-email/components'
 import { formatCurrency } from 'lib/util'
-import { IMAGE } from 'hgss-design'
 
 PurchaseReceiptEmail.PreviewProps = {
     order: {
