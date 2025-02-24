@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { Ellipsis } from 'lucide-react';
+import { FC } from 'react'
 import { cn } from "lib/util"
 
 interface EllipsisLoaderProps {
@@ -8,16 +7,10 @@ interface EllipsisLoaderProps {
 
 const EllipsisLoader: FC<EllipsisLoaderProps> = ({ className, ...props }) => {
   return (
-    <div className="flex items-center justify-center">
-      <Ellipsis
-        className={cn(
-          "animate-wave text-gray-600",
-          "transform origin-bottom",
-          "hover:animate-none",
-          className
-        )}
-        {...props}
-      />
+    <div className={cn("flex text-center justify-center gap-1", className)} {...props}>
+      <span className="dot-animation text-xl text-black">{'.'}</span>
+      <span className="dot-animation text-xl text-black delay-200">{'.'}</span>
+      <span className="dot-animation text-xl text-black delay-400">{'.'}</span>
     </div>
   );
 };
