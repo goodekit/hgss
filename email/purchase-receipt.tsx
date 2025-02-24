@@ -92,11 +92,11 @@ export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
                 ))}
                 <Hr className={'my-4'} />
                 {[
-                    {name: en.item.items.label, price: order.itemsPrice},
-                    {name: en.tax.label, price: order.taxPrice},
-                    {name: en.shipping.label, price: order.shippingPrice},
-                    {name: en.total.label, price: order.totalPrice},
-                ].map(({ name, price}, index) => (
+                  {name: en.item.items.label, price: order.itemsPrice},
+                  {name: en.tax.label, price: order.taxPrice},
+                  {name: en.shipping.label, price: order.shippingPrice},
+                  {name: en.total.label, price: order.totalPrice},
+                  ].map(({ name, price}, index) => (
                     <Row key={index} className={'py-1'}>
                         <Column align={'right'}>{name}:</Column>
                         <Column align={'right'} width={70} className={'align-top'}>
