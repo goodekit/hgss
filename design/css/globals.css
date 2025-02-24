@@ -233,6 +233,28 @@ html.dark .upload-field .text-white {
   animation: blink 0.7s infinite steps(1);
 }
 
+@keyframes dotFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dot-animation {
+  animation: dotFade 1.5s infinite;
+}
+
+.dot-animation.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.dot-animation.delay-400 {
+  animation-delay: 0.4s;
+}
+
+
 @keyframes choppy {
   0%,
   100% {
