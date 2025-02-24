@@ -62,7 +62,7 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
             </Table>
           </div>
           <Card className="rounded-sm shadow-none border-none">
-            <CardContent className="p-4 space-y-8">
+            <CardContent className="space-y-8">
               <div className="text-xl justify-between flex">
                 <div>
                   {en.subtotal.label} &nbsp;
