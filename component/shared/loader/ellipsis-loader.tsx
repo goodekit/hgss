@@ -3,14 +3,16 @@ import { cn } from "lib/util"
 
 interface EllipsisLoaderProps {
     className?: string
+    dotSize  ?: string
+    dotColor ?: string
 }
 
-const EllipsisLoader: FC<EllipsisLoaderProps> = ({ className, ...props }) => {
+const EllipsisLoader: FC<EllipsisLoaderProps> = ({ className, dotSize = 'text-xl', dotColor = 'text-black', ...props }) => {
   return (
     <div className={cn("flex text-center justify-center gap-1", className)} {...props}>
-      <span className="dot-animation text-xl text-black">{'.'}</span>
-      <span className="dot-animation text-xl text-black delay-200">{'.'}</span>
-      <span className="dot-animation text-xl text-black delay-400">{'.'}</span>
+      <span className={cn("dot-animation permanent-marker", dotSize, dotColor)}>{'.'}</span>
+      <span className={cn("dot-animation permanent-marker delay-200", dotSize, dotColor)}>{'.'}</span>
+      <span className={cn("dot-animation permanent-marker delay-400", dotSize, dotColor)}>{'.'}</span>
     </div>
   );
 };
