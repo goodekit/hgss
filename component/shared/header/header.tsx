@@ -13,7 +13,6 @@ const Header= () => {
           <ProtectedNavLink href={PATH_DIR.ROOT} className={`flex-start ml-4`}>
             <div className="h-full flex items-center overflow-hidden">
               <House size={10}/>
-              {/* <Image src={ASSET_DIR.LOGO} width={70} height={70} alt={'logo'} className={'object-cover max-h-full'}/> */}
             </div>
           </ProtectedNavLink>
         </div>
