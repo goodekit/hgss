@@ -3,6 +3,7 @@ import { en } from 'public/locale'
 import { notFound } from 'next/navigation'
 import { auth } from 'auth'
 import { getProductBySlug, getMyBag } from 'lib/action'
+import { cn } from 'lib/util'
 import { Card, CardContent, Badge } from 'component/ui'
 import { ProductImage, ProductPrice, ProductRating } from 'component/module'
 import { AddToBag } from 'component/shared'
@@ -62,13 +63,12 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
                     <ProductPrice value={Number(product.price)} />
                   </div>
                 </div>
-                <div className={"mb-2 flex justify-between"}>
+                <div className={cn("mb-2 flex")}>
                   <div>{en.status.label}</div>
                   {productStatus}
                 </div>
               </div>
-
-              <div className={"col-span-1 md:col-span-3 flex items-center justify-center"}>{renderAddToBagButton}</div>
+              <div className={cn("col-span-1 md:col-span-3 flex items-center justify-center", product.stock <= 0 ? 'hidden' : '')}>{renderAddToBagButton}</div>
             </CardContent>
           </Card>
         </div>
