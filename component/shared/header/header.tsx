@@ -9,6 +9,7 @@ const Header= () => {
     <header className="w-full h-[40px]">
       <div className="wrapper flex-between h-full overflow-hidden">
         <div className="flex-start">
+          {/* @matt, let me know what to add in the category drwer. */}
           {/* <CategoryDrwr /> */}
           <ProtectedNavLink href={PATH_DIR.ROOT} className={`flex-start ml-4`}>
             <div className="h-full flex items-center overflow-hidden">
