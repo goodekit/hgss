@@ -7,15 +7,17 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 import { AlertDialogTitle, AlertDialog, AlertDialogContent, AlertDialogDescription,  AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from 'component/ui'
+import { LinkBtn } from 'component/shared/btn'
 import { cn } from 'lib'
 
 interface ProtectedNavLinkProps {
   href      : string
   children  : React.ReactNode
   className?: string
+  linkBtn  ?: boolean
 }
 
-const ProtectedNavLink: React.FC<ProtectedNavLinkProps> = ({ href, children, className }) => {
+const ProtectedNavLink: React.FC<ProtectedNavLinkProps> = ({ href, children, className, linkBtn }) => {
   const [showDialog, setShowDialog] = useState(false)
   const [nextPath, setNextPath] = useState<string | null>(null)
   const { isDirty, setDirty } = useFormState()
@@ -48,27 +50,38 @@ const ProtectedNavLink: React.FC<ProtectedNavLinkProps> = ({ href, children, cla
 
   return (
     <Fragment>
-       <Link
+      {linkBtn ? (
+        <LinkBtn
+        href={href}
+        ref={triggerRef}
+        size={'sm'}
+        className={cn('text-sm font-medium transition-colors hover:text-primary ease-in-out',
+          className,
+          pathname.includes(href) ? 'font-semibold' : 'text-muted-foreground'
+        )}>
+          {children}
+        </LinkBtn>)
+        : (
+      <Link
         href={href}
         ref={triggerRef}
         onClick={(e) => handleNavigation(e, href)}
-        className={cn('text-sm font-medium transition-colors hover:text-primary ease-in-out', className, pathname.includes(href) ? 'font-semibold' : 'text-muted-foreground')}>
-          {children}
+        className={cn(
+          'text-sm font-medium transition-colors hover:text-primary ease-in-out',
+          className,
+          pathname.includes(href) ? 'font-semibold' : 'text-muted-foreground'
+        )}>
+       {children}
       </Link>
+      )}
       {showDialog && (
         <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
           <AlertDialogContent>
             <AlertDialogTitle>{en.message.default.title}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {en.message.unsaved_changes.description}
-            </AlertDialogDescription>
+            <AlertDialogDescription>{en.message.unsaved_changes.description}</AlertDialogDescription>
             <AlertDialogFooter>
-              <AlertDialogCancel onClick={() => setShowDialog(false)}>
-                {en.cancel.label}
-              </AlertDialogCancel>
-              <AlertDialogAction onClick={confirmNavigation}>
-                {en.leave.label}
-              </AlertDialogAction>
+              <AlertDialogCancel onClick={() => setShowDialog(false)}>{en.cancel.label}</AlertDialogCancel>
+              <AlertDialogAction onClick={confirmNavigation}>{en.leave.label}</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
