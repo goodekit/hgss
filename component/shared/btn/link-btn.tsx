@@ -1,4 +1,4 @@
-import { ReactNode, FC } from 'react'
+import { ReactNode, forwardRef } from 'react'
 import Link from 'next/link'
 import { Button } from 'component/ui'
 
@@ -10,12 +10,18 @@ interface LinkBtnProps {
   size     ?: ButtonSize
 }
 
-const LinkBtn: FC<LinkBtnProps> = ({ href, children, variant = 'ghost', className, size = 'default' }) => {
-  return (
-    <Button asChild variant={variant} className={className} size={size}>
-      <Link href={href}>{children}</Link>
-    </Button>
-  )
-}
+const LinkBtn = forwardRef<HTMLAnchorElement, LinkBtnProps>(
+  ({ href, children, variant = 'ghost', className, size = 'default' }, ref) => {
+    return (
+      <Button asChild variant={variant} className={className} size={size}>
+        <Link href={href} ref={ref && ref}>
+          {children}
+        </Link>
+      </Button>
+    )
+  }
+)
+
+LinkBtn.displayName = 'LinkBtn'
 
 export default LinkBtn
