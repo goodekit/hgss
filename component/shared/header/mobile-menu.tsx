@@ -18,7 +18,7 @@ const MobileMenu = (user: User) => {
   ) : (
     <div className="flex flex-col space-y-2">
       <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT}>{charAtName(user.name)}</ProtectedNavLink>
-      <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT}><SquareUserRound /></ProtectedNavLink>
+      <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT} linkBtn><SquareUserRound /></ProtectedNavLink>
       <ProtectedNavLink href={PATH_DIR.USER.ORDER}>{en.order_history.label}</ProtectedNavLink>
       <Separator className="my-4" />
       {isAdmin && (
