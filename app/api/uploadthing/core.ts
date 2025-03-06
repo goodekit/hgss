@@ -10,8 +10,7 @@ export const ourFileRouter = {
        * For full list of options and defaults, see the File Route API reference
        * @see https://docs.uploadthing.com/file-routes#route-config
        */
-        image: { maxFileSize: "4MB", maxFileCount: 4 },
-
+        image: { maxFileSize: "4MB", maxFileCount: 4 }
     })
     .middleware(async () => {
         const session = await auth()
