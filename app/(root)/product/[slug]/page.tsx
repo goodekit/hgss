@@ -27,7 +27,7 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
   return (
     <Fragment>
       <section>
-        <div className="grid grid-cols-1 md:grid-cols-7">
+        <div className="grid grid-cols-1 md:grid-cols-7 special-elite">
           <div className="col-span-4">
             <ProductImage images={product.images} />
           </div>
@@ -44,7 +44,7 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <ProductPrice value={Number(product.price)} className="w-24 rounded-sm px-5 py-2" />
               </div>
-              <div className="mt-10 text-lg covered-by-your-grace-regular">
+              <div className="mt-10 text-lg special-elite">
                 <p>{product.description}</p>
               </div>
             </div>
