@@ -5,7 +5,7 @@ import { ThemeProvider } from 'next-themes'
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
 import { extractRouterConfig } from "uploadthing/server"
 import { ourFileRouter } from "app/api/uploadthing/core"
-import { Permanent_Marker, Inter_Tight, Covered_By_Your_Grace, Yusei_Magic } from 'next/font/google'
+import { Permanent_Marker, Inter_Tight, Special_Elite, Yusei_Magic } from 'next/font/google'
 import { TooltipProvider } from 'component/ui'
 import { KEY } from 'lib/constant'
 import 'design/css/globals.css'
@@ -19,7 +19,7 @@ const yuseiMagic = Yusei_Magic({
   subsets: ['latin']
 })
 
-const coveredByYourGrace = Covered_By_Your_Grace({
+const specialElite = Special_Elite({
   weight : '400',
   subsets: ['latin']
 })
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang={KEY.EN} suppressHydrationWarning>
-      <body className={`${interTight.className} ${permanentMarker.className} ${coveredByYourGrace.className} ${yuseiMagic.className} antialiased`}>
+      <body className={`${interTight.className} ${specialElite.className} ${permanentMarker.className} ${yuseiMagic.className} antialiased`}>
       <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)}/>
         <ThemeProvider attribute="class" defaultTheme={'dark'} enableSystem disableTransitionOnChange>
           <TooltipProvider>
