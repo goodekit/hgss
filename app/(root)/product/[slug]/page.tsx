@@ -5,7 +5,7 @@ import { auth } from 'auth'
 import { getProductBySlug, getMyBag } from 'lib/action'
 import { cn } from 'lib/util'
 import { Card, CardContent, Badge } from 'component/ui'
-import { ProductImage, ProductPrice, ProductRating } from 'component/module'
+import { ProductImage, ProductPrice } from 'component/module'
 import { AddToBag } from 'component/shared'
 import { ReviewList } from 'component/shared/review'
 
@@ -37,7 +37,7 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
                 {product.brand} {product.category}
               </p>
               <h1 className="h3-bold">{product.name}</h1>
-              <ProductRating value={Number(product.rating)} />
+              {/* <ProductRating value={Number(product.rating)} /> */}
               <p>
                 {product.numReviews} {product.numReviews > 1 ? en.review.reviews.label : en.review.label}
               </p>
