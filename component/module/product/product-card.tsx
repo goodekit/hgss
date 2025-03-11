@@ -8,7 +8,6 @@ import { useTheme } from 'next-themes'
 import { Card, CardHeader, CardContent } from 'component/ui'
 import { cn } from 'lib'
 import ProductPrice from './product-price'
-import ProductRating from './product-rating'
 
 interface ProductCardProps {
   product: Product
@@ -31,7 +30,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           <h2 className="text-sm font-medium">{product.name}</h2>
         </Link>
         <div className="flex-between gap-4">
-          <ProductRating value={Number(product.rating)}/>
+          {/* <ProductRating value={Number(product.rating)}/> */}
           {product.stock > 0 ? <ProductPrice value={Number(product.price)} /> : <p className="text-destructive">{'Out of Stock'}</p>}
         </div>
       </CardContent>
