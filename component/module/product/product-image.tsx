@@ -22,7 +22,7 @@ const ProductImage: FC<ProductImageProps> = ({ images }) => {
           ))}
         </div>
       <div className={'col-span-6'}>
-        <Image src={images[current]} alt={'product-image'} width={1000} height={1000} className="max-h-[480px] object-cover object-center" priority />
+        <Image src={images[current]} alt={'product-image'} width={1000} height={1000} className="max-h-[480px] w-auto object-cover object-center" priority />
       </div>
     </div>
   )
