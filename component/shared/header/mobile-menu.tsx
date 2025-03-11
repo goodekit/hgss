@@ -9,7 +9,7 @@ import { LinkBtn,  } from 'component/shared/btn'
 import { ThemeToggle } from 'component/shared'
 import { charAtName, KEY } from 'lib'
 
-const MobileMenu = (user: User) => {
+const MobileMenu = ({ user }: { user: { role: string, name: string }}) => {
   const isAdmin    = user?.role === KEY.ADMIN
   const renderUser = !user ? (
     <LinkBtn href={PATH_DIR.SIGN_IN}>
