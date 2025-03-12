@@ -23,7 +23,7 @@ const Search = async () => {
         </Select>
         <Input name={'query'} type={'text'} placeholder={en.search.placeholder} className={'md:w-[100px] lg:w-[300px]'}/>
         <Button size={'sm'} variant={'ghost'}>
-            <SearchIcon />
+            <SearchIcon size={20} />
         </Button>
       </div>
     </form>

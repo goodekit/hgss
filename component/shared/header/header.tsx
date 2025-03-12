@@ -13,7 +13,7 @@ const Header= () => {
           {/* <CategoryDrwr /> */}
           <ProtectedNavLink href={PATH_DIR.ROOT} className={`flex-start ml-4`}>
             <div className="h-full flex items-center overflow-hidden">
-              <House size={10}/>
+              <House size={20}/>
             </div>
           </ProtectedNavLink>
         </div>
