@@ -14,18 +14,6 @@
   font-style: normal;
 }
 
-/* .covered-by-your-grace-regular {
-  font-family: 'Covered By Your Grace', sans-serif;
-  font-weight: 400;
-  font-style: normal;
-} */
-
-.yusei-magic-regular {
-  font-family: 'Yusei Magic', sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
 @layer utilities {
 
   /* config  */
@@ -76,10 +64,6 @@
   .loader {
     @apply loader-default-size animate-spin;
   }
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer base {
