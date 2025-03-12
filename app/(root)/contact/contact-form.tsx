@@ -48,7 +48,7 @@ const ContactForm: FC<ContactFormProps> = ({ user }) => {
             <RHFFormField control={control} name={'name'} formKey={'name'} disabled={user && true} />
             <RHFFormField control={control} name={'email'} formKey={'email'} disabled={user && true} />
             <RHFFormField control={control} name={'message'} formKey={'message'} type={'textarea'} />
-            <TapeBtn label={isPending ? <EllipsisLoader /> : en.send_message.label} className={'w-full'} textSize={'text-2xl'} />
+            <TapeBtn label={isPending ? <EllipsisLoader /> : en.send_message.label} className={'w-full'} />
           </form>
         </Form>
       </div>
