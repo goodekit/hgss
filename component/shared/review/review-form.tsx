@@ -76,7 +76,7 @@ const ReviewForm: FC<ReviewFormProps> = ({ userId, productId, onReviewSubmitted 
                             <RHFFormSelectRating control={control} name={'rating'} formKey={'rating'} options={RATING_OPTIONS} disabled={formState.isSubmitting} />
                         </div>
                         <DialogFooter>
-                            <TapeBtn textSize={'text-lg'} label={formState.isSubmitting ? <EllipsisLoader /> : en.submit.label} className={'w-full'} disabled={formState.isSubmitting} />
+                            <TapeBtn label={formState.isSubmitting ? <EllipsisLoader /> : en.submit.label} className={'w-full'} disabled={formState.isSubmitting} />
                         </DialogFooter>
                     </form>
                 </Form>
