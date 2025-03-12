@@ -10,7 +10,7 @@ const MainNav = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const pathname = usePathname()
 
   return (
-    <nav className={cn('flex items-center space-x-4 lg:space-x-6', className)} {...props}>
+    <nav className={cn('flex items-center special-elite space-x-4 lg:space-x-6', className)} {...props}>
       {NAV_CONFIG.map((item, index) => (
         <Link
           key={index}

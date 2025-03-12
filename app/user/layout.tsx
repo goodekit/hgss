@@ -21,7 +21,7 @@ export default function UserLayout({ children }: Readonly<{ children: ReactNode 
             <Toolbar />
           </div>
         </div>
-        <div className="flex-1 space-y-4 p-8 pt-6 container mx-auto">{children}</div>
+        <div className="flex-1 space-y-4 p-8 pt-6 special-elite container mx-auto">{children}</div>
     </header>
   )
 }
