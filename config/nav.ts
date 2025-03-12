@@ -18,13 +18,11 @@ const ORDER   = 'order'
  * Submodule
  */
 const OVERVIEW = 'overview'
-const REQUEST  = 'request'
 
 export const NAV_CONFIG = [
     {title: en.product.products.label, href: connect(PRODUCT)},
     {title: en.gallery.label, href: connect(GALLERY)},
-    {title: en.custom_enquiry.custom_enquiries.label, href: connect(CONTACT, REQUEST)},
-    {title: en.contact.label, href: connect(CONTACT)},
+    {title: en.contact_and_custom_inquiries.label, href: connect(CONTACT)},
 ]
 
 export const NAV_CONFIG_USER = [
