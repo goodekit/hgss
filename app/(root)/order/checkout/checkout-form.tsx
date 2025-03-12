@@ -26,7 +26,6 @@ const CheckoutForm = () => {
           </Fragment>
         }
         disabled={pending}
-        textSize={'text-xl'}
         className={'w-full'}
       />
     )
