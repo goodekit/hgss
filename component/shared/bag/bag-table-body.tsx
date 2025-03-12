@@ -44,7 +44,7 @@ const BagTableBody: FC<BagTableBodyProps> = ({
       },
       {
         id   : 'price',
-        align: 'text-right yusei-magic-regular',
+        align: 'text-right',
         value: item.price
       }
     ]

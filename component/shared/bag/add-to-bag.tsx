@@ -1,8 +1,9 @@
 'use client'
 
 import { Fragment, useTransition, FC } from 'react'
-import { useRouter } from 'next/navigation'
 import { en } from 'public/locale'
+import { ShoppingBagIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { PATH_DIR } from 'hgss-dir'
 import { useToast } from 'hook'
 import { addItemToBag, removeItemFromBag } from 'lib/action'
@@ -54,7 +55,7 @@ const AddToBag: FC<AddToBagProps> = ({ bag, item }) => {
     <EllipsisLoader />
     ) : (
       <Fragment>
-      {'+'} {en.add_to_bag}
+      {'+'} {en.add_to_bag} <ShoppingBagIcon />
       </Fragment>
     )}/>
   )
