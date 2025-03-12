@@ -51,7 +51,7 @@ const StripePayment: FC<StripePaymentProps> = ({ priceInCents, orderId, clientSe
         <div>
             <LinkAuthenticationElement onChange={(e) => setEmail(e.value.email)}/>
         </div>
-        <TapeBtn textSize={'text-xl'} disabled={stripe === null || elements === null || loading} label={loading ? en.loading.processing : `${en.purchase.label} ${formatCurrency(priceInCents / 100)}`}/>
+        <TapeBtn disabled={stripe === null || elements === null || loading} label={loading ? en.loading.processing : `${en.purchase.label} ${formatCurrency(priceInCents / 100)}`}/>
       </form>
     )
   }

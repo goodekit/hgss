@@ -31,9 +31,9 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
     const [{ isPending, isRejected }] = usePayPalScriptReducer()
     let status
     if (isPending) {
-      status = <TapeBtn disabled={isPending} label={en.loading.processing} textSize={'text-xl'} />
+      status = <TapeBtn disabled={isPending} label={en.loading.processing} />
     } else if (isRejected) {
-      status = <TapeBtn disabled label={en.error.paypal_default} textSize={'text-xl'} />
+      status = <TapeBtn disabled label={en.error.paypal_default} />
     }
     return status
   }
