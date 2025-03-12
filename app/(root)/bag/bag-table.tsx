@@ -66,14 +66,14 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
               <div className="text-xl justify-between flex">
                 <div>
                   {en.subtotal.label} &nbsp;
-                  <Badge variant={'outline'} className="text-md yusei-magic-regular">
+                  <Badge variant={'outline'} className="text-md">
                     {subtotal}
                   </Badge>
                   &nbsp;&nbsp;
                 </div>
-                <span className="font-bold yusei-magic-regular"> {formatCurrency(bag.itemsPrice)}</span>
+                <span className="font-bold"> {formatCurrency(bag.itemsPrice)}</span>
               </div>
-              <TapeBtn textSize={'text-md'} className={'w-full'} disabled={isPending} onClick={handleNavigateCheckout} type={'button'} label=  {isPending ? <EllipsisLoader /> : ( <span> {'->'} {en.proceed_to_checkout.label}</span>)} />
+              <TapeBtn className={'w-full'} disabled={isPending} onClick={handleNavigateCheckout} type={'button'} label=  {isPending ? <EllipsisLoader /> : ( <span> {'->'} {en.proceed_to_checkout.label}</span>)} />
             </CardContent>
           </Card>
         </div>
