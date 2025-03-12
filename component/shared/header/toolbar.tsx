@@ -1,4 +1,4 @@
-import { getMyBagCount, getUserById } from 'lib/action'
+import { getMyBagCount } from 'lib/action'
 import { auth } from 'auth'
 import { ThemeToggle, MobileMenu, BagIconWithBadge } from 'component/shared'
 import { UserMenu } from 'component/shared/header'
