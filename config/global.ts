@@ -11,8 +11,9 @@
         LOCALE                 : process.env.NEXT_PUBLIC_LOCALE || 'en-NZ',
         USER_ROLES             : process.env.USER_ROLES && process.env.USER_ROLES.split(';') || ['user', 'admin'],
         LIMIT                  : {
-                                  ADMIN_ORDERS: 10,
-                                  USER_ORDERS : 10,
+                                  ADMIN_ORDERS     : 10,
+                                  USER_ORDERS      : 10,
+                                  PRODUCT_SPECS_MAX: 5
                                 },
         PAGE_SIZE              : 8,
         PAYMENT_METHODS        : process.env.NEXT_PUBLIC_PAYMENT_METHODS,
