@@ -4,6 +4,7 @@ import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { Prisma } from '@prisma/client'
+import { UTApi } from "uploadthing/server"
 import { prisma } from 'db'
 import { revalidatePath } from 'next/cache'
 import { SystemLogger } from 'lib/app-logger'
@@ -12,6 +13,7 @@ import { convertToPlainObject } from 'lib/util'
 import { KEY, CODE } from 'lib/constant'
 
 const TAG = 'PRODUCT.ACTION'
+
 /**
  * Fetches the latest products from the database.
  *
@@ -25,6 +27,44 @@ export async function getProducts() {
     const data = await prisma.product.findMany({ take: GLOBAL.LATEST_PRODUCT_QUANTITY, orderBy: { createdAt: 'desc' }})
 
     return convertToPlainObject(data)
+}
+// TODO: Documentation
+export async function deleteProductImage(currentImages: string[], index:number) {
+  const getFileKeyFromUrl = (url: string) => {
+    try {
+      const urlParts = url.split('/')
+      return urlParts[urlParts.length - 1].split('-')[0]
+    } catch (error) {
+      console.error('Error extracting the file Key: ', error)
+      return null
+    }
+  }
+
+  if (currentImages?.length > 0) {
+    try {
+      const imageToDelete = currentImages[index]
+      const fileKey       = getFileKeyFromUrl(imageToDelete)
+      if (fileKey) {
+        const deleteFile = async () => {
+          try {
+            const utapi = new UTApi()
+            await utapi.deleteFiles(fileKey)
+            return { success: true }
+          } catch (error) {
+            console.error("Error deleting file: ", error)
+            return { success: false, error }
+          }
+        }
+        const result = await deleteFile()
+        return result
+      } else {
+        return { success: false, error: 'failed' }
+      }
+    } catch (error) {
+      console.error("Error in handleDelete: ", error)
+      return { success: false, error }
+    }
+  }
 }
 
 
