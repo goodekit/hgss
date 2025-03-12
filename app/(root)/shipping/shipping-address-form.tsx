@@ -52,7 +52,7 @@ const ShippingAddressForm: FC<ShippingAddressFormProps> = ({ address }) => {
             <RHFFormField control={control} name={'city'} formKey={'city'} />
             <RHFFormField control={control} name={'postalCode'} formKey={'postal_code'} />
             <RHFFormField control={control} name={'country'} formKey={'country'} />
-            <TapeBtn label={isPending ? <EllipsisLoader /> : en.continue.label} className={'w-full'} textSize={'text-2xl'} />
+            <TapeBtn label={isPending ? <EllipsisLoader /> : en.continue.label} className={'w-full'} />
           </form>
         </Form>
       </div>
