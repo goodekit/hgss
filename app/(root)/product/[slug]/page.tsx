@@ -1,5 +1,6 @@
 import { FC, Fragment } from 'react'
 import { en } from 'public/locale'
+import { GLOBAL } from 'hgss'
 import { notFound } from 'next/navigation'
 import { auth } from 'auth'
 import { getProductBySlug, getMyBag } from 'lib/action'
@@ -21,7 +22,7 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
   const bag     = await getMyBag()
 
   const bagProduct           = { productId: product.id, name: product.name, slug: product.slug, price: product.price, qty: 1, image: product.images![0] }
-  const productStatus        = product.stock > 0 ? <Badge variant = "outline" className = {'bg-tape text-black'}>{en.in_stock.label}</Badge> : <Badge variant = "destructive">{en.out_of_stock.label}</Badge>
+  const productStatus        = product.stock > 0 ? <Badge variant="outline" className={'bg-tape text-black'}>{en.in_stock.label}</Badge> : <Badge variant="destructive">{en.out_of_stock.label}</Badge>
   const renderAddToBagButton = product.stock > 0 ? <AddToBag bag={bag} item={bagProduct} /> : null
 
   return (
@@ -37,16 +38,14 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
                 {product.brand} {product.category}
               </p>
               <h1 className="h3-bold">{product.name}</h1>
-              {/* <ProductRating value={Number(product.rating)} /> */}
-              <p>
-                {product.numReviews} {product.numReviews > 1 ? en.review.reviews.label : en.review.label}
-              </p>
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <ProductPrice value={Number(product.price)} className="w-24 rounded-sm px-5 py-2" />
-              </div>
               <div className="mt-10 text-lg special-elite">
                 <p>{product.description}</p>
               </div>
+              {(product.specifications && product.specifications?.length < GLOBAL.LIMIT.PRODUCT_SPECS_MAX)&& (
+                <div className="mt-10 text-sm special-elite">
+                  {product.specifications.map((_spec, index) =>  <p key={index}>{_spec}</p> )}
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ const AdminProductUpdatePage: FC<AdminProductUpdatePageProps> = async ({ params 
   return (
     <Fragment>
       <FormBackBtn href={PATH_DIR.ADMIN.PRODUCT} withLink />
-      <h1 className="h2-bold">{en.update_product.label}</h1>
+      <h1 className="h2-bold permanent-marker-regular">{en.update_product.label}</h1>
       <ProductForm type={'update'} product={product} productId={product.id} />
     </Fragment>
   )
