@@ -66,6 +66,9 @@
         "label": "Contact",
         "description": "Contact us for any enquiries"
     },
+    "contact_and_custom_inquiries": {
+        "label": "Contact and Custom Inquiries"
+    },
     "continue": {
         "label": "Continue",
         "description": "Continue to the next step"
