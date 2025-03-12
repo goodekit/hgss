@@ -19,12 +19,12 @@ interface TapeBtnProps {
   onClick  ?: () => void
 }
 
-const TapeBtn: FC<TapeBtnProps> = ({ href, label, className, index = 2, disabled, type = 'submit', isLink = false, onClick, textSize, icon, isPending }) => {
+const TapeBtn: FC<TapeBtnProps> = ({ href, label, className, index = 2, disabled, type = 'submit', isLink = false, onClick, icon, isPending }) => {
  const randomizedClasses  = NAV_CONFIG.map(() => getRandomTextureClass())
  const renderPendingState = isPending ? ( <EllipsisLoader /> ) : ( <Fragment> {label} {icon} </Fragment> )
 
   return (
-    <button disabled={disabled} type={type} className={cn(`w-full xs:text-md permanent-marker-regular text-black font-bold transform -rotate-1 hover:rotate-0 transition-transform`, randomizedClasses[index], textSize ? textSize : 'text-4xl',  className)} onClick={onClick}>
+    <button disabled={disabled} type={type} className={cn(`w-full permanent-marker-regular text-lg lg:text-4xl text-black transform -rotate-1 hover:rotate-0 transition-transform`, randomizedClasses[index],  className)} onClick={onClick}>
      {isLink ? <a href={href}>{renderPendingState}</a> : renderPendingState}
     </button>
   )
