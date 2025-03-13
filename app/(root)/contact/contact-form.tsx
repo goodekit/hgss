@@ -41,10 +41,10 @@ const ContactForm: FC<ContactFormProps> = ({ user }) => {
   return (
     <Fragment>
       <div className="max-w-md mx-auto space-y-4">
-        <h1 className="h2-bold mt-4">{en.contact.label}</h1>
-        <p className="text-sm text-muted-foreground">{en.contact.description}</p>
+        <h1 className="h2-bold mt-4">{en.contact_and_custom_inquiries.label}</h1>
+        <p className="text-sm text-muted-foreground special-elite">{en.contact.description}</p>
         <Form {...form}>
-          <form method={'post'} onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form method={'post'} onSubmit={handleSubmit(onSubmit)} className="space-y-4 special-elite">
             <RHFFormField control={control} name={'name'} formKey={'name'} disabled={user && true} />
             <RHFFormField control={control} name={'email'} formKey={'email'} disabled={user && true} />
             <RHFFormField control={control} name={'message'} formKey={'message'} type={'textarea'} />
