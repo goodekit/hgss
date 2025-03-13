@@ -50,7 +50,7 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
     <Fragment>
       <h1 className="py-4 h2-bold">{'Your Bag'}</h1>
       {!bag || bag.items.length === 0 ? (
-        <div>
+        <div className={'special-elite'}>
           {en.bag_empty} <Link href={PATH_DIR.ROOT}>{en.go_shopping}</Link>
         </div>
       ) : (
