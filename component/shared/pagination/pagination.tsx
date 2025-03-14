@@ -33,7 +33,7 @@ const Pagination: FC<PaginationProps> = ({ page, totalPages, urlParamName }) => 
         onClick={() => handleClick('prev')}>
         <p className={'text-xl'}>{'<-'}</p>
         {/* <ArrowLeft className={'default-size_icon -right-5 opacity-100 translate-x-[100%] ease-in-out group-hover:translate-x-5 group-hover:opacity-0'} /> */}
-        <p className={cn("ml-2 absolute right-0 translate-x-[100%] opacity-0 whitespace-nowrap rounded px-2 py-1 text-sm transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100", textControlColor)}>
+        <p className={cn("ml-2 absolute translate-x-[100%] opacity-0 whitespace-nowrap rounded px-2 py-1 text-sm transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100", textControlColor)}>
           {en.previous.label}
         </p>
       </Button>
