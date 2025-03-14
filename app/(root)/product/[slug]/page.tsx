@@ -2,13 +2,11 @@ import { FC, Fragment } from 'react'
 import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { notFound } from 'next/navigation'
-import { auth } from 'auth'
 import { getProductBySlug, getMyBag } from 'lib/action'
 import { cn } from 'lib/util'
 import { Card, CardContent, Badge } from 'component/ui'
 import { ProductImage, ProductPrice } from 'component/module'
-import { AddToBag } from 'component/shared'
-import { ReviewList } from 'component/shared/review'
+import { AddToBag, BackBtn } from 'component/shared'
 
 interface ProductViewPageProps {
   params: Promise<{ slug: string }>
@@ -17,23 +15,24 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
   const { slug } = await params
   const product  = await getProductBySlug(slug)
   if (!product) return notFound()
-  const session = await auth()
-  const userId  = session?.user?.id
-  const bag     = await getMyBag()
+  const bag    = await getMyBag()
 
   const bagProduct           = { productId: product.id, name: product.name, slug: product.slug, price: product.price, qty: 1, image: product.images![0] }
   const productStatus        = product.stock > 0 ? <Badge variant="outline" className={'bg-tape text-black'}>{en.in_stock.label}</Badge> : <Badge variant="destructive">{en.out_of_stock.label}</Badge>
   const renderAddToBagButton = product.stock > 0 ? <AddToBag bag={bag} item={bagProduct} /> : null
 
+
   return (
     <Fragment>
+      <BackBtn />
+      {/* <ProtectNavLink href={PATH_DIR.PRODUCT} className={'text-xl pb-5'}>{'<-'}</ProtectNavLink> */}
       <section>
         <div className="grid grid-cols-1 md:grid-cols-7 special-elite">
           <div className="col-span-4">
             <ProductImage images={product.images} />
           </div>
           <div className="col-span-3 p-5">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-5">
               <p>
                 {product.brand} {product.category}
               </p>
@@ -54,7 +53,7 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
         <div>
           <Card className={"rounded-sm shadow-none border-t-2 border-b-2 border-x-0"}>
             <CardContent className={"p-4 grid grid-cols-1 md:grid-cols-7 space-x-4"}>
-            <div className={"col-span-2"}>&nbsp;</div>
+            <div className={"col-span-1 md:col-span-2"}>&nbsp;</div>
               <div className={'grid col-span-1 md:col-span-2'}>
                 <div className="mb-2 flex justify-between">
                   <div>{en.price.label}</div>
@@ -62,20 +61,20 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
                     <ProductPrice value={Number(product.price)} />
                   </div>
                 </div>
-                <div className={cn("mb-2 flex")}>
+                <div className={cn("mb-2 flex justify-between")}>
                   <div>{en.status.label}</div>
                   {productStatus}
                 </div>
               </div>
-              <div className={cn("col-span-1 md:col-span-3 flex items-center justify-center", product.stock <= 0 ? 'hidden' : '')}>{renderAddToBagButton}</div>
+              <div className={cn("col-span-1 md:col-span-3 flex items-center justify-center")}>{renderAddToBagButton}</div>
             </CardContent>
           </Card>
         </div>
       </section>
-      <section className={'mt-10'}>
+      {/* <section className={'mt-10'}>
         <h2 className={'h2-bold mb-5'}>{en.customer_review.customer_reviews.label}</h2>
         <ReviewList userId={userId || ''} productId={product.id} productSlug={product.slug} />
-      </section>
+      </section> */}
     </Fragment>
   )
 }

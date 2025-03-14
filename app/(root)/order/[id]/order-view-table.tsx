@@ -10,9 +10,9 @@ import { useToast } from 'hook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
 import { faPaypal, faStripe } from '@fortawesome/free-brands-svg-icons'
-import { Badge, Button, Separator } from 'component/ui'
+import { Badge, Separator } from 'component/ui'
 import { PriceSummaryCard } from 'component/shared/card'
-import { MarkDeliveredBtn, TapeBtn } from 'component/shared/btn'
+import { BackBtn, MarkDeliveredBtn, TapeBtn, } from 'component/shared/btn'
 import { parseAddress, toCents } from 'lib/util'
 import OrderViewCard from './order-view-card'
 import StripePayment from './stripe-payment'
@@ -54,14 +54,10 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
     toast({ variant: response.success ? 'default' : 'destructive', description: response.message })
   }
 
-  const handleBackButton = () => {
-    window.history.back()
-  }
-
   return (
     <Fragment>
         {/* title and order id */}
-      <Button variant={'ghost'} onClick={handleBackButton}><p className={'text-xl'}>{'<-'}</p></Button>
+     <BackBtn />
       <div className="flex flex-row items-center justify-start gap-4">
           <h1 className={'py-4 h3-bold'}>{en.order.label}</h1>
           <span>
