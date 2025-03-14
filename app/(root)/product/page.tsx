@@ -2,7 +2,7 @@ import { FC, Fragment } from 'react'
 import { _mockData } from '_mock'
 import { KEY } from 'lib'
 import { getAllProducts } from 'lib/action'
-import { NoResult, BackBtn, Pagination } from 'component/shared'
+import { NoResult, Pagination } from 'component/shared'
 import { ProductCard } from 'component/module/product'
 
 const DEFAULT_QUERY = 'all'
@@ -18,9 +18,6 @@ const ProductPage: FC<SearchPageProps> = async ({ searchParams }) => {
     <Fragment>
       <div className="grid md:grid-cols-5 md:gap-5">
         <div className="md:col-span-5 space-y-4">
-            <div className="flex-between flex-col md:flex-row my-4">
-                <BackBtn/>
-            </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                 {products.data.length <= 0  && <NoResult data={_mockData.products.length} />}
                 {products.data.map((_product, index) => (
