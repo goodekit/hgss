@@ -1,18 +1,22 @@
 "use client"
 
+import { FC, ReactNode } from 'react'
 import { en } from 'public/locale'
-// import { ArrowLeft } from 'lucide-react'
 import { Tooltp } from 'component/shared/tooltp'
 import { Button } from 'component/ui'
+import { cn } from 'lib'
 
-const BackBtn = () => {
+interface BackBtnProps {
+  className?: ReactNode
+}
+
+const BackBtn: FC<BackBtnProps> = ({ className }) => {
 
  const handleBackButton = () => { window.history.back() }
   return (
     <Tooltp content={en.go_back}>
-      <Button variant={'ghost'} onClick={handleBackButton}>
-       <h2 className={'text-4xl'}>{'<-'}</h2>
-        {/* <ArrowLeft className={'default-size_icon'} /> */}
+      <Button variant={'ghost'} onClick={handleBackButton} className={cn("", className)}>
+       <h2 className={'text-4xl permanent-marker-regular mb-4'}>{'<-'}</h2>
       </Button>
     </Tooltp>
   )
