@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useTransition, FC } from 'react'
+import { useTransition, FC } from 'react'
 import { en } from 'public/locale'
 import { ShoppingBagIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -54,9 +54,9 @@ const AddToBag: FC<AddToBagProps> = ({ bag, item }) => {
     <TapeBtn type={'button'} onClick={handleAddToBag} label={isPending ? (
     <EllipsisLoader />
     ) : (
-      <Fragment>
-      {'+'} {en.add_to_bag} <ShoppingBagIcon />
-      </Fragment>
+      <div className={'flex justify-center gap-5 items-center'}>
+      {'+'} {en.add_to_bag} <ShoppingBagIcon size={15} />
+      </div>
     )}/>
   )
   return render
