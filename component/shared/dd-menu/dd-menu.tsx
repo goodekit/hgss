@@ -31,7 +31,7 @@ const DDMenu: FC<DDMenuProps> = ({ menuItems, menuIcon, title, className, varian
         {menuIcon ? menuIcon : <RectangleEllipsis size={buttonIconSize} />}
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent align={align}>
+    <DropdownMenuContent align={align} className={'special-elite'}>
       <DropdownMenuLabel>{title}</DropdownMenuLabel>
       <DropdownMenuSeparator />
         {menuItems?.map((item, index) => (
