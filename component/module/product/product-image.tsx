@@ -1,4 +1,5 @@
 'use client'
+
 import { FC, useState } from 'react'
 import Image from 'next/image'
 import { cn } from 'lib'
@@ -9,9 +10,10 @@ interface ProductImageProps {
 
 const ProductImage: FC<ProductImageProps> = ({ images }) => {
   const [current, setCurrent] = useState(0)
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-7 gap-4 h-[500px]">
-       <div className="col-span-1">
+    <div className="grid grid-cols-2 md:grid-cols-7 gap-4 h-[500px]">
+        <div className="col-span-1">
           {images.map((image, index) => (
             <div
               key={index}
@@ -21,8 +23,10 @@ const ProductImage: FC<ProductImageProps> = ({ images }) => {
             </div>
           ))}
         </div>
-      <div className={'col-span-6'}>
-        <Image src={images[current]} alt={'product-image'} width={1000} height={1000} className="max-h-[480px] w-auto object-cover object-center" priority />
+        <div className={'col-span-1 md:col-span-6 flex justify-center items-center'}>
+          <div className={"w-[480px] h-[480px] relative overflow-hidden"}>
+            <Image src={images[current]} alt={'product-image'} fill className="object-cover object-center" priority />
+          </div>
       </div>
     </div>
   )
