@@ -16,9 +16,8 @@ const MobileMenu = ({ user }: { user: User }) => {
       <User2Icon />
     </LinkBtn>
   ) : (
-    <div className="flex flex-col space-y-2">
-      <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT}>{charAtName(user.name)}</ProtectedNavLink>
-      <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT} linkBtn><SquareUserRound /></ProtectedNavLink>
+    <div className="flex-col space-y-2 special-elite">
+      <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT} linkBtn><SquareUserRound /> {charAtName(user.name)} </ProtectedNavLink>
       <ProtectedNavLink href={PATH_DIR.USER.ORDER}>{en.order_history.label}</ProtectedNavLink>
       <Separator className="my-4" />
       {isAdmin && (
@@ -29,7 +28,7 @@ const MobileMenu = ({ user }: { user: User }) => {
       )}
        <form action={signOutBasic} className="w-full">
           <Button className="w-full py-4 px-2 h-4 justify-start" variant={'ghost'}>
-            <LogOut />
+            <LogOut /> <span>{en.sign_out.label}</span>
           </Button>
         </form>
     </div>
@@ -41,12 +40,17 @@ const MobileMenu = ({ user }: { user: User }) => {
         <SheetTrigger className="align-middle">
           <EllipsisVertical />
         </SheetTrigger>
-        <SheetContent className="flex flex-col items-start w-[100px]">
-          <ThemeToggle />
-          <LinkBtn href={PATH_DIR.BAG}>
-            <ShoppingBagIcon />
-          </LinkBtn>
-          {renderUser}
+        <SheetContent className="flex flex-col items-start w-[200px] special-elite">
+          <div className={'flex flex-row justify-between'}>
+            <div>
+                <LinkBtn href={PATH_DIR.BAG} className={'flex items-center'}>
+                    <ShoppingBagIcon />
+                    <span>{en.bag.label}</span>
+                </LinkBtn>
+              <ThemeToggle />
+            </div>
+            {renderUser}
+          </div>
           <SheetDescription></SheetDescription>
         </SheetContent>
       </Sheet>
