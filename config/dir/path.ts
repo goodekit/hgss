@@ -25,6 +25,7 @@ export const PATH_DIR = {
   ORDER           : connect('order'),
   ORDER_VIEW      : (id: string) => connect('order', id),
   PAYMENT         : connect('payment'),
+  PRODUCT         : connect('product'),
   PRODUCT_VIEW    : (slug: string) => connect('product', slug),
   PRODUCT_CALLBACK: (slug: string) => connect('sign-in?callbackUrl=/product', slug),
   ROOT            : '/',
