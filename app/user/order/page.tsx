@@ -5,7 +5,7 @@ import { deleteOrder, getMyOrders } from 'lib/action'
 import { Table, Badge } from 'component/ui'
 import { TblHead, TblBody } from 'component/shared/tbl'
 import { TooltpGoBadge } from 'component/shared/tooltp'
-import { Pagination, DeleteDialg } from 'component/shared'
+import { Pagination, DeleteDialg, BackBtn } from 'component/shared'
 import { formatCurrency, formatDateTime, formatId } from 'lib/util'
 
 export const metadata: Metadata = { title: 'My Orders' }
@@ -67,6 +67,7 @@ const UserOrdersPage = async ({ searchParams }: UserOrdersPageProps) => {
 
   return (
     <div className={'space-y-2'}>
+      <BackBtn />
       <h2 className="h2-bold">{en.order.orders.label}</h2>
       <div className="overflow-x-auto">
         <Table>
