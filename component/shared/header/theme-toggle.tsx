@@ -25,12 +25,12 @@ const ThemeToggle = () => {
 
   const renderIcon = () => {
     if (theme === KEY.DARK) {
-      return <MoonIcon />
+      return <div className={'flex items-center gap-1'}><MoonIcon /> <span className={' md:hidden'}>{capitalize(KEY.DARK)}</span></div>
     }
     if (theme === KEY.LIGHT) {
-      return <SunIcon />
+      return <div className={'flex items-center gap-1'}><SunIcon /> <span className={' md:hidden'}>{capitalize(KEY.LIGHT)}</span></div>
     }
-    return <SunMoon />
+    return <div className={'flex items-center gap-1'}><SunMoon /> <span className={' md:hidden'}>{capitalize(KEY.SYSTEM)}</span></div>
   }
 
   return (
@@ -40,7 +40,7 @@ const ThemeToggle = () => {
           {renderIcon()}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className={'special-elite mt-5'}>
         <DropdownMenuLabel>{capitalize(en.appearance.label)}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem checked={theme === KEY.SYSTEM} onClick={() => setTheme(KEY.SYSTEM)}>
