@@ -50,8 +50,8 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
         </div>
       </section>
       <section>
-        <div>
-          <Card className={"rounded-sm shadow-none border-t-2 border-b-2 border-x-0"}>
+        <div className={'sticky bottom-0 z-50 md:static'}>
+          <Card className={"rounded-sm shadow-none border-t-2 border-b-2 border-x-0 special-elite"}>
             <CardContent className={"p-4 grid grid-cols-1 md:grid-cols-7 space-x-4"}>
             <div className={"col-span-1 md:col-span-2"}>&nbsp;</div>
               <div className={'grid col-span-1 md:col-span-2'}>
