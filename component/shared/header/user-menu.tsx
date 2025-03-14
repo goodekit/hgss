@@ -25,7 +25,7 @@ const UserMenu = async () => {
   const isAdmin = session?.user?.role === KEY.ADMIN
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex gap-2 items-center special-elite">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center">
@@ -34,11 +34,10 @@ const UserMenu = async () => {
           </button>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className={"w-52 text-sm"} align="end" forceMount>
-          <DropdownMenuLabel className={"font-normal"}>
+        <DropdownMenuContent className={"w-52 text-sm special-elite"} align="end" forceMount>
+          <DropdownMenuLabel>
             <div className="flex flex-col space-y-2">
               <div className="text-sm font-medium leading-none">{session?.user?.name}</div>
-              <div className="text-sm text-muted-foreground leading-none">{session?.user?.email}</div>
               <Separator className="my-4" />
             </div>
           </DropdownMenuLabel>
