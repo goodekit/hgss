@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useToast } from 'hook'
-import { Check } from 'lucide-react'
 import { updateUserAccount } from 'lib/action'
 import { UpdateUserSchema } from 'lib/schema'
 import { Form, Badge } from 'component/ui'
@@ -45,7 +44,7 @@ const AccountForm = ({ user }: { user: { updatedAt: Date }  }) => {
                 <RHFFormField control={control} name={FORM_KEY.email} type={'input'} formKey={FORM_KEY.email} disabled />
                 <RHFFormField control={control} name={FORM_KEY.name} type={'input'} formKey={FORM_KEY.name} />
               <div className={'relative'}>
-                <TapeBtn isPending={form.formState.isSubmitting} label={en.update_account.label} className={'w-full'} icon={<Check size={15}/>} />
+                <TapeBtn isPending={form.formState.isSubmitting} label={en.update_account.label} className={'w-full'} />
               <div className="flex justify-end align-center items-center gap-2 mt-5">
                 <p className={'text-muted-foreground'}>{en.last_updated_at.label}</p><span><Badge variant={'outline'} className={'w-auto'}>{formatDateTime(user?.updatedAt).dateTime}</Badge></span>
               </div>
