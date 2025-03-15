@@ -1,4 +1,7 @@
 {
+    "account": {
+        "label": "Account"
+    },
     "action": {
         "label": "Action"
     },
@@ -605,6 +608,9 @@
         "label": "View All Products"
     },
     "welcome": "Welcome to our site",
+    "your_bag": {
+        "label": "Your Bag"
+    },
     "zero_results": {
         "label": "No results found"
     },
