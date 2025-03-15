@@ -1,5 +1,6 @@
 // ⎿ bag
 export { default as AddToBag } from './bag/add-to-bag'
+export { default as BagNavLink } from './bag/bag-nav-link'
 export { default as BagIconWithBadge } from './bag/bag-icon-with-badge'
 // ⎿ btn
 export { default as BackBtn } from './btn/back-btn'
