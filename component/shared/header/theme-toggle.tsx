@@ -12,10 +12,13 @@ import {
   DropdownMenuCheckboxItem,
   Button
 } from 'component/ui'
-import { capitalize, KEY } from 'lib'
+import { capitalize, cn, KEY } from 'lib'
 
+interface ThemeToggleProps {
+  className?: string
+}
 
-const ThemeToggle = () => {
+const ThemeToggle = ({ className }: ThemeToggleProps) => {
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme }   = useTheme()
 
@@ -25,22 +28,22 @@ const ThemeToggle = () => {
 
   const renderIcon = () => {
     if (theme === KEY.DARK) {
-      return <div className={'flex items-center gap-1'}><MoonIcon /> <span className={' md:hidden'}>{capitalize(KEY.DARK)}</span></div>
+      return <div className={'flex items-center gap-1'}><MoonIcon /> <span className={'md:hidden'}>{capitalize(KEY.DARK)}</span></div>
     }
     if (theme === KEY.LIGHT) {
-      return <div className={'flex items-center gap-1'}><SunIcon /> <span className={' md:hidden'}>{capitalize(KEY.LIGHT)}</span></div>
+      return <div className={'flex items-center gap-1'}><SunIcon /> <span className={'md:hidden'}>{capitalize(KEY.LIGHT)}</span></div>
     }
-    return <div className={'flex items-center gap-1'}><SunMoon /> <span className={' md:hidden'}>{capitalize(KEY.SYSTEM)}</span></div>
+    return <div className={'flex items-center gap-1'}><SunMoon /> <span className={'md:hidden'}>{capitalize(KEY.SYSTEM)}</span></div>
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={'ghost'} className="focus-visible:ring-0 focus-visible:ring-offset-0">
+        <Button variant={'ghost'} className={cn("focus-visible:ring-0 focus-visible:ring-offset-0", className)}>
           {renderIcon()}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={'special-elite mt-5'}>
+      <DropdownMenuContent className={'special-elite mt-5 justify-start items-start flex flex-row'}>
         <DropdownMenuLabel>{capitalize(en.appearance.label)}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem checked={theme === KEY.SYSTEM} onClick={() => setTheme(KEY.SYSTEM)}>
