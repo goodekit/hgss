@@ -3,13 +3,12 @@
 import { FC, Fragment, useTransition } from 'react'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useToast } from 'hook'
 import { addItemToBag, removeItemFromBag } from 'lib/action'
 import { Table, Card, CardContent, Badge } from 'component/ui'
 import { EllipsisLoader } from 'component/shared/loader'
-import { TapeBtn } from 'component/shared/btn'
+import { TapeBtn, LinkBtn } from 'component/shared/btn'
 import { BagTableHead, BagTableBody } from 'component/shared/bag'
 import { formatCurrency } from 'lib/util'
 
@@ -48,13 +47,13 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
 
   return (
     <Fragment>
-      <h1 className="py-4 h2-bold">{'Your Bag'}</h1>
+      <h1 className="py-4 h2-bold">{en.your_bag.label}</h1>
       {!bag || bag.items.length === 0 ? (
         <div className={'special-elite'}>
-          {en.bag_empty} <Link href={PATH_DIR.ROOT}>{en.go_shopping}</Link>
+          {en.bag_empty} <LinkBtn href={PATH_DIR.ROOT} variant={'secondary'}>{en.go_shopping}</LinkBtn>
         </div>
       ) : (
-        <div className="grid md:grid-cols-4 md:gap-5">
+        <div className="grid md:grid-cols-4 md:gap-5 special-elite">
           <div className="overflow-x-auto md:col-span-3">
             <Table>
               <BagTableHead />
