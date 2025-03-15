@@ -15,7 +15,7 @@ interface PurchaseFlowProps<T extends BaseLocale> {
 const PurchaseFlow = <T extends BaseLocale> ({ locale, current = 0 }: PurchaseFlowProps<T>) => {
   const lastElement = GLOBAL.PURCHASE_FLOW[GLOBAL.PURCHASE_FLOW.length - 1]
   return (
-    <div className="flex-between flex-col space-x-2 space-y-2 mb-10 md:flex-row">
+    <div className="flex-between flex-row space-x-2 space-y-2 mb-10 special-elite">
       {(GLOBAL.PURCHASE_FLOW as ProcessFlowLocaleKey<T>[]).map((step, index) => (
         <Fragment key={index}>
           <div className={cn('p-2 w-56 rounded-sm text-center text-sm', index === current && 'bg-secondary', index < current && 'opacity-40')}>
