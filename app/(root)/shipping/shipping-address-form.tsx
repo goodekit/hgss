@@ -42,7 +42,7 @@ const ShippingAddressForm: FC<ShippingAddressFormProps> = ({ address }) => {
 
   return (
     <Fragment>
-      <div className="max-w-md mx-auto space-y-4">
+      <div className="max-w-md mx-auto space-y-4 special-elite">
         <h1 className="h2-bold mt-4">{en.shipping_address.label}</h1>
         <p className="text-sm text-muted-foreground">{en.shipping_address.description}</p>
         <Form {...form}>
