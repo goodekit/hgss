@@ -1,55 +1,63 @@
 import { Fragment } from 'react'
-import { PATH_DIR } from 'hgss-dir'
 import { en } from 'public/locale'
+import { PATH_DIR } from 'hgss-dir'
+import { NAV_CONFIG } from 'hgss-nav'
 import { signOutBasic } from 'lib/action'
-import { EllipsisVertical, ShoppingBagIcon, User2Icon, LogOut, SquareUserRound } from 'lucide-react'
+import { EllipsisVertical, User2Icon, LogOut, Shield } from 'lucide-react'
 import { Sheet, SheetContent, SheetDescription, SheetTrigger, Separator, Button } from 'component/ui'
 import { ProtectedNavLink } from 'component/shared/protect'
-import { LinkBtn,  } from 'component/shared/btn'
-import { ThemeToggle } from 'component/shared'
-import { charAtName, KEY } from 'lib'
+import { LinkBtn } from 'component/shared/btn'
+import { ThemeToggle, BagNavLink } from 'component/shared'
+import { KEY } from 'lib'
 
-const MobileMenu = ({ user }: { user: User }) => {
+const MobileMenu = ({ user, count }: { user: User, count: number }) => {
   const isAdmin    = user?.role === KEY.ADMIN
   const renderUser = !user ? (
-    <LinkBtn href={PATH_DIR.SIGN_IN}>
-      <User2Icon />
+    <LinkBtn href={PATH_DIR.SIGN_IN} className={'flex justify-start'}>
+      <User2Icon /> {en.sign_in.label}
     </LinkBtn>
   ) : (
-    <div className="flex-col space-y-2 special-elite">
-      <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT} linkBtn><SquareUserRound /> {charAtName(user.name)} </ProtectedNavLink>
-      <ProtectedNavLink href={PATH_DIR.USER.ORDER}>{en.order_history.label}</ProtectedNavLink>
-      <Separator className="my-4" />
+    <div className={"flex flex-col space-y-2 text-center special-elite"}>
       {isAdmin && (
         <Fragment>
-          <ProtectedNavLink href={PATH_DIR.ADMIN.OVERVIEW}>{en.admin.label}</ProtectedNavLink>
-          <Separator className="my-2" />
+          <LinkBtn href={PATH_DIR.ADMIN.OVERVIEW} className={'flex justify-start'}><Shield />{en.admin.label}</LinkBtn>
+          <Separator className="my-4" />
         </Fragment>
       )}
-       <form action={signOutBasic} className="w-full">
-          <Button className="w-full py-4 px-2 h-4 justify-start" variant={'ghost'}>
-            <LogOut /> <span>{en.sign_out.label}</span>
-          </Button>
-        </form>
+
+      <ThemeToggle className={'flex justify-start'} />
+      <form action={signOutBasic} className="w-full">
+        <Button className={"w-full py-4 h-4 flex justify-start"} variant={'ghost'}>
+          <LogOut /> <span>{en.sign_out.label}</span>
+        </Button>
+      </form>
     </div>
   )
 
   return (
-    <nav className="md:hidden">
+    <nav className={"md:hidden"}>
       <Sheet>
-        <SheetTrigger className="align-middle">
+        <BagNavLink itemCount={count}/>
+        <SheetTrigger className={"align-middle"}>
           <EllipsisVertical />
         </SheetTrigger>
-        <SheetContent className="flex flex-col items-start w-[200px] special-elite">
-          <div className={'flex flex-row justify-between'}>
-            <div>
-                <LinkBtn href={PATH_DIR.BAG} className={'flex items-center'}>
-                    <ShoppingBagIcon />
-                    <span>{en.bag.label}</span>
-                </LinkBtn>
-              <ThemeToggle />
+        <SheetContent className={"w-[200px] special-elite"}>
+          <div className={'flex flex-col h-full justify-between'}>
+            <div className={'flex flex-col space-y-4 mt-5'}>
+                {NAV_CONFIG.map(({ title, href }, index) => (
+                  <ProtectedNavLink key={index}href={href}>{title}</ProtectedNavLink>
+                ))}
+                 <Separator className="my-4" />
+                {!user ? null : (
+                  <Fragment>
+                    <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT} className={'justify-start'}>{en.account.label}</ProtectedNavLink>
+                    <ProtectedNavLink href={PATH_DIR.USER.ORDER}>{en.order_history.label}</ProtectedNavLink>
+                  </Fragment>
+                )}
             </div>
-            {renderUser}
+            <div className={"mt-auto flex flex-col"}>
+              {renderUser}
+            </div>
           </div>
           <SheetDescription></SheetDescription>
         </SheetContent>
