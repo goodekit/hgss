@@ -42,7 +42,7 @@ const CheckoutPage = async () => {
     <Fragment>
       <PurchaseFlow current={3} locale={en} />
       <h1 className="py-4 h3-bold">{en.checkout.label}</h1>
-      <div className="grid md:grid-cols-3 md:gap-5">
+      <div className="grid md:grid-cols-3 md:gap-5 special-elite">
         <div className="md:col-span-2 overflow-x-auto space-y-4">
           <CheckoutCard
             i18Title={en.shipping_address.label}
