@@ -51,7 +51,7 @@ const AddToBag: FC<AddToBagProps> = ({ bag, item }) => {
   const render = existItem ? (
     <DynamicBagBtn isPending={isPending} handlePlus={handleAddToBag} handleMinus={handleRemoveFromBag} amount={existItem.qty} />
   ) : (
-    <TapeBtn type={'button'} onClick={handleAddToBag} label={isPending ? (
+    <TapeBtn type={'button'} className={'texture-4-bg'} onClick={handleAddToBag} label={isPending ? (
     <EllipsisLoader />
     ) : (
       <div className={'flex justify-center gap-5 items-center'}>
