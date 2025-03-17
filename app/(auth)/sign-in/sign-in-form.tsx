@@ -41,7 +41,6 @@ const SignInForm = () => {
             type={KEY.EMAIL}
             autoComplete={KEY.EMAIL}
             defaultValue={signInDefaultValue.email}
-            className="rounded-sm"
             required
           />
         </div>
@@ -53,7 +52,6 @@ const SignInForm = () => {
             type={KEY.PASSWORD}
             autoComplete={KEY.PASSWORD}
             defaultValue={signInDefaultValue.password}
-            className="rounded-sm"
             required
           />
         </div>

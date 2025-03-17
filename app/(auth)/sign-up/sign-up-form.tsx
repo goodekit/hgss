@@ -50,7 +50,6 @@ const SignUpForm = () => {
             type={KEY.TEXT}
             autoComplete={KEY.NAME}
             defaultValue={signUpDefaultValue.name}
-            className="rounded-sm"
             required
           />
         </div>
@@ -62,7 +61,6 @@ const SignUpForm = () => {
             type={KEY.EMAIL}
             autoComplete={KEY.EMAIL}
             defaultValue={signUpDefaultValue.email}
-            className="rounded-sm"
             required
           />
         </div>
@@ -74,7 +72,6 @@ const SignUpForm = () => {
             type={KEY.PASSWORD}
             autoComplete={KEY.PASSWORD}
             defaultValue={signUpDefaultValue.password}
-            className="rounded-sm"
             required
           />
         </div>
@@ -86,7 +83,6 @@ const SignUpForm = () => {
             type={KEY.PASSWORD}
             autoComplete={KEY.PASSWORD}
             defaultValue={signUpDefaultValue.confirmPassword}
-            className="rounded-sm"
             required
           />
         </div>
