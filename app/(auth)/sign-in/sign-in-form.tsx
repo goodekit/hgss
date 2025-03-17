@@ -23,7 +23,7 @@ const SignInForm = () => {
     const { pending } = useFormStatus()
     return (
       <div className="mb-5">
-        <TapeBtn disabled={pending} label={pending ? <EllipsisLoader /> : en.sign_in.label} />
+        <TapeBtn className={'texture-bg'} disabled={pending} label={pending ? <EllipsisLoader /> : en.sign_in.label} />
       </div>
     )
   }
