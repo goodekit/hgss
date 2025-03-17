@@ -61,11 +61,11 @@ const OrderViewTable: FC<OrderViewTableProps> = ({ order, isAdmin,  paypalClient
       <div className="flex flex-row items-center justify-start gap-4">
           <h1 className={'py-4 h3-bold'}>{en.order.label}</h1>
           <span>
-            <Badge variant={'secondary'}>{order.id}</Badge>
+            <Badge variant={'secondary'} className={'special-elite'}>{order.id}</Badge>
           </span>
       </div>
       {/* cards  */}
-      <div className="grid md:grid-cols-3 md:gap-5 grid-cols-1 sm:gap-0">
+      <div className="grid md:grid-cols-3 md:gap-5 grid-cols-1 sm:gap-0 special-elite">
         <div className="col-span-2 space-y-4 overflow-x-auto">
           {/* payment method card */}
           <OrderViewCard
