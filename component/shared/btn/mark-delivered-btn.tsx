@@ -1,10 +1,10 @@
 'use client'
 
-import { FC, Fragment, useTransition } from 'react'
-import { useToast } from 'hook'
-import { Button } from 'component/ui'
-import { updateOrderToDelivered } from 'lib/action'
+import { FC, useTransition } from 'react'
 import { en } from 'public/locale'
+import { useToast } from 'hook'
+import { updateOrderToDelivered } from 'lib/action'
+import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from '../loader'
 
 
@@ -22,9 +22,7 @@ const MarkDeliveredBtn: FC<MarkDeliveredBtnProps> = ({ orderId }) => {
     })
   }
   return (
-    <Button type={'button'} disabled={isPending} onClick={handleMarkDelivered} className={'w-full'}>
-      {isPending ? ( <Fragment> <i>{en.loading.processing}</i> <EllipsisLoader /></Fragment> ) : en.mark_delivered.label}
-    </Button>
+    <TapeBtn type={'button'} textSize={'text-lg'} disabled={isPending} label= {isPending ? ( <div className={'flex justify-center'}> <i>{en.loading.processing}</i> <span><EllipsisLoader /></span></div> ) : en.mark_delivered.label} onClick={handleMarkDelivered} className={'w-full texture-6-bg'} />
   )
 }
 

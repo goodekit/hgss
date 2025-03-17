@@ -72,7 +72,7 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
                 </div>
                 <span className="font-bold"> {formatCurrency(bag.itemsPrice)}</span>
               </div>
-              <TapeBtn className={'w-full'} disabled={isPending} onClick={handleNavigateCheckout} type={'button'} label=  {isPending ? <EllipsisLoader /> : ( <span> {'->'} {en.proceed_to_checkout.label}</span>)} />
+              <TapeBtn textSize={'text-lg'} className={'w-full texture-4-bg'} disabled={isPending} onClick={handleNavigateCheckout} type={'button'} label=  {isPending ? <EllipsisLoader /> : ( <span> {'->'} {en.proceed_to_checkout.label}</span>)} />
             </CardContent>
           </Card>
         </div>
