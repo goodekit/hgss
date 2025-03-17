@@ -102,9 +102,6 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
             <RHFFormField control={control} name={'price'} formKey={'price'} withWrapper={false} />
             <RHFFormField control={control} name={'stock'} formKey={'stock'} withWrapper={false} />
           </div>
-          <div className="flex flex-col md:flex-row gap-4">
-            <RHFFormField control={control} name={'model'} formKey={'model'} withWrapper={false} />
-          </div>
           <div className=" flex flex-col md:flex-col gap-4">
             <div className="flex flex-col gap-4">
                 <label>{en.form.specifications.label}</label>
