@@ -22,11 +22,12 @@ const CheckoutForm = () => {
       <TapeBtn
         label={
           <Fragment>
-            {pending ? <div className={'flex'}><i>{en.place_order.pending}</i><span><EllipsisLoader /></span></div> : en.place_order.label}
+            {pending ? <div className={'flex justify-center'}><i>{en.place_order.pending}</i><span><EllipsisLoader /></span></div> : en.place_order.label}
           </Fragment>
         }
         disabled={pending}
-        className={'w-full'}
+        className={'w-full texture-3-bg'}
+        textSize={'text-lg'}
       />
     )
   }
