@@ -13,8 +13,8 @@ const Homepage = async () => {
             <Image src={ASSET_DIR.LOGO} priority alt="Homegrown Logo" width={800} height={300} className={"m-auto p-12 pointer-events-none"} />
           </div>
           <nav className="special-elite">
-            {NAV_CONFIG.map(({ title, href }, index) => (
-              <TapeBtn key={index} label={title} href={href} index={index} isLink />
+            {NAV_CONFIG.map(({ title, href, className }, index) => (
+              <TapeBtn key={index} label={title} href={href} index={index} isLink className={className} />
             ))}
           </nav>
 

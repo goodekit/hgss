@@ -61,13 +61,13 @@ const PaymentForm: FC<PaymentMethodFormProps> = ({ paymentMethod }) => {
 
   return (
     <Fragment>
-      <div className="max-w-md mx-auto space-y-4 items-center">
+      <div className="max-w-md mx-auto space-y-4 items-center special-elite">
         <h1 className="h2-bold my-2">{en.payment_method.label}</h1>
         <p className="text-sm text-muted-foreground">{en.payment_method.description}</p>
         <Form {...form}>
           <form method={'post'} onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {PAYMENT_METHODS.map((_method, index) => (
-              <TapeBtn key={index} label={loadingMethod === _method && isPending ? <EllipsisLoader />  : <Fragment>{_method} {renderPaymentMethodIcon(_method)}</Fragment>} type={'submit'}className={`btn btn-primary w-full`}  onClick={() => handleButtonClick(_method)}  />
+              <TapeBtn key={index} className={`texture-${index + 2}-bg btn btn-primary w-full`} label={loadingMethod === _method && isPending ? <EllipsisLoader />  : <Fragment>{_method} {renderPaymentMethodIcon(_method)}</Fragment>} type={'submit'} onClick={() => handleButtonClick(_method)}  />
             ))}
           </form>
         </Form>
