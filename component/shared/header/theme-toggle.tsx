@@ -43,7 +43,7 @@ const ThemeToggle = ({ className }: ThemeToggleProps) => {
           {renderIcon()}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={'special-elite mt-5 justify-start items-start flex flex-row'}>
+      <DropdownMenuContent className={'special-elite mt-5 justify-between items-start flex flex-col cursor-pointer'}>
         <DropdownMenuLabel>{capitalize(en.appearance.label)}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem checked={theme === KEY.SYSTEM} onClick={() => setTheme(KEY.SYSTEM)}>
