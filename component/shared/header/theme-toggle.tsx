@@ -9,8 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  Button
+  DropdownMenuCheckboxItem
 } from 'component/ui'
 import { capitalize, cn, KEY } from 'lib'
 
@@ -28,22 +27,22 @@ const ThemeToggle = ({ className }: ThemeToggleProps) => {
 
   const renderIcon = () => {
     if (theme === KEY.DARK) {
-      return <div className={'flex items-center gap-1'}><MoonIcon /> <span className={'md:hidden'}>{capitalize(KEY.DARK)}</span></div>
+      return <div className={'flex items-center gap-1'}><MoonIcon size={20} /> <span className={'md:hidden'}>{capitalize(KEY.DARK)}</span></div>
     }
     if (theme === KEY.LIGHT) {
-      return <div className={'flex items-center gap-1'}><SunIcon /> <span className={'md:hidden'}>{capitalize(KEY.LIGHT)}</span></div>
+      return <div className={'flex items-center gap-1'}><SunIcon size={20} /> <span className={'md:hidden'}>{capitalize(KEY.LIGHT)}</span></div>
     }
-    return <div className={'flex items-center gap-1'}><SunMoon /> <span className={'md:hidden'}>{capitalize(KEY.SYSTEM)}</span></div>
+    return <div className={'flex items-center gap-1'}><SunMoon size={20} /> <span className={'md:hidden'}>{capitalize(KEY.SYSTEM)}</span></div>
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={'ghost'} className={cn("focus-visible:ring-0 focus-visible:ring-offset-0", className)}>
+         <button className={cn('text-sm font-medium transition-colors hover:text-primary ease-in-out text-muted-foreground', className)}>
           {renderIcon()}
-        </Button>
+         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={'special-elite mt-5 justify-between items-start flex flex-col cursor-pointer'}>
+      <DropdownMenuContent className={'special-elite flex flex-col cursor-pointer'} align={"end"} forceMount>
         <DropdownMenuLabel>{capitalize(en.appearance.label)}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem checked={theme === KEY.SYSTEM} onClick={() => setTheme(KEY.SYSTEM)}>
