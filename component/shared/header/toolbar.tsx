@@ -10,7 +10,7 @@ const Toolbar = async () => {
 
   return (
     <div className="flex justify-end gap-3">
-      <nav className="hidden md:flex w-full max-w-xs gap-1">
+      <nav className="hidden md:flex w-full max-w-xs gap-3 space-x-3">
         <ThemeToggle />
         <BagIconWithBadge itemCount={count}/>
         <UserMenu />
