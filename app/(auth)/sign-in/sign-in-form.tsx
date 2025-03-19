@@ -1,10 +1,11 @@
 "use client"
 
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { useSearchParams } from 'next/navigation'
+import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import Link from 'next/link'
 import { signInBasic } from 'lib/action'
 import { signInDefaultValue } from 'lib/schema'
@@ -15,9 +16,14 @@ import { EllipsisLoader } from 'component/shared/loader'
 import { KEY, RESPONSE } from 'lib/constant'
 
 const SignInForm = () => {
-  const [data, action] = useActionState(signInBasic, RESPONSE.DEFAULT)
-  const searchParams   = useSearchParams()
-  const callbackUrl    = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
+  const [showPassword, setShowPassword] = useState(false)
+  const [data, action]                  = useActionState(signInBasic, RESPONSE.DEFAULT)
+  const searchParams                    = useSearchParams()
+  const callbackUrl                     = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
+
+  const togglePassword = () => {
+    setShowPassword(!showPassword)
+  }
 
   const SignInButton = () => {
     const { pending } = useFormStatus()
@@ -34,7 +40,7 @@ const SignInForm = () => {
       {renderDataMessage}
       <div className="space-y-6">
         <div>
-          <Label htmlFor="email">{'Email'}</Label>
+          <Label htmlFor="email">{en.form.email.label}</Label>
           <Input
             id={KEY.EMAIL}
             name={KEY.EMAIL}
@@ -45,15 +51,20 @@ const SignInForm = () => {
           />
         </div>
         <div>
-          <Label htmlFor="password">{'Password'}</Label>
-          <Input
-            id={KEY.PASSWORD}
-            name={KEY.PASSWORD}
-            type={KEY.PASSWORD}
-            autoComplete={KEY.PASSWORD}
-            defaultValue={signInDefaultValue.password}
-            required
-          />
+          <Label htmlFor="password">{en.form.password.label}</Label>
+          <div className="relative">
+            <Input
+              id={KEY.PASSWORD}
+              name={KEY.PASSWORD}
+              type={showPassword ? KEY.TEXT : KEY.PASSWORD}
+              autoComplete={KEY.PASSWORD}
+              defaultValue={signInDefaultValue.password}
+              required
+            />
+            <button type={'button'} onClick={togglePassword} className={'absolute inset-y-0 right-3 items-center flex text-muted-foreground'}>
+              {showPassword ?  <EyeIcon size={15} /> : <EyeOffIcon size={15} />}
+            </button>
+          </div>
         </div>
         <div className="">
           <SignInButton />

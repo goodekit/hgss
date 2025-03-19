@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { signUpDefaultValue } from 'lib/schema'
 import { signUpUser } from 'lib/action/user.action'
+import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { Input } from 'component/ui/input'
 import { Label } from 'component/ui/label'
 import { TapeBtn } from 'component/shared/btn'
@@ -22,11 +23,16 @@ const FORM_KEY = {
 }
 
 const SignUpForm = () => {
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [data, action] = useActionState(signUpUser, RESPONSE.DEFAULT)
   const searchParams   = useSearchParams()
   const callbackUrl    = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
 
-  // enhance password conditions
+  // TODO: enhance password conditions
+
+  const togglePassword        = () => setShowPassword(!showPassword)
+  const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
 
   const SignUpButton = () => {
     const { pending } = useFormStatus()
@@ -65,28 +71,38 @@ const SignUpForm = () => {
           />
         </div>
         <div>
-          <Label htmlFor="password">{en.form.password.label}</Label>
-          <Input
-            id={KEY.PASSWORD}
-            name={FORM_KEY.password}
-            type={KEY.PASSWORD}
-            autoComplete={KEY.PASSWORD}
-            defaultValue={signUpDefaultValue.password}
-            required
-          />
+          <Label htmlFor={KEY.PASSWORD}>{en.form.password.label}</Label>
+          <div className={'relative'}>
+            <Input
+              id={KEY.PASSWORD}
+              name={FORM_KEY.password}
+              type={KEY.PASSWORD}
+              autoComplete={KEY.PASSWORD}
+              defaultValue={signUpDefaultValue.password}
+              required
+            />
+            <button type={'button'} onClick={togglePassword} className={'absolute inset-y-0 right-3 flex items-center text-muted-foreground'}>
+              {showConfirmPassword ? <EyeIcon size={15} /> : <EyeOffIcon size={15} />}
+            </button>
+          </div>
         </div>
         <div>
           <Label htmlFor={KEY.CONFIRM_PASSWORD}>{en.form.confirm_password.label}</Label>
-          <Input
-            id={KEY.CONFIRM_PASSWORD}
-            name={FORM_KEY.confirmPassword}
-            type={KEY.PASSWORD}
-            autoComplete={KEY.PASSWORD}
-            defaultValue={signUpDefaultValue.confirmPassword}
-            required
-          />
+          <div className={'relative'}>
+            <Input
+              id={KEY.CONFIRM_PASSWORD}
+              name={FORM_KEY.confirmPassword}
+              type={KEY.PASSWORD}
+              autoComplete={KEY.PASSWORD}
+              defaultValue={signUpDefaultValue.confirmPassword}
+              required
+            />
+            <button type={'button'} onClick={toggleConfirmPassword} className={'absolute inset-y-0 right-3 items-center flex text-muted-foreground'} >
+              {showConfirmPassword ? <EyeIcon size={15} /> : <EyeOffIcon size={15} />}
+            </button>
+          </div>
         </div>
-        <div className="">
+        <div>
           <SignUpButton />
         </div>
         <div className="text-sm text-center">
