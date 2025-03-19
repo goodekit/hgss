@@ -57,14 +57,14 @@ const DeleteDialg: FC<DeleteDialg> = ({ id, action, children }) => {
         </Button>
       )}
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className={'special-elite'}>
         <AlertDialogHeader>
           <AlertDialogTitle>{en.message.default.title}</AlertDialogTitle>
           <AlertDialogDescription>{en.message.confirm_delete_order.description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{en.cancel.label}</AlertDialogCancel>
-          <AlertDialogAction disabled={isPending} onClick={handleDeleteOrder} style={{ backgroundColor: systemPalette[mode].action.destructive }}>
+          <AlertDialogAction disabled={isPending} onClick={handleDeleteOrder} style={{ backgroundColor: systemPalette[mode].action.destructive, color: systemPalette[mode].text.secondary }}>
             {isPending ? (
               <Fragment>
                 <i>{en.loading.delete_order}</i> <EllipsisLoader />
