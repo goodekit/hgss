@@ -18,8 +18,8 @@ export default function AdminLayout({ children }: Readonly<{ children: ReactNode
             </Link>
           </div>
           <MainNav className={'mx-6'} />
-          <div className="ml-auto items-center flex">
-            <div>
+          <div className={"ml-auto items-center flex"}>
+            <div className={"mr-5"}>
               <AdminSearch />
             </div>
             <Toolbar />
