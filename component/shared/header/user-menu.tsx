@@ -25,11 +25,9 @@ const UserMenu = async () => {
   const isAdmin = session?.user?.role === KEY.ADMIN
 
   return (
-    <div className="flex gap-2 items-center special-elite">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="flex items-center">
-            <button className="relative w-8 h-8 rounded-sm ml-2 flex items-center hover:font-bold justify-center text-2xl">
+            <button className={"rounded-sm flex text-center hover:font-bold text-2xl"}>
               {session?.user?.name ? charAtName(session?.user?.name) : <User2Icon />}
             </button>
           </div>
