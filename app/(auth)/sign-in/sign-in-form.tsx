@@ -54,7 +54,8 @@ const SignInForm = () => {
           <Label htmlFor="password">{en.form.password.label}</Label>
           <div className="relative">
             <Input
-              id={KEY.PASSWORD}
+              id={'password-toggle'}
+              aria-label={'password-toggle'}
               name={KEY.PASSWORD}
               type={showPassword ? KEY.TEXT : KEY.PASSWORD}
               autoComplete={KEY.PASSWORD}
