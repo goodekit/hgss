@@ -16,7 +16,7 @@ const BackBtn: FC<BackBtnProps> = ({ className }) => {
   return (
     <Tooltp content={en.go_back}>
       <Button variant={'ghost'} onClick={handleBackButton} className={cn("", className)}>
-       <h2 className={'text-4xl permanent-marker-regular mb-4'}>{'<-'}</h2>
+       <h2 className={'text-2xl permanent-marker-regular mb-4'}>{'<-'}</h2>
       </Button>
     </Tooltp>
   )
