@@ -24,7 +24,9 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
 
   return (
     <Fragment>
-      <BackBtn />
+      <div className="mb-12">
+        <BackBtn />
+      </div>
       {/* <ProtectNavLink href={PATH_DIR.PRODUCT} className={'text-xl pb-5'}>{'<-'}</ProtectNavLink> */}
       <section>
         <div className="grid grid-cols-1 md:grid-cols-7 special-elite">
