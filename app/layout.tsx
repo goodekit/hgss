@@ -6,7 +6,7 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
 import { extractRouterConfig } from "uploadthing/server"
 import { ourFileRouter } from "app/api/uploadthing/core"
 import { Special_Elite, Permanent_Marker, Inter_Tight, Yusei_Magic } from 'next/font/google'
-import { TooltipProvider } from 'component/ui'
+import { TooltipProvider, Toaster } from 'component/ui'
 import { KEY } from 'lib/constant'
 import 'design/css/globals.css'
 
@@ -46,6 +46,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <ThemeProvider attribute="class" defaultTheme={'dark'} enableSystem disableTransitionOnChange>
           <TooltipProvider>
             {children}
+            <Toaster />
           </TooltipProvider>
         </ThemeProvider>
       </body>

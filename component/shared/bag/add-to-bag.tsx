@@ -32,7 +32,7 @@ const AddToBag: FC<AddToBagProps> = ({ bag, item }) => {
       toast({
         description: response.message,
         action: (
-          <ToastAction className="bg-primary text-white hover:bg-gray-800" altText="Go to Bag" onClick={() => router.push(PATH_DIR.BAG)}>
+          <ToastAction className={'bg-white border-0'} altText={"go-to-bag"} onClick={() => router.push(PATH_DIR.BAG)}>
             {en.go_to_bag}
           </ToastAction>
         )
