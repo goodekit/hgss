@@ -13,7 +13,9 @@ const NotFoundPage = () => {
           <h4 className="text-4xl mt-2 covered-by-your-grace-regular">{CODE.NOT_FOUND}</h4>
           <h1 className="text-3xl font-bold mb-4">{HTTP_RESPONSE[404].title}</h1>
           <h6 className="mt-8 covered-by-your-grace-regular">{HTTP_RESPONSE[404].description}</h6>
-          <TapeBtn label={en.go_back} href={PATH_DIR.ROOT} type={'button'} isLink />
+        </div>
+        <div className={'w-1/3 md:w-1/4 text-center'}>
+          <TapeBtn label={en.go_back} href={PATH_DIR.ROOT} type={'button'} isLink className={'texture-bg'} />
         </div>
     </div>
   )

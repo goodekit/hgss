@@ -400,7 +400,7 @@
     "place_order": {
         "label": "Place Order",
         "description": "Place your order",
-        "pending": "Placing Order..."
+        "pending": "Placing Order"
     },
     "please": {
         "label": "Please"
