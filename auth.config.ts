@@ -24,9 +24,9 @@ export const authConfig = {
                 const { pathname } = request.nextUrl
                 if (!auth && protectedPaths.some((p) => p.test(pathname))) return false
                 if (!request.cookies.get('sessionBagId')) {
-                  const sessionBagId = crypto.randomUUID()
+                  const sessionBagId      = crypto.randomUUID()
                   const newRequestHeaders = new Headers(request.headers)
-                  const response = NextResponse.next({ request: { headers: newRequestHeaders } })
+                  const response          = NextResponse.next({ request: { headers: newRequestHeaders } })
                   response.cookies.set('sessionBagId', sessionBagId)
                   return response
                 }
