@@ -32,7 +32,7 @@ const CheckoutForm = () => {
     )
   }
   return (
-    <form onSubmit={handleSubmit} className={'w-full'}>
+    <form onSubmit={handleSubmit} className={'w-full mt-10'}>
       <CheckoutButton />
     </form>
   )
