@@ -70,12 +70,13 @@ const SignInForm = () => {
         <div className="">
           <SignInButton />
         </div>
-        <div className="text-sm text-center">
+        {/* disable for now: HGSS-Issue8 */}
+        {/* <div className="text-sm text-center">
           {en.dont_have_account.label}
           <Link href={PATH_DIR.SIGN_UP} target={"_self"} className={"link font-bold text-punk"}>
            &nbsp;{en.sign_up.label}
           </Link>
-        </div>
+        </div> */}
       </div>
     </form>
   )
