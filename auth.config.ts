@@ -14,7 +14,13 @@ export const authConfig = {
                   /\/user\/(.*)/,
                   /\/order\/(.*)/,
                   /\/admin/,
-                ];
+                  // remove this when released publicly
+                  /^\/$/,
+                  /\/bag/,
+                  /\/product/,
+                  /\/contact/,
+                  /\/sign-up/
+                ]
                 const { pathname } = request.nextUrl
                 if (!auth && protectedPaths.some((p) => p.test(pathname))) return false
                 if (!request.cookies.get('sessionBagId')) {
