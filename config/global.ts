@@ -32,7 +32,7 @@
         PURCHASE_FLOW          : ['user_sign_in', 'shipping', 'payment', 'place_order'],
         TITLE_SEPARATOR        : ' | ',
         PRICES                 : {
-                                  CURRENCY             : process.env.NEXT_PUBLIC_CURRENCY || 'USD',
+                                  CURRENCY             : process.env.NEXT_PUBLIC_CURRENCY || 'NZD',
                                   CURRENCY_SYMBOL      : process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$',
                                   TAX                  : process.env.NEXT_PUBLIC_TAX || 0.15,
                                   NO_SHIPPING_THRESHOLD: process.env.NEXT_PUBLIC_NO_SHIPPING_THRESHOLD || 100,
