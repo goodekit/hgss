@@ -16,7 +16,7 @@ export const PATH_DIR = {
                       PRODUCT_VIEW    : (productId: string) =>  connect('admin', 'product', productId),
                       USER            : connect('admin', 'user'),
                       USER_VIEW       : (userId: string) => connect('connect', 'user', userId)
-  },
+                    },
   BAG             : connect('bag'),
   CHECKOUT        : connect('order', 'checkout'),
   CONTACT         : connect('contact'),
