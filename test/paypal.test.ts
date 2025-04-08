@@ -5,7 +5,6 @@ import { generateAccessToken, paypal } from 'lib/paypal'
  */
 test('generates access from paypal', async () => {
     const tokenResponse = await generateAccessToken()
-    console.log(tokenResponse)
     expect(typeof tokenResponse).toBe('string')
     expect(tokenResponse.length).toBeGreaterThan(0)
 })
@@ -17,7 +16,6 @@ test('creates a paypal order', async () => {
     await generateAccessToken()
     const PRICE         = 124.23
     const orderResponse = await paypal.createOrder(PRICE)
-    console.log(orderResponse)
     expect(orderResponse).toHaveProperty('id')
     expect(orderResponse).toHaveProperty('status')
     expect(orderResponse.status).toBe('CREATED')
