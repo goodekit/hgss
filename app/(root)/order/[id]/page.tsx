@@ -30,12 +30,11 @@ const OrderViewPage: FC<OrderViewPageProps> = async ({ params }) => {
     // create payment intent
     try {
        const paymentIntent = await stripe.paymentIntents.create({
-         amount: Math.round(Number(order.totalPrice) * 100),
-         currency: GLOBAL.PRICES.CURRENCY,
-         metadata: { orderId: order.id },
+         amount                   : Math.round(Number(order.totalPrice) * 100),
+         currency                 : GLOBAL.PRICES.CURRENCY,
+         metadata                 : { orderId: order.id },
          automatic_payment_methods: { enabled: true }
        })
-       console.log('Payment Intent CREATED? :  ', paymentIntent)
        client_secret = paymentIntent.client_secret
     } catch (error) {
       console.error('Error creating PaymentIntent: ', error)
