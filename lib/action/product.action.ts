@@ -28,7 +28,25 @@ export async function getProducts() {
 
     return convertToPlainObject(data)
 }
-// TODO: Documentation
+
+/**
+ * Deletes a product image from the current list of images by its index.
+ *
+ * @param currentImages - An array of image URLs representing the current images.
+ * @param index - The index of the image to delete in the `currentImages` array.
+ * @returns A promise that resolves to an object indicating the success or failure of the operation.
+ *
+ * The returned object has the following structure:
+ * - `success`: A boolean indicating whether the deletion was successful.
+ * - `error` (optional): An error object or message if the deletion failed.
+ *
+ * The function performs the following steps:
+ * 1. Extracts the file key from the image URL using `getFileKeyFromUrl`.
+ * 2. If the file key is valid, it attempts to delete the file using the `UTApi` service.
+ * 3. Returns the result of the deletion operation.
+ *
+ * If any error occurs during the process, it logs the error and returns a failure response.
+ */
 export async function deleteProductImage(currentImages: string[], index:number) {
   const getFileKeyFromUrl = (url: string) => {
     try {
@@ -66,7 +84,6 @@ export async function deleteProductImage(currentImages: string[], index:number) 
     }
   }
 }
-
 
 /**
  * Retrieves a paginated list of products from the database.
