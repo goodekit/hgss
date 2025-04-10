@@ -35,7 +35,7 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
     if (result?.success) {
       const updatedImages = currentImages.filter((_, _i) => _i != index)
       form.setValue(name, updatedImages as PathValue<z.infer<TSchema>, Path<z.infer<TSchema>>>)
-      toast({ description: "File deleted successfully" })
+      toast({ description: "File deleted" })
     } else {
       toast({ variant: 'destructive', description: "Failed to delete file from server" })
     }
