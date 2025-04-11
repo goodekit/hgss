@@ -47,7 +47,7 @@ export async function getProducts() {
  *
  * If any error occurs during the process, it logs the error and returns a failure response.
  */
-export async function deleteProductImage(currentImages: string[], index:number) {
+export async function deleteProductImage(currentImages: string[] | string, index:number) {
   const getFileKeyFromUrl = (url: string) => {
     try {
       const urlParts = url.split('/')
@@ -61,7 +61,7 @@ export async function deleteProductImage(currentImages: string[], index:number) 
   if (currentImages?.length > 0) {
     try {
       const imageToDelete = currentImages[index]
-      const fileKey       = getFileKeyFromUrl(imageToDelete)
+      const fileKey = getFileKeyFromUrl(imageToDelete)
       if (fileKey) {
         const deleteFile = async () => {
           try {
@@ -69,7 +69,7 @@ export async function deleteProductImage(currentImages: string[], index:number) 
             await utapi.deleteFiles(fileKey)
             return { success: true }
           } catch (error) {
-            console.error("Error deleting file: ", error)
+            console.error('Error deleting file: ', error)
             return { success: false, error }
           }
         }
@@ -79,8 +79,24 @@ export async function deleteProductImage(currentImages: string[], index:number) 
         return { success: false, error: 'failed' }
       }
     } catch (error) {
-      console.error("Error in handleDelete: ", error)
+      console.error('Error in handleDelete: ', error)
       return { success: false, error }
+    }
+  } else {
+    const fileKey = getFileKeyFromUrl(currentImages as string)
+    if (fileKey) {
+      const deleteFile = async () => {
+        try {
+          const utapi = new UTApi()
+          await utapi.deleteFiles(fileKey)
+          return { success: true }
+        } catch (error) {
+          console.error('Error deleting file: ', error)
+          return { success: false, error }
+        }
+      }
+      const result = await deleteFile()
+      return result
     }
   }
 }
