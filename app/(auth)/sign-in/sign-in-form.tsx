@@ -6,7 +6,6 @@ import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { useSearchParams } from 'next/navigation'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
-// import Link from 'next/link'
 import { signInBasic } from 'lib/action'
 import { signInDefaultValue } from 'lib/schema'
 import { Input } from 'component/ui/input'
@@ -34,6 +33,7 @@ const SignInForm = () => {
       </div>
     )
   }
+
   const renderDataMessage = data && !data.success && <div className="text-center text-destructive">{data.message}</div>
   return (
     <form action={action}>
