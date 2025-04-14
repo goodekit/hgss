@@ -26,11 +26,11 @@ const TAG = 'USER.ACTION'
  */
 export async function signInBasic(prevState: unknown, formData: FormData) {
   try {
-    const user = SignInSchema.parse({
+    const { email, password } = SignInSchema.parse({
       email   : formData.get('email'),
       password: formData.get('password')
     })
-    await signIn('credentials', user)
+    await signIn('credentials', { email, password})
     return SystemLogger.response(en.success.user_signed_in, CODE.OK, TAG)
   } catch (error) {
     if (isRedirectError(error)) {
@@ -39,7 +39,6 @@ export async function signInBasic(prevState: unknown, formData: FormData) {
     return SystemLogger.errorMessage(en.error.invalid_credentials, CODE.BAD_REQUEST, TAG)
   }
 }
-
 
 /**
  * Signs out the current user by calling the `signOut` function.
