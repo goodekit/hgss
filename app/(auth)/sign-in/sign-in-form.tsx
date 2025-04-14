@@ -13,6 +13,7 @@ import { Input } from 'component/ui/input'
 import { Label } from 'component/ui/label'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
+// import { GoogleSignInBtn } from 'component/shared/google'
 import { KEY, RESPONSE } from 'lib/constant'
 
 const SignInForm = () => {
@@ -41,14 +42,7 @@ const SignInForm = () => {
       <div className="space-y-6">
         <div>
           <Label htmlFor="email">{en.form.email.label}</Label>
-          <Input
-            id={KEY.EMAIL}
-            name={KEY.EMAIL}
-            type={KEY.EMAIL}
-            autoComplete={KEY.EMAIL}
-            defaultValue={signInDefaultValue.email}
-            required
-          />
+          <Input id={KEY.EMAIL} name={KEY.EMAIL} type={KEY.EMAIL} autoComplete={KEY.EMAIL} defaultValue={signInDefaultValue.email} required />
         </div>
         <div>
           <Label htmlFor="password">{en.form.password.label}</Label>
@@ -63,12 +57,17 @@ const SignInForm = () => {
               required
             />
             <button type={'button'} onClick={togglePassword} className={'absolute inset-y-0 right-3 items-center flex text-muted-foreground'}>
-              {showPassword ?  <EyeIcon size={15} /> : <EyeOffIcon size={15} />}
+              {showPassword ? <EyeIcon size={15} /> : <EyeOffIcon size={15} />}
             </button>
           </div>
         </div>
-        <div className="">
+        <div>
           <SignInButton />
+          {/* disable for now: HGSS-Issue8 */}
+          {/* <div className={'my-4 flex justify-center'}>
+            <h4>{en.or.label}</h4>
+          </div>
+          <GoogleSignInBtn /> */}
         </div>
         {/* disable for now: HGSS-Issue8 */}
         {/* <div className="text-sm text-center">
