@@ -30,7 +30,7 @@ export async function signInBasic(prevState: unknown, formData: FormData) {
       email   : formData.get('email'),
       password: formData.get('password')
     })
-    await signIn('credentials', { email, password})
+    await signIn('credentials', { email, password })
     return SystemLogger.response(en.success.user_signed_in, CODE.OK, TAG)
   } catch (error) {
     if (isRedirectError(error)) {
