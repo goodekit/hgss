@@ -21,6 +21,7 @@ export const PATH_DIR = {
   CHECKOUT        : connect('order', 'checkout'),
   CONTACT         : connect('contact'),
   EMAIL_IMAGE     : (img: string) => connectUrl(GLOBAL.SERVER_URL, img),
+  GOOGLE_CALLBACK : connectUrl(GLOBAL.SERVER_URL, 'api', 'auth', 'callback', 'credentials'),
   MOCK            : connect('__mock', 'sample-data.ts'),
   ORDER           : connect('order'),
   ORDER_VIEW      : (id: string) => connect('order', id),
