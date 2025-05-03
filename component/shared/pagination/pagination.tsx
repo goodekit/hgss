@@ -31,8 +31,7 @@ const Pagination: FC<PaginationProps> = ({ page, totalPages, urlParamName }) => 
         className={'w-28 px-0 group relative flex items-center'}
         disabled={Number(page) <= 1}
         onClick={() => handleClick('prev')}>
-        <p className={'text-xl'}>{'<-'}</p>
-        {/* <ArrowLeft className={'default-size_icon -right-5 opacity-100 translate-x-[100%] ease-in-out group-hover:translate-x-5 group-hover:opacity-0'} /> */}
+        <p className={'text-xl transition-opacity duration-300 group-hover:opacity-30'}>{'<-'}</p>
         <p className={cn("ml-2 absolute translate-x-[100%] opacity-0 whitespace-nowrap rounded px-2 py-1 text-sm transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100", textControlColor)}>
           {en.previous.label}
         </p>
@@ -43,8 +42,7 @@ const Pagination: FC<PaginationProps> = ({ page, totalPages, urlParamName }) => 
         className={'w-28 px-0 group relative flex items-center'}
         disabled={Number(page) >= totalPages}
         onClick={() => handleClick('next')}>
-        <p className={'text-xl'}>{'->'}</p>
-        {/* <ArrowRight className={'default-size_icon opacity-100 translate-x-[-100%] ease-in-out group-hover:translate-x-5 group-hover:opacity-0'} /> */}
+        <p className={'text-xl transition-opacity duration-300 group-hover:opacity-30'}>{'->'}</p>
         <p className={cn("ml-2 absolute left-0 translate-x-[-100%] opacity-0 whitespace-nowrap rounded px-2 py-1 text-black text-sm transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100", textControlColor )}>
           {en.next.label}
         </p>
