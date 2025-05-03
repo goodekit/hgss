@@ -19,7 +19,7 @@ const ProductImage: FC<ProductImageProps> = ({ images }) => {
             key={index}
             onClick={() => setCurrent(index)}
             className={cn('w-[80px] h-[80px] overflow-hidden cursor-pointer hover:opacity-50 ease-in-out transition')}>
-            <Image src={image} alt={'product-image'} width={80} height={80} className={cn("object-cover object-center" ,current !== index && 'scale-75')} />
+            <Image src={image} alt={'product-image'} width={80} height={80} className={cn("object-cover object-center", current !== index ? 'scale-90' : 'opacity-25')} />
           </div>
         ))}
       </div>
