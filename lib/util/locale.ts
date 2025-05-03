@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { en, fr, es } from 'public/locale'
 
 type NestedKeys<T> = {
@@ -25,9 +24,9 @@ const locales    = { en, fr, es }
  * @returns The localized message with placeholders replaced, or the original key if
  *          the message is not found or is not a string.
  */
-export const getLocale = (key: LocaleKey, params?: Record<string, unknown>, locale: LocaleLang = 'en'): string => {
+export const getLocale = (key: LocaleKey, params?: Record<string, object>, locale: LocaleLang = 'en'): string => {
   const messages = locales[locale] || locales['en']
-  const message = key.split('.').reduce((o: unknown, i: any) => (o ? (o as any)[i] : null), messages)
+  const message = key.split('.').reduce((o: unknown, i: string) => (o && typeof o === 'object' && i in o ? (o as Record<string, unknown>)[i] : null), messages)
 
   if (!message) {
     return key
