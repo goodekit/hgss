@@ -22,7 +22,7 @@ export default function UserLayout({ children }: Readonly<{ children: ReactNode 
           </div>
         </div>
         <div className="flex-1 space-y-4 p-8 pt-6 special-elite container mx-auto">
-          <div className={'space-y-8 max-w-7xl mx-auto'}>{children}</div>
+          <div className={'module-wrapper'}>{children}</div>
         </div>
     </header>
   )
