@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
-import { NAV_CONFIG } from 'hgss-nav'
+import { NAV_CONFIG, NAV_CONFIG_ADMIN, NAV_CONFIG_USER } from 'hgss-nav'
 import { signOutBasic } from 'lib/action'
 import { EllipsisVertical, User2Icon, LogOut, Shield } from 'lucide-react'
 import { Sheet, SheetContent, SheetDescription, SheetTrigger, Separator, Button } from 'component/ui'
@@ -10,8 +10,25 @@ import { LinkBtn } from 'component/shared/btn'
 import { ThemeToggle, BagNavLink } from 'component/shared'
 import { KEY } from 'lib'
 
-const MobileMenu = ({ user, count }: { user: User, count: number }) => {
+const MobileMenu = ({ user, count, moduleType = 'default' }: { user: User, count: number, moduleType?: ModuleType }) => {
   const isAdmin    = user?.role === KEY.ADMIN
+
+  let navConfig
+
+  switch (moduleType) {
+    case 'admin':
+      navConfig = NAV_CONFIG_ADMIN
+      break
+
+    case 'user':
+      navConfig = NAV_CONFIG_USER
+      break
+
+    default:
+      navConfig = NAV_CONFIG
+      break
+  }
+
   const renderUser = !user ? (
     <LinkBtn href={PATH_DIR.SIGN_IN} className={'flex justify-start'}>
       <User2Icon /> {en.sign_in.label}
@@ -24,7 +41,6 @@ const MobileMenu = ({ user, count }: { user: User, count: number }) => {
           <Separator className="my-4" />
         </Fragment>
       )}
-
       <ThemeToggle className={'flex justify-start'} />
       <form action={signOutBasic} className="w-full">
         <Button className={"w-full py-4 h-4 flex justify-start"} variant={'ghost'}>
@@ -44,7 +60,7 @@ const MobileMenu = ({ user, count }: { user: User, count: number }) => {
         <SheetContent className={"w-[200px] special-elite"}>
           <div className={'flex flex-col h-full justify-between'}>
             <div className={'flex flex-col space-y-4 mt-5'}>
-                {NAV_CONFIG.map(({ title, href }, index) => (
+                {navConfig.map(({ title, href }, index) => (
                   <ProtectedNavLink key={index}href={href}>{title}</ProtectedNavLink>
                 ))}
                  <Separator className="my-4" />
