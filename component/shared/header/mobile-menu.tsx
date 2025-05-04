@@ -13,21 +13,13 @@ import { KEY } from 'lib'
 const MobileMenu = ({ user, count, moduleType = 'default' }: { user: User, count: number, moduleType?: ModuleType }) => {
   const isAdmin    = user?.role === KEY.ADMIN
 
-  let navConfig
-
-  switch (moduleType) {
-    case 'admin':
-      navConfig = NAV_CONFIG_ADMIN
-      break
-
-    case 'user':
-      navConfig = NAV_CONFIG_USER
-      break
-
-    default:
-      navConfig = NAV_CONFIG
-      break
+  const NAV_CONFIG_MAP = {
+    admin  : NAV_CONFIG_ADMIN,
+    user   : NAV_CONFIG_USER,
+    default: NAV_CONFIG
   }
+
+  const navConfig = NAV_CONFIG_MAP[moduleType] || NAV_CONFIG
 
   const renderUser = !user ? (
     <LinkBtn href={PATH_DIR.SIGN_IN} className={'flex justify-start'}>
