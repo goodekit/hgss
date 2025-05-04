@@ -27,7 +27,6 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
       <div className="mb-12">
         <BackBtn />
       </div>
-      {/* <ProtectNavLink href={PATH_DIR.PRODUCT} className={'text-xl pb-5'}>{'<-'}</ProtectNavLink> */}
       <section>
         <div className="grid grid-cols-1 md:grid-cols-7 special-elite">
           <div className="col-span-4">
@@ -73,10 +72,6 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
           </Card>
         </div>
       </section>
-      {/* <section className={'mt-10'}>
-        <h2 className={'h2-bold mb-5'}>{en.customer_review.customer_reviews.label}</h2>
-        <ReviewList userId={userId || ''} productId={product.id} productSlug={product.slug} />
-      </section> */}
     </Fragment>
   )
 }

@@ -18,7 +18,7 @@ const ProductPage: FC<SearchPageProps> = async ({ searchParams }) => {
     <Fragment>
       <div className="grid md:grid-cols-5 md:gap-5">
         <div className="md:col-span-5 space-y-4">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                 {products.data.length <= 0  && <NoResult data={_mockData.products.length} />}
                 {products.data.map((_product, index) => (
                     <ProductCard key={index} product={_product} />

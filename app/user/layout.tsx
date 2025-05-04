@@ -16,9 +16,9 @@ export default function UserLayout({ children }: Readonly<{ children: ReactNode 
               </div>
             </Link>
           </div>
-          <MainNav className={'mx-6'} />
+          <MainNav className={'mx-6 hidden md:block'} />
           <div className="ml-auto items-center flex">
-            <Toolbar />
+            <Toolbar moduleType={'user'} />
           </div>
         </div>
         <div className="flex-1 space-y-4 p-8 pt-6 special-elite container mx-auto">
