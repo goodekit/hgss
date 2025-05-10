@@ -53,7 +53,8 @@
                                 RESEND_API_KEY: process.env.RESEND_API_KEY || '',
                                 SENDER_EMAIL  : process.env.SENDER_EMAIL || 'onboarding@resend.dev'
                                 },
-        UPLOADTHING           : {
+        RYBBIT                  : `https://app.rybbit.io/api/script.js`,
+        UPLOADTHING: {
                                   APP_ID             : process.env.UPLOADTHING_APP_ID,
                                   TOKEN              : process.env.UPLOADTHING_TOKEN,
                                   SECRET             : process.env.UPLOADTHING_SECRET,
