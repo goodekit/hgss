@@ -46,7 +46,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <Script src={GLOBAL.RYBBIT} data-site-id="388" strategy="afterInteractive" />
       </head>
       <body className={`${interTight.className} ${specialElite.className} ${permanentMarker.className} ${yuseiMagic.className} antialiased`}>
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <ThemeProvider attribute="class" defaultTheme={'dark'} enableSystem disableTransitionOnChange>
           <TooltipProvider>
             {children}
