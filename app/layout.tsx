@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { GLOBAL } from 'hgss'
 import { ThemeProvider } from 'next-themes'
+import Script from 'next/script'
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
 import { extractRouterConfig } from "uploadthing/server"
 import { ourFileRouter } from "app/api/uploadthing/core"
@@ -41,8 +42,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang={KEY.EN} suppressHydrationWarning>
+      <head>
+        <Script src={GLOBAL.RYBBIT} data-site-id="388" strategy="afterInteractive" />
+      </head>
       <body className={`${interTight.className} ${specialElite.className} ${permanentMarker.className} ${yuseiMagic.className} antialiased`}>
-      <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)}/>
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <ThemeProvider attribute="class" defaultTheme={'dark'} enableSystem disableTransitionOnChange>
           <TooltipProvider>
             {children}
