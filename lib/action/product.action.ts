@@ -4,7 +4,7 @@ import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { Prisma } from '@prisma/client'
-import { UTApi } from "uploadthing/server"
+import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { prisma } from 'db'
 import { revalidatePath } from 'next/cache'
 import { SystemLogger } from 'lib/app-logger'
@@ -13,6 +13,14 @@ import { convertToPlainObject } from 'lib/util'
 import { KEY, CODE } from 'lib/constant'
 
 const TAG = 'PRODUCT.ACTION'
+
+const s3 = new S3Client({
+    region: GLOBAL.AWS.REGION,
+    credentials: {
+        accessKeyId    : GLOBAL.AWS.ACCESS_KEY_ID,
+        secretAccessKey: GLOBAL.AWS.SECRET_ACCESS_KEY
+    }
+})
 
 /**
  * Fetches the latest products from the database.
@@ -47,58 +55,35 @@ export async function getProducts() {
  *
  * If any error occurs during the process, it logs the error and returns a failure response.
  */
-export async function deleteProductImage(currentImages: string[] | string, index:number) {
+export async function deleteProductImage(args: ImageInput) {
   const getFileKeyFromUrl = (url: string) => {
     try {
-      const urlParts = url.split('/')
-      return urlParts[urlParts.length - 1].split('-')[0]
+      const urlParts = url?.split('/')
+      const keyParts = urlParts.slice(3)
+      return keyParts.join('/')
     } catch (error) {
-      console.error('Error extracting the file Key: ', error)
+      console.error(en.error.failed_extract_file_key, error)
       return null
     }
   }
 
-  if (currentImages?.length > 0) {
+  const imageToDelete = 'index' in args ? args?.currentImages[args.index] : args.currentImages
+  const fileKey = getFileKeyFromUrl(imageToDelete)
+
+  if (!fileKey) return { success: false, error: en.error.invalid_file_key }
+
     try {
-      const imageToDelete = currentImages[index]
-      const fileKey = getFileKeyFromUrl(imageToDelete)
-      if (fileKey) {
-        const deleteFile = async () => {
-          try {
-            const utapi = new UTApi()
-            await utapi.deleteFiles(fileKey)
-            return { success: true }
-          } catch (error) {
-            console.error('Error deleting file: ', error)
-            return { success: false, error }
-          }
-        }
-        const result = await deleteFile()
-        return result
-      } else {
-        return { success: false, error: 'failed' }
-      }
+      await s3.send(
+        new DeleteObjectCommand({
+          Bucket: GLOBAL.AWS.S3_BUCKET_NAME,
+          Key   : fileKey
+        })
+      )
+      return { success: true }
     } catch (error) {
-      console.error('Error in handleDelete: ', error)
+      console.error(en.error.unable_delete, error)
       return { success: false, error }
     }
-  } else {
-    const fileKey = getFileKeyFromUrl(currentImages as string)
-    if (fileKey) {
-      const deleteFile = async () => {
-        try {
-          const utapi = new UTApi()
-          await utapi.deleteFiles(fileKey)
-          return { success: true }
-        } catch (error) {
-          console.error('Error deleting file: ', error)
-          return { success: false, error }
-        }
-      }
-      const result = await deleteFile()
-      return result
-    }
-  }
 }
 
 /**
