@@ -37,8 +37,9 @@ export const PATH_DIR = {
   SIGN_IN         : connect('sign-in'),
   SIGN_UP         : connect('sign-up'),
   STRIPE_CALLBACK : (id: string) => connectUrl(GLOBAL.SERVER_URL, 'order', id, 'stripe-payment-success'),
+  UPLOAD          : connect('api', 'upload'),
   USER            : {
                       ACCOUNT: connect('user', 'account'),
                       ORDER  : connect('user', 'order'),
-    }
+  }
 }
