@@ -17,6 +17,12 @@ declare global {
     updatedAt : Date
     createdAt : Date
   }
+  export type FieldName    = Path<z.infer<TSchema>>
+  export type SetFieldName = PathValue<TypeOf<TSchema>, Path<TSchema>>
+
+  type ImageArr   = { currentImages: string[]; index: number }
+  type ImageSolo  = { currentImages: string }
+  export type ImageInput = ImageArr | ImageSolo
 
   export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD'
   export type ModuleType = 'admin' | 'user' | 'default'
