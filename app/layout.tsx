@@ -3,9 +3,6 @@ import type { Metadata } from 'next'
 import { GLOBAL } from 'hgss'
 import { ThemeProvider } from 'next-themes'
 import Script from 'next/script'
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
-import { extractRouterConfig } from "uploadthing/server"
-import { ourFileRouter } from "app/api/uploadthing/core"
 import { Special_Elite, Permanent_Marker, Inter_Tight, Yusei_Magic } from 'next/font/google'
 import { TooltipProvider, Toaster } from 'component/ui'
 import { KEY } from 'lib/constant'
