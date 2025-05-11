@@ -103,6 +103,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
             <RHFFormField control={control} name={'stock'} formKey={'stock'} withWrapper={false} />
           </div>
           <div className=" flex flex-col md:flex-col gap-4">
+            {/* TODO: enhance this by puting this in a reusable component */}
             <div className="flex flex-col gap-4">
                 <label>{en.form.specifications.label}</label>
                 {fields.map((field, index) => (
@@ -112,7 +113,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
                   </div>
                 ))}
                 <Button type={"button"} variant={'ghost'} onClick={() => append('')}>{'+ '}{en.form.specifications.placeholder}</Button>
-              </div>
+            </div>
           </div>
           <div className="upload-field flex flex-col md:flex-row gap-4">
             <RHFFormDropzone control={control} name={'images'} formKey={'images'} images={images} form={form} />
