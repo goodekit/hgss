@@ -20,12 +20,12 @@ declare global {
   export type FieldName    = Path<z.infer<TSchema>>
   export type SetFieldName = PathValue<TypeOf<TSchema>, Path<TSchema>>
 
-  type ImageArr   = { currentImages: string[]; index: number }
-  type ImageSolo  = { currentImages: string }
+  type   ImageArr        = { currentImages: string[]; index: number }
+  type   ImageSolo       = { currentImages: string }
   export type ImageInput = ImageArr | ImageSolo
 
-  export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD'
-  export type ModuleType = 'admin' | 'user' | 'default'
+  export type HTTPMethod   = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD'
+  export type ModuleType   = 'admin' | 'user' | 'default'
 
   export interface Product extends z.infer<typeof ProductSchema> {
     id        : string
