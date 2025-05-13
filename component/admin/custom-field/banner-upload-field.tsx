@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { en } from 'public/locale'
 import Image from 'next/image'
 import { z, ZodSchema } from 'zod'
@@ -20,7 +20,8 @@ interface BannerUploadFieldProps<TSchema extends ZodSchema> {
 
 }
 const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, form }: BannerUploadFieldProps<TSchema>) => {
-    const { toast }                           = useToast()
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
+  const { toast }                           = useToast()
 
     const handleUploadComplete                = (res: { url: string }) => {
       form.setValue('banner' as FieldName, res.url as SetFieldName)
@@ -31,17 +32,44 @@ const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, for
       if (!file) return
       const formData = new FormData()
       formData.append('file', file)
-      try {
-        const res = await fetch(PATH_DIR.UPLOAD, {
-          method: 'POST',
-          body  : formData
-        })
-        if (!res.ok) throw new Error(en.error.unable_delete)
-        const data = await res.json()
-        handleUploadComplete({ url: data.url })
-      } catch (error: unknown) {
-        toast({ variant: 'destructive', description: (error as AppError).message })
+      const xhr = new XMLHttpRequest()
+
+      xhr.upload.onprogress = (e) => {
+        const percent = Math.round((e.loaded / e.total) * 100)
+        setUploadProgress((prev) => ({ ...prev, [file.name]: percent}))
       }
+
+      xhr.onload = () => {
+        if (xhr.status === 200){
+          const data = JSON.parse(xhr.responseText)
+          handleUploadComplete({ url: data.url })
+          setUploadProgress((prev) => {
+            const copy = { ...prev }
+            delete copy[file.name]
+            return copy
+          })
+        } else {
+          toast({ variant: 'destructive', description: en.error.unable_upload })
+        }
+      }
+
+      xhr.onerror = () => {
+        toast({ variant: 'destructive', description: en.error.unable_upload })
+      }
+
+      xhr.open('POST', PATH_DIR.UPLOAD)
+      xhr.send(formData)
+      // try {
+      //   const res = await fetch(PATH_DIR.UPLOAD, {
+      //     method: 'POST',
+      //     body  : formData
+      //   })
+      //   if (!res.ok) throw new Error(en.error.unable_delete)
+      //   const data = await res.json()
+      //   handleUploadComplete({ url: data.url })
+      // } catch (error: unknown) {
+      //   toast({ variant: 'destructive', description: (error as AppError).message })
+      // }
     }
 
     const handleDelete = async () => {
@@ -66,9 +94,26 @@ const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, for
               </div>
             )}
             {isFeatured && !banner && (
-              <FormControl>
-                <input type="file" accept="image/*" onChange={(e) => handleUpload(e)} className={'cursor-pointer'} />
-              </FormControl>
+              <Fragment>
+                <FormControl>
+                  <label className="inline-block px-4 py-2 text-sm font-medium text-black bg-punkpink cursor-pointer hover:bg-punk-dark transition rounded-sm">
+                    {en.upload_banner.label}
+                    <input type="file" accept="image/*" multiple max={4} onChange={(e) => handleUpload(e)} className={'hidden'} />
+                  </label>
+                </FormControl>
+                <div className={'ease-in-out transition-opacity'}>
+                  {Object.entries(uploadProgress).map(([filename, progress]) => (
+                    <div key={filename} className="w-full mt-2">
+                      <div className="text-xs">
+                        {filename} - {progress}%
+                      </div>
+                      <div className={'w-full bg-gray-200 rounded-none h-2 overflow-hidden'}>
+                        <div className={cn('bg-tape h-2 transition-all duration-500 ease-in-out')} style={{ width: `${progress}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Fragment>
             )}
           </CardContent>
         </Card>
