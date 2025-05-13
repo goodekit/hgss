@@ -109,7 +109,7 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
                   ))}
                 </div>
                 <FormControl className={'space-y-2 my-2 text-md '}>
-                  <label className="inline-block px-4 py-2 text-sm font-medium text-black bg-punk cursor-pointer hover:bg-punk-dark transition rounded-sm">
+                  <label className="inline-block px-4 py-2 text-sm font-medium text-black bg-punkpink cursor-pointer hover:bg-punk-dark transition rounded-sm">
                     {en.upload_images.label}
                     <input type="file" accept="image/*" multiple max={4} onChange={(e) => handleUpload(e)} className={"hidden"} />
                   </label>

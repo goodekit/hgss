@@ -96,7 +96,7 @@ const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, for
             {isFeatured && !banner && (
               <Fragment>
                 <FormControl>
-                  <label className="inline-block px-4 py-2 text-sm font-medium text-black bg-punk cursor-pointer hover:bg-punk-dark transition rounded-sm">
+                  <label className="inline-block px-4 py-2 text-sm font-medium text-black bg-punkpink cursor-pointer hover:bg-punk-dark transition rounded-sm">
                     {en.upload_banner.label}
                     <input type="file" accept="image/*" multiple max={4} onChange={(e) => handleUpload(e)} className={'hidden'} />
                   </label>
