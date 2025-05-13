@@ -585,6 +585,9 @@ export const en = {
     label      : 'Update User',
     description: 'Complete the form with your user information'
   },
+  upload_images: {
+    label: 'Upload Image/s'
+  },
   upload_banner: {
     label      : 'Upload Banner',
     description: 'Drag and drop an image here or click to upload'
