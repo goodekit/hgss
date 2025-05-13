@@ -4,6 +4,7 @@ import { FC, Fragment, useEffect } from 'react'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { useRouter } from 'next/navigation'
+import { useTheme } from 'next-themes'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm, useFieldArray } from 'react-hook-form'
 import { useToast, usePreventNavigation, useFormState } from 'hook'
@@ -15,16 +16,21 @@ import { Form, Button, Input } from 'component/ui'
 import { BannerUploadField } from 'component/admin/custom-field'
 import { LoadingBtn } from 'component/shared/btn'
 import { RHFFormField, RHFFormDropzone, RHFCheckbox } from 'component/shared/rhf'
-import { capitalize, delay } from 'lib/util'
+import { capitalize, delay, cn } from 'lib/util'
 
 const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
-  const { toast }             = useToast()
-  const { isDirty, setDirty } = useFormState()
-  const router                = useRouter()
-  const form                  = useForm<CreateProduct>({
+  const { systemTheme, theme } = useTheme()
+  const { toast }              = useToast()
+  const { isDirty, setDirty }  = useFormState()
+  const router                 = useRouter()
+  const form                   = useForm<CreateProduct>({
     resolver: type === 'update' ? zodResolver(UpdateProductSchema) : zodResolver(ProductSchema),
     defaultValues: product && type === 'update' ? product : productDefaultValue
   })
+
+  // TODO: move this in system design tokens
+  const isDark    = theme === 'dark' || (theme === 'system' && systemTheme === 'dark')
+  const respLabel = isDark ? 'text-punkpink' : 'text-black'
 
   const { control, formState, register, handleSubmit } = form
   const { errors }                                     = formState
@@ -109,10 +115,10 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
                 {fields.map((field, index) => (
                   <div key={field.id} className={"flex gap-2"}>
                     <Input {...register(`specifications.${index}` as const)} className="border p-2 rounded w-full" />
-                    <span><Button type={'button'} variant={'ghost'} className={'bg-punkpink text-black'} onClick={() => remove(index)}>{en.remove.label}</Button></span>
+                    <span><Button type={'button'} variant={'ghost'} className={cn('bg-punkpink text-black')} onClick={() => remove(index)}>{en.remove.label}</Button></span>
                   </div>
                 ))}
-                <Button type={"button"} variant={'ghost'} onClick={() => append('')}>{'+ '}{en.form.specifications.placeholder}</Button>
+                <Button type={"button"} variant={'ghost'} onClick={() => append('')} className={cn('font-bold', respLabel)}>{'+ '}{en.form.specifications.placeholder}</Button>
             </div>
           </div>
           <div className="upload-field flex flex-col md:flex-row gap-4">
