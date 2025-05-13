@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react'
 import { z, ZodSchema } from 'zod'
 import { en } from 'public/locale'
 import { IMAGE } from 'hgss-design'
@@ -8,6 +9,7 @@ import Image from 'next/image'
 import { useToast } from 'hook'
 import { X } from 'lucide-react'
 import { deleteProductImage } from 'lib/action'
+import { cn } from 'lib'
 import { FormField, FormLabel, FormMessage, FormItem, FormControl } from 'component/ui/form'
 import { Card, CardContent } from 'component/ui/card'
 import { PATH_DIR } from 'hgss-dir'
@@ -23,10 +25,13 @@ interface RHFFormDropzoneProps<TSchema extends ZodSchema> {
 }
 
 const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, formKey, form }: RHFFormDropzoneProps<TSchema>) => {
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast } = useToast()
+
   const handleUploadComplete = (res: { url: string }[]) => {
     const currentImages = form.getValues(name) as string[]
-    form.setValue(name, [...currentImages, ...res.map((r) => r.url)] as FieldName)
+    const newUrls = res.map((r) => r.url).filter((url) => !currentImages.includes(url))
+    form.setValue(name, [...currentImages, ...newUrls] as FieldName)
   };
 
   const handleDelete = async (index: number) => {
@@ -48,49 +53,86 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
     for (const file of files) {
       const formData = new FormData()
       formData.append('file', file)
-      try {
-        const res = await fetch(PATH_DIR.UPLOAD, {
-          method: 'POST',
-          body: formData
-        })
-        if (!res.ok) throw new Error(en.error.unable_upload)
-        const data = await res.json()
-        console.log('urls:', urls)
-        urls.push({ url: data.url })
-      } catch (error: unknown) {
-        toast({ variant: 'destructive', description: (error as AppError).message })
+      const xhr =  new XMLHttpRequest()
+
+      xhr.upload.onprogress = (e) => {
+        const percent = Math.round((e.loaded / e.total) * 100)
+        setUploadProgress((prev) => ({...prev, [file.name]: percent}))
       }
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText)
+          urls.push({ url: data.url })
+          setUploadProgress((prev) => {
+            const copy = { ...prev }
+            delete copy[file.name]
+            return copy
+          })
+          if (urls.length) handleUploadComplete(urls)
+        } else {
+          toast({ variant:  'destructive', description: en.error.unable_upload })
+        }
+      }
+
+      xhr.onerror = () => {
+        toast({ variant: 'destructive', description: en.error.unable_upload })
+      }
+
+      xhr.open('POST', PATH_DIR.UPLOAD)
+      xhr.send(formData)
     }
-    if (urls.length) handleUploadComplete(urls)
   }
 
   return (
     <FormField
-        control={control}
-        name={name}
-        render={() => (
-        <FormItem className={"w-full"}>
-            <FormLabel>{en.form[formKey].label}</FormLabel>
-                <Card>
-                    <CardContent className={'space-y-2 mt-2 min-h-32'}>
-                      <div className="flex flex-col md:flex-row flex-start space-x-2">
-                        <div className="flex-between space-x-2">
-                            {images.map((image, index) => (
-                              <div key={index} className={'relative'}>
-                                <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(index)}/>
-                                <Image  src={image} height={IMAGE.UPLOAD_THUMBNAIL_H} width={IMAGE.UPLOAD_THUMBNAIL_W} alt={'product-name'} className={'w-20 h-20 object-cover rounded-sm'}  />
-                              </div>
-                            ))}
-                        </div>
-                        <FormControl>
-                          <input type="file" accept="image/*" multiple onChange={(e) => handleUpload(e)} className={'cursor-pointer'} />
-                        </FormControl>
-                      </div>
-                    </CardContent>
-                </Card>
-            <FormMessage />
+      control={control}
+      name={name}
+      render={() => (
+        <FormItem className={'w-full'}>
+          <FormLabel>{en.form[formKey].label}</FormLabel>
+          <Card>
+            <CardContent className={'space-y-2 mt-2 min-h-32'}>
+              <div className="flex flex-col md:flex-row flex-start h-32 space-x-2">
+                <div className="flex-between space-x-2">
+                  {images.map((image, index) => (
+                    <div key={index} className={'relative'}>
+                      <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(index)} />
+                      <Image
+                        src={image}
+                        height={IMAGE.UPLOAD_THUMBNAIL_H}
+                        width={IMAGE.UPLOAD_THUMBNAIL_W}
+                        alt={'product-name'}
+                        className={'w-20 h-20 object-cover rounded-sm'}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <FormControl className={'space-y-2 my-2 text-md '}>
+                  <label className="inline-block px-4 py-2 text-sm font-medium text-black bg-punk cursor-pointer hover:bg-punk-dark transition rounded-sm">
+                    {en.upload_images.label}
+                    <input type="file" accept="image/*" multiple max={4} onChange={(e) => handleUpload(e)} className={"hidden"} />
+                  </label>
+                </FormControl>
+              </div>
+              <div className={'ease-in-out transition-opacity'}>
+                {Object.entries(uploadProgress).map(([filename, progress]) => (
+                  <div key={filename} className="w-full mt-2">
+                    <div className="text-xs">
+                      {filename} - {progress}%
+                    </div>
+                    <div className={"w-full bg-gray-200 rounded-none h-2 overflow-hidden"}>
+                      <div className={cn("bg-tape h-2 transition-all duration-500 ease-in-out")} style={{ width: `${progress}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+          <FormMessage />
         </FormItem>
-    )}/>
+      )}
+    />
   )
 }
 
