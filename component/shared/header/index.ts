@@ -1,3 +1,4 @@
+export { default as HamburgerUserMenu } from './hamburger-user-menu'
 export { default as Header } from './header'
 export { default as MobileMenu } from './mobile-menu'
 export { default as Search } from './search'
