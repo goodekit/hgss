@@ -1,0 +1,31 @@
+import { ASSET_DIR, PATH_DIR } from 'hgss-dir'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Toolbar } from 'component/shared/header'
+import { AdminSearch } from 'component/admin'
+import MainNav from 'app/admin/main-nav'
+
+const AdminHeader = () => {
+  return (
+    <header className="sticky top-0 z-50 w-full h-[40px] bg-background">
+      <div className="wrapper flex-center h-full overflow-hidden">
+        <div className="flex-start">
+          <Link href={PATH_DIR.ROOT} className={'w-22'}>
+            <div className="h-full flex items-center overflow-hidden">
+              <Image src={ASSET_DIR.LOGO} width={70} height={70} alt={'logo'} className={'object-cover max-h-full'} />
+            </div>
+          </Link>
+        </div>
+        <MainNav className={'mx-6 hidden md:block'} />
+        <div className={'ml-auto items-center flex'}>
+          <div className={'mr-5'}>
+            <AdminSearch />
+          </div>
+          <Toolbar moduleType={'admin'} />
+        </div>
+      </div>
+    </header>
+  )
+}
+
+export default AdminHeader
