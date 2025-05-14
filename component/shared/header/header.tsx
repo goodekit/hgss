@@ -6,7 +6,7 @@ import { ProtectedNavLink } from 'component/shared/protect'
 
 const Header= () => {
   return (
-    <header className={'sticky top-0 z-50 w-full h-[60px] bg-background'}>
+    <header className={'sticky top-0 z-40 w-full h-[60px] bg-background'}>
       <div className={'nav-wrapper flex-between h-full overflow-hidden'}>
         <div className={'flex-start'}>
           {/* @matt, let me know what to add in the category drwer. */}

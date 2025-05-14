@@ -27,18 +27,18 @@ const ThemeToggle = ({ className }: ThemeToggleProps) => {
 
   const renderIcon = () => {
     if (theme === KEY.DARK) {
-      return <div className={'flex items-center gap-1'}><MoonIcon className={cn(`w-4 h-4 md:w-5 md:h-5`)} /> <span className={'md:hidden'}>{capitalize(KEY.DARK)}</span></div>
+      return <div className={'flex align-middle gap-2'}><MoonIcon className={cn(`w-4 h-4 md:w-5 md:h-5`)} /> <span className={'md:hidden'}>{capitalize(KEY.DARK)}</span></div>
     }
     if (theme === KEY.LIGHT) {
-      return <div className={'flex items-center gap-1'}><SunIcon className={cn(`w-4 h-4 md:w-5 md:h-5`)} /> <span className={'md:hidden'}>{capitalize(KEY.LIGHT)}</span></div>
+      return <div className={'flex align-middle gap-2'}><SunIcon className={cn(`w-4 h-4 md:w-5 md:h-5`)} /> <span className={'md:hidden'}>{capitalize(KEY.LIGHT)}</span></div>
     }
-    return <div className={'flex items-center gap-1'}><SunMoon className={cn(`w-4 h-4 md:w-5 md:h-5`)} /> <span className={'md:hidden'}>{capitalize(KEY.SYSTEM)}</span></div>
+    return <div className={'flex align-middle gap-2'}><SunMoon className={cn(`w-4 h-4 md:w-5 md:h-5`)} /> <span className={'md:hidden'}>{capitalize(KEY.SYSTEM)}</span></div>
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-         <button className={cn('px-4 py-2 text-sm font-medium transition-colors hover:text-primary ease-in-out text-muted-foreground', className)}>
+         <button type={'button'} className={cn('px-4 py-2 text-sm font-medium transition-colors hover:text-primary ease-in-out text-muted-foreground', className)}>
           {renderIcon()}
          </button>
       </DropdownMenuTrigger>
