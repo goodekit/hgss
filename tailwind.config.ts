@@ -39,29 +39,29 @@ const config = {
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
   			white: {
-  				DEFAULT: '#F2EED8',
+  				DEFAULT: 'var(--white)',
   				foreground: 'hsl(var(--white-foreground))'
   			},
   			black: {
-  				DEFAULT: '#0D0E0E',
+  				DEFAULT: 'var(--black)',
   				foreground: 'hsl(var(--black-foreground))'
   			},
   			tape: {
-  				DEFAULT: '#C1FF11',
-  				foreground: '#C1FF11'
+				DEFAULT   : 'var(--tape)',
+				foreground: 'var(--black)'
   			},
   			punk: {
-  				DEFAULT: '#A697CD',
-  				foreground: '#4F11FF'
+				DEFAULT   : 'var(--punk)',
+				foreground: 'var(--black)'
   			},
 			punkpink: {
-				DEFAULT   : '#FFAAD9',
-				foreground: '#4F11FF'
+				DEFAULT   : 'var(--punkpink)',
+				foreground: 'var(--black)'
 			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
+			border: 'hsl(var(--border))',
+			input : 'hsl(var(--input))',
+			ring  : 'hsl(var(--ring))',
+			chart : {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
   				'3': 'hsl(var(--chart-3))',
@@ -72,7 +72,8 @@ const config = {
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+  			sm: 'calc(var(--radius) - 4px)',
+			xs: 'calc(var(--radius) - 6px)'
   		},
   		keyframes: {
   			shuffle1: {
