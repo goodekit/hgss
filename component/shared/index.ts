@@ -26,6 +26,7 @@ export { default as MobileMenu } from './header/mobile-menu'
 export { default as Search } from './header/search'
 export { default as ThemeToggle } from './header/theme-toggle'
 export { default as Toolbar } from './header/toolbar'
+export { default as UserHeader } from './header/user-header'
 export { default as UserMenu } from './header/user-menu'
 // ⎿ footer
 export { default as Footer } from './footer/footer'
