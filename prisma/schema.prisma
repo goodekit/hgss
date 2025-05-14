@@ -35,6 +35,13 @@ model Product {
   Review         Review[]
 }
 
+model GalleryItem {
+  id            String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title         String?
+  description   String
+  image         String
+}
+
 model User {
   id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name          String?   @default("NO_NAME")
