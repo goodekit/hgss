@@ -126,7 +126,8 @@ export async function getAllProducts({ query, limit = GLOBAL.PAGE_SIZE, page, ca
  * @returns {Promise<Product | null>} A promise that resolves to the product if found, or null if not found.
  */
 export async function getProductBySlug(slug: string) {
-    return await prisma.product.findFirst({ where: { slug } })
+    const data =  await prisma.product.findFirst({ where: { slug } })
+    return convertToPlainObject(data)
   }
 
   export async function getProductById(productId: string) {
@@ -174,7 +175,7 @@ export async function createProduct(data: CreateProduct) {
  */
 export async function updateProduct(data:UpdateProduct) {
   try {
-    const product = UpdateProductSchema.parse(data)
+    const product       = UpdateProductSchema.parse(data)
     const productExists = await prisma.product.findFirst({ where: { id: product.id }})
     if (!productExists) throw new Error(en.error.product_not_found)
 
