@@ -1,0 +1,23 @@
+import { z } from 'zod'
+
+export const GalleryItemSchema = z.object({
+  title      : z.string().min(1, 'Title is required'),
+  description: z.string().min(1, 'Description is required'),
+  image      : z.string().min(1, 'Image is required'),
+  galleryId  : z.string().min(1, 'Each gallery item needs to be in a gallery')
+})
+
+export const GallerySchema = z.object({
+  title       : z.string().min(1, 'Title is required'),
+  description : z.string().min(1, 'Description is required'),
+  image       : z.string().min(1, 'Image is required'),
+  galleryItems: z.array(GalleryItemSchema)
+})
+
+export const UpdateGallerySchema = GallerySchema.extend({
+  id: z.string().min(1, 'Id is required')
+})
+
+export const UpdateGalleryItemSchema = GalleryItemSchema.extend({
+  id: z.string().min(1, 'Id is required')
+})
