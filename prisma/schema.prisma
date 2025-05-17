@@ -35,11 +35,25 @@ model Product {
   Review         Review[]
 }
 
+model Gallery {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title        String
+  description  String
+  image        String
+  galleryItems GalleryItem[]
+  createdAt    DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime      @updatedAt
+}
+
 model GalleryItem {
-  id            String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title         String?
-  description   String
-  image         String
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  galleryId   String   @db.Uuid
+  title       String
+  description String
+  image       String
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt
+  gallery     Gallery  @relation(fields: [galleryId], references: [id], onDelete: Cascade)
 }
 
 model User {
