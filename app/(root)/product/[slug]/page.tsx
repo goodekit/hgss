@@ -43,7 +43,7 @@ const ProductViewPage: FC<ProductViewPageProps> = async ({ params }) => {
               </div>
               {(product.specifications && product.specifications?.length < GLOBAL.LIMIT.PRODUCT_SPECS_MAX)&& (
                 <div className="mt-10 text-sm special-elite">
-                  {product.specifications.map((_spec, index) =>  <p key={index}>{_spec}</p> )}
+                  {product.specifications.map((_spec: string, index: number) =>  <p key={index}>{_spec}</p> )}
                 </div>
               )}
             </div>

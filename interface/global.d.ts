@@ -1,7 +1,7 @@
 import { JSX, ReactNode } from 'react'
 import { z, ZodError } from 'zod'
 import { Prisma } from '@prisma/client'
-import { CODE, ProductSchema, BagSchema, BagItemSchema, BagSchema, ShippingAddressSchema, OrderSchema, PaymentMethodSchema, OrderItemSchema, PaymentResultSchema, UpdateUserSchema, UpdateUserAccountSchema, UpdateProductSchema, ContactMessageSchema, GalleryItemSchema } from 'lib/schema'
+import { CODE, ProductSchema, BagSchema, BagItemSchema, BagSchema, ShippingAddressSchema, OrderSchema, PaymentMethodSchema, OrderItemSchema, PaymentResultSchema, UpdateUserSchema, UpdateUserAccountSchema, UpdateProductSchema, ContactMessageSchema, GalleryItemSchema, GallerySchema, UpdateGallerySchema, UpdateGallerySchema } from 'lib/schema'
 import { ReviewSchema } from 'lib/schema/review-schema'
 
 declare global {
@@ -34,9 +34,16 @@ declare global {
     createdAt : Date
   }
 
+  export interface Gallery extends z.infer<typeof GallerySchema> {
+    id       : string
+    createdAt: Date
+    updatedAt: Date
+  }
+
   export interface GalleryItem extends z.infer<typeof GalleryItemSchema> {
     id       : string
     createdAt: Date
+    updatedAt: Date
   }
 
   export interface Order extends z.infer<typeof OrderSchema>  {
@@ -69,6 +76,10 @@ declare global {
   export type UpdateProduct     = z.infer<typeof UpdateProductSchema>
   export type ReviewType        = z.infer<typeof ReviewSchema>
   export type PaymentMethod     = z.infer<typeof PaymentMethodSchema>
+  export type CreateGallery     = z.infer<typeof GallerySchema>
+  export type CreateGalleryItem = z.infer<typeof GalleryItemSchema>
+  export type UpdateGallery     = z.infer<typeof UpdateGallerySchema>
+  export type UpdateGalleryItem = z.infer<typeof UpdateGalleryItemSchema>
   export type SalesData         = { month: string, totalSales: number }[]
 
   export interface TblCell {
@@ -114,6 +125,10 @@ declare global {
   export interface AppPagination {
     limit?: number
     page  : number
+  }
+
+  export interface AppDocuments extends AppPagination {
+    query: string
   }
 
   export interface AppResponse {

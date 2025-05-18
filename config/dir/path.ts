@@ -9,13 +9,15 @@ const protect = () => {
 export const PROTECTED_ROUTES = protect()
 export const PATH_DIR = {
   ADMIN           : {
-                      ORDER           : connect('admin', 'order'),
-                      OVERVIEW        : connect('admin', 'overview'),
-                      PRODUCT         : connect('admin', 'product'),
-                      PRODUCT_CREATE  : connect('admin', 'product', 'create'),
-                      PRODUCT_VIEW    : (productId: string) =>  connect('admin', 'product', productId),
-                      USER            : connect('admin', 'user'),
-                      USER_VIEW       : (userId: string) => connect('connect', 'user', userId)
+                      GALLERY       : connect('admin', 'gallery'),
+                      GALLERY_ID    : connect('admin', 'gallery', ':id'),
+                      ORDER         : connect('admin', 'order'),
+                      OVERVIEW      : connect('admin', 'overview'),
+                      PRODUCT       : connect('admin', 'product'),
+                      PRODUCT_CREATE: connect('admin', 'product', 'create'),
+                      PRODUCT_VIEW  : (productId: string) =>  connect('admin', 'product', productId),
+                      USER          : connect('admin', 'user'),
+                      USER_VIEW     : (userId: string) => connect('connect', 'user', userId)
                     },
   BAG             : connect('bag'),
   CHECKOUT        : connect('order', 'checkout'),
