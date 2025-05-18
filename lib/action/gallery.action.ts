@@ -186,13 +186,13 @@ export async function UpdateGallery(data: UpdateGallery) {
 export async function UpdateGalleryItem(data: UpdateGalleryItem) {
   try {
     const parsed       = UpdateGalleryItemSchema.parse(data)
-    const { title description, image } = parsed
+    const { title, description, image } = parsed
     const galleryItemExists = await prisma.gallery.findFirst({ where: { id: parsed.id } })
     if (!galleryItemExists) throw new Error(en.error.not_found)
 
     await prisma.gallery.update({ where: { id: parsed.id }, data: { title, description, image } })
     revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
-    return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', galleryItem)
+    return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
