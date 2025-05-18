@@ -131,8 +131,22 @@ export async function createGalleryItem(data: CreateGalleryItem) {
  */
 export async function createGallery(data: CreateGallery) {
   try {
-    const gallery = GallerySchema.parse(data)
-    const newGallery = await prisma.gallery.create({ data: gallery })
+    const parsed                    = GallerySchema.parse(data)
+    const { galleryItems, ...rest } = parsed
+    const newGallery = await prisma.gallery.create({
+      data: {
+        ...rest,
+        ...(galleryItems && {
+          galleryItems: {
+            create: galleryItems.map(({ title, description, image }) => ({
+              title,
+              description,
+              image
+            }))
+          }
+        })
+      }
+    })
     revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
     return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', newGallery)
   } catch (error) {
