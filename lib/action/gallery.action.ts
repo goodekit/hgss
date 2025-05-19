@@ -31,7 +31,7 @@ const s3 = new S3Client({
  * @returns {Promise<object[]>} A promise that resolves to an array of plain objects
  * representing the latest galleries.
  */
-export async function getAllGallery({ limit = 8, page, query }: AppDocuments) {
+export async function getAllGallery({ limit = GLOBAL.PAGE_SIZE_GALLERY, page, query, category, sort }: AppDocumentsFilters) {
   const queryFilter: Prisma.GalleryWhereInput =
     query && query !== KEY.ALL
       ? {
@@ -39,13 +39,14 @@ export async function getAllGallery({ limit = 8, page, query }: AppDocuments) {
         }
       : {}
 
-  const gallery = await prisma.gallery.findMany({
-    where: { ...queryFilter },
-    orderBy: { createdAt: 'desc' },
-    skip: (page - 1) * limit,
-    take: limit
+  const categoryFilter = category && category !== KEY.ALL ? { category } : {}
+  const gallery        = await prisma.gallery.findMany({
+    where  : { ...queryFilter, ...categoryFilter },
+    orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
+    skip   : (page - 1) * limit,
+    take   : limit
   })
-  const count = await prisma.gallery.count({ where: { ...queryFilter } })
+  const count   = await prisma.gallery.count({ where: { ...queryFilter } })
   const summary = { data: gallery, totalPages: Math.ceil(count / limit) }
   return convertToPlainObject(summary)
 }
@@ -65,21 +66,21 @@ export async function getGalleryById(galleryId: string) {
  * @returns {Promise<object[]>} A promise that resolves to an array of plain objects
  * representing the latest galleries.
  */
-export async function getAllGalleryItems({ limit = 8, page, query }: AppDocuments) {
+export async function getAllGalleryItems({ limit = GLOBAL.PAGE_SIZE_GALLERY, page, query, sort, category }: AppDocumentsFilters) {
   const queryFilter: Prisma.GalleryItemWhereInput =
     query && query !== KEY.ALL
       ? {
           OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
-        }
-      : {}
+        } : {}
 
-  const galleryItems = await prisma.galleryItem.findMany({
-    where: { ...queryFilter },
-    orderBy: { createdAt: 'desc' },
-    skip: (page - 1) * limit,
-    take: limit
+  const categoryFilter = category && category !== KEY.ALL ? { category }: {}
+  const galleryItems   = await prisma.galleryItem.findMany({
+    where  : { ...queryFilter, ...categoryFilter },
+    orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
+    skip   : (page - 1) * limit,
+    take   : limit
   })
-  const count = await prisma.galleryItem.count({ where: { ...queryFilter } })
+  const count   = await prisma.galleryItem.count({ where: { ...queryFilter } })
   const summary = { data: galleryItems, totalPages: Math.ceil(count / limit) }
   return convertToPlainObject(summary)
 }
@@ -105,9 +106,9 @@ export async function createGalleryItem(data: CreateGalleryItem) {
     if (!galleryId) {
       const newGallery = await prisma.gallery.create({
         data: {
-          title: 'Untitled Gallery',
+          title      : 'Untitled Gallery',
           description: 'Auto-created gallery',
-          image: 'default.jpg'
+          image      : 'default.jpg'
         }
       })
       galleryId = newGallery.id
