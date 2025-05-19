@@ -119,6 +119,10 @@
   transform: rotate(-45deg) translateY(6px) translateX(-6px);
 }
 
+.text-brand {
+  @apply text-black dark:text-tape;
+}
+
 @layer base {
   :root {
     --background            : hsl(42, 23%, 91%);
