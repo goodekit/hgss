@@ -26,7 +26,7 @@ PurchaseReceiptEmail.PreviewProps = {
         taxPrice     : '10',
         shippingPrice: '10',
         itemsPrice   : '80',
-        orderitems: _mockData.products.map((_product) => ({
+        orderitems: _mockData?.products?.map((_product) => ({
             name     : _product.name,
             orderId  : '123',
             productId: '123',
