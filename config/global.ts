@@ -19,10 +19,11 @@
                                   USER_ORDERS      : 10,
                                   PRODUCT_SPECS_MAX: 5
                                 },
-        PAGE_SIZE              : 8,
-        PAYMENT_METHODS        : process.env.NEXT_PUBLIC_PAYMENT_METHODS,
-        PAYMENT_METHOD_DEFAULT : process.env.NEXT_PUBLIC_DEFAULT_PAYMENT_METHOD || 'PayPal',
-        PAYPAL                 : {
+        PAGE_SIZE             : 8,
+        PAGE_SIZE_GALLERY     : 8,
+        PAYMENT_METHODS       : process.env.NEXT_PUBLIC_PAYMENT_METHODS,
+        PAYMENT_METHOD_DEFAULT: process.env.NEXT_PUBLIC_DEFAULT_PAYMENT_METHOD || 'PayPal',
+        PAYPAL                : {
                                   PAYPAL_API_URL   : process.env.PAYPAL_API_URL || 'https://api-m.sandbox.paypal.com',
                                   PAYPAL_CLIENT_ID : process.env.PAYPAL_CLIENT_ID || 'sb',
                                   PAYPAL_APP_SECRET: process.env.PAYPAL_APP_SECRET || '',

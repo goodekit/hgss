@@ -131,6 +131,12 @@ declare global {
     query: string
   }
 
+  export interface AppDocumentsFilters extends AppPagination {
+    query    : string
+    sort    ?: string
+    category?: stiring
+  }
+
   export interface AppResponse {
     success    : boolean
     code       : CODE
