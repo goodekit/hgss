@@ -155,6 +155,12 @@
     --tape                  : #C1FF11;
     --punk                  : #A697CD;
     --punkpink              : #FFAAD9;
+
+    /* sizes */
+    --gallery-thumbnail-width-sm : 200;
+    --gallery-thumbnail-height-sm: 100px;
+    --gallery-thumbnail-width-md : 200;
+    --gallery-thumbnail-height-md: 200px;
   }
 
   .dark {

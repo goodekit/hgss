@@ -16,7 +16,7 @@ const GalleryCard: FC<GalleryCardProps> = ({ galleryItem, fallbackPhoto }) => {
   return (
     <Card className={'w-full max-w-sm sm:max-w-screen-sm special-elite align-middle m-auto border-2 rounded-md cursor-pointer -rotate-1 hover:rotate-0 transform transition-all duration-300 shadow'}>
       <CardHeader className="p-0 items-center">
-        <Link href={PATH_DIR.PRODUCT_VIEW(galleryItem.id)}>
+        <Link href={galleryItem?.image || fallbackPhoto}>
           <Image
             src={galleryItem?.image ? galleryItem?.image : fallbackPhoto}
             alt={galleryItem.title}
