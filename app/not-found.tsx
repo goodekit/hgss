@@ -8,7 +8,7 @@ import { TapeBtn } from 'component/shared/btn'
 const NotFoundPage = () => {
   return (
     <div className="flex flex-col items-center h-[90vh] justify-center shadow-none special-elite">
-        <Image src={ASSET_DIR.LOGO_ALT} width={60} height={60} alt="logo" priority />
+        <Image src={ASSET_DIR.STICKER} width={100} height={100} alt="logo" priority className={'rotate-6'} />
         <div className="p-6 w-1/2 md:w-1/3 rounded-sm text-center">
           <h4 className="text-4xl mt-2 covered-by-your-grace-regular">{CODE.NOT_FOUND}</h4>
           <h1 className="text-3xl font-bold mb-4">{HTTP_RESPONSE[404].title}</h1>
