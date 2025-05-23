@@ -10,5 +10,6 @@ export const ASSET_DIR = {
   LOGO_LIGHT           : connect('image', 'svg', 'vieux-carre-white.svg'),
   LOGO_PRODUCTION      : connectUrl(GLOBAL.SERVER_URL, 'asset/logo/logo.svg'),
   LOGO_PRODUCTION_PNG  : connectUrl(GLOBAL.SERVER_URL, 'asset/logo/logo.png'),
-  PROMO                : connect('image', 'promo', 'promo.png')
+  PROMO                : connect('image', 'promo', 'promo.png'),
+  STICKER              : connect('asset', 'image', 'sticker.png')
 }
