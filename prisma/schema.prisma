@@ -39,7 +39,7 @@ model Gallery {
   id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title        String
   description  String
-  image        String
+  cover        String
   galleryItems GalleryItem[]
   createdAt    DateTime      @default(now()) @db.Timestamp(6)
   updatedAt    DateTime      @updatedAt
