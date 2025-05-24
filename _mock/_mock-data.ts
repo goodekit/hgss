@@ -11,7 +11,7 @@ type UserExtended = {
 type GalleryPreLoadType = {
   title       : string;
   description : string;
-  image       : string;
+  cover       : string;
   galleryItems: {
     title      : string;
     description: string;
@@ -221,7 +221,7 @@ export const _mockData: { users: UserExtended[]; products: Product[]; gallery: G
     {
       title       : 'Custom Totota Colora',
       description : 'This is a mock album',
-      image       : ASSET_DIR.GALLERY_COVER_DEFAULT,
+      cover       : ASSET_DIR.GALLERY_COVER_DEFAULT,
       galleryItems: [
         {
           title: 'Sample',
@@ -238,7 +238,7 @@ export const _mockData: { users: UserExtended[]; products: Product[]; gallery: G
     {
       title       : 'ITB Kit',
       description : 'Blah Blah',
-      image       : ASSET_DIR.GALLERY_COVER_DEFAULT,
+      cover       : ASSET_DIR.GALLERY_COVER_DEFAULT,
       galleryItems: [
         {
           title      : 'ITB Ep.71',
@@ -260,7 +260,7 @@ export const _mockData: { users: UserExtended[]; products: Product[]; gallery: G
     {
       title       : 'Test gallery album',
       description : 'This is a gallery item without image',
-      image       : ASSET_DIR.GALLERY_COVER_DEFAULT,
+      cover       : ASSET_DIR.GALLERY_COVER_DEFAULT,
       galleryItems: [
           {
           title      : 'test no image Ep.6',

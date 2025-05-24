@@ -2,15 +2,15 @@ import { z } from 'zod'
 
 export const GalleryItemSchema = z.object({
   title      : z.string().min(1, 'Title is required'),
-  description: z.string().min(1, 'Description is required'),
+  description: z.string(),
   image      : z.string().min(1, 'Image is required'),
   galleryId  : z.string().min(1, 'Each gallery item needs to be in a gallery')
 })
 
 export const GallerySchema = z.object({
-  title       : z.string().min(1, 'Title is required'),
-  description : z.string().min(1, 'Description is required'),
-  image       : z.string().min(1, 'Image is required'),
+  title       : z.string().min(3, 'Title is required'),
+  description : z.string(),
+  cover       : z.string(),
   galleryItems: z.array(GalleryItemSchema)
 })
 
