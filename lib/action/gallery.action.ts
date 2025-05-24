@@ -108,7 +108,7 @@ export async function createGalleryItem(data: CreateGalleryItem) {
         data: {
           title      : 'Untitled Gallery',
           description: 'Auto-created gallery',
-          image      : 'default.jpg'
+          cover      : 'default.jpg'
         }
       })
       galleryId = newGallery.id
