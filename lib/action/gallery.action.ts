@@ -115,7 +115,7 @@ export async function createGalleryItem(data: CreateGalleryItem) {
     }
     const { title, description, image } = GalleryItemSchema.parse({ ...data, galleryId })
     const galleryItem = await prisma.galleryItem.create({ data: { title, description, image, gallery: { connect: { id: data.galleryId } } } })
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', galleryItem)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -148,7 +148,7 @@ export async function createGallery(data: CreateGallery) {
         })
       }
     })
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', newGallery)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -165,12 +165,12 @@ export async function createGallery(data: CreateGallery) {
 export async function UpdateGallery(data: UpdateGallery) {
   try {
     const parsed                        = UpdateGallerySchema.parse(data)
-    const { title, description, image } = parsed
+    const { title, description, cover } = parsed
     const galleryExists                 = await prisma.gallery.findFirst({ where: { id: parsed.id } })
     if (!galleryExists) throw new Error(en.error.not_found)
 
-    await prisma.gallery.update({ where: { id: parsed.id }, data : { title, description, image }})
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    await prisma.gallery.update({ where: { id: parsed.id }, data : { title, description, cover }})
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -188,11 +188,11 @@ export async function UpdateGalleryItem(data: UpdateGalleryItem) {
   try {
     const parsed       = UpdateGalleryItemSchema.parse(data)
     const { title, description, image } = parsed
-    const galleryItemExists = await prisma.gallery.findFirst({ where: { id: parsed.id } })
+    const galleryItemExists = await prisma.galleryItem.findFirst({ where: { id: parsed.id } })
     if (!galleryItemExists) throw new Error(en.error.not_found)
 
-    await prisma.gallery.update({ where: { id: parsed.id }, data: { title, description, image } })
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    await prisma.galleryItem.update({ where: { id: parsed.id }, data: { title, description, image } })
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -238,8 +238,7 @@ export async function deleteGalleryItemImage(args: ImageInput) {
 export async function deleteGalleryItem(galleryItemId: string) {
   try {
     await prisma.galleryItem.delete({ where: { id: galleryItemId } })
-
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -249,7 +248,6 @@ export async function deleteGalleryItem(galleryItemId: string) {
 export async function deleteGallery(galleryId: string) {
   try {
     await prisma.gallery.delete({ where: { id: galleryId } })
-
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
   } catch (error) {
