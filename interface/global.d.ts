@@ -166,11 +166,17 @@ declare global {
   export type ButtonSize    = 'default' | 'sm' | 'lg' | 'icon' | null | undefined
   export type ButtonType    = 'submit' | 'button' | 'reset' | undefined
 
-  export type ProductFormType = 'create' | 'update'
+  export type ModuleFormType = 'create' | 'update'
   export type ProductForm = {
-    type      : ProductFormType,
-    product  ?: Product,
+    type      : ModuleFormType
+    product  ?: Product
     productId?: string
+  }
+
+  export type GalleryForm = {
+    type      : ModuleFormType
+    gallery  ?: Gallery
+    galleryId?: string
   }
 
   export enum METHOD {
