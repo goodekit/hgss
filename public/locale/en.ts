@@ -8,7 +8,7 @@ export const en = {
   all: {
     label: 'All'
   },
-  add_to_bag   : 'Add to Bag',
+  add_to_bag: 'Add to Bag',
   archived_user: {
     label: 'Archived User'
   },
@@ -16,7 +16,7 @@ export const en = {
     label: 'Admin'
   },
   all_day_support: {
-    label      : '24/7 Support',
+    label: '24/7 Support',
     description: 'Get support whenever you need it'
   },
   already_have_account: {
@@ -29,18 +29,18 @@ export const en = {
     label: 'Appearance'
   },
   bag: {
-    label      : 'Bag',
+    label: 'Bag',
     description: 'Complete the form with your bag information',
-    bag        : {
+    bag: {
       label: 'Bag'
     }
   },
   bag_empty: 'Bag is empty',
-  cancel   : {
+  cancel: {
     label: 'Cancel'
   },
   category: {
-    label     : 'Category',
+    label: 'Category',
     categories: {
       label: 'Categories'
     }
@@ -49,7 +49,7 @@ export const en = {
     label: 'Change File'
   },
   checkout: {
-    label      : 'Checkout',
+    label: 'Checkout',
     description: 'Complete the form with your information'
   },
   clear: {
@@ -58,39 +58,43 @@ export const en = {
   create: {
     label: 'Create'
   },
+  create_gallery: {
+    label: 'Create Gallery',
+    description: 'Complete the form with your gallery information'
+  },
   create_product: {
-    label      : 'Create Product',
+    label: 'Create Product',
     description: 'Complete the form with your product information'
   },
   confirm: {
     label: 'Confirm'
   },
   contact: {
-    label      : 'Contact',
+    label: 'Contact',
     description: 'Contact us for any enquiries'
   },
   contact_and_custom_inquiries: {
     label: 'Contact & Custom Inquiries'
   },
   continue: {
-    label      : 'Continue',
+    label: 'Continue',
     description: 'Continue to the next step'
   },
   custom_enquiry: {
-    label           : 'Custom Enquiry',
-    description     : 'Contact us for custom enquiries',
+    label: 'Custom Enquiry',
+    description: 'Contact us for custom enquiries',
     custom_enquiries: {
       label: 'Custom Enquiries'
     }
   },
   customer: {
-    label    : 'Customer',
+    label: 'Customer',
     customers: {
       label: 'Customers'
     }
   },
   customer_review: {
-    label           : 'Customer Review',
+    label: 'Customer Review',
     customer_reviews: {
       label: 'Customer Reviews'
     }
@@ -103,16 +107,16 @@ export const en = {
   },
   day: {
     label: 'Day',
-    days : {
+    days: {
       label: 'Days'
     }
   },
   deal_has_ended: {
-    label      : 'Deal has ended',
+    label: 'Deal has ended',
     description: "This deal has ended. Don't worry, we have more deals for you!"
   },
   deal_of_the_month: {
-    label      : 'Deal of the Month',
+    label: 'Deal of the Month',
     description:
       "Every purchase comes with exclusive perks and offers, making this month a celebration of savvy choices and smart deals. Don't miss out!"
   },
@@ -125,7 +129,7 @@ export const en = {
   department: {
     label: 'Department'
   },
-  description      : 'This is an example of i18n with Next.js',
+  description: 'This is an example of i18n with Next.js',
   dont_have_account: {
     label: "Don't have an account?"
   },
@@ -133,136 +137,148 @@ export const en = {
     label: 'Edit'
   },
   edit_review: {
-    label      : 'Edit Your Review',
+    label: 'Edit Your Review',
     description: 'Edit your review'
   },
   flexible_payment: {
-    label      : 'Flexible Payment',
+    label: 'Flexible Payment',
     description: 'Pay with Credit Card, PayPal or Cash on Delivery'
   },
   filtered_by: {
     label: 'Filtered by'
   },
   form: {
+    image: {
+      label: 'Image',
+      placeholder: 'Add Image'
+    },
+    gallery_item: {
+      label: 'Gallery Item',
+      placeholder: 'Add Gallery Item'
+    },
+    cover: {
+      label: 'Cover',
+      placeholder: 'Add cover'
+    },
     specifications: {
-      label      : 'Specifications',
+      label: 'Specifications',
       placeholder: 'Add Specification'
     },
     model: {
-      label      : 'Model',
+      label: 'Model',
       placeholder: 'Add the Model'
     },
     message: {
-      label      : 'Message',
+      label: 'Message',
       placeholder: 'Compose your message'
     },
     password: {
-      label      : 'Password',
+      label: 'Password',
       placeholder: 'Enter your password'
     },
     confirm_password: {
-      label      : 'Confirm Password',
+      label: 'Confirm Password',
       placeholder: 'Confirm your password'
     },
     rating: {
-      label      : 'Rating',
+      label: 'Rating',
       placeholder: 'Enter the rating'
     },
     title: {
-      label      : 'Title',
+      label: 'Title',
       placeholder: 'Enter the title'
     },
     name: {
-      label      : 'Name',
+      label: 'Name',
       placeholder: 'Enter name'
     },
     slug: {
-      label      : 'Slug',
+      label: 'Slug',
       placeholder: 'Enter the slug or generate'
     },
     category: {
-      label      : 'Category',
+      label: 'Category',
       placeholder: 'Enter the category'
     },
     banner: {
-      label      : 'Banner',
+      label: 'Banner',
       placeholder: 'Upload the banner'
     },
     brand: {
-      label      : 'Brand',
+      label: 'Brand',
       placeholder: 'Enter the brand'
     },
     price: {
-      label      : 'Price',
+      label: 'Price',
       placeholder: 'Enter the price'
     },
     role: {
-      label      : 'Role',
+      label: 'Role',
       placeholder: 'Enter the role'
     },
     stock: {
-      label      : 'Stock',
+      label: 'Stock',
       placeholder: 'Enter the stock count'
     },
     images: {
-      label      : 'Images',
+      label: 'Images',
       placeholder: 'Upload the images'
     },
     featured: {
-      label      : 'Featured Product',
+      label: 'Featured Product',
       placeholder: 'Set as a featured product'
     },
     description: {
-      label      : 'Description',
+      label: 'Description',
       placeholder: 'Enter the description'
     },
     first_name: {
-      label      : 'First Name',
+      label: 'First Name',
       placeholder: 'Enter your first name'
     },
     last_name: {
-      label      : 'Last Name',
+      label: 'Last Name',
       placeholder: 'Enter your last name'
     },
     full_name: {
-      label      : 'Full Name',
+      label: 'Full Name',
       placeholder: 'Enter your full name'
     },
     email: {
-      label      : 'Email',
+      label: 'Email',
       placeholder: 'Enter your email'
     },
     phone: {
-      label      : 'Phone',
+      label: 'Phone',
       placeholder: 'Enter your phone'
     },
     address: {
-      label      : 'Address',
+      label: 'Address',
       placeholder: 'Enter your address'
     },
     street: {
-      label      : 'Street',
+      label: 'Street',
       placeholder: 'Enter your street'
     },
     city: {
-      label      : 'City',
+      label: 'City',
       placeholder: 'Enter your city'
     },
     state: {
-      label      : 'State',
+      label: 'State',
       placeholder: 'Enter your state'
     },
     postal_code: {
-      label      : 'Postal Code',
+      label: 'Postal Code',
       placeholder: 'Enter your postal code'
     },
     country: {
-      label      : 'Country',
+      label: 'Country',
       placeholder: 'Enter your country'
     }
   },
   free_shipping: {
-    label      : 'Free Shipping',
+    label: 'Free Shipping',
     description: 'Free shipping on orders above '
   },
   gallery: {
@@ -272,12 +288,12 @@ export const en = {
     label: 'Generate'
   },
   go_back: 'Go Back',
-  go_to  : {
+  go_to: {
     label: 'Go to'
   },
-  go_to_bag  : 'Go to Bag',
+  go_to_bag: 'Go to Bag',
   go_shopping: 'Go Shopping',
-  home       : {
+  home: {
     label: 'Home'
   },
   hour: {
@@ -287,7 +303,7 @@ export const en = {
     }
   },
   image: {
-    label : 'Image',
+    label: 'Image',
     images: {
       label: 'Images'
     }
@@ -308,14 +324,14 @@ export const en = {
     label: 'Leave'
   },
   loading: {
-    delete_order     : 'Deleting Order',
-    processing       : 'Processing',
-    leaving          : 'Leaving',
-    loading          : 'Loading',
+    delete_order: 'Deleting Order',
+    processing: 'Processing',
+    leaving: 'Leaving',
+    loading: 'Loading',
     loading_countdown: 'Loading Countdown',
-    saving           : 'Saving',
-    updating         : 'Updating',
-    uploading        : 'Uploading'
+    saving: 'Saving',
+    updating: 'Updating',
+    uploading: 'Uploading'
   },
   mark_paid: {
     label: 'Mark as Paid'
@@ -324,13 +340,13 @@ export const en = {
     label: 'Mark as Delivered'
   },
   minute: {
-    label  : 'Minute',
+    label: 'Minute',
     minutes: {
       label: 'Minutes'
     }
   },
   money_back_guarantee: {
-    label      : 'Money Back Guarantee',
+    label: 'Money Back Guarantee',
     description: ' days money back guarantee'
   },
   navigation: {
@@ -341,7 +357,7 @@ export const en = {
       label: 'Bag'
     },
     order: {
-      label : 'Order',
+      label: 'Order',
       orders: {
         label: 'Orders'
       }
@@ -363,9 +379,9 @@ export const en = {
     label: 'or'
   },
   order: {
-    label      : 'Order',
+    label: 'Order',
     description: 'Complete the form with your order information',
-    orders     : {
+    orders: {
       label: 'Orders'
     }
   },
@@ -397,13 +413,13 @@ export const en = {
     label: 'Payment'
   },
   payment_method: {
-    label      : 'Payment Method',
+    label: 'Payment Method',
     description: 'Select your preferred payment method'
   },
   place_order: {
-    label      : 'Place Order',
+    label: 'Place Order',
     description: 'Place your order',
-    pending    : 'Placing Order'
+    pending: 'Placing Order'
   },
   please: {
     label: 'Please'
@@ -412,7 +428,7 @@ export const en = {
     label: 'Previous'
   },
   price: {
-    label : 'Price',
+    label: 'Price',
     prices: {
       label: 'Prices'
     }
@@ -424,7 +440,7 @@ export const en = {
     label: 'Proceed to Checkout'
   },
   product: {
-    label   : 'Product',
+    label: 'Product',
     products: {
       label: 'Products'
     }
@@ -437,24 +453,24 @@ export const en = {
   },
   purchase_flow: {
     user_sign_in: {
-      label      : 'User Sign In',
+      label: 'User Sign In',
       description: 'Complete the form with your user information',
-      completed  : 'User Signed in'
+      completed: 'User Signed in'
     },
     shipping: {
-      label      : 'Shipping',
+      label: 'Shipping',
       description: 'Complete the form with your shipping information',
-      completed  : 'Shipping Filled'
+      completed: 'Shipping Filled'
     },
     payment: {
-      label      : 'Payment',
+      label: 'Payment',
       description: 'Complete the form with your payment information',
-      completed  : 'Payment Filled'
+      completed: 'Payment Filled'
     },
     place_order: {
-      label      : 'Place Order',
+      label: 'Place Order',
       description: 'Place your order',
-      completed  : 'Order Placed'
+      completed: 'Order Placed'
     }
   },
   purchase_order: {
@@ -473,7 +489,7 @@ export const en = {
     label: 'Remove'
   },
   review: {
-    label  : 'Review',
+    label: 'Review',
     reviews: {
       label: 'Reviews'
     }
@@ -482,14 +498,14 @@ export const en = {
     label: 'Sales'
   },
   search: {
-    label      : 'Search',
+    label: 'Search',
     placeholder: 'Looking for something?'
   },
   search_product: {
     label: 'Search Product'
   },
   second: {
-    label  : 'Second',
+    label: 'Second',
     seconds: {
       label: 'Seconds'
     }
@@ -501,38 +517,38 @@ export const en = {
     label: 'Send Message'
   },
   shipping: {
-    label      : 'Shipping',
+    label: 'Shipping',
     description: 'Complete the form with your shipping information'
   },
   shipping_address: {
-    label      : 'Shipping Address',
+    label: 'Shipping Address',
     description: 'Complete the form with your shipping address'
   },
   shop_itb_kit: {
-    label        : 'In The Bag Kit',
-    description  : 'Get the In The Bag Kit for free with every purchase',
+    label: 'In The Bag Kit',
+    description: 'Get the In The Bag Kit for free with every purchase',
     shop_itb_kits: {
       label: 'Shop ITB Kits'
     }
   },
   shop_part: {
-    label      : 'Shop Part',
+    label: 'Shop Part',
     description: 'Shop this part',
-    shop_parts : {
+    shop_parts: {
       label: 'Shop Parts'
     }
   },
   sign_in: {
-    label      : 'Sign in',
+    label: 'Sign in',
     description: 'Sign in to your account',
-    google     : 'Sign in with Google'
+    google: 'Sign in with Google'
   },
   sign_up: {
-    label      : 'Sign up',
+    label: 'Sign up',
     description: 'Complete the form with your information'
   },
   sign_out: {
-    label      : 'Sign out',
+    label: 'Sign out',
     description: 'Complete the form with your information'
   },
   sort_by: {
@@ -545,7 +561,7 @@ export const en = {
     label: 'Stay'
   },
   stripe_checkout: {
-    label      : 'Stripe Checkout',
+    label: 'Stripe Checkout',
     description: 'Complete the form with your payment information'
   },
   submit: {
@@ -573,17 +589,24 @@ export const en = {
     label: 'Update'
   },
   update_account: {
-    label      : 'Update Account',
+    label: 'Update Account',
     description: 'Complete the form with your information',
-    toast      : 'User name updated'
+    toast: 'User name updated'
   },
   update_product: {
-    label      : 'Update Product',
+    label: 'Update Product',
     description: 'Complete the form with your product information'
   },
   update_user: {
-    label      : 'Update User',
+    label: 'Update User',
     description: 'Complete the form with your user information'
+  },
+  upload: {
+    label      : 'Upload',
+    description: 'Click to Upload'
+  },
+  upload_image: {
+    label: 'Upload Image'
   },
   upload_images: {
     label: 'Upload Image/s'
@@ -592,10 +615,18 @@ export const en = {
     label      : 'Upload Banner',
     description: 'Drag and drop an image here or click to upload'
   },
+  upload_cover: {
+    label      : 'Upload Cover',
+    description: 'Click to upload cover'
+  },
+  uploaded: {
+    label      : 'Uploaded',
+    description: 'File Uploaded'
+  },
   user: {
-    label      : 'User',
+    label: 'User',
     description: 'Complete the form with your user information',
-    users      : {
+    users: {
       label: 'Users'
     }
   },
@@ -609,7 +640,7 @@ export const en = {
     label: 'View Order Receipt'
   },
   view_product: {
-    label        : 'View Product',
+    label: 'View Product',
     view_products: {
       label: 'View Products'
     }
@@ -617,7 +648,7 @@ export const en = {
   view_all_products: {
     label: 'View All Products'
   },
-  welcome : 'Welcome to our site',
+  welcome: 'Welcome to our site',
   your_bag: {
     label: 'Your Bag'
   },
@@ -625,85 +656,85 @@ export const en = {
     label: 'No results found'
   },
   write_review: {
-    label      : 'Write a Review',
+    label: 'Write a Review',
     description: 'Share your thoughts on this product with other customers'
   },
   message: {
     default: {
-      title      : 'Are you sure?',
+      title: 'Are you sure?',
       description: 'This is a message'
     },
     confirm_delete_order: {
-      title      : 'Confirm Delete Order',
+      title: 'Confirm Delete Order',
       description: 'This action cannot be undone and is irreversible.'
     },
     unsaved_changes: {
-      title      : 'Are you sure?',
+      title: 'Are you sure?',
       description: 'You have unsaved changes. Are you sure you want to leave?'
     },
     currently_no_reviews: {
-      title      : 'No Reviews',
+      title: 'No Reviews',
       description: 'There are currently no reviews for this product.'
     },
     to_write_review: {
-      title      : 'Write a Review',
+      title: 'Write a Review',
       description: ' to write a review.'
     },
     thanks_for_purchase: {
-      title            : 'Thank you for your purchase',
-      description      : 'Your order has been placed successfully.',
+      title: 'Thank you for your purchase',
+      description: 'Your order has been placed successfully.',
       we_are_processing: 'We are processing your order and will send you a confirmation email shortly.'
     }
   },
   success: {
-    created          : 'Document created',
-    deleted          : 'Document deleted',
-    updated          : 'Document updated',
-    file_deleted     : 'File deleted',
-    order_created    : 'Order created',
-    order_deleted    : 'Order deleted',
-    order_delivered  : 'Order delivered',
-    order_paid       : 'Your order has been paid',
-    product_created  : 'Product created',
-    product_deleted  : 'Product deleted',
-    product_updated  : 'Product updated',
+    created: 'Document created',
+    deleted: 'Document deleted',
+    updated: 'Document updated',
+    file_deleted: 'File deleted',
+    order_created: 'Order created',
+    order_deleted: 'Order deleted',
+    order_delivered: 'Order delivered',
+    order_paid: 'Your order has been paid',
+    product_created: 'Product created',
+    product_deleted: 'Product deleted',
+    product_updated: 'Product updated',
     update_order_paid: 'updateOrderToPaid was successful',
-    user_created     : 'User created',
-    user_deleted     : 'User deleted',
-    user_updated     : 'User updated',
-    user_signed_up   : 'User signed up',
-    user_signed_in   : 'User signed in',
-    review_updated   : 'Review updated'
+    user_created: 'User created',
+    user_deleted: 'User deleted',
+    user_updated: 'User updated',
+    user_signed_up: 'User signed up',
+    user_signed_in: 'User signed in',
+    review_updated: 'Review updated'
   },
   error: {
-    bag_empty                 : 'Bag is empty',
-    bag_not_found             : 'Bag not found',
+    bag_empty: 'Bag is empty',
+    bag_not_found: 'Bag not found',
     failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
-    invalid_credentials       : 'Invalid credentials',
-    invalid_file_key          : 'Invalid file key',
-    invalid_payment_method    : 'Invalid payment method',
-    item_not_found            : 'Item not found',
-    failed_extract_file_key   : 'Failed extracting the file key',
-    failed_delete_file        : 'Failed to delete file',
-    no_file                   : 'No file',
-    no_existing_item          : 'No existing item to add on',
-    no_shipping_address       : 'No shipping address',
-    no_payment_method         : 'No payment method selected',
-    not_found                 : 'Document not found',
-    order_paid                : 'Order is already paid',
-    order_not_created         : 'Order not created',
-    order_not_found           : 'Order not found',
-    order_not_paid            : 'Order not paid',
-    paypal_default            : "PayPal: Error Occured'",
-    paypal_payment_error      : 'Error occurred while processing PayPal payment',
-    product_not_found         : 'Product not found',
-    sesssion_not_found        : 'Session bag id not found',
-    unable_delete             : 'Unable to delete file',
-    unable_upload             : 'Unable to upload file',
-    unknown_error             : 'Unknown error occurred',
-    update_order_paid         : 'updateOrderToPaid failed',
-    user_not_authenticated    : 'User not authenticated',
-    user_not_authorized       : 'User not authorized',
-    user_not_found            : 'User not found'
+    invalid_credentials: 'Invalid credentials',
+    invalid_file_key: 'Invalid file key',
+    invalid_payment_method: 'Invalid payment method',
+    item_not_found: 'Item not found',
+    failed_extract_file_key: 'Failed extracting the file key',
+    failed_delete_file: 'Failed to delete file',
+    no_file: 'No file',
+    no_existing_item: 'No existing item to add on',
+    no_shipping_address: 'No shipping address',
+    no_payment_method: 'No payment method selected',
+    not_found: 'Document not found',
+    order_paid: 'Order is already paid',
+    order_not_created: 'Order not created',
+    order_not_found: 'Order not found',
+    order_not_paid: 'Order not paid',
+    paypal_default: "PayPal: Error Occured'",
+    paypal_payment_error: 'Error occurred while processing PayPal payment',
+    product_not_found: 'Product not found',
+    sesssion_not_found: 'Session bag id not found',
+    unable_delete: 'Unable to delete file',
+    unable_upload: 'Unable to upload file',
+    unknown_error: 'Unknown error occurred',
+    update_order_paid: 'updateOrderToPaid failed',
+    user_not_authenticated: 'User not authenticated',
+    user_not_authorized: 'User not authorized',
+    user_not_found: 'User not found'
   }
 }

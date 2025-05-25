@@ -108,14 +108,14 @@ export async function createGalleryItem(data: CreateGalleryItem) {
         data: {
           title      : 'Untitled Gallery',
           description: 'Auto-created gallery',
-          image      : 'default.jpg'
+          cover      : 'default.jpg'
         }
       })
       galleryId = newGallery.id
     }
     const { title, description, image } = GalleryItemSchema.parse({ ...data, galleryId })
     const galleryItem = await prisma.galleryItem.create({ data: { title, description, image, gallery: { connect: { id: data.galleryId } } } })
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', galleryItem)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -148,7 +148,9 @@ export async function createGallery(data: CreateGallery) {
         })
       }
     })
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+
+    console.log('new gallery: ', newGallery)
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', newGallery)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -162,15 +164,15 @@ export async function createGallery(data: CreateGallery) {
  * @returns {Promise<SystemLogger>} - A promise that resolves to a SystemLogger response.
  * @throws {Error} - Throws an error if the gallery is not found or if there is a validation error.
  */
-export async function UpdateGallery(data: UpdateGallery) {
+export async function updateGallery(data: UpdateGallery) {
   try {
     const parsed                        = UpdateGallerySchema.parse(data)
-    const { title, description, image } = parsed
+    const { title, description, cover } = parsed
     const galleryExists                 = await prisma.gallery.findFirst({ where: { id: parsed.id } })
     if (!galleryExists) throw new Error(en.error.not_found)
 
-    await prisma.gallery.update({ where: { id: parsed.id }, data : { title, description, image }})
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    await prisma.gallery.update({ where: { id: parsed.id }, data : { title, description, cover }})
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -184,15 +186,15 @@ export async function UpdateGallery(data: UpdateGallery) {
  * @returns {Promise<SystemLogger>} - A promise that resolves to a SystemLogger response.
  * @throws {Error} - Throws an error if the gallery item is not found or if there is a validation error.
  */
-export async function UpdateGalleryItem(data: UpdateGalleryItem) {
+export async function updateGalleryItem(data: UpdateGalleryItem) {
   try {
     const parsed       = UpdateGalleryItemSchema.parse(data)
     const { title, description, image } = parsed
-    const galleryItemExists = await prisma.gallery.findFirst({ where: { id: parsed.id } })
+    const galleryItemExists = await prisma.galleryItem.findFirst({ where: { id: parsed.id } })
     if (!galleryItemExists) throw new Error(en.error.not_found)
 
-    await prisma.gallery.update({ where: { id: parsed.id }, data: { title, description, image } })
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    await prisma.galleryItem.update({ where: { id: parsed.id }, data: { title, description, image } })
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -238,8 +240,7 @@ export async function deleteGalleryItemImage(args: ImageInput) {
 export async function deleteGalleryItem(galleryItemId: string) {
   try {
     await prisma.galleryItem.delete({ where: { id: galleryItemId } })
-
-    revalidatePath(PATH_DIR.ADMIN.GALLERY_ID)
+    revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -249,10 +250,58 @@ export async function deleteGalleryItem(galleryItemId: string) {
 export async function deleteGallery(galleryId: string) {
   try {
     await prisma.gallery.delete({ where: { id: galleryId } })
-
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
+}
+
+/**
+ * Deletes a gallery image from the current list of images by its index or by its address.
+ *
+ * @param currentImages - An array of image URLs representing the current images.
+ * @param index - The index of the image to delete in the `currentImages` array.
+ * @returns A promise that resolves to an object indicating the success or failure of the operation.
+ *
+ * The returned object has the following structure:
+ * - `success`: A boolean indicating whether the deletion was successful.
+ * - `error` (optional): An error object or message if the deletion failed.
+ *
+ * The function performs the following steps:
+ * 1. Extracts the file key from the image URL using `getFileKeyFromUrl`.
+ * 2. If the file key is valid, it attempts to delete the file using the `UTApi` service.
+ * 3. Returns the result of the deletion operation.
+ *
+ * If any error occurs during the process, it logs the error and returns a failure response.
+ */
+export async function deleteGalleryImage(args: ImageInput) {
+  const getFileKeyFromUrl = (url: string) => {
+    try {
+      const urlParts = url?.split('/')
+      const keyParts = urlParts.slice(3)
+      return keyParts.join('/')
+    } catch (error) {
+      console.error(en.error.failed_extract_file_key, error)
+      return null
+    }
+  }
+
+  const imageToDelete = 'index' in args ? args?.currentImages[args.index] : args.currentImages
+  const fileKey = getFileKeyFromUrl(imageToDelete)
+
+  if (!fileKey) return { success: false, error: en.error.invalid_file_key }
+
+    try {
+      await s3.send(
+        new DeleteObjectCommand({
+          Bucket: GLOBAL.AWS.S3_BUCKET_NAME,
+          Key   : fileKey
+        })
+      )
+      return { success: true }
+    } catch (error) {
+      console.error(en.error.unable_delete, error)
+      return { success: false, error }
+    }
 }

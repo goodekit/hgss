@@ -10,7 +10,8 @@ export const PROTECTED_ROUTES = protect()
 export const PATH_DIR = {
   ADMIN           : {
                       GALLERY       : connect('admin', 'gallery'),
-                      GALLERY_ID    : connect('admin', 'gallery', ':id'),
+                      GALLERY_CREATE: connect('admin', 'gallery', 'create'),
+                      GALLERY_VIEW  : (galleryId: string) => connect('admin', 'gallery', galleryId),
                       ORDER         : connect('admin', 'order'),
                       OVERVIEW      : connect('admin', 'overview'),
                       PRODUCT       : connect('admin', 'product'),

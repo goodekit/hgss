@@ -1,4 +1,5 @@
 export * from './bag.action'
+export * from './image-action'
 export * from './order.action'
 export * from './product.action'
 export * from './review.action'

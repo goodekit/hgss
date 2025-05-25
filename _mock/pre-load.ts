@@ -19,7 +19,7 @@ async function main() {
         data: {
           title       : gallery.title,
           description : gallery.description,
-          image       : gallery.image
+          cover       : gallery.cover
         }
       })
 

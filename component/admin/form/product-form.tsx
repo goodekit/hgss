@@ -4,7 +4,6 @@ import { FC, Fragment, useEffect } from 'react'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { useRouter } from 'next/navigation'
-import { useTheme } from 'next-themes'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm, useFieldArray } from 'react-hook-form'
 import { useToast, usePreventNavigation, useFormState } from 'hook'
@@ -19,7 +18,6 @@ import { RHFFormField, RHFFormDropzone, RHFCheckbox } from 'component/shared/rhf
 import { capitalize, delay, cn } from 'lib/util'
 
 const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
-  const { systemTheme, theme } = useTheme()
   const { toast }              = useToast()
   const { isDirty, setDirty }  = useFormState()
   const router                 = useRouter()
@@ -27,10 +25,6 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
     resolver: type === 'update' ? zodResolver(UpdateProductSchema) : zodResolver(ProductSchema),
     defaultValues: product && type === 'update' ? product : productDefaultValue
   })
-
-  // TODO: move this in system design tokens
-  const isDark    = theme === 'dark' || (theme === 'system' && systemTheme === 'dark')
-  const respLabel = isDark ? 'text-punkpink' : 'text-black'
 
   const { control, formState, register, handleSubmit } = form
   const { errors }                                     = formState
@@ -118,7 +112,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
                     <span><Button type={'button'} variant={'ghost'} className={cn('bg-punkpink text-black')} onClick={() => remove(index)}>{en.remove.label}</Button></span>
                   </div>
                 ))}
-                <Button type={"button"} variant={'ghost'} onClick={() => append('')} className={cn('font-bold', respLabel)}>{'+ '}{en.form.specifications.placeholder}</Button>
+                <Button type={"button"} variant={'ghost'} onClick={() => append('')} className={cn('font-bold align-middle items-center text-button')}><Plus/><span>{en.form.specifications.placeholder}</span></Button>
             </div>
           </div>
           <div className="upload-field flex flex-col md:flex-row gap-4">
@@ -138,7 +132,8 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
               isPending={formState.isSubmitting}
               label={`${capitalize(type)} Product`}
               disabled={formState.isSubmitting}
-              className={'min-w-24 sm:w-full'}
+              variant={'secondary'}
+              className={'min-w-24 sm:w-full texture-bg permanent-marker-regular text-xl text-black bg-transparent'}
               icon={type === 'create' ? <Plus size={20} /> : <MoveUpRight size={20} />}
             />
           </div>

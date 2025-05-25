@@ -11,8 +11,8 @@ const AdminHeader = () => {
       <div className="wrapper flex-center h-full overflow-hidden">
         <div className="flex-start">
           <Link href={PATH_DIR.ROOT} className={'w-22'}>
-            <div className="h-full flex items-center overflow-hidden">
-              <Image src={ASSET_DIR.LOGO} width={70} height={70} alt={'logo'} className={'object-cover max-h-full'} />
+            <div className="h-full w-auto flex items-center overflow-hidden">
+              <Image src={ASSET_DIR.LOGO} width={70} height={70} alt={'logo'} className={'object-cover'} />
             </div>
           </Link>
         </div>

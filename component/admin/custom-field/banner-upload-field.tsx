@@ -59,17 +59,6 @@ const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, for
 
       xhr.open('POST', PATH_DIR.UPLOAD)
       xhr.send(formData)
-      // try {
-      //   const res = await fetch(PATH_DIR.UPLOAD, {
-      //     method: 'POST',
-      //     body  : formData
-      //   })
-      //   if (!res.ok) throw new Error(en.error.unable_delete)
-      //   const data = await res.json()
-      //   handleUploadComplete({ url: data.url })
-      // } catch (error: unknown) {
-      //   toast({ variant: 'destructive', description: (error as AppError).message })
-      // }
     }
 
     const handleDelete = async () => {
