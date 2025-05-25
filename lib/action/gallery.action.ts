@@ -162,7 +162,7 @@ export async function createGallery(data: CreateGallery) {
  * @returns {Promise<SystemLogger>} - A promise that resolves to a SystemLogger response.
  * @throws {Error} - Throws an error if the gallery is not found or if there is a validation error.
  */
-export async function UpdateGallery(data: UpdateGallery) {
+export async function updateGallery(data: UpdateGallery) {
   try {
     const parsed                        = UpdateGallerySchema.parse(data)
     const { title, description, cover } = parsed
@@ -184,7 +184,7 @@ export async function UpdateGallery(data: UpdateGallery) {
  * @returns {Promise<SystemLogger>} - A promise that resolves to a SystemLogger response.
  * @throws {Error} - Throws an error if the gallery item is not found or if there is a validation error.
  */
-export async function UpdateGalleryItem(data: UpdateGalleryItem) {
+export async function updateGalleryItem(data: UpdateGalleryItem) {
   try {
     const parsed       = UpdateGalleryItemSchema.parse(data)
     const { title, description, image } = parsed
