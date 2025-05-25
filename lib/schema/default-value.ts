@@ -1,3 +1,5 @@
+import { ASSET_DIR } from "config/dir"
+
 export const signInDefaultValue = {
   email   : '',
   password: ''
@@ -46,6 +48,20 @@ export const productDefaultValue = {
   numReviews    : 0,
   isFeatured    : false,
   banner        : null
+}
+
+export const galleryDefaultValue = {
+ title       : '',
+ description : '',
+ cover       : ASSET_DIR.GALLERY_COVER_DEFAULT,
+ galleryItems: []
+}
+
+export const galleryItemDefaultValue = {
+  title      : '',
+  description: '',
+  image      : '',
+  galleryId  : ''
 }
 
 export const reviewDefaultValue = {
