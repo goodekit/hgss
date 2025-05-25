@@ -123,6 +123,14 @@
   @apply text-black dark:text-tape;
 }
 
+.text-button {
+  @apply text-black dark:text-punkpink;
+}
+
+.input-bg-form {
+  @apply bg-gray-200 dark:bg-gray-800
+}
+
 @layer base {
   :root {
     --background            : hsl(42, 23%, 91%);
