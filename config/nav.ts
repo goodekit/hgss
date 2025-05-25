@@ -35,5 +35,6 @@ export const NAV_CONFIG_ADMIN = [
     { title: en.product.label, href: connect(ADMIN, PRODUCT) },
     { title: en.order.label, href: connect(ADMIN, ORDER) },
     { title: en.user.label, href: connect(ADMIN, USER) },
+    { title: en.gallery.label, href: connect(ADMIN, GALLERY) },
 ]
 
