@@ -22,22 +22,26 @@ interface RHFFormFieldProps<TSchema extends ZodSchema, TName extends Path<z.infe
   withButton ?: boolean
   buttonLabel?: string
   onClick    ?: () => void
+  withLabel  ?: boolean
+  withBorder ?: boolean
 }
 
 interface RHFFormFieldControllerRender<TSchema extends ZodSchema, TName extends Path<z.infer<TSchema>>> {
   field: ControllerRenderProps<z.infer<TSchema>, TName>
 }
 
-const RHFFormField = <TSchema extends ZodSchema, TName extends Path<z.infer<TSchema>>>({ control, name, formKey, disabled = false, withWrapper = true, className, type = 'input', buttonLabel, onClick }: RHFFormFieldProps<TSchema, TName>) => {
+const RHFFormField = <TSchema extends ZodSchema, TName extends Path<z.infer<TSchema>>>({ control, name, formKey, disabled = false, withWrapper = true, className, type = 'input', buttonLabel, onClick, withLabel = true, withBorder = true }: RHFFormFieldProps<TSchema, TName>) => {
   const FormFieldComponent = (
     <FormField
     control={control}
     name={name}
     render={({ field }: RHFFormFieldControllerRender<TSchema, TName>) => (
       <FormItem className={"w-full"}>
-        <FormControl>
-          <FormLabel>{en.form[formKey].label}</FormLabel>
-        </FormControl>
+        {withLabel && (
+          <FormControl>
+            <FormLabel>{en.form[formKey].label}</FormLabel>
+          </FormControl>
+        )}
         {
         type === 'inputWithButton' ? (
           <div className={'flex flex-row items-center gap-2'}>
@@ -47,15 +51,15 @@ const RHFFormField = <TSchema extends ZodSchema, TName extends Path<z.infer<TSch
         )
         :
         type === 'textarea' ? (
-          <Textarea disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} className={'resize-none'} />
+          <Textarea disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} className={cn('resize-none', !withBorder && 'border-none')} />
         )
         :
         type === 'input' ?
         (
-          <Input disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} />
+          <Input disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} className={cn(!withBorder && 'border-none')} />
         ):
         (
-          <Input disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} />
+          <Input disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} className={cn(!withBorder && 'border-none')} />
         )}
         <FormMessage />
       </FormItem>
