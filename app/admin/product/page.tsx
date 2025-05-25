@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { PATH_DIR } from 'hgss-dir'
 import { en } from 'public/locale'
 import { Metadata } from 'next'
 import Link from 'next/link'
@@ -10,7 +11,6 @@ import { Pagination, DeleteDialg, TooltpGoBadge, Tooltp, NoResult } from 'compon
 import { TblHead, TblBody } from 'component/shared/tbl'
 import { DDMenu } from 'component/shared/dd-menu'
 import { PageTitle } from 'component/admin'
-import { PATH_DIR } from 'hgss-dir'
 
 export const metadata: Metadata = { title: generateTitle(en.product.products.label, en.admin.label) }
 
@@ -76,4 +76,4 @@ const AdminProductsPage: FC<AdminProductsPageProps> = async ({ searchParams }) =
     );
 }
 
-export default AdminProductsPage;
+export default AdminProductsPage

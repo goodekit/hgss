@@ -148,6 +148,8 @@ export async function createGallery(data: CreateGallery) {
         })
       }
     })
+
+    console.log('new gallery: ', newGallery)
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', newGallery)
   } catch (error) {
