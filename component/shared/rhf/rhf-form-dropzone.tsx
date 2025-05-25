@@ -8,7 +8,7 @@ import { Control, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import Image from 'next/image'
 import { useToast } from 'hook'
 import { X } from 'lucide-react'
-import { deleteProductImage } from 'lib/action'
+import { deleteImage } from 'lib/action'
 import { cn } from 'lib'
 import { FormField, FormLabel, FormMessage, FormItem, FormControl } from 'component/ui/form'
 import { Card, CardContent } from 'component/ui/card'
@@ -17,14 +17,15 @@ import { PATH_DIR } from 'hgss-dir'
 type FormKeyLocale = keyof typeof en.form
 
 interface RHFFormDropzoneProps<TSchema extends ZodSchema> {
-  control: Control<z.infer<TSchema>>
-  formKey: FormKeyLocale
-  images : string[]
-  name   : Path<z.infer<TSchema>>
-  form   : UseFormReturn<z.infer<TSchema>>
+  control    : Control<z.infer<TSchema>>
+  formKey    : FormKeyLocale
+  images     : string[] | string
+  name       : Path<z.infer<TSchema>>
+  form       : UseFormReturn<z.infer<TSchema>>
+  withLabel ?: boolean
 }
 
-const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, formKey, form }: RHFFormDropzoneProps<TSchema>) => {
+const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, formKey, form, withLabel = true }: RHFFormDropzoneProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast } = useToast()
 
@@ -36,7 +37,7 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
 
   const handleDelete = async (index: number) => {
     const currentImages = form.getValues(name) as string[]
-    const result = await deleteProductImage({ currentImages, index })
+    const result = await deleteImage({ currentImages, index })
     if (result?.success) {
       const updatedImages = currentImages.filter((_, _i) => _i != index)
       form.setValue(name, updatedImages as PathValue<z.infer<TSchema>, Path<z.infer<TSchema>>>)
@@ -90,12 +91,18 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
       name={name}
       render={() => (
         <FormItem className={'w-full'}>
-          <FormLabel>{en.form[formKey].label}</FormLabel>
+          {withLabel && <FormLabel>{en.form[formKey].label}</FormLabel>}
           <Card>
             <CardContent className={'space-y-2 mt-2 min-h-32'}>
               <div className="flex flex-col md:flex-row flex-start h-32 space-x-2">
                 <div className="flex-between space-x-2">
-                  {images.map((image, index) => (
+                  {typeof images === 'string' && (
+                     <div className={'relative'}>
+                        <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(0)} />
+                        <Image src={images} alt={'image'} width={680} height={680} className={'w-full object-cover object-center rounded-sm'} />
+                      </div>
+                  )}
+                  {Array.isArray(images) && images.map((image, index) => (
                     <div key={index} className={'relative'}>
                       <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(index)} />
                       <Image
