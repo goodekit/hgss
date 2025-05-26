@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { z, ZodSchema } from 'zod'
 import { en } from 'public/locale'
+import { GLOBAL } from 'hgss'
 import { Control, Path, UseFormReturn } from 'react-hook-form'
 import Image from 'next/image'
 import { useToast } from 'hook'
@@ -46,6 +47,14 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+
+    const maxLimit = GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024
+
+    if (file.size > maxLimit) {
+      toast({ variant: 'destructive', description: `File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit` })
+      throw new Error(`File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit`)
+    }
+
     const formData = new FormData()
     formData.append('file', file)
     const xhr = new XMLHttpRequest()
