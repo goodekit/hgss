@@ -139,8 +139,7 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
                 </Card>
               ))}
               <Button type={'button'} variant={'ghost'} onClick={() => append({ ...galleryItemDefaultValue })} className={cn('font-bold w-full')}>
-                {'+ '}
-                {en.form.gallery_item.placeholder}
+                {'+ '}{en.form.gallery_item.placeholder}
               </Button>
             </div>
           </div>
