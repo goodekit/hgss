@@ -64,6 +64,7 @@ export default function GalleryLightbox({ items }: GalleryLightboxProps) {
           item?.image !== '' && (
             <Image
               key={i}
+              priority
               src={item?.image}
               alt={item.title}
               loading="eager"

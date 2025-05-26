@@ -134,6 +134,7 @@ export async function createGallery(data: CreateGallery) {
   try {
     const parsed                    = GallerySchema.parse(data)
     const { galleryItems, ...rest } = parsed
+
     const newGallery = await prisma.gallery.create({
       data: {
         ...rest,
@@ -149,10 +150,15 @@ export async function createGallery(data: CreateGallery) {
       }
     })
 
-    console.log('new gallery: ', newGallery)
+    if (!galleryItems || galleryItems.length === 0) {
+      throw new Error('At least one gallery item must be provided')
+    }
+
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
+
     return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', newGallery)
   } catch (error) {
+    console.error('Gallery creation failed: ', error)
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
 }

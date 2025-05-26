@@ -38,7 +38,6 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
   }, [formState.isDirty, setDirty])
 
  const onSubmit: SubmitHandler<CreateGallery> = async (data) => {
-    console.log('ive been clicked!')
     if (Object.keys(errors).length > 0) {
       toast({ variant: 'destructive', description: 'Please fix form errors before submitting.' });
       return
@@ -93,6 +92,7 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
             {/* TODO: put in the components */}
             <div className="flex flex-col gap-4">
               <label>{en.form.gallery_item.label}</label>
+              {errors.galleryItems && <p className="text-sm text-destructive">{errors.galleryItems.message as string}</p>}
               {fields.map((field, index) => (
                 <Card key={field.id} className={'relative flex flex-col w-full p-2'}>
                   <div className="absolute -top-2 -right-2 md:top-0 md:-right-11">
@@ -139,8 +139,7 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
                 </Card>
               ))}
               <Button type={'button'} variant={'ghost'} onClick={() => append({ ...galleryItemDefaultValue })} className={cn('font-bold w-full')}>
-                {'+ '}
-                {en.form.gallery_item.placeholder}
+                {'+ '}{en.form.gallery_item.placeholder}
               </Button>
             </div>
           </div>
