@@ -9,7 +9,6 @@ import { getAllGalleryItems } from 'lib/action'
 import { Button } from 'component/ui'
 import { Pagination, NoResult } from 'component/shared'
 import { GalleryLightBox } from 'component/module/gallery'
-import { PageTitle } from 'component/admin'
 
 export const metadata: Metadata = { title: generateTitle(en.product.products.label, en.admin.label) }
 
@@ -27,9 +26,11 @@ const AdminGalleryPage: FC<AdminGalleryPageProps> = async ({ searchParams }) => 
     const galleryItems = await getAllGalleryItems({ query, category, sort, page: Number(page) })
     return (
     <div className={'space-y-2'} suppressHydrationWarning>
-        <div className={'flex-between'}>
-            <PageTitle query={query} title={en.gallery.label} href={PATH_DIR.ADMIN.PRODUCT} />
-            <Button asChild className={'text-black'}>
+        <div className={'flex-between md:mb-5'}>
+            <div className="space-y-4 gap-3">
+                <h1 className={'h2-bold'}>{en.gallery.label}</h1>
+            </div>
+            <Button asChild className={'bg-punkpink text-black'}>
                 <Link href={PATH_DIR.ADMIN.GALLERY_CREATE}>{en.create_gallery.label}</Link>
             </Button>
         </div>
