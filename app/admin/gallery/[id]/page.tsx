@@ -3,8 +3,8 @@ import { Metadata } from 'next'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { notFound } from 'next/navigation'
-import { getProductById } from 'lib/action'
-import { ProductForm } from 'component/admin'
+import { getGalleryById } from 'lib/action'
+import { GalleryForm } from 'component/admin'
 import { FormBackBtn } from 'component/shared/btn'
 import { generateTitle } from 'lib'
 
@@ -15,13 +15,13 @@ interface AdminUpdateGalleryPageProps {
 }
 const AdminUpdateGalleryPage: FC<AdminUpdateGalleryPageProps> = async ({ params }) => {
   const { id } = await params
-  const product = await getProductById(id)
-  if (!product) return notFound()
+  const gallery = await getGalleryById(id)
+  if (!gallery) return notFound()
   return (
     <Fragment>
-      <FormBackBtn href={PATH_DIR.ADMIN.PRODUCT} withLink />
-      <h1 className="h2-bold permanent-marker-regular">{en.update_product.label}</h1>
-      <ProductForm type={'update'} product={product} productId={product.id} />
+      <FormBackBtn href={PATH_DIR.ADMIN.GALLERY} withLink />
+      <h1 className="h2-bold permanent-marker-regular">{en.update_gallery.label}</h1>
+      <GalleryForm type={'update'} gallery={gallery} galleryId={gallery.id} />
     </Fragment>
   )
 }
