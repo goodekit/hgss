@@ -50,7 +50,7 @@ const AdminOverviewPage = async () => {
 
   return (
     <div className={'space-y-4'}>
-      <h2 className="h2-bold">{en.dashboard.label}</h2>
+      <h2 className="h2-bold">{en.stats.label}</h2>
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <AdminOverviewCard label={en.total_revenue.label} icon={<Landmark size={20} className={'text-muted-foreground'} />}>
           <div className="text-xs align-super">{GLOBAL.PRICES.CURRENCY}&nbsp;</div>

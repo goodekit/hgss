@@ -9,7 +9,7 @@ import { Table, Badge } from 'component/ui'
 import { Pagination, DeleteDialg, NoResult } from 'component/shared'
 import { TblHead, TblBody } from 'component/shared/tbl'
 import { Tooltp, TooltpGoBadge } from 'component/shared/tooltp'
-import { PageTitle } from 'component/admin'
+import { AdminPageTitle } from 'component/admin/title'
 import { generateTitle, limiter,  formatCurrency, formatDateTime, formatId } from 'lib/util'
 
 export const metadata: Metadata = { title: generateTitle(en.order.orders.label, 'Admin') }
@@ -76,7 +76,7 @@ const AdminOrdersPage = async ({ searchParams }: AdminOrdersPageProps) => {
 
   return (
     <div className={'space-y-2'} suppressHydrationWarning>
-      <PageTitle query={query} title={en.order.orders.label} href={PATH_DIR.ADMIN.ORDER} />
+      <AdminPageTitle query={query} title={en.order.orders.label} href={PATH_DIR.ADMIN.ORDER} />
       <div className="overflow-x-auto">
         <Table>
           <TblHead cells={HEADER.cells} />
