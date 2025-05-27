@@ -5,12 +5,12 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { PATH_DIR } from 'hgss-dir'
 import { generateTitle, KEY } from 'lib'
-import { getAllGalleryItems } from 'lib/action'
+import { getAllGalleryItems, getGalleryCount } from 'lib/action'
 import { Button } from 'component/ui'
 import { Pagination, NoResult } from 'component/shared'
 import { GalleryLightBox } from 'component/module/gallery'
 
-export const metadata: Metadata = { title: generateTitle(en.product.products.label, en.admin.label) }
+export const metadata: Metadata = { title: generateTitle(en.gallery.label, en.admin.label) }
 
 const DEFAULT_QUERY = 'all'
 interface AdminGalleryPageProps {
@@ -24,19 +24,26 @@ const AdminGalleryPage: FC<AdminGalleryPageProps> = async ({ searchParams }) => 
       page     = '1'
     }          = await searchParams
     const galleryItems = await getAllGalleryItems({ query, category, sort, page: Number(page) })
+    const counts       = await getGalleryCount()
     return (
     <div className={'space-y-2'} suppressHydrationWarning>
         <div className={'flex-between md:mb-5'}>
             <div className="space-y-4 gap-3">
                 <h1 className={'h2-bold'}>{en.gallery.label}</h1>
             </div>
-            <Button asChild className={'bg-punkpink text-black'}>
+            <Button asChild className={'bg-punkpink'}>
                 <Link href={PATH_DIR.ADMIN.GALLERY_CREATE}>{en.create_gallery.label}</Link>
             </Button>
         </div>
+        <div className={'flex-between md:mb-5'}>
+            <div className={'space-y-4'}>
+                <p className={'text-md'}>{`Albums: ${counts.gallery}`}</p>
+                <p className={'text-md'}>{`Images: ${counts.galleryItem}`}</p>
+            </div>
+        </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {galleryItems.data.length <= 0 && <NoResult data={_mockData.products.length} />}
-            <GalleryLightBox items={galleryItems.data} />
+            <GalleryLightBox items={galleryItems.data} moduleType={'admin'} />
         </div>
         <NoResult data={galleryItems.totalPages} />
         {galleryItems.totalPages > 1 && (
