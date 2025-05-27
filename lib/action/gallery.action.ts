@@ -17,10 +17,19 @@ const TAG = 'GALLERY.ACTION'
 const s3 = new S3Client({
   region: GLOBAL.AWS.REGION,
   credentials: {
-    accessKeyId: GLOBAL.AWS.ACCESS_KEY_ID,
+    accessKeyId    : GLOBAL.AWS.ACCESS_KEY_ID,
     secretAccessKey: GLOBAL.AWS.SECRET_ACCESS_KEY
   }
 })
+
+export async function getGalleryCount() {
+  const [galleryCount, galleryItemCount] = await Promise.all([
+    prisma.gallery.count(),
+    prisma.galleryItem.count()
+  ])
+  const summary = { gallery: galleryCount, galleryItem: galleryItemCount }
+  return convertToPlainObject(summary)
+}
 
 /**
  * Fetches the latest galleries from the database.
@@ -52,7 +61,7 @@ export async function getAllGallery({ limit = GLOBAL.PAGE_SIZE_GALLERY, page, qu
 }
 
 export async function getGalleryById(galleryId: string) {
-  const gallery = await prisma.gallery.findFirst({ where: { id: galleryId } })
+  const gallery = await prisma.gallery.findFirst({ where: { id: galleryId }, include: { galleryItems: true } })
   if (!gallery) throw new Error(en.error.not_found)
   return convertToPlainObject(gallery)
 }
