@@ -17,7 +17,7 @@ const Chart: FC<ChartProps> = ({ data: { salesData } }) => {
       <BarChart data={salesData}>
         <XAxis dataKey={'month'} stroke={systemPalette[mode].chart.stroke} fontSize={10} tickLine axisLine />
         <YAxis stroke={systemPalette[mode].chart.stroke} fontSize={10} tickLine axisLine={false} tickFormatter={(value) => `${formatCurrency(value)}`} />
-        <Bar dataKey={'totalSales'} fill={systemPalette['light'].punk.primary} radius={[4,4,0,0]} className={'fill-primary'} />
+        <Bar dataKey={'totalSales'} fill={systemPalette[mode].punk.primary} radius={[4,4,0,0]} className={''} />
       </BarChart>
     </ResponsiveContainer>
   )
