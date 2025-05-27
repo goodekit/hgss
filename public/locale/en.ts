@@ -123,6 +123,16 @@ export const en = {
   delete: {
     label: 'Delete'
   },
+  delete_image: {
+    label: 'Delete Image',
+    description: 'Are you sure you want to delete this image?',
+    description_last_image: 'This is the last image in the Album, deleting this will delete the album, are you sure you want to continue?'
+  },
+  delete_album: {
+    label: 'Delete Album',
+    description: 'Are you sure you want to delete this Album?',
+    description_multiple: 'There are multiple images in the album, are you sure you want to delete this album?'
+  },
   delivered_at: {
     label: 'Delivered At'
   },
@@ -554,6 +564,9 @@ export const en = {
   sort_by: {
     label: 'Sort by'
   },
+  stats: {
+    label: 'Stats'
+  },
   status: {
     label: 'Status'
   },
@@ -593,6 +606,10 @@ export const en = {
     description: 'Complete the form with your information',
     toast: 'User name updated'
   },
+  update_gallery: {
+    label: 'Update Gallery',
+    description: 'Complete the form with your gallery information'
+  },
   update_product: {
     label: 'Update Product',
     description: 'Complete the form with your product information'
@@ -602,7 +619,7 @@ export const en = {
     description: 'Complete the form with your user information'
   },
   upload: {
-    label      : 'Upload',
+    label: 'Upload',
     description: 'Click to Upload'
   },
   upload_image: {
@@ -612,15 +629,15 @@ export const en = {
     label: 'Upload Image/s'
   },
   upload_banner: {
-    label      : 'Upload Banner',
+    label: 'Upload Banner',
     description: 'Drag and drop an image here or click to upload'
   },
   upload_cover: {
-    label      : 'Upload Cover',
+    label: 'Upload Cover',
     description: 'Click to upload cover'
   },
   uploaded: {
-    label      : 'Uploaded',
+    label: 'Uploaded',
     description: 'File Uploaded'
   },
   user: {
