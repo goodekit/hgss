@@ -4,13 +4,13 @@ import { XIcon } from 'lucide-react'
 import { Badge } from 'component/ui'
 import { LinkBtn } from 'component/shared'
 
-interface PageTitleProps {
-    query: string
-    title: string
-    href : string
+interface AdminPageTitleProps {
+    query?: string
+    title : string
+    href  : string
 }
 
-const PageTitle: FC<PageTitleProps> = ({ query, title, href }) => {
+const AdminPageTitle: FC<AdminPageTitleProps> = ({ query, title, href }) => {
   return (
     <div className="space-y-4 gap-3">
       <h1 className={'h2-bold'}>{title}</h1>
@@ -28,4 +28,4 @@ const PageTitle: FC<PageTitleProps> = ({ query, title, href }) => {
   )
 }
 
-export default PageTitle
+export default AdminPageTitle
