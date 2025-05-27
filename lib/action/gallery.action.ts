@@ -172,12 +172,28 @@ export async function createGallery(data: CreateGallery) {
  */
 export async function updateGallery(data: UpdateGallery) {
   try {
-    const parsed                        = UpdateGallerySchema.parse(data)
-    const { title, description, cover } = parsed
-    const galleryExists                 = await prisma.gallery.findFirst({ where: { id: parsed.id } })
+    const parsed                                      = UpdateGallerySchema.parse(data)
+    const { title, description, cover, galleryItems } = parsed
+    const galleryExists                               = await prisma.gallery.findFirst({ where: { id: parsed.id } })
     if (!galleryExists) throw new Error(en.error.not_found)
 
-    await prisma.gallery.update({ where: { id: parsed.id }, data : { title, description, cover }})
+    await prisma.gallery.update({
+      where: { id: parsed.id },
+      data: {
+        title,
+        description,
+        cover,
+        ...(galleryItems && {
+          galleryItems: {
+            upsert: galleryItems.map(item => ({
+              where : { id: item.id || '' },
+              update: { title: item.title, description: item.description, image: item.image },
+              create: { title: item.title, description: item.description, image: item.image }
+            }))
+          }
+        })
+      }
+    })
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
   } catch (error) {
@@ -245,7 +261,15 @@ export async function deleteGalleryItemImage(args: ImageInput) {
 
 export async function deleteGalleryItem(galleryItemId: string) {
   try {
+    const item = await prisma.galleryItem.findFirst({ where: { id: galleryItemId }})
+    if (!item) throw new Error(en.error.not_found)
     await prisma.galleryItem.delete({ where: { id: galleryItemId } })
+
+    const remainingItems = await prisma.galleryItem.count({ where: { galleryId: item.galleryId }})
+    if (remainingItems === 0) {
+      await prisma.gallery.delete({ where: { id: item.galleryId }})
+    }
+
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
   } catch (error) {
