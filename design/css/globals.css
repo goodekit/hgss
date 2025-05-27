@@ -127,6 +127,10 @@
   @apply text-black dark:text-punkpink;
 }
 
+.text-default {
+  @apply text-black dark:text-white
+}
+
 .input-bg-form {
   @apply bg-gray-200 dark:bg-gray-800
 }
