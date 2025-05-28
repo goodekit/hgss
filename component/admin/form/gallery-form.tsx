@@ -9,7 +9,8 @@ import { SubmitHandler, useForm, useFieldArray } from 'react-hook-form'
 import { useToast, usePreventNavigation, useFormState } from 'hook'
 import { Plus, MoveUpRight, X } from 'lucide-react'
 import { GallerySchema, UpdateGallerySchema, galleryDefaultValue, galleryItemDefaultValue } from 'lib/schema'
-import { createGallery, updateGallery } from 'lib/action/gallery.action'
+import { createGallery, updateGallery, deleteGalleryItem } from 'lib/action/gallery.action'
+import { deleteImage } from 'lib/action/image-action'
 import { Form, Button, Card } from 'component/ui'
 import { LoadingBtn } from 'component/shared/btn'
 import { RHFFormField, RHFFormImageUpload } from 'component/shared/rhf'
@@ -17,19 +18,21 @@ import { formatText, delay, cn } from 'lib/util'
 
 const TAG = 'Gallery'
 const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
-  const { toast }              = useToast()
-  const { isDirty, setDirty }  = useFormState()
-  const router                 = useRouter()
-  const form = useForm<CreateGallery>({
-    resolver     : type            === 'update' ? zodResolver(UpdateGallerySchema) : zodResolver(GallerySchema),
-    defaultValues: gallery && type === 'update' ? gallery : galleryDefaultValue
-  })
+ const { toast }             = useToast()
+ const { isDirty, setDirty } = useFormState()
+ const router                = useRouter()
+ const isUpdate              = type === 'update'
+ const form                  = useForm<UpdateGallery | CreateGallery>({
+   resolver     : isUpdate ? zodResolver(UpdateGallerySchema): zodResolver(GallerySchema),
+   defaultValues: isUpdate && gallery ? gallery              : galleryDefaultValue
+ })
 
   const { control, formState, register, handleSubmit } = form
   const { errors }                                     = formState
   const cover                                          = form.watch('cover')
-
-  const { fields, append, remove } = useFieldArray<CreateGallery>({ control, name: 'galleryItems' as never })
+  const image                                          = (index:number) =>  form.watch(`galleryItems.${index}.image`)
+  const galleryItems                                   = form.getValues(`galleryItems`)
+  const { fields, append, remove }                     = useFieldArray<CreateGallery>({ control, name: 'galleryItems' as never })
 
   usePreventNavigation(isDirty)
 
@@ -37,9 +40,9 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
     setDirty(formState.isDirty)
   }, [formState.isDirty, setDirty])
 
- const onSubmit: SubmitHandler<CreateGallery> = async (data) => {
+ const onSubmit: SubmitHandler<UpdateGallery | CreateGallery> = async (data) => {
     if (Object.keys(errors).length > 0) {
-      toast({ variant: 'destructive', description: 'Please fix form errors before submitting.' });
+      toast({ variant: 'destructive', description: en.error.form });
       return
     }
     try {
@@ -50,26 +53,52 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
           toast({ variant: 'destructive', description: response.message })
         } else {
           toast({ description: response.message })
+          router.push(PATH_DIR.ADMIN.GALLERY)
         }
       }
 
       if (type === 'update' && galleryId) {
-        const response = await updateGallery({ ...data, id: galleryId })
+        const response = await updateGallery(data)
         if (!response.success) {
           toast({ variant: 'destructive', description: response.message })
         } else {
           toast({ description: response.message })
+          router.push(PATH_DIR.ADMIN.GALLERY)
         }
       }
-      router.push(PATH_DIR.ADMIN.GALLERY)
+      // router.push(PATH_DIR.ADMIN.GALLERY)
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        description: 'An error occurred while saving the gallery' + error
-      })
+      toast({ variant: 'destructive', description: en.error.gallery_save + error })
     }
   }
 
+  const handleRemoveIndex = async (image: string, index: number) => {
+    try {
+      await delay(500)
+      if (image && image.startsWith('http')) {
+        const itemId = form.getValues(`galleryItems.${index}.id`)
+        if (itemId) {
+          const response = await deleteGalleryItem(itemId)
+          if (!response.success) {
+            toast({ variant: 'destructive', description: en.error.failed_delete_file })
+          } else {
+            toast({ description: en.success.deleted })
+          }
+        } else {
+          const imageResponse = await deleteImage({ currentImages: image })
+          if (!imageResponse.success) {
+            toast({ variant: 'destructive', description: en.error.failed_delete_file })
+          } else {
+            toast({ description: en.success.deleted })
+          }
+        }
+      }
+
+      remove(index)
+    } catch (error: unknown) {
+      toast({ variant: 'destructive', description: String(error) })
+    }
+  }
 
   return (
     <Fragment>
@@ -95,16 +124,16 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
               {errors.galleryItems && <p className="text-sm text-destructive">{errors.galleryItems.message as string}</p>}
               {fields.map((field, index) => (
                 <Card key={field.id} className={'relative flex flex-col w-full p-2'}>
-                  <div className="absolute -top-2 -right-2 md:top-0 md:-right-11">
-                    <Button
-                      type={'button'}
-                      size={'sm'}
-                      variant={'destructive'}
-                      className={cn('text-black rounded-l-none')}
-                      onClick={() => remove(index)}>
-                      <X />
-                    </Button>
-                  </div>
+                  {!(isUpdate && galleryItems.filter((item: UpdateGalleryItem) => !!item?.id).length === 1 && (galleryItems[index] as UpdateGalleryItem)?.id) && (
+                    <div className="absolute -top-2 -right-2 md:top-0 md:-right-11">
+                      {image(index) === '' ? (
+                        <Button type={'button'} size={'sm'} variant={'destructive'} className={cn('text-black rounded-l-none')} onClick={() => remove(index)}> <X /> </Button>
+                      ) : (
+                        <Button type={'button'} size={'sm'} variant={'destructive'} className={cn('text-black rounded-l-none')} onClick={() => handleRemoveIndex(image(index), index)}> <X /> </Button>
+                      )}
+                    </div>
+                  )}
+                  <input type="hidden" {...register(`galleryItems.${index}.id`)} />
                   <div className={'flex flex-col md:flex-row justify-evenly gap-2'}>
                     <div className={'w-full'}>
                       <RHFFormField
@@ -145,10 +174,11 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
           </div>
           <div className="flex justify-end">
             <LoadingBtn
+              variant={'link'}
               isPending={formState.isSubmitting}
               label={formatText(`${type} ${TAG}`, 'capitalize')}
               disabled={formState.isSubmitting}
-              className={'min-w-24 sm:w-full'}
+              className={'min-w-24 sm:w-full texture-bg permanent-marker-regular text-xl text-black bg-transparent'}
               icon={type === 'create' ? <Plus size={20} /> : <MoveUpRight size={20} />}
             />
           </div>

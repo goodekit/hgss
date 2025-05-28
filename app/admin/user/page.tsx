@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 import { getAllUsers, deleteUser } from 'lib/action'
 import { FilePenLine, Ellipsis, ListMinus, Crown } from 'lucide-react'
 import { Table, Badge } from 'component/ui'
-import { PageTitle } from 'component/admin'
+import { AdminPageTitle } from 'component/admin/title'
 import { DeleteDialg, TooltpGoBadge, DDMenu, Tooltp, Pagination, NoResult } from 'component/shared'
 import { TblBody, TblHead } from 'component/shared/tbl'
 import { generateTitle, formatId, cn } from 'lib/util'
@@ -54,7 +54,7 @@ const AdminUsersPage: FC<AdminUsersPageProps> = async ({ searchParams }) => {
 
     return (
       <div className="space-y-2" suppressHydrationWarning>
-        <PageTitle query={query} title={en.user.users.label} href={PATH_DIR.ADMIN.USER} />
+        <AdminPageTitle query={query} title={en.user.users.label} href={PATH_DIR.ADMIN.USER} />
         <Table>
           <TblHead cells={HEAD.cells} />
           <TblBody items={users.data as unknown as User[]} cells={BODY} />

@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, Fragment, useTransition, useState } from 'react'
+import { FC, Fragment, useTransition, useState, JSX } from 'react'
 import { en } from 'public/locale'
 import { useToast } from 'hook'
 import { systemPalette } from 'hgss-design'
@@ -23,11 +23,16 @@ import { delay } from 'lib/util'
 import { KEY } from 'lib/constant'
 
 interface DeleteDialg {
-  id       : string
-  action   : (orderId: string) => Promise<AppResponse>
-  children?: React.ReactNode
+  id           : string
+  action       : (orderId: string) => Promise<AppResponse>
+  children    ?: React.ReactNode
+  variant     ?: ButtonVariant
+  label       ?: string | JSX.Element
+  title       ?: string
+  description ?: string
+  btnClassName?: string
 }
-const DeleteDialg: FC<DeleteDialg> = ({ id, action, children }) => {
+const DeleteDialg: FC<DeleteDialg> = ({ id, action, children, label, variant, title, description, btnClassName }) => {
   const [isPending, startTransition] = useTransition()
   const [open, setOpen]              = useState(false)
   const { toast }                    = useToast()
@@ -52,19 +57,19 @@ const DeleteDialg: FC<DeleteDialg> = ({ id, action, children }) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
       {children ? children : (
-        <Button size={'sm'} variant={'ghost'}>
-         <Minus size={20} color={systemPalette[mode].text.destructive} />
+        <Button size={'sm'} variant={variant ? variant :'ghost'} className={btnClassName}>
+         {label ? label : <Minus size={20} color={systemPalette[mode].text.destructive} />}
         </Button>
       )}
       </AlertDialogTrigger>
       <AlertDialogContent className={'special-elite'}>
         <AlertDialogHeader>
-          <AlertDialogTitle>{en.message.default.title}</AlertDialogTitle>
-          <AlertDialogDescription>{en.message.confirm_delete_order.description}</AlertDialogDescription>
+          <AlertDialogTitle>{title ? title : en.message.default.title}</AlertDialogTitle>
+          <AlertDialogDescription>{description ? description : en.message.confirm_delete_order.description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{en.cancel.label}</AlertDialogCancel>
-          <AlertDialogAction disabled={isPending} onClick={handleDeleteOrder} style={{ backgroundColor: systemPalette[mode].action.destructive, color: systemPalette[mode].text.secondary }}>
+          <AlertDialogAction disabled={isPending} onClick={handleDeleteOrder} style={{ backgroundColor: systemPalette[mode].action.destructive }}>
             {isPending ? (
               <Fragment>
                 <i>{en.loading.delete_order}</i> <EllipsisLoader />

@@ -31,11 +31,11 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
 
   const handleUploadComplete = (res: { url: string }) => {
     form.setValue(name, res.url as SetFieldName)
-  };
+  }
 
   const handleDelete = async () => {
     const currentImage = form.getValues(name)
-    const result = await deleteImage({ currentImages: currentImage })
+    const result       = await deleteImage({ currentImages: currentImage })
     if (result?.success) {
       form.setValue(name, '' as SetFieldName)
       toast({ description: en.success.file_deleted })

@@ -10,7 +10,7 @@ import { Button, Table } from 'component/ui'
 import { Pagination, DeleteDialg, TooltpGoBadge, Tooltp, NoResult } from 'component/shared'
 import { TblHead, TblBody } from 'component/shared/tbl'
 import { DDMenu } from 'component/shared/dd-menu'
-import { PageTitle } from 'component/admin'
+import { AdminPageTitle } from 'component/admin/title'
 
 export const metadata: Metadata = { title: generateTitle(en.product.products.label, en.admin.label) }
 
@@ -57,8 +57,8 @@ const AdminProductsPage: FC<AdminProductsPageProps> = async ({ searchParams }) =
     return (
     <div className={'space-y-2'} suppressHydrationWarning>
         <div className={'flex-between'}>
-            <PageTitle query={query} title={en.product.products.label} href={PATH_DIR.ADMIN.PRODUCT} />
-            <Button asChild className={'bg-punkpink text-black'}>
+            <AdminPageTitle query={query} title={en.product.products.label} href={PATH_DIR.ADMIN.PRODUCT} />
+            <Button asChild className={'bg-punkpink'}>
                 <Link href={PATH_DIR.ADMIN.PRODUCT_CREATE}>{en.create_product.label}</Link>
             </Button>
         </div>

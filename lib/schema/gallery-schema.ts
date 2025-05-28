@@ -14,10 +14,11 @@ export const GallerySchema = z.object({
   galleryItems: z.array(GalleryItemSchema).min(1, 'At least one gallery item is required')
 })
 
-export const UpdateGallerySchema = GallerySchema.extend({
-  id: z.string().min(1, 'Id is required')
+export const UpdateGalleryItemSchema = GalleryItemSchema.extend({
+  id: z.string().optional()
 })
 
-export const UpdateGalleryItemSchema = GalleryItemSchema.extend({
-  id: z.string().min(1, 'Id is required')
+export const UpdateGallerySchema = GallerySchema.extend({
+  id          : z.string().optional(),
+  galleryItems: z.array(UpdateGalleryItemSchema)
 })

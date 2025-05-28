@@ -10,4 +10,4 @@ export { default as AdminHeader } from './header/admin-header'
 // ⎿ search
 export { default as AdminSearch } from './search/admin-search'
 // ⎿ title
-export { default as PageTitle } from './title/page-title'
+export { default as AdminPageTitle } from './title/page-title'
