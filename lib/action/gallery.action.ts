@@ -194,11 +194,21 @@ export async function updateGallery(data: UpdateGallery) {
         cover,
         ...(galleryItems && {
           galleryItems: {
-            upsert: galleryItems.map(item => ({
-              where : { id: item.id || '' },
-              update: { title: item.title, description: item.description, image: item.image },
-              create: { title: item.title, description: item.description, image: item.image }
-            }))
+           updateMany: galleryItems.filter(item => item.id).map(item => ({
+            where: { id: item.id },
+            data : {
+              title      : item.title,
+              description: item.description,
+              image      : item.image
+            }
+           })),
+           createMany: {
+              data: galleryItems.filter(item => !item.id).map(item => ({
+                title      : item.title,
+                description: item.description,
+                image      : item.image
+              }))
+           }
           }
         })
       }
@@ -206,6 +216,7 @@ export async function updateGallery(data: UpdateGallery) {
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
   } catch (error) {
+    console.log('error: ', error)
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
 }
@@ -251,14 +262,14 @@ export async function deleteGalleryItemImage(args: ImageInput) {
   }
 
   const imageToDelete = 'index' in args ? args.currentImages[args.index] : args.currentImages
-  const fileKey = getFileKeyFromUrl(imageToDelete)
+  const fileKey       = getFileKeyFromUrl(imageToDelete)
 
   if (!fileKey) return { succes: false, error: en.error.invalid_file_key }
   try {
     await s3.send(
       new DeleteObjectCommand({
         Bucket: GLOBAL.AWS.S3_BUCKET_NAME,
-        Key: fileKey
+        Key   : fileKey
       })
     )
     return { success: true }
@@ -270,8 +281,9 @@ export async function deleteGalleryItemImage(args: ImageInput) {
 
 export async function deleteGalleryItem(galleryItemId: string) {
   try {
-    const item = await prisma.galleryItem.findFirst({ where: { id: galleryItemId }})
+    const item = await prisma.galleryItem.findFirst({ where: { id: galleryItemId } })
     if (!item) throw new Error(en.error.not_found)
+    await deleteGalleryItemImage({ currentImages: item.image })
     await prisma.galleryItem.delete({ where: { id: galleryItemId } })
 
     const remainingItems = await prisma.galleryItem.count({ where: { galleryId: item.galleryId }})
@@ -288,6 +300,13 @@ export async function deleteGalleryItem(galleryItemId: string) {
 
 export async function deleteGallery(galleryId: string) {
   try {
+    const galleryItems = await prisma.galleryItem.findMany({ where: { galleryId }})
+    if (!galleryItems || galleryItems.length === 0) throw new Error(en.error.not_found)
+
+    for (const _item of galleryItems) {
+      await deleteGalleryItemImage({ currentImages: _item.image })
+    }
+
     await prisma.gallery.delete({ where: { id: galleryId } })
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
