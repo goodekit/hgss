@@ -23,15 +23,16 @@ import { delay } from 'lib/util'
 import { KEY } from 'lib/constant'
 
 interface DeleteDialg {
-  id          : string
-  action      : (orderId: string) => Promise<AppResponse>
-  children   ?: React.ReactNode
-  variant    ?: ButtonVariant
-  label      ?: string | JSX.Element
-  title      ?: string
-  description?: string
+  id           : string
+  action       : (orderId: string) => Promise<AppResponse>
+  children    ?: React.ReactNode
+  variant     ?: ButtonVariant
+  label       ?: string | JSX.Element
+  title       ?: string
+  description ?: string
+  btnClassName?: string
 }
-const DeleteDialg: FC<DeleteDialg> = ({ id, action, children, label, variant, title, description }) => {
+const DeleteDialg: FC<DeleteDialg> = ({ id, action, children, label, variant, title, description, btnClassName }) => {
   const [isPending, startTransition] = useTransition()
   const [open, setOpen]              = useState(false)
   const { toast }                    = useToast()
@@ -56,7 +57,7 @@ const DeleteDialg: FC<DeleteDialg> = ({ id, action, children, label, variant, ti
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
       {children ? children : (
-        <Button size={'sm'} variant={variant ? variant :'ghost'}>
+        <Button size={'sm'} variant={variant ? variant :'ghost'} className={btnClassName}>
          {label ? label : <Minus size={20} color={systemPalette[mode].text.destructive} />}
         </Button>
       )}
