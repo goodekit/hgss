@@ -75,10 +75,9 @@ export default function GalleryLightbox({ items, moduleType = 'user' }: GalleryL
         (item, i) =>
           item?.image !== '' &&
           (moduleType === KEY.ADMIN ? (
-            <div key={i} className="relative group md:h-[250px] md:w-[250px] rounded-md shadow-md overflow-hidden">
+            <div key={i} className="relative group lg:h-[250px] lg:w-[250px] rounded-md shadow-md overflow-hidden">
               <Image
                 priority
-                key={i}
                 src={item?.image}
                 alt={item.title}
                 loading="eager"
