@@ -17,7 +17,7 @@ interface ThemeToggleProps {
   className?: string
 }
 
-const ThemeToggle = ({ className }: ThemeToggleProps) => {
+export const ThemeToggle = ({ className }: ThemeToggleProps) => {
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme }   = useTheme()
 
@@ -58,5 +58,3 @@ const ThemeToggle = ({ className }: ThemeToggleProps) => {
     </DropdownMenu>
   )
 }
-
-export default ThemeToggle
