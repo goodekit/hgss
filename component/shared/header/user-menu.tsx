@@ -10,7 +10,7 @@ import { ProtectedNavLink } from 'component/shared/protect'
 import { KEY } from 'lib/constant'
 import { charAtName } from 'lib/util'
 
-const UserMenu = ({ session }: { session: Session | null }) => {
+export const UserMenu = ({ session }: { session: Session | null }) => {
   if (!session) {
     return (
       <Button asChild variant="ghost">
@@ -65,5 +65,3 @@ const UserMenu = ({ session }: { session: Session | null }) => {
       </DropdownMenu>
   )
 }
-
-export default UserMenu

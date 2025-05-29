@@ -1,10 +1,9 @@
 import { FC } from 'react'
-// import { ThemeToggle, MobileMenu } from 'component/shared/header'
 import { Session } from 'next-auth'
 import { BagIconWithBadge } from 'component/shared/bag'
 import { ThemeToggle } from 'component/shared/header/theme-toggle'
-import MobileMenu from 'component/shared/header/mobile-menu'
-import UserMenu from 'component/shared/header/user-menu'
+import { MobileMenu } from 'component/shared/header/mobile-menu'
+import { UserMenu } from 'component/shared/header/user-menu'
 
 interface ToolbarProps {
   moduleType?: ModuleType

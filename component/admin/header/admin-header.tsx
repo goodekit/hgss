@@ -2,7 +2,7 @@ import { ASSET_DIR, PATH_DIR } from 'hgss-dir'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AdminSearch } from 'component/admin'
-import ToolBarServer from 'component/shared/header/toolbar.server'
+import { ToolbarServer } from 'component/shared/header/toolbar.server'
 import MainNav from 'app/admin/main-nav'
 
 const AdminHeader = () => {
@@ -21,7 +21,7 @@ const AdminHeader = () => {
           <div className={'mr-5'}>
             <AdminSearch />
           </div>
-          <ToolBarServer moduleType={'admin'} />
+          <ToolbarServer moduleType={'admin'} />
         </div>
       </div>
     </header>

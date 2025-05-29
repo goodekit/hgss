@@ -1,6 +1,6 @@
 import { cn } from 'lib'
 
-const HamburgerUserMenu = () => {
+export const HamburgerUserMenu = () => {
   return (
     <div className={cn('hamburger md:hidden focus:outline-none', 'relative z-50')}>
       <span className={'hamburger-top'}></span>
@@ -9,5 +9,3 @@ const HamburgerUserMenu = () => {
     </div>
   )
 }
-
-export default HamburgerUserMenu

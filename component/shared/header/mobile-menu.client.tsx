@@ -14,7 +14,7 @@ import { ProtectedNavLink } from 'component/shared/protect'
 import { LinkBtn } from 'component/shared/btn'
 import { charAtName, KEY } from 'lib'
 
-const MobileMenuClient = ({ user, count, moduleType = 'default' }: { user: User, count: number, moduleType?: ModuleType }) => {
+export const MobileMenuClient = ({ user, count, moduleType = 'default' }: { user: User, count: number, moduleType?: ModuleType }) => {
   const [open, setOpen] = useState(false)
   const pathname        = usePathname()
   const isAdmin         = user?.role === KEY.ADMIN
@@ -84,5 +84,3 @@ const MobileMenuClient = ({ user, count, moduleType = 'default' }: { user: User,
     </nav>
   )
 }
-
-export default MobileMenuClient
