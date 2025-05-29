@@ -3,8 +3,8 @@ import { en } from 'public/locale'
 import { AlertDialog, AlertDialogTitle, AlertDialogContent, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from 'component/ui'
 
 interface ProtectNavDialgProps {
-  open: boolean
-  setOpen: (open: boolean) => void
+  open               : boolean
+  setOpen            : (open: boolean) => void
   confirmedNavigation: () => void
 }
 
