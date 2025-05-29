@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { en } from 'public/locale'
-import { _mockData } from '_mock'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { PATH_DIR } from 'hgss-dir'
@@ -42,7 +41,6 @@ const AdminGalleryPage: FC<AdminGalleryPageProps> = async ({ searchParams }) => 
             </div>
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {galleryItems.data.length <= 0 && <NoResult data={_mockData.products.length} />}
             <GalleryLightBox items={galleryItems.data} moduleType={'admin'} />
         </div>
         <NoResult data={galleryItems.totalPages} />
