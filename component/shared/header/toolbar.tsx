@@ -1,28 +1,28 @@
 import { FC } from 'react'
-import { getMyBagCount } from 'lib/action'
-import { auth } from 'auth'
-import { ThemeToggle, MobileMenu, BagIconWithBadge } from 'component/shared'
-import { UserMenu } from 'component/shared/header'
+// import { ThemeToggle, MobileMenu } from 'component/shared/header'
+import { Session } from 'next-auth'
+import { BagIconWithBadge } from 'component/shared/bag'
+import { ThemeToggle } from 'component/shared/header/theme-toggle'
+import MobileMenu from 'component/shared/header/mobile-menu'
+import UserMenu from 'component/shared/header/user-menu'
 
 interface ToolbarProps {
   moduleType?: ModuleType
+  user       : User
+  count      : number
+  session    : Session | null
 }
 
-const Toolbar: FC<ToolbarProps> = async ({ moduleType }) => {
-  const count = await getMyBagCount()
-  const session = await auth()
-  const user = session?.user
-
+export const Toolbar: FC<ToolbarProps> = ({ moduleType, user, count, session }) => {
   return (
     <div className="flex justify-end gap-3">
       <nav className="hidden md:flex w-full max-w-xs gap-3">
         <ThemeToggle />
         <BagIconWithBadge itemCount={count} />
-        <UserMenu />
+        <UserMenu session={session} />
       </nav>
       <MobileMenu user={user as User} count={count} moduleType={moduleType} />
     </div>
   )
 }
 
-export default Toolbar
