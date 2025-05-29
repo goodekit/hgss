@@ -1,8 +1,8 @@
 import { PATH_DIR } from 'hgss-dir'
 import { House } from 'lucide-react'
-import { Toolbar } from 'component/shared/header'
-import { Search } from 'component/shared'
 import { ProtectedNavLink } from 'component/shared/protect'
+import Search from 'component/shared/header/search'
+import ToolBarServer from 'component/shared/header/toolbar.server'
 
 const Header= () => {
   return (
@@ -20,7 +20,7 @@ const Header= () => {
         <div className={'hidden'}>
           <Search />
         </div>
-        <Toolbar />
+        <ToolBarServer moduleType={'user'} />
       </div>
     </header>
   )
