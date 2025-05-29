@@ -1,10 +1,10 @@
 import { PATH_DIR } from 'hgss-dir'
 import { House } from 'lucide-react'
-import { Toolbar } from 'component/shared/header'
-import { Search } from 'component/shared'
 import { ProtectedNavLink } from 'component/shared/protect'
+import { Search } from 'component/shared/header/search'
+import { ToolbarServer } from 'component/shared/header/toolbar.server'
 
-const Header= () => {
+export const Header= () => {
   return (
     <header className={'sticky top-0 z-40 w-full h-[60px] bg-background'}>
       <div className={'nav-wrapper flex-between h-full overflow-hidden'}>
@@ -20,10 +20,9 @@ const Header= () => {
         <div className={'hidden'}>
           <Search />
         </div>
-        <Toolbar />
+        <ToolbarServer moduleType={'user'} />
       </div>
     </header>
   )
 }
 
-export default Header

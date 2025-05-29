@@ -1,8 +1,8 @@
 import { ASSET_DIR, PATH_DIR } from 'hgss-dir'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Toolbar } from 'component/shared/header'
 import { AdminSearch } from 'component/admin'
+import { ToolbarServer } from 'component/shared/header/toolbar.server'
 import MainNav from 'app/admin/main-nav'
 
 const AdminHeader = () => {
@@ -11,7 +11,7 @@ const AdminHeader = () => {
       <div className="wrapper flex-center h-full overflow-hidden">
         <div className="flex-start">
           <Link href={PATH_DIR.ROOT} className={'h-auto w-22'}>
-            <div className={"flex items-center overflow-hidden"}>
+            <div className={'flex items-center overflow-hidden'}>
               <Image src={ASSET_DIR.LOGO} height={70} width={50} alt={'logo'} className={'object-cover'} />
             </div>
           </Link>
@@ -21,7 +21,7 @@ const AdminHeader = () => {
           <div className={'mr-5'}>
             <AdminSearch />
           </div>
-          <Toolbar moduleType={'admin'} />
+          <ToolbarServer moduleType={'admin'} />
         </div>
       </div>
     </header>

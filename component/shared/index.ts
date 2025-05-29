@@ -21,15 +21,15 @@ export { default as CategoryDrwr } from './drwr/category-drwr'
 // ⎿ form
 export { default as AccountForm } from './form/account-form'
 // ⎿header
-export { default as Header } from './header/header'
-export { default as MobileMenu } from './header/mobile-menu'
-export { default as Search } from './header/search'
-export { default as ThemeToggle } from './header/theme-toggle'
-export { default as Toolbar } from './header/toolbar'
-export { default as UserHeader } from './header/user-header'
-export { default as UserMenu } from './header/user-menu'
+export { Header } from './header/header'
+export { MobileMenu } from './header/mobile-menu'
+export { Search } from './header/search'
+export { ThemeToggle } from './header/theme-toggle'
+export { Toolbar } from './header/toolbar'
+export { UserHeader } from './header/user-header'
+export { UserMenu } from './header/user-menu'
 // ⎿ footer
-export { default as Footer } from './footer/footer'
+export { Footer } from './footer/footer'
 // ⎿ no
 export { default as NoResult } from './no/no-result'
 // ⎿ pagination

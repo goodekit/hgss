@@ -19,11 +19,11 @@ interface ProtectedNavLinkProps {
 
 const ProtectedNavLink: React.FC<ProtectedNavLinkProps> = ({ href, children, className, linkBtn }) => {
   const [showDialog, setShowDialog] = useState(false)
-  const [nextPath, setNextPath] = useState<string | null>(null)
-  const { isDirty, setDirty } = useFormState()
-  const pathname = usePathname()
-  const router = useRouter()
-  const triggerRef = useRef<HTMLAnchorElement>(null)
+  const [nextPath, setNextPath]     = useState<string | null>(null)
+  const { isDirty, setDirty }       = useFormState()
+  const pathname                    = usePathname()
+  const router                      = useRouter()
+  const triggerRef                  = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     if (!showDialog && triggerRef.current) {
@@ -32,6 +32,9 @@ const ProtectedNavLink: React.FC<ProtectedNavLinkProps> = ({ href, children, cla
   }, [showDialog])
 
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    const overlay = document.querySelector('[data-radix-sheet-overlay]') as HTMLElement | null
+    overlay?.click()
+
     if (isDirty) {
       e.preventDefault()
       setNextPath(path)
@@ -55,10 +58,7 @@ const ProtectedNavLink: React.FC<ProtectedNavLinkProps> = ({ href, children, cla
         href={href}
         ref={triggerRef}
         size={'sm'}
-        className={cn('text-sm font-medium transition-colors hover:text-primary ease-in-out',
-          className,
-          pathname.includes(href) ? 'font-semibold' : 'text-muted-foreground'
-        )}>
+        className={cn('text-sm font-medium transition-colors hover:text-primary ease-in-out', className, pathname.includes(href) ? 'font-semibold' : 'text-muted-foreground')}>
           {children}
         </LinkBtn>)
         : (
@@ -66,11 +66,7 @@ const ProtectedNavLink: React.FC<ProtectedNavLinkProps> = ({ href, children, cla
         href={href}
         ref={triggerRef}
         onClick={(e) => handleNavigation(e, href)}
-        className={cn(
-          'text-sm font-medium transition-colors hover:text-primary ease-in-out',
-          className,
-          pathname.includes(href) ? 'font-semibold' : 'text-muted-foreground'
-        )}>
+        className={cn('text-sm font-medium transition-colors hover:text-primary ease-in-out', className, pathname.includes(href) ? 'font-semibold' : 'text-muted-foreground')}>
        {children}
       </Link>
       )}

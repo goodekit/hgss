@@ -2,12 +2,9 @@ import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { Search as SearchIcon } from 'lucide-react'
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem, Input, Button } from 'component/ui'
-// import { getAllCategories } from 'lib'
 
-const Search = async () => {
-  // const data       = await getAllCategories()
+export const Search = async () => {
   const categories = [{ category: en.all.label }]
-
   return (
     <form action={PATH_DIR.SEARCH} method={'GET'}>
       <div className="flex w-full max-w sm items-center space-x-2">
@@ -29,5 +26,3 @@ const Search = async () => {
     </form>
   )
 }
-
-export default Search

@@ -1,6 +1,6 @@
 import { GLOBAL } from 'hgss'
 
-const Footer = () => {
+export const Footer = () => {
   const currentYear = new Date().getFullYear()
   return (
     <footer>
@@ -10,5 +10,3 @@ const Footer = () => {
     </footer>
   )
 }
-
-export default Footer
