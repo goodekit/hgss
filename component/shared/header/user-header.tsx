@@ -1,7 +1,7 @@
 import { ASSET_DIR, PATH_DIR } from 'hgss-dir'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Toolbar } from 'component/shared/header'
+import ToolBarServer from 'component/shared/header/toolbar.server'
 import MainNav from 'app/user/main-nav'
 
 const UserHeader = () => {
@@ -17,7 +17,7 @@ const UserHeader = () => {
         </div>
         <MainNav className={'mx-6 hidden md:block'} />
         <div className="ml-auto items-center flex">
-          <Toolbar moduleType={'user'} />
+          <ToolBarServer moduleType={'user'} />
         </div>
       </div>
     </header>

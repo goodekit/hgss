@@ -1,8 +1,8 @@
 import { Fragment } from 'react'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
+import { Session } from 'next-auth'
 import Link from 'next/link'
-import { auth } from 'auth'
 import { signOutBasic } from 'lib/action'
 import { User2Icon, LogOut } from 'lucide-react'
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger, Separator } from 'component/ui'
@@ -10,8 +10,7 @@ import { ProtectedNavLink } from 'component/shared/protect'
 import { KEY } from 'lib/constant'
 import { charAtName } from 'lib/util'
 
-const UserMenu = async () => {
-  const session = await auth()
+const UserMenu = ({ session }: { session: Session | null }) => {
   if (!session) {
     return (
       <Button asChild variant="ghost">

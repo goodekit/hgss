@@ -22,10 +22,10 @@ export { default as CategoryDrwr } from './drwr/category-drwr'
 export { default as AccountForm } from './form/account-form'
 // ⎿header
 export { default as Header } from './header/header'
-export { default as MobileMenu } from './header/mobile-menu'
+export { default as MobileMenu } from './header/mobile-menu.client'
 export { default as Search } from './header/search'
-export { default as ThemeToggle } from './header/theme-toggle'
-export { default as Toolbar } from './header/toolbar'
+export { ThemeToggle } from './header/theme-toggle'
+export { Toolbar } from './header/toolbar'
 export { default as UserHeader } from './header/user-header'
 export { default as UserMenu } from './header/user-menu'
 // ⎿ footer
