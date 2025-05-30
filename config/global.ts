@@ -56,12 +56,6 @@
                                 SENDER_EMAIL  : process.env.SENDER_EMAIL || 'onboarding@resend.dev'
                                 },
         RYBBIT                  : `https://app.rybbit.io/api/script.js`,
-        UPLOADTHING: {
-                                  APP_ID             : process.env.UPLOADTHING_APP_ID,
-                                  TOKEN              : process.env.UPLOADTHING_TOKEN,
-                                  SECRET             : process.env.UPLOADTHING_SECRET,
-                                  ALLLOWED_IMAGE_TYPE: 'image/*'
-                                },
         AWS                   : {
                                   ACCESS_KEY_ID    : process.env.AWS_ACCESS_KEY_ID || "",
                                   SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
