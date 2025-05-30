@@ -3,6 +3,7 @@ import { en } from 'public/locale'
 import { NextRequest, NextResponse } from 'next/server'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { v4 as uuidv4 } from 'uuid'
+import sharp from 'sharp'
 import { CODE } from 'lib'
 
 const s3 = new S3Client({
@@ -19,15 +20,17 @@ export async function POST(req: NextRequest) {
 
   if (!file) return NextResponse.json({ error: en.error.no_file }, { status: CODE.BAD_REQUEST })
 
-  const fileBuffer = Buffer.from(await file.arrayBuffer())
-  const fileKey    = `upload/${uuidv4()}-${file.name}`
+  const rawBuffer    = Buffer.from(await file.arrayBuffer())
+  const fileBuffer   = await sharp(rawBuffer).resize({ width: 1080 }).webp({ quality: 80 }).toBuffer()
+  const originalName = file.name.replace(/\.[^/.]+$/, '')
+  const fileKey      = `upload/${uuidv4()}-${originalName}.webp`
 
   await s3.send(
     new PutObjectCommand({
       Bucket     : GLOBAL.AWS.S3_BUCKET_NAME,
       Key        : fileKey,
       Body       : fileBuffer,
-      ContentType: file.type
+      ContentType: GLOBAL.AWS.IMAGE_TYPE
     })
   )
 
