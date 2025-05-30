@@ -63,6 +63,7 @@
                                   S3_BUCKET_NAME   : process.env.AWS_S3_BUCKET_NAME || "",
                                   S3_BUCKET_USER   : process.env.AWS_S3_BUCKET_USER || "",
                                   SIGNED_URL_EXP   : Number(process.env.AWS_SIGNED_URL_EXP) || 60,
-                                  PUBLIC_URL       : `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`
+                                  PUBLIC_URL       : `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+                                  IMAGE_TYPE       : 'image/webp'
         }
       }
