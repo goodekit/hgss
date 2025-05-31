@@ -18,7 +18,7 @@
                                   ADMIN_ORDERS           : 10,
                                   USER_ORDERS            : 10,
                                   PRODUCT_SPECS_MAX      : 5,
-                                  MAX_UPLOAD_SIZE_GALLERY: 2    // MB
+                                  MAX_UPLOAD_SIZE_GALLERY: 5    // MB
                                 },
         PAGE_SIZE             : 8,
         PAGE_SIZE_GALLERY     : 8,
