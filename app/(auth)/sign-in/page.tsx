@@ -23,14 +23,16 @@ const SignInPage = async ({ searchParams }: SignInPageProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-7 h-screen w-full special-elite">
       <div className="relative col-span-4 hidden md:block">
-        <Image src={ASSET_DIR.BG}  alt="hgss-background" className={'h-screen'} fill sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 100vw"} />
+        <Image src={ASSET_DIR.BG}  alt="hgss-background" fill priority sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 100vw"} className={'h-screen'} />
       </div>
-      <div className={"col-span-3 flex items-center justify-center min-h-screen"}>
-        <div className="max-w-2xl w-full px-6">
+      <div className={'col-span-3 flex items-center justify-center min-h-screen'}>
+        <div className="max-w-2xl px-6 w-full">
           <Card className="shadow-none border-none">
             <CardHeader className="space-y-4">
               <Link href={PATH_DIR.ROOT} className="flex-center">
-                <Image src={ASSET_DIR.LOGO} height={120} width={120} alt={'logo'} />
+                <div className="relative w-[120px] h-[120px]">
+                  <Image src={ASSET_DIR.LOGO} alt="logo" fill style={{ objectFit: 'contain' }} />
+                </div>
               </Link>
               <CardDescription className="text-center">{en.sign_in.description}</CardDescription>
               <CardContent className="space-y-4">
