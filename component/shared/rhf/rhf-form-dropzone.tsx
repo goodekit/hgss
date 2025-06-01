@@ -3,16 +3,17 @@
 import { useState } from 'react'
 import { z, ZodSchema } from 'zod'
 import { en } from 'public/locale'
+import { GLOBAL } from 'hgss'
 import { IMAGE } from 'hgss-design'
+import { PATH_DIR } from 'hgss-dir'
 import { Control, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import Image from 'next/image'
 import { useToast } from 'hook'
 import { X } from 'lucide-react'
-import { deleteImage } from 'lib/action'
-import { cn } from 'lib'
 import { FormField, FormLabel, FormMessage, FormItem, FormControl } from 'component/ui/form'
 import { Card, CardContent } from 'component/ui/card'
-import { PATH_DIR } from 'hgss-dir'
+import { cn, truncate } from 'lib'
+import { deleteImage } from 'lib/action'
 
 type FormKeyLocale = keyof typeof en.form
 
@@ -50,8 +51,16 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (!files) return
+
+    const maxLimit = GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024
+
     const urls: { url: string }[] = []
     for (const file of files) {
+      if (file.size > maxLimit) {
+        toast({ variant: 'destructive', description: `File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit` })
+        throw new Error(`File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit`)
+      }
+
       const formData = new FormData()
       formData.append('file', file)
       const xhr =  new XMLHttpRequest()
@@ -97,28 +106,29 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
               <div className="flex flex-col md:flex-row flex-start h-32 space-x-2">
                 <div className="flex-between space-x-2">
                   {typeof images === 'string' && (
-                     <div className={'relative'}>
-                        <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(0)} />
-                        <Image src={images} alt={'image'} width={680} height={680} className={'w-full object-cover object-center rounded-sm'} />
-                      </div>
-                  )}
-                  {Array.isArray(images) && images.map((image, index) => (
-                    <div key={index} className={'relative'}>
-                      <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(index)} />
-                      <Image
-                        src={image}
-                        height={IMAGE.UPLOAD_THUMBNAIL_H}
-                        width={IMAGE.UPLOAD_THUMBNAIL_W}
-                        alt={'product-name'}
-                        className={'w-20 h-20 object-cover rounded-sm'}
-                      />
+                    <div className={'relative'}>
+                      <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(0)} />
+                      <Image src={images} alt={'image'} width={680} height={680} className={'w-full object-cover object-center rounded-sm'} />
                     </div>
-                  ))}
+                  )}
+                  {Array.isArray(images) &&
+                    images.map((image, index) => (
+                      <div key={index} className={'relative'}>
+                        <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(index)} />
+                        <Image
+                          src={image}
+                          height={IMAGE.UPLOAD_THUMBNAIL_H}
+                          width={IMAGE.UPLOAD_THUMBNAIL_W}
+                          alt={'product-name'}
+                          className={'w-20 h-20 object-cover rounded-sm'}
+                        />
+                      </div>
+                    ))}
                 </div>
                 <FormControl className={'space-y-2 my-2 text-md '}>
                   <label className="inline-block px-4 py-2 text-sm font-medium text-black bg-punkpink cursor-pointer hover:bg-punk-dark transition rounded-sm">
                     {en.upload_images.label}
-                    <input type="file" accept="image/*" multiple max={4} onChange={(e) => handleUpload(e)} className={"hidden"} />
+                    <input type="file" accept="image/*" multiple max={4} onChange={(e) => handleUpload(e)} className={'hidden'} />
                   </label>
                 </FormControl>
               </div>
@@ -126,10 +136,10 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
                 {Object.entries(uploadProgress).map(([filename, progress]) => (
                   <div key={filename} className="w-full mt-2">
                     <div className="text-xs">
-                      {filename} - {progress}%
+                      {truncate(filename, 20)} - {progress}%
                     </div>
-                    <div className={"w-full bg-gray-200 rounded-none h-2 overflow-hidden"}>
-                      <div className={cn("bg-tape h-2 transition-all duration-500 ease-in-out")} style={{ width: `${progress}%` }} />
+                    <div className={'w-full bg-gray-200 rounded-none h-2 overflow-hidden'}>
+                      <div className={cn('bg-tape h-2 transition-all duration-500 ease-in-out')} style={{ width: `${progress}%` }} />
                     </div>
                   </div>
                 ))}
