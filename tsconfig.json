@@ -21,6 +21,7 @@
     "paths": {
       "*": ["./*"],
       "hgss": ["./config/global.ts"],
+      "hgss-locale": ["./public/locale"],
       "hgss-design": ["./design/token"],
       "hgss-dir": ["./config/dir"],
       "hgss-nav": ["./config/nav.ts"]
