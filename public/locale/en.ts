@@ -162,6 +162,14 @@ export const en = {
     label: 'Filtered by'
   },
   form: {
+    reset_password: {
+      label      : 'Reset Password',
+      placeholder: 'We will send you an email to reset your password'
+    },
+    forgot_password: {
+      label      : 'Forgot Password',
+      placeholder: 'Forgot Password?'
+    },
     image: {
       label      : 'Image',
       placeholder: 'Add Image'
