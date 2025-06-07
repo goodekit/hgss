@@ -15,7 +15,7 @@ import { Form, Button, Input } from 'component/ui'
 import { BannerUploadField } from 'component/admin/custom-field'
 import { LoadingBtn } from 'component/shared/btn'
 import { RHFFormField, RHFFormDropzone, RHFCheckbox } from 'component/shared/rhf'
-import { capitalize, delay, cn } from 'lib/util'
+import { capitalize, delay, cn, transl } from 'lib/util'
 
 const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
   const { toast }              = useToast()
@@ -46,7 +46,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
 
  const onSubmit: SubmitHandler<CreateProduct> = async (data) => {
     if (Object.keys(errors).length > 0) {
-      toast({ variant: 'destructive', description: 'Please fix form errors before submitting.' });
+      toast({ variant: 'destructive', description: transl('error.fix_form_errors') })
       return
     }
     try {
@@ -72,7 +72,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
     } catch (error) {
       toast({
         variant: 'destructive',
-        description: 'An error occurred while saving the product' + error
+        description: transl('error.failed_create_product') + error
       })
     }
   }
