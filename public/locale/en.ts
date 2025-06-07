@@ -715,6 +715,13 @@ export const en = {
       we_are_processing: 'We are processing your order and will send you a confirmation email shortly.'
     }
   },
+  validation: {
+    price_format     : 'Price must have exactly 2 decimal places',
+    min_default      : `{field} must be at least {value} characters`,
+    max_default      : `{field} must not be over {value} characters`,
+    min_image_default: `{module} should have at least {value} image`,
+    required_default : `{field} is required`
+  },
   success: {
     created          : 'Document created',
     deleted          : 'Document deleted',
@@ -744,8 +751,10 @@ export const en = {
     invalid_file_key          : 'Invalid file key',
     invalid_payment_method    : 'Invalid payment method',
     item_not_found            : 'Item not found',
+    failed_create_product     : 'An error occurred while creating the product',
     failed_extract_file_key   : 'Failed extracting the file key',
     failed_delete_file        : 'Failed to delete file',
+    fix_form_errors           : 'Please fix form errors before submitting.',
     form                      : 'Please fix form errors before submitting.',
     no_file                   : 'No file',
     no_existing_item          : 'No existing item to add on',
@@ -758,6 +767,7 @@ export const en = {
     order_not_paid            : 'Order not paid',
     paypal_default            : "PayPal: Error Occured'",
     paypal_payment_error      : 'Error occurred while processing PayPal payment',
+    price_min                 : 'Price must be greater than {amount}',
     product_not_found         : 'Product not found',
     sesssion_not_found        : 'Session bag id not found',
     unable_delete             : 'Unable to delete file',
