@@ -41,6 +41,7 @@
                                   CURRENCY             : process.env.NEXT_PUBLIC_CURRENCY || 'NZD',
                                   CURRENCY_SYMBOL      : process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$',
                                   TAX                  : process.env.NEXT_PUBLIC_TAX || 0.15,
+                                  PRICE_MIN            : process.env.NEXT_PUBLIC_PRICE_MIN || 0.50,
                                   NO_SHIPPING_THRESHOLD: process.env.NEXT_PUBLIC_NO_SHIPPING_THRESHOLD || 100,
                                   DEFAULT_SHIPPING_COST: process.env.NEXT_PUBLIC_DEFAULT_SHIPPING_COST || 10
                                 },
