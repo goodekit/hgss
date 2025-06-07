@@ -7,8 +7,8 @@
         DATABASE_URL           : process.env.DATABASE_URL || '',
         ENCRYPTION_KEY         : process.env.ENCRYPTION_KEY || '',
         GOOGLE                 : {
-          CLIENT_ID    : process.env.GOOGLE_CLIENT_ID,
-          CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET
+                                  CLIENT_ID    : process.env.GOOGLE_CLIENT_ID,
+                                  CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET
         },
         NEXTAUTH_STRATEGY      : process.env.NEXTAUTH_STRATEGY || 'jwt',
         LATEST_PRODUCT_QUANTITY: 4,
