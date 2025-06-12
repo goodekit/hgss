@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { GLOBAL } from 'hgss'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ThemeProvider } from 'next-themes'
 import Script from 'next/script'
 import { Special_Elite, Permanent_Marker, Inter_Tight, Yusei_Magic } from 'next/font/google'
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <TooltipProvider>
             {children}
             <Toaster />
+            <SpeedInsights />
           </TooltipProvider>
         </ThemeProvider>
       </body>
