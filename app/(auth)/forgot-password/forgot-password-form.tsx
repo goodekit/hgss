@@ -1,17 +1,16 @@
 "use client"
 
 import { useState, useTransition } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { sendPasswordResetEmail } from 'lib/action'
 import { ForgotPasswordSchema } from 'lib/schema'
 import { useToast } from 'hook'
 import { CircleCheckBigIcon } from 'lucide-react'
-import { Input } from 'component/ui/input'
-import { Label } from 'component/ui/label'
+import { Form } from 'component/ui/form'
+import { RHFFormField } from 'component/shared/rhf'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
-import { KEY } from 'lib/constant'
 import { transl } from 'lib/util'
 
 const ForgotPasswordForm = () => {
@@ -23,7 +22,7 @@ const ForgotPasswordForm = () => {
     defaultValues: { email: '' }
   })
 
-  const { handleSubmit, register } = form
+  const { handleSubmit, control } = form
 
   const ResetPasswordButton = () => {
     return (
@@ -33,7 +32,7 @@ const ForgotPasswordForm = () => {
     )
   }
 
-  const onSubmit = async (data: ForgotPassword) => {
+  const onSubmit: SubmitHandler<ForgotPassword> = async (data) => {
     startTransition(async () => {
       const response = await sendPasswordResetEmail(data)
       if (!response.success) {
@@ -46,29 +45,30 @@ const ForgotPasswordForm = () => {
   }
 
   return (
-    <form method={'POST'} onSubmit={handleSubmit(onSubmit)}>
-      <div className={'space-y-6'}>
-        {isSent ? (
-          <div className={'flex items-center justify-center'}>
-            <CircleCheckBigIcon />
-          </div>
-        ) : (
-          <div>
-            <Label htmlFor={KEY.EMAIL}>{transl('form.email.label')}</Label>
-            <Input id={KEY.EMAIL} type={KEY.EMAIL} autoComplete={KEY.EMAIL} defaultValue={''} {...register('email')} required />
-          </div>
-        )}
-        <div>
+    <Form {...form}>
+      <form method={'POST'} onSubmit={handleSubmit(onSubmit)}>
+        <div className={'space-y-6'}>
           {isSent ? (
-            <div className={'mb-5 flex items-center justify-center'}>
-              <p className={'text-md md:text-xl text-punk dark:text-tape'}>{transl('message.password_reset_sent.description')}</p>
+            <div className={'flex items-center justify-center'}>
+              <CircleCheckBigIcon />
             </div>
           ) : (
-            <ResetPasswordButton />
+            <div>
+              <RHFFormField control={control} name={'email'} formKey={'email'} disabled={true} />
+            </div>
           )}
+          <div>
+            {isSent ? (
+              <div className={'mb-5 flex items-center justify-center'}>
+                <p className={'text-md md:text-xl text-punk dark:text-tape'}>{transl('message.password_reset_sent.description')}</p>
+              </div>
+            ) : (
+              <ResetPasswordButton />
+            )}
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </Form>
   )
 }
 

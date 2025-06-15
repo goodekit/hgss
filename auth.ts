@@ -24,7 +24,7 @@ export const config = {
   providers: [
     GoogleProvider({
       clientId    : GLOBAL.GOOGLE.CLIENT_ID,
-      clientSecret:GLOBAL.GOOGLE.CLIENT_SECRET
+      clientSecret: GLOBAL.GOOGLE.CLIENT_SECRET
     }),
     CredentialsProvider({
       credentials: {

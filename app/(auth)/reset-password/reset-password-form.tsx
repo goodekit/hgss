@@ -2,19 +2,18 @@
 
 import { useEffect, useTransition } from 'react'
 import { PATH_DIR } from 'hgss-dir'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { resetPasswordWithToken } from 'lib/action'
 import { ResetPasswordSchema } from 'lib/schema'
 import { useToast } from 'hook'
+import { Form } from 'component/ui/form'
 import { Input } from 'component/ui/input'
-import { Label } from 'component/ui/label'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
-import { KEY } from 'lib/constant'
+import { RHFPasswordField, RHFFormField } from 'component/shared/rhf'
 import { delay, transl } from 'lib/util'
-import { RHFPasswordField } from 'component/shared/rhf'
 
 const ResetPasswordForm = ({ token, verifiedUserEmail }: { token: string, verifiedUserEmail: string }) => {
   const [isPending, startTransition]    = useTransition()
@@ -25,7 +24,11 @@ const ResetPasswordForm = ({ token, verifiedUserEmail }: { token: string, verifi
     defaultValues: { token, password: '', confirmPassword: '' }
   })
 
-  const { handleSubmit, register } = form
+  const { handleSubmit, register, formState: { errors }, control } = form
+
+  if (!token) {
+    redirect(PATH_DIR.PASSWORD_FORGOT)
+  }
 
   useEffect(() => {
     async function validateTokenAndPrefillEmail() {
@@ -57,20 +60,21 @@ const ResetPasswordForm = ({ token, verifiedUserEmail }: { token: string, verifi
   }
 
   return (
+  <Form {...form}>
     <form method={'POST'} onSubmit={handleSubmit(onSubmit)}>
       <div className={'space-y-6'}>
         <div>
-          <Label htmlFor={KEY.EMAIL}>{transl('form.email.label')}</Label>
-          <Input type={KEY.EMAIL} autoComplete={KEY.EMAIL} {...register('email')} required disabled />
+          <RHFFormField control={control} name={'email'} formKey={'email'} disabled={true} />
         </div>
-        <RHFPasswordField label={transl('form.password.label')} register={register} name={'password'} />
-        <RHFPasswordField label={transl('form.confirm_password.label')} register={register} name={'confirmPassword'} />
+          <RHFPasswordField label={transl('form.password.label')} register={register} name={'password'} formKey={'password'} error={errors.password?.message as string} />
+          <RHFPasswordField label={transl('form.confirm_password.label')} register={register} name={'confirmPassword'} formKey={'confirm_password'} error={errors.confirmPassword?.message as string} />
         <div>
           <ResetPasswordButton />
         </div>
         <Input type="hidden" {...register('token')} required />
       </div>
     </form>
+  </Form>
   )
 }
 

@@ -10,7 +10,7 @@ import { signIn, signOut, auth } from 'auth'
 import { isRedirectError } from 'next/dist/client/components/redirect-error'
 import { hash } from 'lib/encrypt'
 import { prisma } from 'db/prisma'
-import { SignInSchema, SignUpSchema, ShippingAddressSchema, PaymentMethodSchema } from 'lib/schema'
+import { ShippingAddressSchema, PaymentMethodSchema } from 'lib/schema'
 import { sendResetPasswordLink } from 'mailer'
 import { SystemLogger } from 'lib/app-logger'
 import { CODE } from 'lib/constant'
@@ -27,19 +27,16 @@ const TAG = 'USER.ACTION'
  * or an error response if the credentials are invalid.
  * @throws Will throw an error if a redirect error occurs.
  */
-export async function signInBasic(prevState: unknown, formData: FormData) {
+export async function signInBasic(data: SignIn) {
   try {
-    const { email, password } = SignInSchema.parse({
-      email   : formData.get('email'),
-      password: formData.get('password')
-    })
-    await signIn('credentials', { email, password })
-    return SystemLogger.response(en.success.user_signed_in, CODE.OK, TAG)
+    const { email, password } = data
+    await signIn('credentials', { email, password, redirect: false })
+    return SystemLogger.response(transl('success.user_signed_in'), CODE.OK, TAG)
   } catch (error) {
     if (isRedirectError(error)) {
       throw error
     }
-    return SystemLogger.errorMessage(en.error.invalid_credentials, CODE.BAD_REQUEST, TAG)
+    return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.BAD_REQUEST, TAG)
   }
 }
 
@@ -60,22 +57,17 @@ export async function signOutBasic() {
  * @returns A promise that resolves to a system logger response indicating the result of the sign-up process.
  * @throws Will throw an error if the sign-up process encounters a redirect error.
  */
-export async function signUpUser(prevState: unknown, formData: FormData) {
-
+export async function signUpUser(data: SignUp) {
   try {
-    const user = SignUpSchema.parse({
-      name           : formData.get('name'),
-      email          : formData.get('email'),
-      password       : formData.get('password'),
-      confirmPassword: formData.get('confirmPassword')
-    })
-    const encodedName      = encodeURIComponent(user.name || 'Anonymous')
-    const avatarUrl        = GLOBAL.AVATAR_API + `${encodedName}-${new Date()}`
-    const unhashedPassword = user.password
-          user.password    = await hash(user.password)
-    await prisma.user.create({ data: { name: user.name, email: user.email, password: user.password, avatar: avatarUrl } })
-    await signIn('credentials', { email: user.email, password: unhashedPassword })
-    return SystemLogger.response(en.success.user_signed_up, CODE.CREATED, TAG)
+      const { name, email, password } = data
+
+      const encodedName      = encodeURIComponent(name || 'Anonymous')
+      const avatarUrl        = GLOBAL.AVATAR_API + `${encodedName}`
+      const unhashedPassword = password
+      const hashedPassword   = await hash(password)
+      await prisma.user.create({ data: { name, email, password: hashedPassword, avatar: avatarUrl } })
+      await signIn('credentials', { email, password: unhashedPassword, redirect: false })
+    return SystemLogger.response(transl('success.user_signed_up'), CODE.CREATED, TAG)
   } catch (error) {
     if (isRedirectError(error)) {
       throw error
@@ -83,7 +75,6 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
 }
-
 
 /**
  * Retrieves a paginated list of users from the database.
