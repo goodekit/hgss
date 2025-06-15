@@ -16,9 +16,11 @@ export const ForgotPasswordSchema = z.object({
   email: z.string().email().min(5, 'Email must be at least 5 characters')
 })
 
-export const ResetPasswordSchema = z.object({
-  token          : z.string().min(1, 'Token is required'),
-  email          : z.string().email().min(5, 'Email must be at least 5 characters'),
-  password       : z.string().min(6, 'Password must be at least 6 characters'),
-  confirmPassword: z.string().min(6, 'Password must be at least 6 characters')
-})
+export const ResetPasswordSchema = z
+  .object({
+    token          : z.string().min(1, 'Token is required'),
+    email          : z.string().email().min(5, 'Email must be at least 5 characters'),
+    password       : z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string().min(6, 'Confirm Password must be at least 6 characters')
+  })
+  .refine((data) => data.password === data.confirmPassword, { message: 'Passwords do not match', path: ['confirmPassword'] })
