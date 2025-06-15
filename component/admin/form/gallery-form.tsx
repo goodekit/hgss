@@ -14,7 +14,7 @@ import { deleteImage } from 'lib/action/image-action'
 import { Form, Button, Card } from 'component/ui'
 import { LoadingBtn } from 'component/shared/btn'
 import { RHFFormField, RHFFormImageUpload } from 'component/shared/rhf'
-import { formatText, delay, cn } from 'lib/util'
+import { formatText, delay, cn, transl } from 'lib/util'
 
 const TAG = 'Gallery'
 const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
@@ -162,13 +162,14 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
                         image={form.watch(`galleryItems.${index}.image`)}
                         form={form}
                         withLabel={false}
+                        folderName={'gallery'}
                       />
                     </div>
                   </div>
                 </Card>
               ))}
               <Button type={'button'} variant={'ghost'} onClick={() => append({ ...galleryItemDefaultValue })} className={cn('font-bold w-full')}>
-                {'+ '}{en.form.gallery_item.placeholder}
+                {'+ '}{transl('form.gallery_item.placeholder')}
               </Button>
             </div>
           </div>
