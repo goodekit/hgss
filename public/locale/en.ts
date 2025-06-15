@@ -789,6 +789,7 @@ export const en = {
     item_not_found            : 'Item not found',
     failed_create_product     : 'An error occurred while creating the product',
     failed_extract_file_key   : 'Failed extracting the file key',
+    failed_sign_up            : `Error occurred while signing-up`,
     failed_delete_file        : 'Failed to delete file',
     fix_form_errors           : 'Please fix form errors before submitting.',
     form                      : 'Please fix form errors before submitting.',
