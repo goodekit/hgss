@@ -5,13 +5,16 @@ import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { Prisma } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
+import crypto from 'crypto'
 import { signIn, signOut, auth } from 'auth'
 import { isRedirectError } from 'next/dist/client/components/redirect-error'
 import { hash } from 'lib/encrypt'
 import { prisma } from 'db/prisma'
 import { SignInSchema, SignUpSchema, ShippingAddressSchema, PaymentMethodSchema } from 'lib/schema'
+import { sendResetPasswordLink } from 'mailer'
 import { SystemLogger } from 'lib/app-logger'
 import { CODE } from 'lib/constant'
+import { transl } from 'lib/util'
 
 const TAG = 'USER.ACTION'
 
@@ -226,3 +229,107 @@ export async function deleteUser(userId: string) {
   }
 }
 
+/**
+ * Handles a password reset request by verifying the email and sending a reset link.
+ *
+ * @param _prevState - Ignored.
+ * @param formData - The submitted form data containing the user's email.
+ * @returns A system logger response, or a generic response if the user doesn't exist.
+ */
+export async function sendPasswordResetEmail(data: { email: string }) {
+  try {
+    const email = data.email
+    const user  = await prisma.user.findUnique({ where: { email } })
+    if (!user) {
+      return SystemLogger.errorResponse(transl('error.not_found'), CODE.NOT_FOUND)
+    }
+
+    const existingToken = await prisma.passwordResetToken.findFirst({ where: { userId: user.id, expiresAt: { gt: new Date() }}})
+    if (existingToken) {
+      return SystemLogger.response(transl('error.exists_reset_password'), CODE.OK, TAG)
+    }
+
+    const token     = crypto.randomBytes(32).toString('hex')
+    const expiresAt = GLOBAL.LIMIT.RESET_PASSWORD_LINK_EXPIRY
+
+    await prisma.passwordResetToken.create({ data: { token, userId: user.id, expiresAt } })
+
+    await sendResetPasswordLink({ resetLink: PATH_DIR.PASSWORD_RESET(token), userEmail: email })
+    return SystemLogger.response(transl('success.password_reset_sent'), CODE.OK, TAG)
+  } catch (error) {
+    return SystemLogger.errorResponse((error as AppError).message, CODE.BAD_REQUEST, TAG)
+  }
+}
+
+/**
+ * Validates the token, and return the user in response
+ *
+ * @param data - Object containing the token
+ * @returns A system logger response, or a generic response.
+ */
+export async function getResetPasswordTokenUser(data: { token: string }) {
+  try {
+    const { token } = data
+    const resetToken = await prisma.passwordResetToken.findUnique({ where: { token } })
+
+    if (!resetToken) {
+      throw new Error(transl('error.invalid_token'))
+    }
+
+    const now = new Date()
+    if (resetToken.expiresAt < now) {
+      throw new Error(transl('error.expired_token'))
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: resetToken.userId }})
+
+    if (!user) {
+      throw new Error(transl('error.not_found'))
+    }
+
+    return SystemLogger.response(transl('success.valid_token'), CODE.OK, TAG, '', { email: user.email })
+  } catch (error) {
+    return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
+  }
+}
+
+/**
+ * Resets the user's password using the token
+ *
+ * @param data - Object containing token, new password, and confirm password
+ * @returns A system logger response, or a generic response if the user doesn't exist.
+ */
+export async function resetPasswordWithToken(data: { token: string, password: string, confirmPassword: string}) {
+  try {
+    const { token, password, confirmPassword } = data
+
+    if (password !== confirmPassword) {
+      throw new Error(transl('error.password_mismatch'))
+    }
+
+    const resetToken = await prisma.passwordResetToken.findUnique({ where: { token }})
+    if (!resetToken) {
+      throw new Error(transl('error.invalid_token'))
+    }
+
+    const now = new Date()
+    if (resetToken.expiresAt < now) {
+      throw new Error(transl('error.expired_token'))
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: resetToken.userId }})
+
+    if (!user) {
+      throw new Error(transl('error.not_found'))
+    }
+
+    const hashedPassword = await hash(password)
+
+    await prisma.user.update({ where: { id: user.id }, data: { password: hashedPassword }})
+    await prisma.passwordResetToken.delete({ where: { token }})
+
+    return SystemLogger.response(transl('success.password_updated'), CODE.OK, TAG)
+  } catch (error) {
+    return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
+  }
+}
