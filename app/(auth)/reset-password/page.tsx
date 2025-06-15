@@ -2,7 +2,6 @@ import { Metadata } from 'next'
 import { PATH_DIR, ASSET_DIR } from 'hgss-dir'
 import Link from 'next/link'
 import Image from 'next/image'
-import { auth } from 'auth'
 import { redirect } from 'next/navigation'
 import { getResetPasswordTokenUser } from 'lib/action'
 import { Card, CardHeader, CardContent } from 'component/ui'
@@ -13,12 +12,11 @@ import ResetPasswordForm from './reset-password-form'
 export const metadata: Metadata = { title: transl('sign_in.label') }
 
 interface ResetPasswordPageProps {
-  searchParams: { callbackUrl?: string; token?: string }
+  searchParams: { token?: string }
 }
 
 const ResetPasswordPage = async ({ searchParams }: ResetPasswordPageProps) => {
-  const { token, callbackUrl } = searchParams
-  const session                = await auth()
+  const { token } = searchParams
 
   let email = ''
   if (token) {
@@ -29,10 +27,6 @@ const ResetPasswordPage = async ({ searchParams }: ResetPasswordPageProps) => {
     } else {
       redirect(PATH_DIR.PASSWORD_FORGOT)
     }
-  }
-
-  if (session) {
-    redirect(callbackUrl || PATH_DIR.ROOT)
   }
   return (
     <div className={'grid grid-cols-1 md:grid-cols-7 h-screen w-full special-elite'}>
