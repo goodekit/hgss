@@ -54,7 +54,7 @@ const ForgotPasswordForm = () => {
             </div>
           ) : (
             <div>
-              <RHFFormField control={control} name={'email'} formKey={'email'} disabled={true} />
+              <RHFFormField control={control} name={'email'} formKey={'email'} />
             </div>
           )}
           <div>
