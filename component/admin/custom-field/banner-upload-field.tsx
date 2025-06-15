@@ -14,12 +14,12 @@ import { Card, CardContent, FormLabel, FormControl } from 'component/ui'
 import { PATH_DIR } from 'config/dir'
 
 interface BannerUploadFieldProps<TSchema extends ZodSchema> {
-    isFeatured            : boolean
-    banner                : string
-    form                  : UseFormReturn<z.infer<TSchema>>
-
+    isFeatured: boolean
+    banner    : string
+    form      : UseFormReturn<z.infer<TSchema>>
+    folderName: string
 }
-const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, form }: BannerUploadFieldProps<TSchema>) => {
+const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, form, folderName }: BannerUploadFieldProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast }                           = useToast()
 
@@ -32,6 +32,11 @@ const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, for
       if (!file) return
       const formData = new FormData()
       formData.append('file', file)
+
+      if (folderName) {
+        formData.append('folderName', folderName)
+      }
+
       const xhr = new XMLHttpRequest()
 
       xhr.upload.onprogress = (e) => {

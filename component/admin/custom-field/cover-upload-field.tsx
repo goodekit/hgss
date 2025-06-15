@@ -14,11 +14,11 @@ import { Card, CardContent, FormLabel, FormControl } from 'component/ui'
 import { PATH_DIR } from 'config/dir'
 
 interface CoverUploadFieldProps<TSchema extends ZodSchema> {
-    cover: string
-    form : UseFormReturn<z.infer<TSchema>>
-
+    cover      : string
+    form       : UseFormReturn<z.infer<TSchema>>
+    folderName?: string
 }
-const CoverUploadField = <TSchema extends ZodSchema>({ cover, form }: CoverUploadFieldProps<TSchema>) => {
+const CoverUploadField = <TSchema extends ZodSchema>({ cover, form, folderName }: CoverUploadFieldProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast } = useToast()
 
@@ -31,6 +31,11 @@ const CoverUploadField = <TSchema extends ZodSchema>({ cover, form }: CoverUploa
     if (!file) return
     const formData = new FormData()
     formData.append('file', file)
+
+    if (folderName) {
+      formData.append('folderName', folderName)
+    }
+
     const xhr = new XMLHttpRequest()
 
     xhr.upload.onprogress = (e) => {
