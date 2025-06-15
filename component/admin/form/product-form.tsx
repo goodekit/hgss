@@ -71,7 +71,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
       router.push(PATH_DIR.ADMIN.PRODUCT)
     } catch (error) {
       toast({
-        variant: 'destructive',
+        variant    : 'destructive',
         description: transl('error.failed_create_product') + error
       })
     }
