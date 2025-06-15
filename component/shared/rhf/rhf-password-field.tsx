@@ -41,7 +41,7 @@ const RHFPasswordField = <TSchema extends ZodSchema, TName extends Path<z.infer<
             required
           />
           <button type={'button'} onClick={togglePassword} className={'absolute inset-y-0 right-3 items-center flex text-muted-foreground'}>
-            {showPassword ? <EyeIcon size={15} /> : <EyeOffIcon size={15} />}
+            {showPassword ? <EyeOffIcon size={15} /> : <EyeIcon size={15} />}
           </button>
         </div>
         {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
