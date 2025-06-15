@@ -1,7 +1,7 @@
 
 import { Fragment, JSX } from 'react'
 import { z, ZodSchema } from 'zod'
-import { en } from 'public/locale'
+import { en } from 'hgss-locale'
 import { Control, ControllerRenderProps, Path } from 'react-hook-form'
 import { FormField, FormControl, FormLabel, FormMessage, FormItem } from 'component/ui/form'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from 'component/ui/select'
