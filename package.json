@@ -11,7 +11,7 @@
     "preload": "npx tsx ./_mock/pre-load.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "email": "cp .env ./node_modules/react-email && email dev --dir email --port 3001"
+    "email": "cp .env ./node_modules/react-email && email dev --dir mailer --port 3001"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
@@ -41,6 +41,7 @@
     "@react-email/components": "^0.0.33",
     "@stripe/react-stripe-js": "^3.1.1",
     "@stripe/stripe-js": "^5.6.0",
+    "@types/nodemailer": "^6.4.17",
     "@uploadthing/react": "^7.2.1",
     "@vercel/speed-insights": "^1.2.0",
     "class-variance-authority": "^0.7.1",

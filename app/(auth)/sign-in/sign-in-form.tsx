@@ -1,29 +1,26 @@
 "use client"
 
-import { useActionState, useState } from 'react'
+import { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { useSearchParams } from 'next/navigation'
-import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { signInBasic } from 'lib/action'
 import { signInDefaultValue } from 'lib/schema'
 import { Input } from 'component/ui/input'
 import { Label } from 'component/ui/label'
+// import { AppAuthRedir } from 'component/shared/app'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
+import { FormPasswordField } from 'component/shared/form'
 // import { GoogleSignInBtn } from 'component/shared/google'
 import { KEY, RESPONSE } from 'lib/constant'
+import { transl } from 'lib/util'
 
 const SignInForm = () => {
-  const [showPassword, setShowPassword] = useState(false)
-  const [data, action]                  = useActionState(signInBasic, RESPONSE.DEFAULT)
-  const searchParams                    = useSearchParams()
-  const callbackUrl                     = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
-
-  const togglePassword = () => {
-    setShowPassword(!showPassword)
-  }
+  const [data, action] = useActionState(signInBasic, RESPONSE.DEFAULT)
+  const searchParams   = useSearchParams()
+  const callbackUrl    = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
 
   const SignInButton = () => {
     const { pending } = useFormStatus()
@@ -44,23 +41,7 @@ const SignInForm = () => {
           <Label htmlFor="email">{en.form.email.label}</Label>
           <Input id={KEY.EMAIL} name={KEY.EMAIL} type={KEY.EMAIL} autoComplete={KEY.EMAIL} defaultValue={signInDefaultValue.email} required />
         </div>
-        <div>
-          <Label htmlFor="password">{en.form.password.label}</Label>
-          <div className="relative">
-            <Input
-              id={'password-toggle'}
-              aria-label={'password-toggle'}
-              name={KEY.PASSWORD}
-              type={showPassword ? KEY.TEXT : KEY.PASSWORD}
-              autoComplete={KEY.PASSWORD}
-              defaultValue={signInDefaultValue.password}
-              required
-            />
-            <button type={'button'} onClick={togglePassword} className={'absolute inset-y-0 right-3 items-center flex text-muted-foreground'}>
-              {showPassword ? <EyeIcon size={15} /> : <EyeOffIcon size={15} />}
-            </button>
-          </div>
-        </div>
+        <FormPasswordField label={transl('form.confirm_password.label')} name={'password'} />
         <div>
           <SignInButton />
           {/* disable for now: HGSS-Issue8 */}
@@ -70,12 +51,7 @@ const SignInForm = () => {
           <GoogleSignInBtn /> */}
         </div>
         {/* disable for now: HGSS-Issue8 */}
-        {/* <div className="text-sm text-center">
-          {en.dont_have_account.label}
-          <Link href={PATH_DIR.SIGN_UP} target={"_self"} className={"link font-bold text-punk"}>
-           &nbsp;{en.sign_up.label}
-          </Link>
-        </div> */}
+        {/* <AppAuthRedir type={'sign-in'} /> */}
       </div>
     </form>
   )

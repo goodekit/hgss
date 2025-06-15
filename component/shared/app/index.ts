@@ -1,0 +1,1 @@
+export { default as AppAuthRedir } from './app-auth-redir'

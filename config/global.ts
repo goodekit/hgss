@@ -4,6 +4,7 @@
         APP_DESCRIPTION        : process.env.NEXT_PUBLIC_APP_DESCRIPTION || 'Classic car parts, accessories and requests',
         AVATAR_API             : process.env.NEXT_PUBLIC_AVATAR_API || `https://api.dicebear.com/7.x/avataaars/`,
         SERVER_URL             : process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+        SITE_NAME              : process.env.NEXT_PUBLIC_SITE_NAME || 'homegrownspeed.shop',
         DATABASE_URL           : process.env.DATABASE_URL || '',
         ENCRYPTION_KEY         : process.env.ENCRYPTION_KEY || '',
         GOOGLE                 : {
@@ -15,10 +16,11 @@
         LOCALE                 : process.env.NEXT_PUBLIC_LOCALE || 'en-NZ',
         USER_ROLES             : process.env.USER_ROLES && process.env.USER_ROLES.split(';') || ['user', 'admin'],
         LIMIT                  : {
-                                  ADMIN_ORDERS           : 10,
-                                  USER_ORDERS            : 10,
-                                  PRODUCT_SPECS_MAX      : 5,
-                                  MAX_UPLOAD_SIZE_GALLERY: 5    // MB
+                                  ADMIN_ORDERS              : 10,
+                                  USER_ORDERS               : 10,
+                                  PRODUCT_SPECS_MAX         : 5,
+                                  MAX_UPLOAD_SIZE_GALLERY   : 5,    // MB,
+                                  RESET_PASSWORD_LINK_EXPIRY: new Date(Date.now() + 3 * 60 * 60 * 1000)     // HOUR
                                 },
         PAGE_SIZE             : 8,
         PAGE_SIZE_GALLERY     : 8,

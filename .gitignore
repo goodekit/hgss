@@ -20,6 +20,8 @@
 # production
 /build
 
+reset-password.html
+
 # misc
 .DS_Store
 *.pem

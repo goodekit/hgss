@@ -28,6 +28,8 @@ export const PATH_DIR = {
   MOCK            : connect('__mock', 'sample-data.ts'),
   ORDER           : connect('order'),
   ORDER_VIEW      : (id: string) => connect('order', id),
+  PASSWORD_FORGOT : connect('forgot-password'),
+  PASSWORD_RESET  : (token: string) => connectUrl(GLOBAL.SERVER_URL, `reset-password?token=${token}`),
   PAYMENT         : connect('payment'),
   PRODUCT         : connect('product'),
   PRODUCT_VIEW    : (slug: string) => connect('product', slug),

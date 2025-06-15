@@ -48,6 +48,10 @@ export const en = {
   change_file: {
     label: 'Change File'
   },
+  change_password: {
+    label      : 'Change Password',
+    description: 'Change your account\'s Password'
+  },
   checkout: {
     label      : 'Checkout',
     description: 'Complete the form with your information'
@@ -510,6 +514,11 @@ export const en = {
   remove: {
     label: 'Remove'
   },
+  reset_password: {
+    label      : 'Reset Password',
+    description: 'We will send you an email to reset your password',
+    button     : 'Send Password Reset Email',
+  },
   review: {
     label  : 'Review',
     reviews: {
@@ -622,6 +631,10 @@ export const en = {
     label      : 'Update Gallery',
     description: 'Complete the form with your gallery information'
   },
+  update_password: {
+    label      : 'Update Password',
+    description: 'Update your account\'s password'
+  },
   update_product: {
     label      : 'Update Product',
     description: 'Complete the form with your product information'
@@ -688,6 +701,18 @@ export const en = {
     label      : 'Write a Review',
     description: 'Share your thoughts on this product with other customers'
   },
+  legal: {
+    copyright_notice: `All rights reserved.`
+  },
+  smtp: {
+    reset_password: {
+      subject: `Your Password Reset Request`,
+      title  : `Homegrown-Speedshop Password Reset`,
+      body_1 : `We received a request to reset your password. Click the button below to choose a new password: `,
+      body_2 : `If you don't use this link within 3 hours, it will expire.`,
+      button : `Reset Password`
+    }
+  },
   message: {
     default: {
       title      : 'Are you sure?',
@@ -713,6 +738,11 @@ export const en = {
       title            : 'Thank you for your purchase',
       description      : 'Your order has been placed successfully.',
       we_are_processing: 'We are processing your order and will send you a confirmation email shortly.'
+    },
+    password_reset_sent: {
+      description: 'Password Reset link has been sent to your Email',
+      check_email: `You have a valid reset link sent in your email account, please check before requesting for a new one.`,
+
     }
   },
   validation: {
@@ -723,32 +753,38 @@ export const en = {
     required_default : `{field} is required`
   },
   success: {
-    created          : 'Document created',
-    deleted          : 'Document deleted',
-    updated          : 'Document updated',
-    file_deleted     : 'File deleted',
-    order_created    : 'Order created',
-    order_deleted    : 'Order deleted',
-    order_delivered  : 'Order delivered',
-    order_paid       : 'Your order has been paid',
-    product_created  : 'Product created',
-    product_deleted  : 'Product deleted',
-    product_updated  : 'Product updated',
-    update_order_paid: 'updateOrderToPaid was successful',
-    user_created     : 'User created',
-    user_deleted     : 'User deleted',
-    user_updated     : 'User updated',
-    user_signed_up   : 'User signed up',
-    user_signed_in   : 'User signed in',
-    review_updated   : 'Review updated'
+    created            : 'Document created',
+    deleted            : 'Document deleted',
+    updated            : 'Document updated',
+    file_deleted       : 'File deleted',
+    order_created      : 'Order created',
+    order_deleted      : 'Order deleted',
+    order_delivered    : 'Order delivered',
+    order_paid         : 'Your order has been paid',
+    password_updated   : `Successful, password updated`,
+    product_created    : 'Product created',
+    product_deleted    : 'Product deleted',
+    product_updated    : 'Product updated',
+    password_reset_sent: 'Password reset token sent',
+    review_updated     : 'Review updated',
+    update_order_paid  : 'updateOrderToPaid was successful',
+    user_created       : 'User created',
+    user_deleted       : 'User deleted',
+    user_updated       : 'User updated',
+    user_signed_up     : 'User signed up',
+    user_signed_in     : 'User signed in',
+    valid_token        : `Successful, Token valid`
   },
   error: {
     bag_empty                 : 'Bag is empty',
     bag_not_found             : 'Bag not found',
+    exists_reset_password     : `Valid reset password request already exists in your mailbox`,
+    expired_token             : `Token expired`,
     failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
     gallery_save              : 'An error occurred while saving the gallery',
     invalid_credentials       : 'Invalid credentials',
     invalid_file_key          : 'Invalid file key',
+    invalid_token             : 'Invalid token',
     invalid_payment_method    : 'Invalid payment method',
     item_not_found            : 'Item not found',
     failed_create_product     : 'An error occurred while creating the product',
@@ -765,10 +801,12 @@ export const en = {
     order_not_created         : 'Order not created',
     order_not_found           : 'Order not found',
     order_not_paid            : 'Order not paid',
+    password_mismatch         : `Password mismatch`,
     paypal_default            : "PayPal: Error Occured'",
     paypal_payment_error      : 'Error occurred while processing PayPal payment',
     price_min                 : 'Price must be greater than {amount}',
     product_not_found         : 'Product not found',
+    send_email                : `Error occured while sending email`,
     sesssion_not_found        : 'Session bag id not found',
     unable_delete             : 'Unable to delete file',
     unable_upload             : 'Unable to upload file',

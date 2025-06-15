@@ -20,7 +20,7 @@ interface AdminUsersPageProps {
 
 const AdminUsersPage: FC<AdminUsersPageProps> = async ({ searchParams }) => {
     const { page, query } = await searchParams
-    const users    = await getAllUsers({ page: Number(page) || 1, query })
+    const users           = await getAllUsers({ page: Number(page) || 1, query })
     if (!users) return notFound()
     const isAdmin = (role: string) => role === KEY.ADMIN
 
