@@ -69,10 +69,10 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       password       : formData.get('password'),
       confirmPassword: formData.get('confirmPassword')
     })
-    const encodedName = encodeURIComponent(user.name || 'Anonymous')
-    const avatarUrl = GLOBAL.AVATAR_API + `${encodedName}-${new Date()}`
+    const encodedName      = encodeURIComponent(user.name || 'Anonymous')
+    const avatarUrl        = GLOBAL.AVATAR_API + `${encodedName}-${new Date()}`
     const unhashedPassword = user.password
-    user.password = await hash(user.password)
+          user.password    = await hash(user.password)
     await prisma.user.create({ data: { name: user.name, email: user.email, password: user.password, avatar: avatarUrl } })
     await signIn('credentials', { email: user.email, password: unhashedPassword })
     return SystemLogger.response(en.success.user_signed_up, CODE.CREATED, TAG)

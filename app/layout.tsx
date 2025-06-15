@@ -7,6 +7,7 @@ import Script from 'next/script'
 import { Special_Elite, Permanent_Marker, Inter_Tight, Yusei_Magic } from 'next/font/google'
 import { TooltipProvider, Toaster } from 'component/ui'
 import { KEY } from 'lib/constant'
+
 import 'design/css/globals.css'
 
 const interTight = Inter_Tight({

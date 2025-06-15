@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { en } from 'hgss-locale'
 import { PATH_DIR, ASSET_DIR } from 'hgss-dir'
 import Link from 'next/link'
 import Image from 'next/image'
