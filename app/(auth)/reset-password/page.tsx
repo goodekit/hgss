@@ -12,11 +12,11 @@ import ResetPasswordForm from './reset-password-form'
 export const metadata: Metadata = { title: transl('sign_in.label') }
 
 interface ResetPasswordPageProps {
-  searchParams: { token?: string }
+  searchParams: URLSearchParams
 }
 
 const ResetPasswordPage = async ({ searchParams }: ResetPasswordPageProps) => {
-  const { token } = searchParams
+  const token = searchParams.get('token')
 
   let email = ''
   if (token) {
