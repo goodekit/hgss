@@ -3,7 +3,6 @@ import { PATH_DIR } from 'hgss-dir'
 import { en } from 'public/locale'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { formatCurrency, formatId, generateTitle } from 'lib'
 import { getAllProducts, deleteProduct } from 'lib/action'
 import { FilePenLine, ListMinus, SquareArrowOutUpRight, Ellipsis } from 'lucide-react'
 import { Button, Table } from 'component/ui'
@@ -11,8 +10,9 @@ import { Pagination, DeleteDialg, TooltpGoBadge, Tooltp, NoResult } from 'compon
 import { TblHead, TblBody } from 'component/shared/tbl'
 import { DDMenu } from 'component/shared/dd-menu'
 import { AdminPageTitle } from 'component/admin/title'
+import { formatCurrency, formatId, generateTitle, transl } from 'lib'
 
-export const metadata: Metadata = { title: generateTitle(en.product.products.label, en.admin.label) }
+export const metadata: Metadata = { title: generateTitle(transl('product.products.label'), transl('admin.label')) }
 
 interface AdminProductsPageProps {
     searchParams: Promise<AppProductsPage<string>>
@@ -58,8 +58,8 @@ const AdminProductsPage: FC<AdminProductsPageProps> = async ({ searchParams }) =
     <div className={'space-y-2'} suppressHydrationWarning>
         <div className={'flex-between'}>
             <AdminPageTitle query={query} title={en.product.products.label} href={PATH_DIR.ADMIN.PRODUCT} />
-            <Button asChild className={'bg-punkpink'}>
-                <Link href={PATH_DIR.ADMIN.PRODUCT_CREATE}>{en.create_product.label}</Link>
+            <Button asChild className={'bg-punkpink text-black hover:bg-pink-500 hover:font-bold'}>
+                <Link href={PATH_DIR.ADMIN.PRODUCT_CREATE}>{transl('create_product.label')}</Link>
             </Button>
         </div>
         <Table>
