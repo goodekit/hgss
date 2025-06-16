@@ -40,6 +40,10 @@ export async function signInBasic(data: SignIn) {
         return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.NOT_FOUND, TAG)
       }
 
+      if (user.isBlocked) {
+        return SystemLogger.errorMessage(transl('error.account_locked'), CODE.FORBIDDEN, TAG)
+      }
+
       const { isBlocked, secondsLeft } = await checkSignInThrottle(REDIS_KEY)
       if (isBlocked) {
         const minutes = Math.floor(secondsLeft / 60)
@@ -51,6 +55,9 @@ export async function signInBasic(data: SignIn) {
       const withinDBWindow                     = user.failedSignInAttempts >= SIGNIN_ATTEMPT_MAX && user.lastFailedAttempt && now.getTime() - user.lastFailedAttempt.getTime() < SIGNIN_TTL
 
       if (withinDBWindow) {
+        if (!user.isBlocked) {
+          await prisma.user.update({ where: { email }, data: { isBlocked: true }})
+        }
         return SystemLogger.errorMessage(transl('error.account_locked'), CODE.TOO_MANY_REQUESTS, TAG)
       }
       try {
