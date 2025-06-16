@@ -116,7 +116,7 @@ export async function getAllProducts({ query, limit = GLOBAL.PAGE_SIZE, page, ca
     const count = await prisma.product.count({ where: { ...queryFilter }})
 
     const summary = { data, totalPages: Math.ceil(count / limit) }
-    return summary
+    return convertToPlainObject(summary)
   }
 
   /**
@@ -127,7 +127,7 @@ export async function getAllProducts({ query, limit = GLOBAL.PAGE_SIZE, page, ca
  */
 export async function getProductBySlug(slug: string) {
     const data =  await prisma.product.findFirst({ where: { slug } })
-    return convertToPlainObject(data)
+    return data
   }
 
   export async function getProductById(productId: string) {
