@@ -57,24 +57,27 @@ model GalleryItem {
 }
 
 model User {
-  id                 String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name               String?              @default("NO_NAME")
-  email              String               @unique(map: "user_email_idx")
-  emailVerified      DateTime?            @db.Timestamp(6)
-  image              String?
-  password           String?
-  role               String               @default("user")
-  avatar             String?
-  address            Json?                @db.Json
-  paymentMethod      String?
-  createdAt          DateTime             @default(now()) @db.Timestamp(6)
-  updatedAt          DateTime             @updatedAt
-  account            Account[]
-  Session            Session[]
-  Bag                Bag[]
-  Order              Order[]
-  Review             Review[]
-  PasswordResetToken PasswordResetToken[]
+  id                   String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                 String?              @default("NO_NAME")
+  email                String               @unique(map: "user_email_idx")
+  emailVerified        DateTime?            @db.Timestamp(6)
+  image                String?
+  password             String?
+  role                 String               @default("user")
+  avatar               String?
+  address              Json?                @db.Json
+  paymentMethod        String?
+  createdAt            DateTime             @default(now()) @db.Timestamp(6)
+  updatedAt            DateTime             @updatedAt
+  failedSignInAttempts Int                  @default(0)
+  //add signIn logs
+  lastFailedAttempt    DateTime?
+  account              Account[]
+  Session              Session[]
+  Bag                  Bag[]
+  Order                Order[]
+  Review               Review[]
+  PasswordResetToken   PasswordResetToken[]
 }
 
 model Account {
@@ -121,7 +124,8 @@ model PasswordResetToken {
   expiresAt DateTime
   createdAt DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([token])
 }
 
