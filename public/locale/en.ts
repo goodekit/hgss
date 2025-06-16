@@ -767,6 +767,7 @@ export const en = {
     product_updated    : 'Product updated',
     password_reset_sent: 'Password reset token sent',
     review_updated     : 'Review updated',
+    sign_in_welcome    : `Welcome, {name}!`,
     update_order_paid  : 'updateOrderToPaid was successful',
     user_created       : 'User created',
     user_deleted       : 'User deleted',

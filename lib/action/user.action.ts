@@ -30,8 +30,9 @@ const TAG = 'USER.ACTION'
 export async function signInBasic(data: SignIn) {
   try {
     const { email, password } = data
+    const user = await prisma.user.findUnique({ where: { email }})
     await signIn('credentials', { email, password, redirect: false })
-    return SystemLogger.response(transl('success.user_signed_in'), CODE.OK, TAG)
+    return SystemLogger.response(transl('success.sign_in_welcome', { name: user?.name || 'Mate' }), CODE.OK, TAG)
   } catch (error) {
     if (isRedirectError(error)) {
       throw error
