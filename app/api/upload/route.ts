@@ -17,9 +17,10 @@ const s3 = new S3Client({
 export async function POST(req: NextRequest) {
   const formData   = await req.formData()
   const file       = formData.get('file') as File
-  const folderName = (formData.get('folderName') as string) || 'upload'
+  const folderName = (formData.get('folderName') as S3FolderName) || 'upload'
 
   if (!file) return NextResponse.json({ error: en.error.no_file }, { status: CODE.BAD_REQUEST })
+
   const allowedFolders = ['product', 'gallery', 'banner']
   if (!allowedFolders.includes(folderName)) {
     return NextResponse.json({ error: 'Invalid folder' }, { status: CODE.BAD_REQUEST })
