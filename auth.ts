@@ -55,7 +55,7 @@ export const config = {
   ],
   callbacks: {
     async session({ session, user, trigger, token }: any) {
-      session.user.id   = token.sub
+      session.user.id   = token.id
       session.user.role = token.role
       session.user.name = token.name
 
@@ -67,24 +67,42 @@ export const config = {
 
     async jwt({ token, user, trigger, session }: any) {
       if (user) {
-        token.id   = user.id
-        token.role = user.role
-        if (user.name === 'NO_NAME') {
-          token.name = user.email!.split('@')[0]
-          await prisma.user.update({ where: { id: user.id }, data: { name: token.name } })
+        let dbUser = await prisma.user.findUnique({
+          where: { email: user.email! }
+        })
+        if (!dbUser) {
+          dbUser = await prisma.user.create({
+            data: {
+              email: user.email!,
+              name : user.name ?? user.email!.split('@')[0],
+              role : 'user'
+            }
+          })
         }
+        token.id   = dbUser.id
+        token.sub  = dbUser.id
+        token.role = dbUser.role
+        token.name = dbUser.name
+
+        if (dbUser.name === 'NO_NAME') {
+          const name = dbUser.email!.split('@')[0]
+          await prisma.user.update({ where: { id: dbUser.id }, data: { name } })
+          token.name = name
+        }
+
         if (trigger === 'signIn' || trigger === 'signUp') {
           const cookiesObject = await cookies()
-          const sessionBagId  = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
+          const sessionBagId = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
           if (sessionBagId) {
             const sessionBag = await prisma.bag.findFirst({ where: { sessionBagId } })
             if (sessionBag) {
-              await prisma.bag.deleteMany({where:{userId: user.id}})
-              await prisma.bag.update({where: {id: sessionBag.id}, data: {userId: user.id}})
+              await prisma.bag.deleteMany({ where: { userId: dbUser.id } })
+              await prisma.bag.update({ where: { id: sessionBag.id }, data: { userId: dbUser.id } })
             }
           }
         }
       }
+
       if (session?.user.name && trigger === 'update') {
         token.name = session.user.name
       }
