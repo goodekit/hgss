@@ -20,6 +20,7 @@ import { transl } from 'lib/util'
 
 const TAG = 'USER.ACTION'
 /**
+ * TODO: Cleanup
  * Signs in a user with the provided credentials.
  *
  * @param prevState - The previous state, which is currently not used.
@@ -36,6 +37,10 @@ export async function signInBasic(data: SignIn) {
       const ipHash              = crypto.createHash('sha256').update(rawIp).digest('hex')
       const REDIS_KEY           = `${GLOBAL.REDIS.KEY}${email}:${ipHash}`
 
+      const { SIGNIN_TTL, SIGNIN_ATTEMPT_MAX } = GLOBAL.LIMIT
+      const now                                = new Date()
+      const blockThreshold                     = SIGNIN_ATTEMPT_MAX * 4
+
       if (!user) {
         return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.NOT_FOUND, TAG)
       }
@@ -48,15 +53,23 @@ export async function signInBasic(data: SignIn) {
       if (isBlocked) {
         const minutes = Math.floor(secondsLeft / 60)
         const seconds = secondsLeft % 60
+
+        if (!user.isBlocked && user.failedSignInAttempts >= blockThreshold) {
+          await prisma.user.update({ where: { email }, data: { isBlocked: true }})
+          return SystemLogger.errorMessage(transl('error.account_locked'), CODE.TOO_MANY_REQUESTS, TAG)
+        }
+        await prisma.user.update({
+          where: { email },
+          data : { failedSignInAttempts: { increment: 1 }, lastFailedAttempt: new Date() }
+        })
         return SystemLogger.errorMessage(transl('error.too_many_attempt', { min: minutes, sec: seconds }), CODE.TOO_MANY_REQUESTS, TAG)
       }
-      const { SIGNIN_TTL, SIGNIN_ATTEMPT_MAX } = GLOBAL.LIMIT
-      const now                                = new Date()
-      const withinDBWindow                     = user.failedSignInAttempts >= SIGNIN_ATTEMPT_MAX && user.lastFailedAttempt && now.getTime() - user.lastFailedAttempt.getTime() < SIGNIN_TTL
+
+      const withinDBWindow = user.failedSignInAttempts >= SIGNIN_ATTEMPT_MAX && user.lastFailedAttempt && now.getTime() - user.lastFailedAttempt.getTime() < SIGNIN_TTL
 
       if (withinDBWindow) {
         if (!user.isBlocked) {
-          await prisma.user.update({ where: { email }, data: { isBlocked: true }})
+          await prisma.user.update({ where: { email }, data: { isBlocked: true } })
         }
         return SystemLogger.errorMessage(transl('error.account_locked'), CODE.TOO_MANY_REQUESTS, TAG)
       }
@@ -74,7 +87,7 @@ export async function signInBasic(data: SignIn) {
           where: { email },
           data : { failedSignInAttempts: { increment: 1 }, lastFailedAttempt: new Date() }
         })}
-        return SystemLogger.errorMessage(transl('error.unknown_error_sign_in', { error: (error as AppError)?.message }), CODE.BAD_REQUEST, TAG)
+        return SystemLogger.errorMessage(transl('error.invalid_credentials', { error: (error as AppError)?.message }), CODE.BAD_REQUEST, TAG)
       }
 }
 
@@ -147,7 +160,7 @@ export async function getAllUsers({ limit = GLOBAL.PAGE_SIZE, page, query }: App
  * @throws Will throw an error if the user is not found.
  */
 export async function getUserById(userId: string) {
-  const user = await prisma.user.findFirst({ where: {id: userId }})
+  const user = await prisma.user.findFirst({ where: { id: userId }})
   if (!user) throw new Error(en.error.user_not_found)
   return user
 }
