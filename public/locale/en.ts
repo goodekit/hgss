@@ -778,7 +778,7 @@ export const en = {
     valid_token         : `Successful, Token valid`
   },
   error: {
-    account_locked            : 'Account temporarily locked. Try again soon.',
+    account_locked            : 'Account temporarily locked. Contact support.',
     bag_empty                 : 'Bag is empty',
     bag_not_found             : 'Bag not found',
     exists_reset_password     : `Valid reset password request already exists in your mailbox`,
