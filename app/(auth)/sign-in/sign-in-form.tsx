@@ -13,7 +13,7 @@ import { EllipsisLoader } from 'component/shared/loader'
 import { RHFFormField, RHFPasswordField } from 'component/shared/rhf'
 // import { GoogleSignInBtn } from 'component/shared/google'
 import { KEY } from 'lib/constant'
-import { transl, delay } from 'lib/util'
+import { transl } from 'lib/util'
 
 const SignInForm = () => {
   const { toast }    = useToast()
@@ -29,7 +29,7 @@ const SignInForm = () => {
 
   const SignInButton = () => {
     return (
-      <div className="mb-5">
+      <div className={"mb-5"}>
         <TapeBtn className={'texture-bg'} disabled={isSubmitting} label={isSubmitting ? <EllipsisLoader /> : transl('sign_in.label')} />
       </div>
     )
@@ -38,7 +38,6 @@ const SignInForm = () => {
   const onSubmit: SubmitHandler<SignIn> = async (data) => {
     try {
         const response = await signInBasic(data)
-        await delay(500)
         toast({ description: response.message })
         router.push(PATH_DIR.ROOT)
     } catch (error) {
