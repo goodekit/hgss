@@ -13,7 +13,7 @@ const Tooltp: FC<TooltpProps> = ({ content, children }) => {
       <TooltipTrigger asChild>
         {children}
       </TooltipTrigger>
-      <TooltipContent side='right'>
+      <TooltipContent side='right' className={'bg-punk text-black'}>
         {content}
       </TooltipContent>
     </Tooltip>

@@ -5,19 +5,20 @@ import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { Prisma } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
 import crypto from 'crypto'
-import { signIn, signOut, auth } from 'auth'
 import { isRedirectError } from 'next/dist/client/components/redirect-error'
-import { hash } from 'lib/encrypt'
-import { prisma } from 'db/prisma'
-import { ShippingAddressSchema, PaymentMethodSchema } from 'lib/schema'
+import { signIn, signOut, auth } from 'auth'
 import { sendResetPasswordLink } from 'mailer'
+import { prisma } from 'db/prisma'
+import { hash } from 'lib/encrypt'
+import { checkSignInThrottle, incrementSignInAttempts, resetSignInAttempts } from 'lib/throttle'
+import { ShippingAddressSchema, PaymentMethodSchema } from 'lib/schema'
 import { SystemLogger } from 'lib/app-logger'
 import { CODE } from 'lib/constant'
 import { transl } from 'lib/util'
 
 const TAG = 'USER.ACTION'
-
 /**
  * Signs in a user with the provided credentials.
  *
@@ -28,17 +29,46 @@ const TAG = 'USER.ACTION'
  * @throws Will throw an error if a redirect error occurs.
  */
 export async function signInBasic(data: SignIn) {
-  try {
-    const { email, password } = data
-    const user = await prisma.user.findUnique({ where: { email }})
-    await signIn('credentials', { email, password, redirect: false })
-    return SystemLogger.response(transl('success.sign_in_welcome', { name: user?.name || 'Mate' }), CODE.OK, TAG)
-  } catch (error) {
-    if (isRedirectError(error)) {
-      throw error
-    }
-    return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.BAD_REQUEST, TAG)
-  }
+      const { email, password } = data
+      const user                = await prisma.user.findUnique({ where: { email }})
+      const clientCookies       = cookies()
+      const rawIp               = (await clientCookies).get('client-ip')?.value || 'unknown'
+      const ipHash              = crypto.createHash('sha256').update(rawIp).digest('hex')
+      const REDIS_KEY           = `${GLOBAL.REDIS.KEY}${email}:${ipHash}`
+
+      if (!user) {
+        return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.NOT_FOUND, TAG)
+      }
+
+      const { isBlocked, secondsLeft } = await checkSignInThrottle(REDIS_KEY)
+      if (isBlocked) {
+        const minutes = Math.floor(secondsLeft / 60)
+        const seconds = secondsLeft % 60
+        return SystemLogger.errorMessage(transl('error.too_many_attempt', { min: minutes, sec: seconds }), CODE.TOO_MANY_REQUESTS, TAG)
+      }
+      const { SIGNIN_TTL, SIGNIN_ATTEMPT_MAX } = GLOBAL.LIMIT
+      const now                                = new Date()
+      const withinDBWindow                     = user.failedSignInAttempts >= SIGNIN_ATTEMPT_MAX && user.lastFailedAttempt && now.getTime() - user.lastFailedAttempt.getTime() < SIGNIN_TTL
+
+      if (withinDBWindow) {
+        return SystemLogger.errorMessage(transl('error.account_locked'), CODE.TOO_MANY_REQUESTS, TAG)
+      }
+      try {
+        await signIn('credentials', { email, password, redirect: false })
+        await resetSignInAttempts(REDIS_KEY)
+        if (user) {
+          await prisma.user.update({ where: { email }, data: { failedSignInAttempts: 0, lastFailedAttempt: null }})
+        }
+        return SystemLogger.response(transl('success.sign_in_welcome_back', { name: user?.name || 'Mate' }), CODE.OK, TAG)
+      } catch (error) {
+        await incrementSignInAttempts(REDIS_KEY)
+        if (user) {
+        await prisma.user.update({
+          where: { email },
+          data : { failedSignInAttempts: { increment: 1 }, lastFailedAttempt: new Date() }
+        })}
+        return SystemLogger.errorMessage(transl('error.unknown_error_sign_in', { error: (error as AppError)?.message }), CODE.BAD_REQUEST, TAG)
+      }
 }
 
 /**
@@ -47,7 +77,7 @@ export async function signInBasic(data: SignIn) {
  * @returns {Promise<void>} A promise that resolves when the sign-out process is complete.
  */
 export async function signOutBasic() {
-    await signOut()
+    await signOut({ redirect: true, redirectTo: PATH_DIR.SIGN_IN })
 }
 
 /**
@@ -68,7 +98,9 @@ export async function signUpUser(data: SignUp) {
       const hashedPassword   = await hash(password)
       await prisma.user.create({ data: { name, email, password: hashedPassword, avatar: avatarUrl } })
       await signIn('credentials', { email, password: unhashedPassword, redirect: false })
-    return SystemLogger.response(transl('success.user_signed_up'), CODE.CREATED, TAG)
+      // count the sign-in logs /last time logged in
+      // await prisma.user.update({ where: { email }, data: { failedSignInAttempts: 0, lastFailedAttempt: null }})
+      return SystemLogger.response(transl('success.sign_in_welcome', { name }), CODE.CREATED, TAG)
   } catch (error) {
     if (isRedirectError(error)) {
       throw error

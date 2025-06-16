@@ -1,12 +1,11 @@
 import { Metadata } from 'next'
-import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { deleteOrder, getMyOrders } from 'lib/action'
 import { Table, Badge } from 'component/ui'
 import { TblHead, TblBody } from 'component/shared/tbl'
 import { TooltpGoBadge } from 'component/shared/tooltp'
-import { Pagination, DeleteDialg, BackBtn } from 'component/shared'
-import { formatCurrency, formatDateTime, formatId } from 'lib/util'
+import { Pagination, DeleteDialg, BackBtn, NoResult } from 'component/shared'
+import { formatCurrency, formatDateTime, formatId, transl } from 'lib/util'
 
 export const metadata: Metadata = { title: 'My Orders' }
 
@@ -36,7 +35,7 @@ const UserOrdersPage = async ({ searchParams }: UserOrdersPageProps) => {
         id: 'id',
         value: (
           <div className={'flex flex-row items-center'}>
-           <TooltpGoBadge trigger={formatId(item.id)} href={PATH_DIR.ORDER_VIEW(item.id)} content={`${en.go_to.label} this order`} />
+           <TooltpGoBadge trigger={formatId(item.id)} href={PATH_DIR.ORDER_VIEW(item.id)} content={`${transl('go_to.label')} this order`} />
           </div>
         ),
         align: 'left'
@@ -68,12 +67,13 @@ const UserOrdersPage = async ({ searchParams }: UserOrdersPageProps) => {
   return (
     <div className={'space-y-2'}>
       <BackBtn />
-      <h2 className="h2-bold">{en.order.orders.label}</h2>
+      <h2 className="h2-bold">{transl('order.orders.label')}</h2>
       <div className="overflow-x-auto">
         <Table>
           <TblHead cells={HEADER.cells} />
           <TblBody cells={BODY} items={orders.orders as unknown as Order[]} />
         </Table>
+        <NoResult data={orders.totalPages} />
         {orders.totalPages > 1 && (<div className={'mt-5 flex justify-end'}><Pagination page={Number(page) || 1} totalPages={orders?.totalPages}/></div>)}
       </div>
     </div>
