@@ -47,7 +47,7 @@ const AdminUsersPage: FC<AdminUsersPageProps> = async ({ searchParams }) => {
             { id: 'userId',  value: <TooltpGoBadge trigger={formatId(item.id.toString())} href={PATH_DIR.ADMIN.USER_VIEW(item.id.toString())} content={`${en.go_to.label} to ${item.name}`} />, align: 'left' },
             { id: 'name',  value: item.name, align: 'left' },
             { id: 'email',  value: item.email, align: 'left' },
-            { id: 'role',  value: <Badge variant={!isAdmin(item.role) ? 'secondary' : 'default'} className={cn('shadow-none', isAdmin(item.role) && 'bg-punk')}>{isAdmin(item.role) && (<Crown size={10} className={'opacity-50  text-punkpink'} />)}{(item.role).toUpperCase()}</Badge>, align: 'center' },
+            { id: 'role',  value: <Badge variant={!isAdmin(item.role) ? 'secondary' : 'default'} className={cn('shadow-none', isAdmin(item.role) && 'bg-punk')}>{isAdmin(item.role) && (<Crown size={10} className={'opacity-50 text-tape'} />)}{(item.role).toUpperCase()}</Badge>, align: 'center' },
             { id: 'action',  value: (<Tooltp content={en.action.label}><DDMenu title={<Ellipsis size={10} />} menuItems={MENU_ITEMS(item)}/></Tooltp>), align: 'right' }
         ]
     })

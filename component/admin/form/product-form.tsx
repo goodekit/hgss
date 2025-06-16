@@ -90,7 +90,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
               formKey={'slug'}
               type={'inputWithButton'}
               withWrapper={false}
-              buttonLabel={en.generate.label}
+              buttonLabel={transl('generate.label')}
               onClick={handleSlugify}
             />
           </div>
@@ -108,8 +108,8 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
                 <label>{en.form.specifications.label}</label>
                 {fields.map((field, index) => (
                   <div key={field.id} className={"flex gap-2"}>
-                    <Input {...register(`specifications.${index}` as const)} className="border p-2 rounded w-full" />
-                    <span><Button type={'button'} variant={'ghost'} className={cn('bg-punkpink text-black')} onClick={() => remove(index)}>{en.remove.label}</Button></span>
+                    <Input {...register(`specifications.${index}` as const)} className={"border p-2 rounded w-full"} />
+                    <span><Button type={'button'} variant={'ghost'} className={cn('bg-punkpink text-black hover:bg-pink-500 hover:font-bold')} onClick={() => remove(index)}>{transl('remove.label')}</Button></span>
                   </div>
                 ))}
                 <Button type={"button"} variant={'ghost'} onClick={() => append('')} className={cn('font-bold align-middle items-center text-button')}><Plus/><span>{en.form.specifications.placeholder}</span></Button>

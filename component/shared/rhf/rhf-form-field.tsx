@@ -46,7 +46,7 @@ const RHFFormField = <TSchema extends ZodSchema, TName extends Path<z.infer<TSch
         type === 'inputWithButton' ? (
           <div className={'flex flex-row items-center gap-2'}>
             <Input disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} />
-           <span><Button type={'button'} variant={'ghost'} className={'bg-punkpink text-black'} onClick={onClick}>{buttonLabel}</Button></span>
+           <span><Button type={'button'} variant={'ghost'} className={'bg-punkpink text-black hover:bg-pink-500 hover:font-bold'} onClick={onClick}>{buttonLabel}</Button></span>
           </div>
         )
         :

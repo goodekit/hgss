@@ -3,11 +3,11 @@ import { en } from 'public/locale'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { PATH_DIR } from 'hgss-dir'
-import { generateTitle, KEY } from 'lib'
 import { getAllGalleryItems, getGalleryCount } from 'lib/action'
 import { Button } from 'component/ui'
 import { Pagination, NoResult } from 'component/shared'
 import { GalleryLightBox } from 'component/module/gallery'
+import { generateTitle, KEY, transl } from 'lib'
 
 export const metadata: Metadata = { title: generateTitle(en.gallery.label, en.admin.label) }
 
@@ -27,11 +27,11 @@ const AdminGalleryPage: FC<AdminGalleryPageProps> = async ({ searchParams }) => 
     return (
     <div className={'space-y-2'} suppressHydrationWarning>
         <div className={'flex-between md:mb-5'}>
-            <div className="space-y-4 gap-3">
+            <div className={"space-y-4 gap-3"}>
                 <h1 className={'h2-bold'}>{en.gallery.label}</h1>
             </div>
-            <Button asChild className={'bg-punkpink'}>
-                <Link href={PATH_DIR.ADMIN.GALLERY_CREATE}>{en.create_gallery.label}</Link>
+            <Button asChild className={'bg-punkpink text-black hover:bg-pink-500 hover:font-bold'}>
+                <Link href={PATH_DIR.ADMIN.GALLERY_CREATE}>{transl('create_gallery.label')}</Link>
             </Button>
         </div>
         <div className={'flex-between md:mb-5'}>
