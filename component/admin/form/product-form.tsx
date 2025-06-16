@@ -90,7 +90,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
               formKey={'slug'}
               type={'inputWithButton'}
               withWrapper={false}
-              buttonLabel={en.generate.label}
+              buttonLabel={transl('generate.label')}
               onClick={handleSlugify}
             />
           </div>
