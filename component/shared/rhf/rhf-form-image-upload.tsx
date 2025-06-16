@@ -3,16 +3,16 @@
 import { useState } from 'react'
 import { z, ZodSchema } from 'zod'
 import { en } from 'public/locale'
+import { PATH_DIR } from 'hgss-dir'
 import { GLOBAL } from 'hgss'
 import { Control, Path, UseFormReturn } from 'react-hook-form'
 import Image from 'next/image'
 import { useToast } from 'hook'
 import { X, ImageUp } from 'lucide-react'
 import { deleteImage } from 'lib/action'
-import { cn } from 'lib'
 import { FormField, FormLabel, FormMessage, FormItem, FormControl } from 'component/ui/form'
 import { Card, CardContent } from 'component/ui/card'
-import { PATH_DIR } from 'hgss-dir'
+import { cn, transl } from 'lib/util'
 
 type FormKeyLocale = keyof typeof en.form
 
@@ -39,9 +39,9 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
     const result       = await deleteImage({ currentImages: currentImage })
     if (result?.success) {
       form.setValue(name, '' as SetFieldName)
-      toast({ description: en.success.file_deleted })
+      toast({ description: transl('success.file_deleted') })
     } else {
-      toast({ variant: 'destructive', description: en.error.unable_delete })
+      toast({ variant: 'destructive', description: transl('error.unable_delete') })
     }
   }
 
@@ -80,12 +80,12 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
           return copy
         })
       } else {
-        toast({ variant: 'destructive', description: en.error.unable_upload })
+        toast({ variant: 'destructive', description: transl('error.unable_upload') })
       }
     }
 
     xhr.onerror = () => {
-      toast({ variant: 'destructive', description: en.error.unable_upload })
+      toast({ variant: 'destructive', description: transl('error.unable_upload') })
     }
 
     xhr.open('POST', PATH_DIR.UPLOAD)
@@ -114,7 +114,7 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
                         : 'text-muted-foreground flex flex-col items-center justify-center text-center gap-2 min-h-32'
                     )}>
                     {!image && (
-                      <div className="flex flex-col items-center justify-center">
+                      <div className={"flex flex-col items-center justify-center"}>
                         <ImageUp size={40} />
                         {en.upload.description}
                       </div>

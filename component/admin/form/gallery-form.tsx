@@ -117,11 +117,11 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
             </div>
           </div>
 
-          <div className=" flex flex-col gap-4">
+          <div className={"flex flex-col gap-4"}>
             {/* TODO: put in the components */}
-            <div className="flex flex-col gap-4">
+            <div className={"flex flex-col gap-4"}>
               <label>{en.form.gallery_item.label}</label>
-              {errors.galleryItems && <p className="text-sm text-destructive">{errors.galleryItems.message as string}</p>}
+              {errors.galleryItems && <p className={"text-sm text-destructive"}>{errors.galleryItems.message as string}</p>}
               {fields.map((field, index) => (
                 <Card key={field.id} className={'relative flex flex-col w-full p-2'}>
                   {!(isUpdate && galleryItems.filter((item: UpdateGalleryItem) => !!item?.id).length === 1 && (galleryItems[index] as UpdateGalleryItem)?.id) && (
