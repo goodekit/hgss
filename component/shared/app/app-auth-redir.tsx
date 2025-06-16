@@ -15,12 +15,11 @@ const AppAuthRedir = ({ type }: AppAuthRedir) => {
           &nbsp;{transl(`${type === 'sign-in' ? 'sign_up' : 'sign_in'}.label`)}
         </Link>
         {type === 'sign-in' && (
-          <div>
-            <p className={'text-md'}>{'or'}</p>
+          <span>
             <Link href={PATH_DIR.PASSWORD_FORGOT} target="_self" className={'link font-bold'}>
-              {transl('form.forgot_password.placeholder')}
+              &nbsp; | &nbsp; {transl('form.forgot_password.placeholder')}
             </Link>
-          </div>
+          </span>
         )}
       </div>
     )
