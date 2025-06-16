@@ -28,17 +28,34 @@ const TAG = 'USER.ACTION'
  * @throws Will throw an error if a redirect error occurs.
  */
 export async function signInBasic(data: SignIn) {
-  try {
+
     const { email, password } = data
     const user = await prisma.user.findUnique({ where: { email }})
-    await signIn('credentials', { email, password, redirect: false })
-    return SystemLogger.response(transl('success.sign_in_welcome', { name: user?.name || 'Mate' }), CODE.OK, TAG)
-  } catch (error) {
-    if (isRedirectError(error)) {
-      throw error
+
+    if (!user) {
+      return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.NOT_FOUND, TAG)
     }
-    return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.BAD_REQUEST, TAG)
-  }
+
+    const { SIGNIN_ATTEMPT_DURATION, SIGNIN_ATTEMPT_MAX } = GLOBAL.LIMIT
+    const now = new Date()
+    if (user.failedSignInAttempts >= SIGNIN_ATTEMPT_MAX && user.lastFailedAttempt && (now.getTime() - user.lastFailedAttempt.getTime()) < SIGNIN_ATTEMPT_DURATION) {
+      return SystemLogger.errorMessage(transl('error.too_many_attempt'),CODE.TOO_MANY_REQUESTS, TAG)
+    }
+      try {
+        await signIn('credentials', { email, password, redirect: false })
+        await prisma.user.update({
+          where: { email },
+          data: { failedSignInAttempts: 0, lastFailedAttempt: null }
+        })
+        return SystemLogger.response(transl('success.sign_in_welcome_back', { name: user?.name || 'Mate' }), CODE.OK, TAG)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        await prisma.user.update({
+          where: { email },
+          data : { failedSignInAttempts: { increment: 1 }, lastFailedAttempt: new Date() }
+        })
+        return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.BAD_REQUEST, TAG)
+      }
 }
 
 /**
@@ -68,7 +85,9 @@ export async function signUpUser(data: SignUp) {
       const hashedPassword   = await hash(password)
       await prisma.user.create({ data: { name, email, password: hashedPassword, avatar: avatarUrl } })
       await signIn('credentials', { email, password: unhashedPassword, redirect: false })
-    return SystemLogger.response(transl('success.user_signed_up'), CODE.CREATED, TAG)
+      // count the sign-in logs /last time logged in
+      // await prisma.user.update({ where: { email }, data: { failedSignInAttempts: 0, lastFailedAttempt: null }})
+      return SystemLogger.response(transl('success.sign_in_welcome', { name }), CODE.CREATED, TAG)
   } catch (error) {
     if (isRedirectError(error)) {
       throw error
