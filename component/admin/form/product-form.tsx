@@ -116,7 +116,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
             </div>
           </div>
           <div className="upload-field flex flex-col md:flex-row gap-4">
-            <RHFFormDropzone control={control} name={'images'} formKey={'images'} images={images} form={form} />
+            <RHFFormDropzone control={control} name={'images'} formKey={'images'} images={images} form={form} folderName={'product'} />
           </div>
           <div className="upload-field gap-4 h-auto">
             <RHFFormField control={control} name={'description'} formKey={'description'} type={'textarea'} withWrapper={false} />
@@ -125,7 +125,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
             <RHFCheckbox control={control} name={'isFeatured'} formKey={'featured'} />
           </div>
           <div className="upload-field gap-4">
-            <BannerUploadField isFeatured={isFeatured} banner={banner!} form={form} />
+            <BannerUploadField isFeatured={isFeatured} banner={banner!} form={form} folderName={'banner'} />
           </div>
           <div className="flex justify-end">
             <LoadingBtn

@@ -17,15 +17,16 @@ import { PATH_DIR } from 'hgss-dir'
 type FormKeyLocale = keyof typeof en.form
 
 interface RHFFormImageUploadProps<TSchema extends ZodSchema> {
-  control   : Control<z.infer<TSchema>>
-  formKey   : FormKeyLocale
-  image     : string
-  name      : Path<z.infer<TSchema>>
-  form      : UseFormReturn<z.infer<TSchema>>
-  withLabel?: boolean
+  control    : Control<z.infer<TSchema>>
+  formKey    : FormKeyLocale
+  image      : string
+  name       : Path<z.infer<TSchema>>
+  form       : UseFormReturn<z.infer<TSchema>>
+  withLabel ?: boolean
+  folderName?: S3FolderName
 }
 
-const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, formKey, form, withLabel = true }: RHFFormImageUploadProps<TSchema>) => {
+const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, formKey, form, withLabel = true, folderName }: RHFFormImageUploadProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast } = useToast()
 
@@ -57,6 +58,11 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
 
     const formData = new FormData()
     formData.append('file', file)
+
+    if (folderName) {
+      formData.append('folderName', folderName)
+    }
+
     const xhr = new XMLHttpRequest()
 
     xhr.upload.onprogress = (e) => {

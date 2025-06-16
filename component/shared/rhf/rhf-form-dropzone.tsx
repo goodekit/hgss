@@ -12,8 +12,8 @@ import { useToast } from 'hook'
 import { X } from 'lucide-react'
 import { FormField, FormLabel, FormMessage, FormItem, FormControl } from 'component/ui/form'
 import { Card, CardContent } from 'component/ui/card'
-import { cn, truncate } from 'lib'
 import { deleteImage } from 'lib/action'
+import { cn, transl, truncate } from 'lib/util'
 
 type FormKeyLocale = keyof typeof en.form
 
@@ -24,9 +24,10 @@ interface RHFFormDropzoneProps<TSchema extends ZodSchema> {
   name       : Path<z.infer<TSchema>>
   form       : UseFormReturn<z.infer<TSchema>>
   withLabel ?: boolean
+  folderName?: S3FolderName
 }
 
-const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, formKey, form, withLabel = true }: RHFFormDropzoneProps<TSchema>) => {
+const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, formKey, form, withLabel = true, folderName }: RHFFormDropzoneProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast } = useToast()
 
@@ -63,6 +64,11 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
 
       const formData = new FormData()
       formData.append('file', file)
+
+      if (folderName) {
+        formData.append('folderName', folderName)
+      }
+
       const xhr =  new XMLHttpRequest()
 
       xhr.upload.onprogress = (e) => {
@@ -103,8 +109,8 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
           {withLabel && <FormLabel>{en.form[formKey].label}</FormLabel>}
           <Card>
             <CardContent className={'space-y-2 mt-2 min-h-32'}>
-              <div className="flex flex-col md:flex-row flex-start h-32 space-x-2">
-                <div className="flex-between space-x-2">
+              <div className={"flex flex-col md:flex-row flex-start h-32 space-x-2"}>
+                <div className={"flex-between space-x-2"}>
                   {typeof images === 'string' && (
                     <div className={'relative'}>
                       <X size={20} color={'red'} className={'absolute top-0 right-0 cursor-pointer'} onClick={() => handleDelete(0)} />
@@ -126,16 +132,16 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
                     ))}
                 </div>
                 <FormControl className={'space-y-2 my-2 text-md '}>
-                  <label className="inline-block px-4 py-2 text-sm font-medium text-black bg-punkpink cursor-pointer hover:bg-punk-dark transition rounded-sm">
-                    {en.upload_images.label}
+                  <label className={"inline-block px-4 py-2 text-sm font-medium text-black hover:dark:text-white bg-punkpink cursor-pointer hover:bg-pink-500 hover:font-bold transition rounded-sm"}>
+                    {transl('upload_images.label')}
                     <input type="file" accept="image/*" multiple max={4} onChange={(e) => handleUpload(e)} className={'hidden'} />
                   </label>
                 </FormControl>
               </div>
               <div className={'ease-in-out transition-opacity'}>
                 {Object.entries(uploadProgress).map(([filename, progress]) => (
-                  <div key={filename} className="w-full mt-2">
-                    <div className="text-xs">
+                  <div key={filename} className={"w-full mt-2"}>
+                    <div className={"text-xs"}>
                       {truncate(filename, 20)} - {progress}%
                     </div>
                     <div className={'w-full bg-gray-200 rounded-none h-2 overflow-hidden'}>

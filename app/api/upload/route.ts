@@ -15,15 +15,20 @@ const s3 = new S3Client({
 })
 
 export async function POST(req: NextRequest) {
-  const formData = await req.formData()
-  const file = formData.get('file') as File
+  const formData   = await req.formData()
+  const file       = formData.get('file') as File
+  const folderName = (formData.get('folderName') as string) || 'upload'
 
   if (!file) return NextResponse.json({ error: en.error.no_file }, { status: CODE.BAD_REQUEST })
+  const allowedFolders = ['product', 'gallery', 'banner']
+  if (!allowedFolders.includes(folderName)) {
+    return NextResponse.json({ error: 'Invalid folder' }, { status: CODE.BAD_REQUEST })
+  }
 
   const rawBuffer    = Buffer.from(await file.arrayBuffer())
   const fileBuffer   = await sharp(rawBuffer).resize({ width: 1080 }).webp({ quality: 80 }).toBuffer()
   const originalName = file.name.replace(/\.[^/.]+$/, '')
-  const fileKey      = `upload/${uuidv4()}-${originalName}.webp`
+  const fileKey      = `upload/${folderName}/${uuidv4()}-${originalName}.webp`
 
   await s3.send(
     new PutObjectCommand({
