@@ -6,7 +6,7 @@ const { PRICE_MIN } = GLOBAL.PRICES
 
 export const currency = z
   .string()
-  .refine((num) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(num))), transl('validation.price_format')).refine((num) => Number(num) > Number(PRICE_MIN), transl('error.price_min', { amount: PRICE_MIN }))
+  .refine((num) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(num))), transl('validation.price_format'))
 
 export const ProductSchema = z.object({
   name          : z.string().min(3, transl('validation.min_default', { field: 'Name', value: 3 })).max(50, transl('validation.max_default', { field: 'Name', value: 50 })),
@@ -20,7 +20,7 @@ export const ProductSchema = z.object({
   images        : z.array(z.string()).min(1, transl('validation.min_image_default', { module: 'Product', value: 1 })),
   isFeatured    : z.boolean(),
   banner        : z.string().nullable(),
-  price         : currency
+  price         : currency.refine((num) => Number(num) > Number(PRICE_MIN), transl('error.price_min', { amount: PRICE_MIN }))
 })
 
 export const UpdateProductSchema = ProductSchema.extend({
