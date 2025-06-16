@@ -183,9 +183,9 @@
     --popover               : hsl(0, 0%, 10%);
     --popover-foreground    : hsl(45, 100%, 90%);
     --primary               : 210 40% 98%;
-    --primary-foreground    : 222.2 47.4% 11.2%;
+    --primary-foreground    : #F2EED8;
     --secondary             : 217.2 32.6% 17.5%;
-    --secondary-foreground  : 210 40% 98%;
+    --secondary-foreground  : #F2EED8;
     --muted                 : 217.2 32.6% 17.5%;
     --muted-foreground      : 30 20.2% 65.1%;
     --accent                : 217.2 32.6% 17.5%;
