@@ -7,11 +7,11 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { signInBasic } from 'lib/action'
 import { useToast } from 'hook'
 import { signInDefaultValue, SignInSchema } from 'lib/schema'
-// import { AppAuthRedir } from 'component/shared/app'
+import { AppAuthRedir } from 'component/shared/app'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
 import { RHFFormField, RHFPasswordField } from 'component/shared/rhf'
-// import { GoogleSignInBtn } from 'component/shared/google'
+import { GoogleSignInBtn } from 'component/shared/google'
 import { KEY } from 'lib/constant'
 import { transl } from 'lib/util'
 
@@ -55,13 +55,13 @@ const SignInForm = () => {
           <div>
             <SignInButton />
             {/* disable for now: HGSS-Issue8 */}
-            {/* <div className={'my-4 flex justify-center'}>
-            <h4>{en.or.label}</h4>
+            <div className={'my-4 flex justify-center'}>
+            <h4>{transl('or.label')}</h4>
           </div>
-          <GoogleSignInBtn /> */}
+          <GoogleSignInBtn />
           </div>
           {/* disable for now: HGSS-Issue8 */}
-          {/* <AppAuthRedir type={'sign-in'} /> */}
+          <AppAuthRedir type={'sign-in'} />
         </div>
       </form>
     </FormProvider>

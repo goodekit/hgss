@@ -19,7 +19,7 @@ export const authConfig = {
                   /\/bag/,
                   /\/product/,
                   /\/contact/,
-                  /\/sign-up/
+                  // /\/sign-up/
                 ]
                 const { pathname } = request.nextUrl
                 if (!auth && protectedPaths.some((p) => p.test(pathname))) return false
