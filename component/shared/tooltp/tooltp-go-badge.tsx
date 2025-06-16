@@ -23,7 +23,7 @@ interface TooltpGoBadgeProps extends TooltpProps {
 const TooltpGoBadge: FC<TooltpGoBadgeProps> = ({ trigger, content, href, variant = 'secondary' }) => {
   return (
     <Tooltp content={content}>
-      <Badge variant={variant} className={'gap-2'}>
+      <Badge variant={variant} className={'gap-2 bg-transparent'}>
         <div>{trigger}</div>
         <span>
           <Link href={href}>
