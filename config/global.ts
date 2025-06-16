@@ -19,8 +19,10 @@
                                   ADMIN_ORDERS              : 10,
                                   USER_ORDERS               : 10,
                                   PRODUCT_SPECS_MAX         : 5,
-                                  MAX_UPLOAD_SIZE_GALLERY   : 5,    // MB,
-                                  RESET_PASSWORD_LINK_EXPIRY: new Date(Date.now() + 3 * 60 * 60 * 1000)     // HOUR
+                                  MAX_UPLOAD_SIZE_GALLERY   : 5,                                           // MB,
+                                  RESET_PASSWORD_LINK_EXPIRY: new Date(Date.now() + 3 * 60 * 60 * 1000),   // HOUR
+                                  SIGNIN_TTL                : 15 * 60,                              //15 MIN
+                                  SIGNIN_ATTEMPT_MAX        : 5
                                 },
         PAGE_SIZE             : 8,
         PAGE_SIZE_GALLERY     : 8,
@@ -54,7 +56,16 @@
                                   HAS_PROMOTION_TAX     : process.env.HAS_PROMOTION_TAX || false,
                                   HAS_PROMOTION_SHIPPING: process.env.HAS_PROMOTION_TAX || false
                                 },
-        RESEND                :{
+        REDIS                   : {
+                                  URL: process.env.REDIS_URL || 'redis://localhost:6379',
+                                  KEY: `signin:attempts:`,
+                                  UPSTASH: {
+                                    REST_URL  : process.env.UPSTASH_REDIS_REST_URL || '',
+                                    REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN || '',
+                                    URI       : `redis://default:${process.env.UPSTASH_REDIS_REST_TOKEN}@${process.env.UPSTASH_REDIS_HOST}` || ''
+                                  }
+                                },
+        RESEND                  : {
                                 RESEND_API_KEY: process.env.RESEND_API_KEY || '',
                                 SENDER_EMAIL  : process.env.SENDER_EMAIL || 'onboarding@resend.dev'
                                 },
@@ -68,5 +79,5 @@
                                   SIGNED_URL_EXP   : Number(process.env.AWS_SIGNED_URL_EXP) || 60,
                                   PUBLIC_URL       : `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
                                   IMAGE_TYPE       : 'image/webp'
-        }
+        },
       }
