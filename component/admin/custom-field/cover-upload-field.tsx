@@ -16,7 +16,7 @@ import { PATH_DIR } from 'config/dir'
 interface CoverUploadFieldProps<TSchema extends ZodSchema> {
     cover      : string
     form       : UseFormReturn<z.infer<TSchema>>
-    folderName?: string
+    folderName?: S3FolderName
 }
 const CoverUploadField = <TSchema extends ZodSchema>({ cover, form, folderName }: CoverUploadFieldProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})

@@ -155,7 +155,7 @@ const GalleryForm: FC<GalleryForm> = ({ type, gallery, galleryId }) => {
                       />
                     </div>
                     <div className={'w-full md:w-1/3'}>
-                      <RHFFormImageUpload
+                      <RHFFormImageUpload<typeof GallerySchema>
                         control={control}
                         name={`galleryItems.${index}.image`}
                         formKey={'image'}

@@ -17,7 +17,7 @@ interface BannerUploadFieldProps<TSchema extends ZodSchema> {
     isFeatured: boolean
     banner    : string
     form      : UseFormReturn<z.infer<TSchema>>
-    folderName: string
+    folderName: S3FolderName
 }
 const BannerUploadField = <TSchema extends ZodSchema> ({ isFeatured, banner, form, folderName }: BannerUploadFieldProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})

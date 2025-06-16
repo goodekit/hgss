@@ -87,6 +87,8 @@ declare global {
   export type UpdateGalleryItem = z.infer<typeof UpdateGalleryItemSchema>
   export type SalesData         = { month: string, totalSales: number }[]
 
+  export type S3FolderName = 'product'| 'gallery'| 'banner' | 'upload'
+
   export interface TblCell {
     id        : string
     value     : string | JSX.Element | number | ReactNode
