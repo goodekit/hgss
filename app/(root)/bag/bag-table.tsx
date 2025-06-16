@@ -10,7 +10,7 @@ import { Table, Card, CardContent, Badge } from 'component/ui'
 import { EllipsisLoader } from 'component/shared/loader'
 import { TapeBtn, LinkBtn } from 'component/shared/btn'
 import { BagTableHead, BagTableBody } from 'component/shared/bag'
-import { formatCurrency } from 'lib/util'
+import { formatCurrency, transl } from 'lib/util'
 
 interface BagTableProps {
   bag: Bag
@@ -64,7 +64,7 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
             <CardContent className="space-y-8">
               <div className="text-xl justify-between flex">
                 <div>
-                  {en.subtotal.label} &nbsp;
+                  {transl('subtotal.label')} &nbsp;
                   <Badge variant={'outline'} className="text-md">
                     {subtotal}
                   </Badge>
@@ -72,7 +72,7 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
                 </div>
                 <span className="font-bold"> {formatCurrency(bag.itemsPrice)}</span>
               </div>
-              <TapeBtn textSize={'text-lg'} className={'w-full texture-4-bg'} disabled={isPending} onClick={handleNavigateCheckout} type={'button'} label=  {isPending ? <EllipsisLoader /> : ( <span> {'->'} {en.proceed_to_checkout.label}</span>)} />
+              <TapeBtn textSize={'text-lg'} className={'w-full texture-4-bg'} disabled={isPending} onClick={handleNavigateCheckout} type={'button'} label=  {isPending ? <EllipsisLoader /> : ( <span> {'->'} {transl('proceed_to_checkout.label')}</span>)} />
             </CardContent>
           </Card>
         </div>
