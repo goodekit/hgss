@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 import { getResetPasswordTokenUser } from 'lib/action'
 import { Card, CardHeader, CardContent } from 'component/ui'
 import { Label } from 'component/ui/label'
+import { AppAuthBG } from 'component/shared/app'
 import { transl } from 'lib'
 import ResetPasswordForm from './reset-password-form'
 
@@ -30,9 +31,7 @@ const ResetPasswordPage = async ({ searchParams }: ResetPasswordPageProps) => {
   }
   return (
     <div className={'grid grid-cols-1 md:grid-cols-7 h-screen w-full special-elite'}>
-      <div className={'relative col-span-4 hidden md:block'}>
-        <Image src={ASSET_DIR.BG} alt="hgss-background" fill priority sizes={'(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 100vw'} className={'h-screen'} />
-      </div>
+      <AppAuthBG />
       <div className={'col-span-3 flex items-center justify-center min-h-screen'}>
         <div className={'max-w-2xl px-6 w-full'}>
           <Card className={'shadow-none border-none'}>
