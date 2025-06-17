@@ -24,7 +24,7 @@ const ResetPasswordForm = ({ token, verifiedUserEmail }: { token: string, verifi
     defaultValues: { token, password: '', confirmPassword: '' }
   })
 
-  const { handleSubmit, register, formState: { errors }, control } = form
+  const { handleSubmit, register, control } = form
 
   if (!token) {
     redirect(PATH_DIR.PASSWORD_FORGOT)
@@ -66,8 +66,8 @@ const ResetPasswordForm = ({ token, verifiedUserEmail }: { token: string, verifi
         <div>
           <RHFFormField control={control} name={'email'} formKey={'email'} disabled={true} />
         </div>
-          <RHFPasswordField label={transl('form.password.label')} register={register} name={'password'} formKey={'password'} error={errors.password?.message as string} />
-          <RHFPasswordField label={transl('form.confirm_password.label')} register={register} name={'confirmPassword'} formKey={'confirm_password'} error={errors.confirmPassword?.message as string} />
+          <RHFPasswordField control={control} register={register} name={'password'} formKey={'password'} />
+          <RHFPasswordField control={control} register={register} name={'confirmPassword'} formKey={'confirm_password'} />
         <div>
           <ResetPasswordButton />
         </div>
