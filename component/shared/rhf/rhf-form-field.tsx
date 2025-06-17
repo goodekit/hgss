@@ -6,7 +6,7 @@ import { Textarea } from 'component/ui'
 import { FormField, FormControl, FormLabel, FormMessage, FormItem } from 'component/ui/form'
 import { Input } from 'component/ui/input'
 import { Button } from 'component/ui/button'
-import { cn } from 'lib/util'
+import { cn, transl } from 'lib/util'
 
 type FormKeyLocale = keyof typeof en.form
 type FormFieldType = 'input' | 'inputWithButton' | 'textarea'
@@ -39,29 +39,29 @@ const RHFFormField = <TSchema extends ZodSchema, TName extends Path<z.infer<TSch
       <FormItem className={"w-full"}>
         {withLabel && (
           <FormControl>
-            <FormLabel>{en.form[formKey].label}</FormLabel>
+            <FormLabel className={cn(disabled ? 'text-white opacity-25' : 'peer-invalid:text-red-600')}>{transl(`form.${formKey}.label` as const)}</FormLabel>
           </FormControl>
         )}
         {
         type === 'inputWithButton' ? (
           <div className={'flex flex-row items-center gap-2'}>
-            <Input disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} />
+            <Input disabled={disabled} placeholder={transl(`form.${formKey}.placeholder` as const)} {...field} />
            <span><Button type={'button'} variant={'ghost'} className={'bg-punkpink text-black hover:bg-pink-500 hover:font-bold'} onClick={onClick}>{buttonLabel}</Button></span>
           </div>
         )
         :
         type === 'textarea' ? (
-          <Textarea disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} className={cn('resize-none', !withBorder && 'border-none')} />
+          <Textarea disabled={disabled} placeholder={transl(`form.${formKey}.placeholder` as const)} {...field} className={cn('resize-none', !withBorder && 'border-none')} />
         )
         :
         type === 'input' ?
         (
-          <Input disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} className={cn(!withBorder && 'border-none')} />
+          <Input disabled={disabled} placeholder={transl(`form.${formKey}.placeholder` as const)} {...field} className={cn(!withBorder && 'border-none')} />
         ):
         (
-          <Input disabled={disabled} placeholder={en.form[formKey].placeholder} {...field} className={cn(!withBorder && 'border-none')} />
+          <Input disabled={disabled} placeholder={transl(`form.${formKey}.placeholder` as const)} {...field} className={cn(!withBorder && 'border-none')} />
         )}
-        <FormMessage />
+        {!disabled && <FormMessage />}
       </FormItem>
     )}/>
   )
