@@ -1,6 +1,8 @@
 "use client"
 
+import { useEffect } from 'react'
 import { signIn } from 'next-auth/react'
+import { useSearchParams } from 'next/navigation'
 import { useToast } from 'hook'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
@@ -8,16 +10,24 @@ import { transl } from 'lib/util'
 
 interface GoogleSignInBtnProps {
   userName?: string
-  loading?: boolean
+  loading ?: boolean
   disabled?: boolean
-  onClick?: () => void
+  onClick ?: () => void
 }
 
 export const GoogleSignInBtn = ({ userName, loading, disabled, onClick }: GoogleSignInBtnProps) => {
+  const searchParams = useSearchParams()
   const { toast }    = useToast()
+
+  useEffect(() => {
+    if (searchParams.get('success') === '1') {
+      toast({ description: transl('success.sign_in_welcome_back', { name: userName || '' }) })
+    }
+  }, [searchParams])
+
   const handleSignIn = () => {
-    onClick?.();
-    signIn('google', { callbackUrl: '/' }).then(() => { toast({ description: transl('success.sign_in_welcome_back', { name: userName || 'Mate' })})})
+    onClick?.()
+    signIn('google', { callbackUrl: '/?success=1' })
   }
   return (
     <div className={'my-5'}>
