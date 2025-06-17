@@ -67,8 +67,8 @@ export async function addItemToBag(data: BagItem) {
     const session = await auth()
     const userId = session?.user?.id ? (session.user.id as string) : undefined
 
-    const bag = await getMyBag()
-    const item = BagItemSchema.parse(data)
+    const bag     = await getMyBag()
+    const item    = BagItemSchema.parse(data)
     const product = await prisma.product.findFirst({ where: { id: item.productId } })
     if (!product) throw new Error(transl('error.product_not_found'))
 
@@ -80,6 +80,7 @@ export async function addItemToBag(data: BagItem) {
         ...calculatePrices([item])
       })
       await prisma.bag.create({ data: newBag })
+      await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
       revalidatePath(PATH_DIR.PRODUCT_VIEW(product.slug))
       return RESPONSE.SUCCESS(`${product.name} added to bag`)
     } else {
@@ -116,14 +117,13 @@ export async function addItemToBag(data: BagItem) {
 
 export async function getMyBag() {
   const sessionBagId = (await cookies()).get(KEY.SESSION_BAG_ID)?.value
-  if (!sessionBagId) throw new Error(en.error.sesssion_not_found)
-  const session = await auth()
-  const userId  = session?.user?.id ? (session.user.id as string) : undefined
-
+  if (!sessionBagId) throw new Error(transl('error.sesssion_not_found'))
   return cache({
-    key: CACHE_KEY.myBag(userId ?? sessionBagId),
-    ttl: CACHE_TTL.myBag,
+    key    : CACHE_KEY.myBagId(sessionBagId),
+    ttl    : CACHE_TTL.myBag,
     fetcher: async () => {
+      const session = await auth()
+      const userId  = session?.user?.id ? (session.user.id as string) : undefined
       const bag = await prisma.bag.findFirst({ where: userId ? { userId } : { sessionBagId } })
       if (!bag) return undefined
       const myBag = convertToPlainObject({
@@ -180,7 +180,7 @@ export async function removeItemFromBag(productId: string) {
       where: { id: bag.id },
       data : { items: bag.items as Prisma.BagUpdateitemsInput[], ...calculatePrices(bag.items as BagItem[]) }
     })
-    await invalidateCache(CACHE_KEY.myBag(bag.id))
+    await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
     revalidatePath(PATH_DIR.PRODUCT_VIEW(product.slug))
     return SystemLogger.response(`${product.name} was removed from bag`, CODE.OK, TAG)
   } catch (error) {
