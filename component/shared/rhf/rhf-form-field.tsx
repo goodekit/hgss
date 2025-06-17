@@ -39,7 +39,7 @@ const RHFFormField = <TSchema extends ZodSchema, TName extends Path<z.infer<TSch
       <FormItem className={"w-full"}>
         {withLabel && (
           <FormControl>
-            <FormLabel className={cn(disabled ? 'text-white opacity-25' : 'peer-invalid:text-red-600')}>{transl(`form.${formKey}.label` as const)}</FormLabel>
+            <FormLabel className={cn(disabled ? 'text-muted-foreground opacity-25' : 'peer-invalid:text-red-600')}>{transl(`form.${formKey}.label` as const)}</FormLabel>
           </FormControl>
         )}
         {

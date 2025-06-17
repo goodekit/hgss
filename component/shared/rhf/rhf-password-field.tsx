@@ -40,7 +40,7 @@ const RHFPasswordField = <TSchema extends ZodSchema, TName extends Path<z.infer<
         render={({ field }: RHFFormPasswordFieldControllerRender<TSchema, TName>) => (
              <FormItem className={"w-full"}>
                <FormControl>
-                  <FormLabel className={cn(disabled ? 'text-white opacity-25' : 'peer-invalid:text-red-600')}>{transl(`form.${formKey}.label` as const)}</FormLabel>
+                  <FormLabel className={cn(disabled ? 'text-muted-foreground opacity-25' : 'peer-invalid:text-red-600')}>{transl(`form.${formKey}.label` as const)}</FormLabel>
                 </FormControl>
                  <div className="relative">
                     <Input
@@ -54,7 +54,7 @@ const RHFPasswordField = <TSchema extends ZodSchema, TName extends Path<z.infer<
                       required
                        {...field}
                     />
-                    <button type={'button'} onClick={togglePassword} className={'absolute inset-y-0 right-3 items-center flex text-muted-foreground'}>
+                    <button type={'button'} onClick={togglePassword} className={cn('absolute inset-y-0 right-3 items-center flex', disabled ? 'text-muted-foreground opacity-25' : 'text-muted-foreground')}>
                       {showPassword ? <EyeOffIcon size={15} /> : <EyeIcon size={15} />}
                     </button>
                   </div>
