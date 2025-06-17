@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { prisma } from 'db'
 import { revalidatePath } from 'next/cache'
-import { cache } from 'lib/cache'
+import { cache, invalidateCache } from 'lib/cache'
 import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
 import { SystemLogger } from 'lib/app-logger'
 import { ProductSchema, UpdateProductSchema } from 'lib/schema'
@@ -171,7 +171,8 @@ export async function getAllCategories() {
 export async function createProduct(data: CreateProduct) {
   try {
     const product = ProductSchema.parse(data)
-    await prisma.product.create({ data: product })
+    const newProduct = await prisma.product.create({ data: product })
+    await invalidateCache(CACHE_KEY.productById(newProduct.id))
     revalidatePath(PATH_DIR.ADMIN.PRODUCT)
     return SystemLogger.response(transl('success.product_created'), CODE.CREATED, TAG, '', product)
   } catch (error) {
@@ -193,7 +194,8 @@ export async function updateProduct(data:UpdateProduct) {
     const productExists = await prisma.product.findFirst({ where: { id: product.id }})
     if (!productExists) throw new Error(transl('error.product_not_found'))
 
-    await prisma.product.update({ where: {id: product.id }, data: product })
+    const updatedProduct = await prisma.product.update({ where: {id: product.id }, data: product })
+    await invalidateCache(CACHE_KEY.productById(updatedProduct.id))
     revalidatePath(PATH_DIR.ADMIN.PRODUCT)
     return SystemLogger.response(transl('success.product_updated'), CODE.OK, TAG, '', product)
   } catch (error) {
@@ -211,6 +213,7 @@ export async function updateProduct(data:UpdateProduct) {
 export async function deleteProduct(productId: string) {
   try {
     await prisma.product.delete({ where: { id: productId } })
+    await invalidateCache(CACHE_KEY.productById(productId))
     revalidatePath(PATH_DIR.ADMIN.PRODUCT)
     return SystemLogger.response(transl('success.product_deleted'), CODE.OK, TAG)
   } catch (error) {
