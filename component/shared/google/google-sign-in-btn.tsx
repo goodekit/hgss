@@ -1,21 +1,24 @@
 "use client"
 
 import { signIn } from 'next-auth/react'
-import { en } from 'public/locale'
-import { useFormStatus } from 'react-dom'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
+import { transl } from 'lib/util'
 
-export const GoogleSignInBtn = () => {
-    const { pending } = useFormStatus()
+interface GoogleSignInBtnProps {
+  loading ?: boolean
+  disabled?: boolean
+  onClick ?: () => void
+}
 
+export const GoogleSignInBtn = ({ loading, disabled, onClick }: GoogleSignInBtnProps) => {
   return (
     <div className={'my-5'}>
       <TapeBtn
         className={'texture-bg'}
-        disabled={pending}
-        label={pending ? <EllipsisLoader /> : en.sign_in.google}
-        onClick={() => signIn('google', { callbackUrl: '/' })}
+        disabled={loading || disabled}
+        label={disabled ? <EllipsisLoader /> : transl('sign_in.google')}
+        onClick={() => { onClick?.(); signIn('google', { callbackUrl: '/' })}}
       />
     </div>
   )
