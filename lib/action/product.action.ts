@@ -7,9 +7,11 @@ import { Prisma } from '@prisma/client'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { prisma } from 'db'
 import { revalidatePath } from 'next/cache'
+import { cache } from 'lib/cache'
+import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
 import { SystemLogger } from 'lib/app-logger'
 import { ProductSchema, UpdateProductSchema } from 'lib/schema'
-import { convertToPlainObject } from 'lib/util'
+import { convertToPlainObject, transl } from 'lib/util'
 import { KEY, CODE } from 'lib/constant'
 
 const TAG = 'PRODUCT.ACTION'
@@ -21,22 +23,6 @@ const s3 = new S3Client({
         secretAccessKey: GLOBAL.AWS.SECRET_ACCESS_KEY
     }
 })
-
-/**
- * Fetches the latest products from the database.
- *
- * This function retrieves a specified number of the most recently created products
- * from the database, ordered by their creation date in descending order.
- *
- * @returns {Promise<object[]>} A promise that resolves to an array of plain objects
- * representing the latest products.
- */
-export async function getProducts() {
-    const data = await prisma.product.findMany({ take: GLOBAL.LATEST_PRODUCT_QUANTITY, orderBy: { createdAt: 'desc' }})
-
-    return convertToPlainObject(data)
-}
-
 /**
  * Deletes a product image from the current list of images by its index.
  *
@@ -62,7 +48,7 @@ export async function deleteProductImage(args: ImageInput) {
       const keyParts = urlParts.slice(3)
       return keyParts.join('/')
     } catch (error) {
-      console.error(en.error.failed_extract_file_key, error)
+      console.error(transl('error.failed_extract_file_key'), error)
       return null
     }
   }
@@ -70,7 +56,7 @@ export async function deleteProductImage(args: ImageInput) {
   const imageToDelete = 'index' in args ? args?.currentImages[args.index] : args.currentImages
   const fileKey = getFileKeyFromUrl(imageToDelete)
 
-  if (!fileKey) return { success: false, error: en.error.invalid_file_key }
+  if (!fileKey) return { success: false, error: transl('error.invalid_file_key') }
 
     try {
       await s3.send(
@@ -99,25 +85,35 @@ export async function deleteProductImage(args: ImageInput) {
  * @property {number} totalPages - The total number of pages.
  */
 export async function getAllProducts({ query, limit = GLOBAL.PAGE_SIZE, page, category, price, rating, sort }: AppProductsAction<number>) {
-    const queryFilter: Prisma.ProductWhereInput =
-    query && query !== KEY.ALL
-      ? { name: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }
-      : {}
-    const categoryFilter                       = category && category !== KEY.ALL ? { category } : {}
-    const priceFilter:Prisma.ProductWhereInput = price && price       !== KEY.ALL ? { price: { gte: Number(price.split('-')[0]),  lte: Number(price.split('-')[1]) } } : {}
-    const ratingFilter                         = rating && rating     !== KEY.ALL ? { rating: { gte: Number(rating)} } : {}
+  return cache({
+    key    : CACHE_KEY.products(page),
+    ttl    : CACHE_TTL.products,
+    fetcher: async () => {
+      const queryFilter: Prisma.ProductWhereInput = query && query       !== KEY.ALL ? { name: { contains: query, mode: 'insensitive' } as Prisma.StringFilter } : {}
+      const categoryFilter                        = category && category !== KEY.ALL ? { category } : {}
+      const priceFilter: Prisma.ProductWhereInput = price && price       !== KEY.ALL ? { price: { gte: Number(price.split('-')[0]), lte: Number(price.split('-')[1]) } } : {}
+      const ratingFilter                          = rating && rating     !== KEY.ALL ? { rating: { gte: Number(rating) } } : {}
 
-    const data = await prisma.product.findMany({
-      where  : { ...queryFilter, ...categoryFilter, ...priceFilter, ...ratingFilter },
-      orderBy: sort === KEY.LOWEST ? { price: 'asc' } : sort === KEY.HIGHEST ? { price : 'desc' } : sort === KEY.RATING ? { rating: 'desc' } : { createdAt: 'desc' },
-      skip   : (page - 1) * limit,
-      take   : limit
-    })
-    const count = await prisma.product.count({ where: { ...queryFilter }})
+      const data = await prisma.product.findMany({
+        where: { ...queryFilter, ...categoryFilter, ...priceFilter, ...ratingFilter },
+        orderBy:
+          sort === KEY.LOWEST
+            ? { price: 'asc' }
+            : sort === KEY.HIGHEST
+              ? { price: 'desc' }
+              : sort === KEY.RATING
+                ? { rating: 'desc' }
+                : { createdAt: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit
+      })
+      const count = await prisma.product.count({ where: { ...queryFilter } })
 
-    const summary = { data, totalPages: Math.ceil(count / limit) }
-    return convertToPlainObject(summary)
-  }
+      const summary = { data, totalPages: Math.ceil(count / limit) }
+      return convertToPlainObject(summary)
+    }
+  })
+}
 
   /**
  * Retrieves a product by its slug.
@@ -126,13 +122,25 @@ export async function getAllProducts({ query, limit = GLOBAL.PAGE_SIZE, page, ca
  * @returns {Promise<Product | null>} A promise that resolves to the product if found, or null if not found.
  */
 export async function getProductBySlug(slug: string) {
-    const data =  await prisma.product.findFirst({ where: { slug } })
-    return data
+   return cache({
+     key    : CACHE_KEY.productBySlug(slug),
+     ttl    : CACHE_TTL.productBySlug,
+     fetcher: async () => {
+       const data = await prisma.product.findFirst({ where: { slug } })
+       return data
+     }
+   })
   }
 
   export async function getProductById(productId: string) {
-    const data = await prisma.product.findFirst({ where: { id: productId } })
-    return convertToPlainObject(data)
+    return cache({
+      key    : CACHE_KEY.productById(productId),
+      ttl    : CACHE_TTL.productById,
+      fetcher: async () => {
+        const data = await prisma.product.findFirst({ where: { id: productId } })
+        return convertToPlainObject(data)
+      }
+    })
   }
 
 /**
@@ -142,8 +150,14 @@ export async function getProductBySlug(slug: string) {
  * each containing a category and the count of products in that category.
  */
 export async function getAllCategories() {
-  const products = await prisma.product.groupBy({ by: ['category'], _count: true })
-  return products
+  return cache({
+    key    : CACHE_KEY.categories,
+    ttl    : CACHE_TTL.categories,
+    fetcher: async () => {
+      const products = await prisma.product.groupBy({ by: ['category'], _count: true })
+      return products
+    }
+  })
 }
 
 /**
@@ -159,7 +173,7 @@ export async function createProduct(data: CreateProduct) {
     const product = ProductSchema.parse(data)
     await prisma.product.create({ data: product })
     revalidatePath(PATH_DIR.ADMIN.PRODUCT)
-    return SystemLogger.response(en.success.product_created, CODE.CREATED, TAG, '', product)
+    return SystemLogger.response(transl('success.product_created'), CODE.CREATED, TAG, '', product)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -177,11 +191,11 @@ export async function updateProduct(data:UpdateProduct) {
   try {
     const product       = UpdateProductSchema.parse(data)
     const productExists = await prisma.product.findFirst({ where: { id: product.id }})
-    if (!productExists) throw new Error(en.error.product_not_found)
+    if (!productExists) throw new Error(transl('error.product_not_found'))
 
     await prisma.product.update({ where: {id: product.id }, data: product })
     revalidatePath(PATH_DIR.ADMIN.PRODUCT)
-    return SystemLogger.response(en.success.product_updated, CODE.OK, TAG, '', product)
+    return SystemLogger.response(transl('success.product_updated'), CODE.OK, TAG, '', product)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -197,9 +211,8 @@ export async function updateProduct(data:UpdateProduct) {
 export async function deleteProduct(productId: string) {
   try {
     await prisma.product.delete({ where: { id: productId } })
-
     revalidatePath(PATH_DIR.ADMIN.PRODUCT)
-    return SystemLogger.response(en.success.product_deleted, CODE.OK, TAG)
+    return SystemLogger.response(transl('success.product_deleted'), CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
