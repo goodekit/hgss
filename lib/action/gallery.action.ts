@@ -7,10 +7,12 @@ import { Prisma } from '@prisma/client'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { prisma } from 'db'
 import { revalidatePath } from 'next/cache'
+import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
 import { SystemLogger } from 'lib/app-logger'
+import { cache, invalidateCache } from 'lib/cache'
 import { GalleryItemSchema, GallerySchema, UpdateGalleryItemSchema, UpdateGallerySchema } from 'lib/schema'
-import { convertToPlainObject } from 'lib/util'
 import { KEY, CODE } from 'lib/constant'
+import { convertToPlainObject, transl } from 'lib/util'
 
 const TAG = 'GALLERY.ACTION'
 
@@ -41,29 +43,41 @@ export async function getGalleryCount() {
  * representing the latest galleries.
  */
 export async function getAllGallery({ limit = GLOBAL.PAGE_SIZE_GALLERY, page, query, category, sort }: AppDocumentsFilters) {
-  const queryFilter: Prisma.GalleryWhereInput =
-    query && query !== KEY.ALL
-      ? {
-          OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
-        }
-      : {}
+ return cache({
+  key    : CACHE_KEY.galleries(page),
+  ttl    : CACHE_TTL.galleries,
+  fetcher: async () => {
+      const queryFilter: Prisma.GalleryWhereInput =
+      query && query !== KEY.ALL
+        ? {
+            OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
+          }
+        : {}
 
-  const categoryFilter = category && category !== KEY.ALL ? { category } : {}
-  const gallery        = await prisma.gallery.findMany({
-    where  : { ...queryFilter, ...categoryFilter },
-    orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
-    skip   : (page - 1) * limit,
-    take   : limit
+    const categoryFilter = category && category !== KEY.ALL ? { category } : {}
+    const gallery        = await prisma.gallery.findMany({
+      where  : { ...queryFilter, ...categoryFilter },
+      orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
+      skip   : (page - 1) * limit,
+      take   : limit
+    })
+    const count   = await prisma.gallery.count({ where: { ...queryFilter } })
+    const summary = { data: gallery, totalPages: Math.ceil(count / limit) }
+    return convertToPlainObject(summary)
+    }
   })
-  const count   = await prisma.gallery.count({ where: { ...queryFilter } })
-  const summary = { data: gallery, totalPages: Math.ceil(count / limit) }
-  return convertToPlainObject(summary)
 }
 
 export async function getGalleryById(galleryId: string) {
-  const gallery = await prisma.gallery.findFirst({ where: { id: galleryId }, include: { galleryItems: true } })
-  if (!gallery) throw new Error(en.error.not_found)
-  return convertToPlainObject(gallery)
+  cache({
+    key    : CACHE_KEY.galleryById(galleryId),
+    ttl    : CACHE_TTL.galleryById,
+    fetcher: async() => {
+      const gallery = await prisma.gallery.findFirst({ where: { id: galleryId }, include: { galleryItems: true } })
+      if (!gallery) throw new Error(transl('error.not_found'))
+      return convertToPlainObject(gallery)
+      }
+  })
 }
 
 /**
@@ -76,28 +90,40 @@ export async function getGalleryById(galleryId: string) {
  * representing the latest galleries.
  */
 export async function getAllGalleryItems({ limit = GLOBAL.PAGE_SIZE_GALLERY, page, query, sort, category }: AppDocumentsFilters) {
-  const queryFilter: Prisma.GalleryItemWhereInput =
-    query && query !== KEY.ALL
-      ? {
-          OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
-        } : {}
+  return cache({
+    key    : CACHE_KEY.galleryItems(page),
+    ttl    : CACHE_TTL.galleryItems,
+    fetcher: async () => {
+      const queryFilter: Prisma.GalleryItemWhereInput =
+        query && query !== KEY.ALL
+          ? {
+              OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
+            } : {}
 
-  const categoryFilter = category && category !== KEY.ALL ? { category }: {}
-  const galleryItems   = await prisma.galleryItem.findMany({
-    where  : { ...queryFilter, ...categoryFilter },
-    orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
-    skip   : (page - 1) * limit,
-    take   : limit
+      const categoryFilter = category && category !== KEY.ALL ? { category }: {}
+      const galleryItems   = await prisma.galleryItem.findMany({
+        where  : { ...queryFilter, ...categoryFilter },
+        orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
+        skip   : (page - 1) * limit,
+        take   : limit
+      })
+      const count   = await prisma.galleryItem.count({ where: { ...queryFilter } })
+      const summary = { data: galleryItems, totalPages: Math.ceil(count / limit) }
+      return convertToPlainObject(summary)
+      }
   })
-  const count   = await prisma.galleryItem.count({ where: { ...queryFilter } })
-  const summary = { data: galleryItems, totalPages: Math.ceil(count / limit) }
-  return convertToPlainObject(summary)
 }
 
 export async function getGalleryItemById(galleryItemId: string) {
-  const galleryItem = await prisma.galleryItem.findFirst({ where: { id: galleryItemId } })
-  if (!galleryItem) throw new Error(en.error.not_found)
-  return convertToPlainObject(galleryItem)
+  return cache({
+    key    : CACHE_KEY.galleryItem(galleryItemId),
+    ttl    : CACHE_TTL.galleryItem,
+    fetcher: async () => {
+      const galleryItem = await prisma.galleryItem.findFirst({ where: { id: galleryItemId } })
+      if (!galleryItem) throw new Error(en.error.not_found)
+      return convertToPlainObject(galleryItem)
+      }
+  })
 }
 
 /**
@@ -164,7 +190,6 @@ export async function createGallery(data: CreateGallery) {
     }
 
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
-
     return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', newGallery)
   } catch (error) {
     console.error('Gallery creation failed: ', error)
@@ -290,7 +315,7 @@ export async function deleteGalleryItem(galleryItemId: string) {
     if (remainingItems === 0) {
       await prisma.gallery.delete({ where: { id: item.galleryId }})
     }
-
+    await invalidateCache(CACHE_KEY.galleryItem(galleryItemId))
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
     return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
   } catch (error) {
