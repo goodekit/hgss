@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GLOBAL } from 'hgss'
 import NextAuth from 'next-auth'
@@ -6,6 +5,8 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import { cookies } from 'next/headers'
 import { prisma } from 'db/prisma'
+import { CACHE_KEY } from 'config/cache.config'
+import { invalidateCache } from 'lib/cache'
 import { compare } from 'lib/encrypt'
 import { KEY } from 'lib/constant'
 import { authConfig } from './auth.config'
@@ -92,12 +93,13 @@ export const config = {
 
         if (trigger === 'signIn' || trigger === 'signUp') {
           const cookiesObject = await cookies()
-          const sessionBagId = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
+          const sessionBagId  = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
           if (sessionBagId) {
             const sessionBag = await prisma.bag.findFirst({ where: { sessionBagId } })
             if (sessionBag) {
               await prisma.bag.deleteMany({ where: { userId: dbUser.id } })
               await prisma.bag.update({ where: { id: sessionBag.id }, data: { userId: dbUser.id } })
+              await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
             }
           }
         }

@@ -1,16 +1,17 @@
 'use server'
 
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { Prisma } from '@prisma/client'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { prisma } from 'db'
 import { revalidatePath } from 'next/cache'
+import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
 import { SystemLogger } from 'lib/app-logger'
+import { cache, invalidateCache } from 'lib/cache'
 import { GalleryItemSchema, GallerySchema, UpdateGalleryItemSchema, UpdateGallerySchema } from 'lib/schema'
-import { convertToPlainObject } from 'lib/util'
 import { KEY, CODE } from 'lib/constant'
+import { convertToPlainObject, transl } from 'lib/util'
 
 const TAG = 'GALLERY.ACTION'
 
@@ -41,29 +42,41 @@ export async function getGalleryCount() {
  * representing the latest galleries.
  */
 export async function getAllGallery({ limit = GLOBAL.PAGE_SIZE_GALLERY, page, query, category, sort }: AppDocumentsFilters) {
-  const queryFilter: Prisma.GalleryWhereInput =
-    query && query !== KEY.ALL
-      ? {
-          OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
-        }
-      : {}
+ return cache({
+  key    : CACHE_KEY.galleries(page),
+  ttl    : CACHE_TTL.galleries,
+  fetcher: async () => {
+      const queryFilter: Prisma.GalleryWhereInput =
+      query && query !== KEY.ALL
+        ? {
+            OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
+          }
+        : {}
 
-  const categoryFilter = category && category !== KEY.ALL ? { category } : {}
-  const gallery        = await prisma.gallery.findMany({
-    where  : { ...queryFilter, ...categoryFilter },
-    orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
-    skip   : (page - 1) * limit,
-    take   : limit
+    const categoryFilter = category && category !== KEY.ALL ? { category } : {}
+    const gallery        = await prisma.gallery.findMany({
+      where  : { ...queryFilter, ...categoryFilter },
+      orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
+      skip   : (page - 1) * limit,
+      take   : limit
+    })
+    const count   = await prisma.gallery.count({ where: { ...queryFilter } })
+    const summary = { data: gallery, totalPages: Math.ceil(count / limit) }
+    return convertToPlainObject(summary)
+    }
   })
-  const count   = await prisma.gallery.count({ where: { ...queryFilter } })
-  const summary = { data: gallery, totalPages: Math.ceil(count / limit) }
-  return convertToPlainObject(summary)
 }
 
 export async function getGalleryById(galleryId: string) {
-  const gallery = await prisma.gallery.findFirst({ where: { id: galleryId }, include: { galleryItems: true } })
-  if (!gallery) throw new Error(en.error.not_found)
-  return convertToPlainObject(gallery)
+  return cache({
+    key    : CACHE_KEY.galleryById(galleryId),
+    ttl    : CACHE_TTL.galleryById,
+    fetcher: async() => {
+      const gallery = await prisma.gallery.findFirst({ where: { id: galleryId }, include: { galleryItems: true } })
+      if (!gallery) throw new Error(transl('error.not_found'))
+      return convertToPlainObject(gallery)
+      }
+  })
 }
 
 /**
@@ -76,28 +89,40 @@ export async function getGalleryById(galleryId: string) {
  * representing the latest galleries.
  */
 export async function getAllGalleryItems({ limit = GLOBAL.PAGE_SIZE_GALLERY, page, query, sort, category }: AppDocumentsFilters) {
-  const queryFilter: Prisma.GalleryItemWhereInput =
-    query && query !== KEY.ALL
-      ? {
-          OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
-        } : {}
+  return cache({
+    key    : CACHE_KEY.galleryItems(page),
+    ttl    : CACHE_TTL.galleryItems,
+    fetcher: async () => {
+      const queryFilter: Prisma.GalleryItemWhereInput =
+        query && query !== KEY.ALL
+          ? {
+              OR: [{ title: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }]
+            } : {}
 
-  const categoryFilter = category && category !== KEY.ALL ? { category }: {}
-  const galleryItems   = await prisma.galleryItem.findMany({
-    where  : { ...queryFilter, ...categoryFilter },
-    orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
-    skip   : (page - 1) * limit,
-    take   : limit
+      const categoryFilter = category && category !== KEY.ALL ? { category }: {}
+      const galleryItems   = await prisma.galleryItem.findMany({
+        where  : { ...queryFilter, ...categoryFilter },
+        orderBy: sort === KEY.NEWEST ? { createdAt: 'desc' }: { createdAt: 'asc' },
+        skip   : (page - 1) * limit,
+        take   : limit
+      })
+      const count   = await prisma.galleryItem.count({ where: { ...queryFilter } })
+      const summary = { data: galleryItems, totalPages: Math.ceil(count / limit) }
+      return convertToPlainObject(summary)
+      }
   })
-  const count   = await prisma.galleryItem.count({ where: { ...queryFilter } })
-  const summary = { data: galleryItems, totalPages: Math.ceil(count / limit) }
-  return convertToPlainObject(summary)
 }
 
 export async function getGalleryItemById(galleryItemId: string) {
-  const galleryItem = await prisma.galleryItem.findFirst({ where: { id: galleryItemId } })
-  if (!galleryItem) throw new Error(en.error.not_found)
-  return convertToPlainObject(galleryItem)
+  return cache({
+    key    : CACHE_KEY.galleryItemById(galleryItemId),
+    ttl    : CACHE_TTL.galleryItem,
+    fetcher: async () => {
+      const galleryItem = await prisma.galleryItem.findFirst({ where: { id: galleryItemId } })
+      if (!galleryItem) throw new Error(transl('error.not_found'))
+      return convertToPlainObject(galleryItem)
+      }
+  })
 }
 
 /**
@@ -124,8 +149,9 @@ export async function createGalleryItem(data: CreateGalleryItem) {
     }
     const { title, description, image } = GalleryItemSchema.parse({ ...data, galleryId })
     const galleryItem = await prisma.galleryItem.create({ data: { title, description, image, gallery: { connect: { id: data.galleryId } } } })
+    await invalidateCache(CACHE_KEY.galleryItemById(galleryId))
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
-    return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', galleryItem)
+    return SystemLogger.response(transl('success.created'), CODE.CREATED, TAG, '', galleryItem)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -162,10 +188,9 @@ export async function createGallery(data: CreateGallery) {
     if (!galleryItems || galleryItems.length === 0) {
       throw new Error('At least one gallery item must be provided')
     }
-
+    await invalidateCache(CACHE_KEY.galleryById(newGallery.id))
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
-
-    return SystemLogger.response(en.success.created, CODE.CREATED, TAG, '', newGallery)
+    return SystemLogger.response(transl('success.created'), CODE.CREATED, TAG, '', newGallery)
   } catch (error) {
     console.error('Gallery creation failed: ', error)
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -184,11 +209,11 @@ export async function updateGallery(data: UpdateGallery) {
     const parsed                                      = UpdateGallerySchema.parse(data)
     const { title, description, cover, galleryItems } = parsed
     const galleryExists                               = await prisma.gallery.findFirst({ where: { id: parsed.id } })
-    if (!galleryExists) throw new Error(en.error.not_found)
+    if (!galleryExists) throw new Error(transl('error.not_found'))
 
-    await prisma.gallery.update({
+    const updatedGallery = await prisma.gallery.update({
       where: { id: parsed.id },
-      data: {
+      data : {
         title,
         description,
         cover,
@@ -213,8 +238,9 @@ export async function updateGallery(data: UpdateGallery) {
         })
       }
     })
+    await invalidateCache(CACHE_KEY.galleryById(updatedGallery.id))
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
-    return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
+    return SystemLogger.response(transl('success.updated'), CODE.OK, TAG, '', parsed)
   } catch (error) {
     console.log('error: ', error)
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -233,11 +259,12 @@ export async function updateGalleryItem(data: UpdateGalleryItem) {
     const parsed       = UpdateGalleryItemSchema.parse(data)
     const { title, description, image } = parsed
     const galleryItemExists = await prisma.galleryItem.findFirst({ where: { id: parsed.id } })
-    if (!galleryItemExists) throw new Error(en.error.not_found)
+    if (!galleryItemExists) throw new Error(transl('error.not_found'))
 
-    await prisma.galleryItem.update({ where: { id: parsed.id }, data: { title, description, image } })
+    const updatedGalleryItem = await prisma.galleryItem.update({ where: { id: parsed.id }, data: { title, description, image } })
+    await invalidateCache(CACHE_KEY.galleryItemById(updatedGalleryItem.id))
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
-    return SystemLogger.response(en.success.updated, CODE.OK, TAG, '', parsed)
+    return SystemLogger.response(transl('success.updated'), CODE.OK, TAG, '', parsed)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -256,7 +283,7 @@ export async function deleteGalleryItemImage(args: ImageInput) {
       const keyParts = urlParts.slice(3)
       return keyParts.join('/')
     } catch (error) {
-      console.error(en.error.failed_extraction_file_key, error)
+      console.error(transl('error.failed_extraction_file_key'), error)
       return null
     }
   }
@@ -264,7 +291,7 @@ export async function deleteGalleryItemImage(args: ImageInput) {
   const imageToDelete = 'index' in args ? args.currentImages[args.index] : args.currentImages
   const fileKey       = getFileKeyFromUrl(imageToDelete)
 
-  if (!fileKey) return { succes: false, error: en.error.invalid_file_key }
+  if (!fileKey) return { succes: false, error: transl('error.invalid_file_key') }
   try {
     await s3.send(
       new DeleteObjectCommand({
@@ -274,7 +301,7 @@ export async function deleteGalleryItemImage(args: ImageInput) {
     )
     return { success: true }
   } catch (error) {
-    console.error(en.error.unable_delete, error)
+    console.error(transl('error.unable_delete'), error)
     return { success: false, error }
   }
 }
@@ -282,7 +309,7 @@ export async function deleteGalleryItemImage(args: ImageInput) {
 export async function deleteGalleryItem(galleryItemId: string) {
   try {
     const item = await prisma.galleryItem.findFirst({ where: { id: galleryItemId } })
-    if (!item) throw new Error(en.error.not_found)
+    if (!item) throw new Error(transl('error.not_found'))
     await deleteGalleryItemImage({ currentImages: item.image })
     await prisma.galleryItem.delete({ where: { id: galleryItemId } })
 
@@ -290,9 +317,9 @@ export async function deleteGalleryItem(galleryItemId: string) {
     if (remainingItems === 0) {
       await prisma.gallery.delete({ where: { id: item.galleryId }})
     }
-
+    await invalidateCache(CACHE_KEY.galleryItemById(galleryItemId))
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
-    return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
+    return SystemLogger.response(transl('success.deleted'), CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -301,15 +328,16 @@ export async function deleteGalleryItem(galleryItemId: string) {
 export async function deleteGallery(galleryId: string) {
   try {
     const galleryItems = await prisma.galleryItem.findMany({ where: { galleryId }})
-    if (!galleryItems || galleryItems.length === 0) throw new Error(en.error.not_found)
+    if (!galleryItems || galleryItems.length === 0) throw new Error(transl('error.not_found'))
 
     for (const _item of galleryItems) {
       await deleteGalleryItemImage({ currentImages: _item.image })
     }
 
     await prisma.gallery.delete({ where: { id: galleryId } })
+    await invalidateCache(CACHE_KEY.galleryById(galleryId))
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
-    return SystemLogger.response(en.success.deleted, CODE.OK, TAG)
+    return SystemLogger.response(transl('success.deleted'), CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -340,7 +368,7 @@ export async function deleteGalleryImage(args: ImageInput) {
       const keyParts = urlParts.slice(3)
       return keyParts.join('/')
     } catch (error) {
-      console.error(en.error.failed_extract_file_key, error)
+      console.error(transl('error.failed_extract_file_key'), error)
       return null
     }
   }
@@ -348,7 +376,7 @@ export async function deleteGalleryImage(args: ImageInput) {
   const imageToDelete = 'index' in args ? args?.currentImages[args.index] : args.currentImages
   const fileKey = getFileKeyFromUrl(imageToDelete)
 
-  if (!fileKey) return { success: false, error: en.error.invalid_file_key }
+  if (!fileKey) return { success: false, error: transl('error.invalid_file_key') }
 
     try {
       await s3.send(
@@ -359,7 +387,7 @@ export async function deleteGalleryImage(args: ImageInput) {
       )
       return { success: true }
     } catch (error) {
-      console.error(en.error.unable_delete, error)
+      console.error(transl('error.unable_delete'), error)
       return { success: false, error }
     }
 }

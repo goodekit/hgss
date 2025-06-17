@@ -8,13 +8,15 @@ import { revalidatePath } from 'next/cache'
 import { Prisma } from '@prisma/client'
 import { sendPurchaseReceipt } from 'mailer'
 import { prisma } from 'db/prisma'
+import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
+import { cache, invalidateCache } from 'lib/cache'
 import { paypal } from 'lib/paypal'
 import { OrderSchema } from 'lib/schema'
 import { SystemLogger } from 'lib/app-logger'
 import { getUserById } from './user.action'
 import { getMyBag } from 'lib/action'
 import { CODE } from 'lib/constant'
-import { convertToPlainObject } from 'lib/util'
+import { convertToPlainObject, transl } from 'lib/util'
 
 const TAG = 'ORDER.ACTION'
 /**
@@ -38,22 +40,22 @@ const TAG = 'ORDER.ACTION'
 export async function createOrder() {
   try {
     const session = await auth()
-    if (!session) throw new Error(en.error.user_not_authenticated)
+    if (!session) throw new Error(transl('error.user_not_authenticated'))
     const bag = await getMyBag()
     const userId = session?.user?.id
-    if (!userId) throw new Error(en.error.user_not_found)
+    if (!userId) throw new Error(transl('error.user_not_found'))
     const user = await getUserById(userId)
 
     if (!bag || bag.items.length === 0) {
-      return SystemLogger.errorResponse(en.error.bag_empty, CODE.BAD_REQUEST, TAG, PATH_DIR.BAG)
+      return SystemLogger.errorResponse(transl('error.bag_empty'), CODE.BAD_REQUEST, TAG, PATH_DIR.BAG)
     }
 
     if (!user.address) {
-      return SystemLogger.errorResponse(en.error.no_shipping_address, CODE.BAD_REQUEST, TAG, PATH_DIR.SHIPPING)
+      return SystemLogger.errorResponse(transl('error.no_shipping_address'), CODE.BAD_REQUEST, TAG, PATH_DIR.SHIPPING)
     }
 
     if (!user.paymentMethod) {
-      return SystemLogger.errorResponse(en.error.no_payment_method, CODE.BAD_REQUEST, TAG, PATH_DIR.PAYMENT)
+      return SystemLogger.errorResponse(transl('error.no_payment_method'), CODE.BAD_REQUEST, TAG, PATH_DIR.PAYMENT)
     }
 
     const order = OrderSchema.parse({
@@ -77,8 +79,10 @@ export async function createOrder() {
         await tx.bag.update({ where: { id: bag.id }, data: clearedBag })
         return createdOrder.id
     })
-    if (!createdOrderId) throw new Error(en.error.order_not_created)
-    return SystemLogger.response(`${en.success.order_created} - ${createdOrderId}`, CODE.CREATED, TAG, PATH_DIR.ORDER_VIEW(createdOrderId))
+    if (!createdOrderId) throw new Error(transl('error.order_not_created'))
+    await invalidateCache(CACHE_KEY.orderById(createdOrderId))
+    revalidatePath(PATH_DIR.ORDER)
+    return SystemLogger.response(`${transl('success.order_created')} - ${createdOrderId}`, CODE.CREATED, TAG, PATH_DIR.ORDER_VIEW(createdOrderId))
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -93,8 +97,14 @@ export async function createOrder() {
  */
 export async function getOrderById(orderId: string) {
   try {
-    const order = await prisma.order.findFirst({ where: { id: orderId }, include: { orderitems: true, user: { select: { name: true, email: true }}} })
-    return convertToPlainObject(order)
+    return cache({
+      key    : CACHE_KEY.orderById(orderId),
+      ttl    : CACHE_TTL.orderById,
+      fetcher: async () => {
+        const order = await prisma.order.findFirst({ where: { id: orderId }, include: { orderitems: true, user: { select: { name: true, email: true }}} })
+        return convertToPlainObject(order)
+      }
+    })
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.NOT_FOUND, TAG)
   }
@@ -113,9 +123,10 @@ export async function createPayPalOrder(orderId: string) {
     if (order) {
       const paypalOrder = await paypal.createOrder(Number(order.totalPrice));
       await prisma.order.update({ where: { id: orderId }, data: { paymentResult: { id: paypalOrder.id, email_address: '', status: '', pricePaid: 0 }}})
-      return SystemLogger.response(en.success.order_created, CODE.CREATED, TAG, undefined, paypalOrder.id)
+      await invalidateCache(CACHE_KEY.orderById(orderId))
+      return SystemLogger.response(transl('success.order_created'), CODE.CREATED, TAG, undefined, paypalOrder.id)
     } else {
-      throw new Error(en.error.order_not_found)
+      throw new Error(transl('error.order_not_found'))
     }
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -140,17 +151,18 @@ export async function approvePayPalOrder(orderId: string, data: { orderID: strin
       throw new Error(en.error.paypal_payment_error)
    }
 
-   await updateOrderToPaid({
-    orderId,
-    paymentResult: {
-      id           : captureData.id,
-      status       : captureData.status,
-      email_address: captureData.payer.email_address,
-      pricePaid    : captureData.purchase_units[0]?.payments?.captures[0]?.amount?.value,
-    },
-  });
-   revalidatePath(PATH_DIR.ORDER_VIEW(orderId))
-   return SystemLogger.response(en.success.order_paid)
+    await updateOrderToPaid({
+      orderId,
+      paymentResult: {
+        id           : captureData.id,
+        status       : captureData.status,
+        email_address: captureData.payer.email_address,
+        pricePaid    : captureData.purchase_units[0]?.payments?.captures[0]?.amount?.value,
+      },
+    })
+    await invalidateCache(CACHE_KEY.orderById(orderId))
+    revalidatePath(PATH_DIR.ORDER_VIEW(orderId))
+   return SystemLogger.response(transl('success.order_paid'))
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -170,8 +182,8 @@ export async function approvePayPalOrder(orderId: string, data: { orderID: strin
  */
 export async function updateOrderToPaid({ orderId, paymentResult }: { orderId: string, paymentResult?: PaymentResult }) {
   const order = await prisma.order.findFirst({ where: { id: orderId }, include: { orderitems: true }})
-  if (!order) throw new Error(en.error.order_not_found)
-  if (order.isPaid) throw new Error(en.error.order_paid)
+  if (!order) throw new Error(transl('error.order_not_found'))
+  if (order.isPaid) throw new Error(transl('error.order_paid'))
 
   await prisma.$transaction(async (tx) => {
     for (const item of order.orderitems) {
@@ -196,12 +208,19 @@ export async function updateOrderToPaid({ orderId, paymentResult }: { orderId: s
 }
 
 export async function getMyOrders({ limit = GLOBAL.PAGE_SIZE, page }: AppPagination) {
-  const session = await auth()
-  if (!session) throw new Error(en.error.user_not_authenticated)
-  const orders = await prisma.order.findMany({ where: { userId: session?.user?.id}, orderBy:{ createdAt:'desc' }, take: limit, skip: (page - 1) * limit })
+  return cache({
+    key    : CACHE_KEY.myOrders(page),
+    ttl    : CACHE_TTL.myOrders,
+    fetcher: async () => {
+      const session = await auth()
+      if (!session) throw new Error(en.error.user_not_authenticated)
+      const orders = await prisma.order.findMany({ where: { userId: session?.user?.id}, orderBy:{ createdAt:'desc' }, take: limit, skip: (page - 1) * limit })
 
-  const dataCount = await prisma.order.count({ where: {userId: session?.user?.id }})
-  return { orders, totalPages: Math.ceil( dataCount / limit )}
+      const dataCount = await prisma.order.count({ where: {userId: session?.user?.id }})
+      const summary   = { orders, totalPages: Math.ceil(dataCount / limit) }
+      return summary
+      }
+  })
 }
 
 /**
@@ -215,27 +234,32 @@ export async function getMyOrders({ limit = GLOBAL.PAGE_SIZE, page }: AppPaginat
  * }>} A promise that resolves to an object containing the summary report.
  */
 export async function getOrderSummary() {
- /**
-  * count
-  */
-  const orders   = await prisma.order.count()
-  const products = await prisma.product.count()
-  const users    = await prisma.user.count()
-  const count    = { orders, products, users }
-  /**
-   * data
-   */
-  const totalSales           = await prisma.order.aggregate({ _sum: { totalPrice: true } })
-  const rawSalesData         = await prisma.$queryRaw<Array<{month:string; totalSales: Prisma.Decimal}>>`SELECT to_char("createdAt", 'MM/YY') as "month", sum("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM/YY')`
-  const salesData: SalesData = rawSalesData.map(entry => ({ month: entry.month, totalSales: Number(entry.totalSales) }))
-  /**
-   * latest sales
-   */
-  const latestSales          = await prisma.order.findMany({ orderBy: { createdAt: 'desc' }, include: { user: { select: { name: true }}}, take: 6 })
+return cache({
+  key    : CACHE_KEY.orderSummary,
+  ttl    : CACHE_TTL.orderSummary,
+  fetcher: async () => {
+      /**
+      * count
+      */
+      const orders   = await prisma.order.count()
+      const products = await prisma.product.count()
+      const users    = await prisma.user.count()
+      const count    = { orders, products, users }
+      /**
+       * data
+       */
+      const totalSales           = await prisma.order.aggregate({ _sum: { totalPrice: true } })
+      const rawSalesData         = await prisma.$queryRaw<Array<{month:string; totalSales: Prisma.Decimal}>>`SELECT to_char("createdAt", 'MM/YY') as "month", sum("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM/YY')`
+      const salesData: SalesData = rawSalesData.map(entry => ({ month: entry.month, totalSales: Number(entry.totalSales) }))
+      /**
+       * latest sales
+       */
+      const latestSales          = await prisma.order.findMany({ orderBy: { createdAt: 'desc' }, include: { user: { select: { name: true }}}, take: 6 })
 
-  const summary = { count, totalSales, salesData, latestSales }
-
-  return summary
+      const summary = { count, totalSales, salesData, latestSales }
+      return summary
+      }
+  })
 }
 
 /**
@@ -247,16 +271,22 @@ export async function getOrderSummary() {
  * @returns {Promise<{ data: Order[], totalPages: number }>} A promise that resolves to an object containing the list of orders and the total number of pages.
  */
 export async function getAllOrders({ limit = GLOBAL.PAGE_SIZE, page, query }: AppOrdersAction<number>) {
- const queryFilter: Prisma.OrderWhereInput = query && query !== 'all' ? {
-  OR: [
-        { paymentMethod: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
-        { user: { name: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }}
-      ]} : {}
- const data      = await prisma.order.findMany({ where: { ...queryFilter }, orderBy: { createdAt: 'desc' }, take: limit, skip: (page - 1) * limit, include: { user: { select: { name: true }}} })
- const dataCount = await prisma.order.count({ where: { ...queryFilter }})
+ return cache({
+  key    : CACHE_KEY.orders(page),
+  ttl    : CACHE_TTL.orders,
+  fetcher: async () => {
+    const queryFilter: Prisma.OrderWhereInput = query && query !== 'all' ? {
+      OR: [
+            { paymentMethod: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
+            { user: { name: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }}
+          ]} : {}
+    const data      = await prisma.order.findMany({ where: { ...queryFilter }, orderBy: { createdAt: 'desc' }, take: limit, skip: (page - 1) * limit, include: { user: { select: { name: true }}} })
+    const dataCount = await prisma.order.count({ where: { ...queryFilter }})
 
- const summary   = { data, totalPages: Math.ceil( dataCount / limit ) }
- return summary
+    const summary   = { data, totalPages: Math.ceil( dataCount / limit ) }
+    return summary
+    }
+  })
 }
 
 
@@ -270,8 +300,9 @@ export async function getAllOrders({ limit = GLOBAL.PAGE_SIZE, page, query }: Ap
 export async function deleteOrder(orderId: string) {
   try {
     await prisma.order.delete({ where: { id: orderId }})
+    await invalidateCache(CACHE_KEY.orderById(orderId))
     revalidatePath(PATH_DIR.ADMIN.ORDER)
-    return SystemLogger.response(en.success.order_deleted, CODE.OK, TAG)
+    return SystemLogger.response(transl('success.order_deleted'), CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -291,8 +322,9 @@ export async function deleteOrder(orderId: string) {
 export async function updateCODOrderToPaid(orderId: string) {
   try {
     await updateOrderToPaid({ orderId })
+    await invalidateCache(CACHE_KEY.orderById(orderId))
     revalidatePath(PATH_DIR.ORDER_VIEW(orderId))
-    return SystemLogger.response(en.success.order_paid)
+    return SystemLogger.response(transl('success.order_paid'))
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -316,11 +348,12 @@ export async function updateCODOrderToPaid(orderId: string) {
 export async function updateOrderToDelivered(orderId: string) {
   try {
     const order = await prisma.order.findFirst({ where: { id: orderId }})
-    if (!order) throw new Error(en.error.order_not_found)
-    if (!order.isPaid) throw new Error(en.error.order_not_paid)
+    if (!order) throw new Error(transl('error.order_not_found'))
+    if (!order.isPaid) throw new Error(transl('error.order_not_paid'))
     await prisma.order.update({ where: { id: orderId}, data: { isDelivered: true, deliveredAt: new Date() }})
+    await invalidateCache(CACHE_KEY.orderById(orderId))
     revalidatePath(PATH_DIR.ORDER_VIEW(orderId))
-    return SystemLogger.response(en.success.order_delivered)
+    return SystemLogger.response(transl('success.order_delivered'))
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
