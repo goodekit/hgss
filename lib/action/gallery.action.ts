@@ -68,7 +68,7 @@ export async function getAllGallery({ limit = GLOBAL.PAGE_SIZE_GALLERY, page, qu
 }
 
 export async function getGalleryById(galleryId: string) {
-  cache({
+  return cache({
     key    : CACHE_KEY.galleryById(galleryId),
     ttl    : CACHE_TTL.galleryById,
     fetcher: async() => {
