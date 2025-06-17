@@ -8,6 +8,7 @@ import { revalidatePath } from 'next/cache'
 import { Prisma } from '@prisma/client'
 import { sendPurchaseReceipt } from 'mailer'
 import { prisma } from 'db/prisma'
+import { cache } from 'lib/cache'
 import { paypal } from 'lib/paypal'
 import { OrderSchema } from 'lib/schema'
 import { SystemLogger } from 'lib/app-logger'
@@ -15,6 +16,7 @@ import { getUserById } from './user.action'
 import { getMyBag } from 'lib/action'
 import { CODE } from 'lib/constant'
 import { convertToPlainObject } from 'lib/util'
+import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
 
 const TAG = 'ORDER.ACTION'
 /**
@@ -78,6 +80,7 @@ export async function createOrder() {
         return createdOrder.id
     })
     if (!createdOrderId) throw new Error(en.error.order_not_created)
+   revalidatePath(PATH_DIR.ORDER)
     return SystemLogger.response(`${en.success.order_created} - ${createdOrderId}`, CODE.CREATED, TAG, PATH_DIR.ORDER_VIEW(createdOrderId))
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -93,8 +96,14 @@ export async function createOrder() {
  */
 export async function getOrderById(orderId: string) {
   try {
-    const order = await prisma.order.findFirst({ where: { id: orderId }, include: { orderitems: true, user: { select: { name: true, email: true }}} })
-    return convertToPlainObject(order)
+    return cache({
+      key    : CACHE_KEY.orderById(orderId),
+      ttl    : CACHE_TTL.orderById,
+      fetcher: async () => {
+        const order = await prisma.order.findFirst({ where: { id: orderId }, include: { orderitems: true, user: { select: { name: true, email: true }}} })
+        return convertToPlainObject(order)
+      }
+    })
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.NOT_FOUND, TAG)
   }
@@ -196,12 +205,19 @@ export async function updateOrderToPaid({ orderId, paymentResult }: { orderId: s
 }
 
 export async function getMyOrders({ limit = GLOBAL.PAGE_SIZE, page }: AppPagination) {
-  const session = await auth()
-  if (!session) throw new Error(en.error.user_not_authenticated)
-  const orders = await prisma.order.findMany({ where: { userId: session?.user?.id}, orderBy:{ createdAt:'desc' }, take: limit, skip: (page - 1) * limit })
+  return cache({
+    key    : CACHE_KEY.myOrders(page),
+    ttl    : CACHE_TTL.myOrders,
+    fetcher: async () => {
+      const session = await auth()
+      if (!session) throw new Error(en.error.user_not_authenticated)
+      const orders = await prisma.order.findMany({ where: { userId: session?.user?.id}, orderBy:{ createdAt:'desc' }, take: limit, skip: (page - 1) * limit })
 
-  const dataCount = await prisma.order.count({ where: {userId: session?.user?.id }})
-  return { orders, totalPages: Math.ceil( dataCount / limit )}
+      const dataCount = await prisma.order.count({ where: {userId: session?.user?.id }})
+      const summary   = { orders, totalPages: Math.ceil(dataCount / limit) }
+      return summary
+      }
+  })
 }
 
 /**
@@ -215,27 +231,32 @@ export async function getMyOrders({ limit = GLOBAL.PAGE_SIZE, page }: AppPaginat
  * }>} A promise that resolves to an object containing the summary report.
  */
 export async function getOrderSummary() {
- /**
-  * count
-  */
-  const orders   = await prisma.order.count()
-  const products = await prisma.product.count()
-  const users    = await prisma.user.count()
-  const count    = { orders, products, users }
-  /**
-   * data
-   */
-  const totalSales           = await prisma.order.aggregate({ _sum: { totalPrice: true } })
-  const rawSalesData         = await prisma.$queryRaw<Array<{month:string; totalSales: Prisma.Decimal}>>`SELECT to_char("createdAt", 'MM/YY') as "month", sum("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM/YY')`
-  const salesData: SalesData = rawSalesData.map(entry => ({ month: entry.month, totalSales: Number(entry.totalSales) }))
-  /**
-   * latest sales
-   */
-  const latestSales          = await prisma.order.findMany({ orderBy: { createdAt: 'desc' }, include: { user: { select: { name: true }}}, take: 6 })
+return cache({
+  key    : CACHE_KEY.orderSummary,
+  ttl    : CACHE_TTL.orderSummary,
+  fetcher: async () => {
+      /**
+      * count
+      */
+      const orders   = await prisma.order.count()
+      const products = await prisma.product.count()
+      const users    = await prisma.user.count()
+      const count    = { orders, products, users }
+      /**
+       * data
+       */
+      const totalSales           = await prisma.order.aggregate({ _sum: { totalPrice: true } })
+      const rawSalesData         = await prisma.$queryRaw<Array<{month:string; totalSales: Prisma.Decimal}>>`SELECT to_char("createdAt", 'MM/YY') as "month", sum("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM/YY')`
+      const salesData: SalesData = rawSalesData.map(entry => ({ month: entry.month, totalSales: Number(entry.totalSales) }))
+      /**
+       * latest sales
+       */
+      const latestSales          = await prisma.order.findMany({ orderBy: { createdAt: 'desc' }, include: { user: { select: { name: true }}}, take: 6 })
 
-  const summary = { count, totalSales, salesData, latestSales }
-
-  return summary
+      const summary = { count, totalSales, salesData, latestSales }
+      return summary
+      }
+  })
 }
 
 /**
@@ -247,16 +268,22 @@ export async function getOrderSummary() {
  * @returns {Promise<{ data: Order[], totalPages: number }>} A promise that resolves to an object containing the list of orders and the total number of pages.
  */
 export async function getAllOrders({ limit = GLOBAL.PAGE_SIZE, page, query }: AppOrdersAction<number>) {
- const queryFilter: Prisma.OrderWhereInput = query && query !== 'all' ? {
-  OR: [
-        { paymentMethod: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
-        { user: { name: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }}
-      ]} : {}
- const data      = await prisma.order.findMany({ where: { ...queryFilter }, orderBy: { createdAt: 'desc' }, take: limit, skip: (page - 1) * limit, include: { user: { select: { name: true }}} })
- const dataCount = await prisma.order.count({ where: { ...queryFilter }})
+ return cache({
+  key    : CACHE_KEY.orders(page),
+  ttl    : CACHE_TTL.orders,
+  fetcher: async () => {
+    const queryFilter: Prisma.OrderWhereInput = query && query !== 'all' ? {
+      OR: [
+            { paymentMethod: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
+            { user: { name: { contains: query, mode: 'insensitive' } as Prisma.StringFilter }}
+          ]} : {}
+    const data      = await prisma.order.findMany({ where: { ...queryFilter }, orderBy: { createdAt: 'desc' }, take: limit, skip: (page - 1) * limit, include: { user: { select: { name: true }}} })
+    const dataCount = await prisma.order.count({ where: { ...queryFilter }})
 
- const summary   = { data, totalPages: Math.ceil( dataCount / limit ) }
- return summary
+    const summary   = { data, totalPages: Math.ceil( dataCount / limit ) }
+    return summary
+    }
+  })
 }
 
 
