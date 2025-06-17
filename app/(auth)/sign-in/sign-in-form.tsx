@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react'
 import { SubmitHandler, FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PATH_DIR } from 'hgss-dir'
@@ -16,16 +17,18 @@ import { KEY } from 'lib/constant'
 import { transl } from 'lib/util'
 
 const SignInForm = () => {
-  const { toast }    = useToast()
-  const router       = useRouter()
-  const searchParams = useSearchParams()
-  const callbackUrl  = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
-  const form         = useForm<SignIn>({
+  const [isOAuth, setIsOAuth]                   = useState(false)
+  const [isOAuthIsLoading, setIsOAuthIsLoading] = useState(false)
+  const { toast }                               = useToast()
+  const router                                  = useRouter()
+  const searchParams                            = useSearchParams()
+  const callbackUrl                             = searchParams.get(KEY.CALLBACK_URL) || PATH_DIR.ROOT
+  const form                                    = useForm<SignIn>({
       resolver     : zodResolver(SignInSchema),
       defaultValues: signInDefaultValue
     })
 
-  const { handleSubmit, register, formState: { errors, isSubmitting }, control } = form
+  const { handleSubmit, register, formState: { isSubmitting }, control } = form
 
   const SignInButton = () => {
     return (
@@ -49,16 +52,16 @@ const SignInForm = () => {
     <FormProvider {...form}>
       <form method={'POST'} onSubmit={handleSubmit(onSubmit)}>
         <input type="hidden" name={KEY.CALLBACK_URL} value={callbackUrl} />
-        <div className="space-y-6">
-            <RHFFormField control={control} name={'email'} formKey={'email'} withWrapper />
-            <RHFPasswordField label={transl('form.password.label')} register={register} name={'password'} formKey={'password'} error={errors.password?.message as string} />
+        <div className={"space-y-6"}>
+            <RHFFormField control={control} name={'email'} formKey={'email'} disabled={isOAuth} withWrapper />
+            <RHFPasswordField control={control} register={register} name={'password'} formKey={'password'} disabled={isOAuth} />
           <div>
             <SignInButton />
             {/* disable for now: HGSS-Issue8 */}
             <div className={'my-4 flex justify-center'}>
             <h4>{transl('or.label')}</h4>
           </div>
-          <GoogleSignInBtn />
+          <GoogleSignInBtn loading={isOAuthIsLoading} disabled={isOAuthIsLoading} onClick={() => {setIsOAuth(true); setIsOAuthIsLoading(true)}}/>
           </div>
           {/* disable for now: HGSS-Issue8 */}
           <AppAuthRedir type={'sign-in'} />
