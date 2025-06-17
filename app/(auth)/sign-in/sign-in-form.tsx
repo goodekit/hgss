@@ -61,7 +61,7 @@ const SignInForm = () => {
             <div className={'my-4 flex justify-center'}>
             <h4>{transl('or.label')}</h4>
           </div>
-          <GoogleSignInBtn loading={isOAuthIsLoading} disabled={isOAuthIsLoading} onClick={() => {setIsOAuth(true); setIsOAuthIsLoading(true)}}/>
+          <GoogleSignInBtn userName={''} loading={isOAuthIsLoading} disabled={isOAuthIsLoading} onClick={() => {setIsOAuth(true); setIsOAuthIsLoading(true)}}/>
           </div>
           {/* disable for now: HGSS-Issue8 */}
           <AppAuthRedir type={'sign-in'} />
