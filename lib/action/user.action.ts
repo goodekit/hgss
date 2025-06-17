@@ -11,6 +11,8 @@ import { isRedirectError } from 'next/dist/client/components/redirect-error'
 import { signIn, signOut, auth } from 'auth'
 import { sendResetPasswordLink } from 'mailer'
 import { prisma } from 'db/prisma'
+import { cache, invalidateCache } from 'lib/cache'
+import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
 import { hash } from 'lib/encrypt'
 import { checkSignInThrottle, incrementSignInAttempts, resetSignInAttempts } from 'lib/throttle'
 import { ShippingAddressSchema, PaymentMethodSchema } from 'lib/schema'
@@ -138,17 +140,23 @@ export async function signUpUser(data: SignUp) {
  * @returns {Promise<{ data: Array<User>, totalPages: number }>} A promise that resolves to an object containing the list of users and the total number of pages.
  */
 export async function getAllUsers({ limit = GLOBAL.PAGE_SIZE, page, query }: AppUser<number>) {
-  const queryFilter: Prisma.UserWhereInput = query && query !== 'all' ? {
-    OR: [
-          { name: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
-          { email: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
-          { role: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
-        ]} : {}
-  const users = await prisma.user.findMany({ where: { ...queryFilter }, orderBy: { createdAt: 'desc' }, skip: (page - 1) * limit, take: limit })
-  const count = await prisma.user.count({ where: { ...queryFilter } })
+  return cache({
+    key    : CACHE_KEY.users(page),
+    ttl    : CACHE_TTL.users,
+    fetcher: async () => {
+      const queryFilter: Prisma.UserWhereInput = query && query !== 'all' ? {
+        OR: [
+              { name: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
+              { email: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
+              { role: { contains: query, mode: 'insensitive' } as Prisma.StringFilter },
+            ]} : {}
+      const users = await prisma.user.findMany({ where: { ...queryFilter }, orderBy: { createdAt: 'desc' }, skip: (page - 1) * limit, take: limit })
+      const count = await prisma.user.count({ where: { ...queryFilter } })
 
-  const summary = { data: users, totalPages: Math.ceil(count / limit) }
-  return summary
+      const summary = { data: users, totalPages: Math.ceil(count / limit) }
+      return summary
+    }
+  })
 }
 
 
@@ -160,9 +168,15 @@ export async function getAllUsers({ limit = GLOBAL.PAGE_SIZE, page, query }: App
  * @throws Will throw an error if the user is not found.
  */
 export async function getUserById(userId: string) {
-  const user = await prisma.user.findFirst({ where: { id: userId }})
-  if (!user) throw new Error(en.error.user_not_found)
-  return user
+  return cache({
+    key    : CACHE_KEY.userById(userId),
+    ttl    : CACHE_TTL.userById,
+    fetcher: async () => {
+      const user = await prisma.user.findFirst({ where: { id: userId }})
+      if (!user) throw new Error(en.error.user_not_found)
+      return user
+    }
+  })
 }
 
 /**
@@ -221,6 +235,7 @@ export async function updateUserAccount(user: UserBase) {
     const currentUser = await prisma.user.findFirst({ where: { id: userId }})
     if (!currentUser) throw new Error(en.error.user_not_found)
     const updatedUser = await prisma.user.update({ where:{ id: currentUser.id }, data: { name: user.name, email: user.email }})
+    await invalidateCache(CACHE_KEY.userById(currentUser.id))
     revalidatePath(PATH_DIR.USER.ACCOUNT)
     return SystemLogger.response(en.success.user_updated, CODE.OK, TAG, '', updatedUser)
   } catch (error) {
@@ -241,6 +256,7 @@ export async function updateUser(data: UpdateUserAccount) {
     if (!user) throw new Error(en.error.user_not_found)
 
     const updatedUser = await prisma.user.update({ where:{ id: user.id }, data: { name: data.name, role: data.role }})
+    await invalidateCache(CACHE_KEY.userById(user.id))
     revalidatePath(PATH_DIR.ADMIN.USER_VIEW(user.id))
     return SystemLogger.response(en.success.user_updated, CODE.OK, TAG, '', updatedUser)
   } catch (error) {
@@ -265,7 +281,7 @@ export async function updateUser(data: UpdateUserAccount) {
 export async function deleteUser(userId: string) {
   try {
     await prisma.user.delete({ where: { id: userId } })
-
+    await invalidateCache(CACHE_KEY.userById(userId))
     revalidatePath(PATH_DIR.ADMIN.USER)
     return SystemLogger.response(en.success.user_deleted, CODE.OK, TAG)
   } catch (error) {
