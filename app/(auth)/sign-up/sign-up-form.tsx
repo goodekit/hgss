@@ -24,7 +24,7 @@ const SignUpForm = () => {
     defaultValues: signUpDefaultValue
   })
 
-  const { handleSubmit, register, formState: { errors, isSubmitting }, control } = form
+  const { handleSubmit, register, formState: { isSubmitting }, control } = form
 
   const SignUpButton = () => {
     return (
@@ -51,8 +51,8 @@ const SignUpForm = () => {
         <div className={"space-y-6"}>
             <RHFFormField control={control} name={'name'} formKey={'name'} withWrapper />
             <RHFFormField control={control} name={'email'} formKey={'email'} withWrapper />
-            <RHFPasswordField label={transl('form.password.label')} register={register} name={'password'} formKey={'password'} error={errors.password?.message as string} />
-            <RHFPasswordField label={transl('form.password.label')} register={register} name={'confirmPassword'} formKey={'confirm_password'} error={errors.confirmPassword?.message as string} />
+            <RHFPasswordField control={control} register={register} name={'password'} formKey={'password'} />
+            <RHFPasswordField control={control} register={register} name={'confirmPassword'} formKey={'confirm_password'} />
             <SignUpButton />
             <AppAuthRedir type={'sign-up'} />
         </div>
