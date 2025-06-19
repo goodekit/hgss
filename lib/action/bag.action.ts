@@ -4,12 +4,12 @@ import { cookies } from 'next/headers'
 import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
-import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
+import { CACHE_KEY } from 'config/cache.config'
 import { revalidatePath } from 'next/cache'
 import { auth } from 'auth'
 import { Prisma } from '@prisma/client'
 import { prisma } from 'db/prisma'
-import { cache, invalidateCache } from 'lib/cache'
+import { invalidateCache } from 'lib/cache'
 import { SystemLogger } from 'lib/app-logger'
 import { BagItemSchema, BagSchema } from 'lib/schema'
 import { RESPONSE, CODE, KEY } from 'lib/constant'
@@ -118,27 +118,20 @@ export async function addItemToBag(data: BagItem) {
 export async function getMyBag() {
   const sessionBagId = (await cookies()).get(KEY.SESSION_BAG_ID)?.value
   if (!sessionBagId) throw new Error(transl('error.sesssion_not_found'))
-  return cache({
-    key    : CACHE_KEY.myBagId(sessionBagId),
-    ttl    : CACHE_TTL.myBag,
-    fetcher: async () => {
-      const session = await auth()
-      const userId  = session?.user?.id ? (session.user.id as string) : undefined
-      const bag = await prisma.bag.findFirst({ where: userId ? { userId } : { sessionBagId } })
-      if (!bag) return undefined
-      const myBag = convertToPlainObject({
-        ...bag,
-        items        : bag.items as BagItem[],
-        itemsPrice   : bag.itemsPrice.toString(),
-        totalPrice   : bag.totalPrice.toString(),
-        shippingPrice: bag.shippingPrice.toString(),
-        taxPrice     : bag.taxPrice.toString()
-      })
+  const session      = await auth()
+  const userId       = session?.user?.id ? (session.user.id as string) : undefined
+  const bag          = await prisma.bag.findFirst({ where: userId ? { userId } : { sessionBagId } })
+   if (!bag) return undefined
+   const myBag = convertToPlainObject({
+     ...bag,
+     items        : bag.items as BagItem[],
+     itemsPrice   : bag.itemsPrice.toString(),
+     totalPrice   : bag.totalPrice.toString(),
+     shippingPrice: bag.shippingPrice.toString(),
+     taxPrice     : bag.taxPrice.toString()
+   })
 
-      return myBag
-    }
-  })
-
+   return myBag
 }
 
 /**
