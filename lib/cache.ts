@@ -1,4 +1,5 @@
 import redis from 'lib/redis'
+import { transl } from 'lib/util'
 
 type CacheOptions<T> = {
   key     : string
@@ -21,6 +22,9 @@ type CacheOptions<T> = {
  * @throws {Error} - Throws an error if the fetcher function fails to retrieve the data.
  */
 export async function cache<T = unknown>({ key, ttl = 300, fetcher }: CacheOptions<T>): Promise<T> {
+  if (!key) {
+    throw new Error(transl('error.invalid_cache_key', { key }))
+  }
   const cachedRaw = await redis.get(key)
   if (cachedRaw && typeof cachedRaw === 'string' && cachedRaw.trim() !== '') {
     try {
