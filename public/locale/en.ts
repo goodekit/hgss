@@ -785,6 +785,7 @@ export const en = {
     expired_token             : `Token expired`,
     failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
     gallery_save              : 'An error occurred while saving the gallery',
+    invalid_cache_key         : `invalid cache key:{key}`,
     invalid_credentials       : 'Invalid credentials',
     invalid_file_key          : 'Invalid file key',
     invalid_token             : 'Invalid token',
