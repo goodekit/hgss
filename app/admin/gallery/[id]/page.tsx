@@ -14,7 +14,7 @@ interface AdminUpdateGalleryPageProps {
   params: Promise<{ id: string }>
 }
 const AdminUpdateGalleryPage: FC<AdminUpdateGalleryPageProps> = async ({ params }) => {
-  const { id } = await params
+  const { id }  = await params
   const gallery = await getGalleryById(id)
   if (!gallery) return notFound()
   return (
