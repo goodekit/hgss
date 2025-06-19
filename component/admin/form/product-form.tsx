@@ -11,8 +11,8 @@ import slugify from 'slugify'
 import { Plus, MoveUpRight } from 'lucide-react'
 import { ProductSchema, UpdateProductSchema, productDefaultValue } from 'lib/schema'
 import { createProduct, updateProduct } from 'lib/action'
-import { Form, Button, Input } from 'component/ui'
-import { BannerUploadField } from 'component/admin/custom-field'
+import { Form } from 'component/ui'
+import { BannerUploadField, SpecificationField } from 'component/admin/custom-field'
 import { LoadingBtn } from 'component/shared/btn'
 import { RHFFormField, RHFFormDropzone, RHFCheckbox } from 'component/shared/rhf'
 import { capitalize, delay, cn, transl } from 'lib/util'
@@ -82,7 +82,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
     <Fragment>
       <Form {...form}>
         <form method={'POST'} onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className={"flex flex-col md:flex-row gap-4"}>
             <RHFFormField control={control} name={'name'} formKey={'name'} withWrapper={false} />
             <RHFFormField
               control={control}
@@ -94,40 +94,30 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
               onClick={handleSlugify}
             />
           </div>
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className={"flex flex-col md:flex-row gap-4"}>
             <RHFFormField control={control} name={'category'} formKey={'category'} withWrapper={false} />
             <RHFFormField control={control} name={'brand'} formKey={'brand'} withWrapper={false} />
           </div>
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className={"flex flex-col md:flex-row gap-4"}>
             <RHFFormField control={control} name={'price'} formKey={'price'} withWrapper={false} />
             <RHFFormField control={control} name={'stock'} formKey={'stock'} withWrapper={false} />
           </div>
           <div className=" flex flex-col md:flex-col gap-4">
-            {/* TODO: enhance this by puting this in a reusable component */}
-            <div className="flex flex-col gap-4">
-                <label>{en.form.specifications.label}</label>
-                {fields.map((field, index) => (
-                  <div key={field.id} className={"flex gap-2"}>
-                    <Input {...register(`specifications.${index}` as const)} className={"border p-2 rounded w-full"} />
-                    <span><Button type={'button'} variant={'ghost'} className={cn('bg-punkpink text-black hover:bg-pink-500 hover:font-bold')} onClick={() => remove(index)}>{transl('remove.label')}</Button></span>
-                  </div>
-                ))}
-                <Button type={"button"} variant={'ghost'} onClick={() => append('')} className={cn('font-bold align-middle items-center text-button')}><Plus/><span>{en.form.specifications.placeholder}</span></Button>
-            </div>
+            <SpecificationField fields={fields} register={register} onClick={() => append('')} remove={remove} />
           </div>
-          <div className="upload-field flex flex-col md:flex-row gap-4">
+          <div className={"upload-field flex flex-col md:flex-row gap-4"}>
             <RHFFormDropzone control={control} name={'images'} formKey={'images'} images={images} form={form} folderName={'product'} />
           </div>
-          <div className="upload-field gap-4 h-auto">
+          <div className={"upload-field gap-4 h-auto"}>
             <RHFFormField control={control} name={'description'} formKey={'description'} type={'textarea'} withWrapper={false} />
           </div>
-          <div className="upload-field gap-4 h-auto">
+          <div className={"upload-field gap-4 h-auto"}>
             <RHFCheckbox control={control} name={'isFeatured'} formKey={'featured'} />
           </div>
-          <div className="upload-field gap-4">
+          <div className={"upload-field gap-4"}>
             <BannerUploadField isFeatured={isFeatured} banner={banner!} form={form} folderName={'banner'} />
           </div>
-          <div className="flex justify-end">
+          <div className={"flex justify-end"}>
             <LoadingBtn
               isPending={formState.isSubmitting}
               label={`${capitalize(type)} Product`}
