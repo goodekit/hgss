@@ -96,7 +96,7 @@ export const config = {
           const sessionBagId  = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
           if (sessionBagId) {
             const sessionBag = await prisma.bag.findFirst({ where: { sessionBagId } })
-            if (sessionBag) {
+            if (sessionBag && !sessionBag.userId) {
               await prisma.bag.deleteMany({ where: { userId: dbUser.id } })
               await prisma.bag.update({ where: { id: sessionBag.id }, data: { userId: dbUser.id } })
               await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
