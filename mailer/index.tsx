@@ -23,11 +23,11 @@ export const sendResetPasswordLink = async ({ resetLink, userEmail }: { resetLin
   const year = new Date().getFullYear()
    try {
       await resend.emails.send({
-       from   : `${GLOBAL.APP_NAME} <${GLOBAL.RESEND.SENDER_EMAIL}>`,
-       to     : userEmail,
-       subject: transl('smtp.reset_password.subject') ,
-       react  : <ResetPasswordEmail year={year} resetLink={resetLink} siteName={GLOBAL.SITE_NAME} />
-     })
+        from   : `${GLOBAL.APP_NAME} <${GLOBAL.RESEND.SENDER_EMAIL}>`,
+        to     : userEmail,
+        subject: transl('smtp.reset_password.subject'),
+        react  : <ResetPasswordEmail year={year} resetLink={resetLink} siteName={GLOBAL.APP_NAME} />
+      })
    } catch (error) {
      console.error(transl('error.send_email'), error)
    }
