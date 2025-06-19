@@ -1,7 +1,6 @@
 'use client'
 
 import { FC, Fragment, useEffect } from 'react'
-import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,14 +14,14 @@ import { Form } from 'component/ui'
 import { BannerUploadField, SpecificationField } from 'component/admin/custom-field'
 import { LoadingBtn } from 'component/shared/btn'
 import { RHFFormField, RHFFormDropzone, RHFCheckbox } from 'component/shared/rhf'
-import { capitalize, delay, cn, transl } from 'lib/util'
+import { capitalize, delay, transl } from 'lib/util'
 
 const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
   const { toast }              = useToast()
   const { isDirty, setDirty }  = useFormState()
   const router                 = useRouter()
   const form                   = useForm<CreateProduct>({
-    resolver: type === 'update' ? zodResolver(UpdateProductSchema) : zodResolver(ProductSchema),
+    resolver     : type            === 'update' ? zodResolver(UpdateProductSchema) : zodResolver(ProductSchema),
     defaultValues: product && type === 'update' ? product : productDefaultValue
   })
 
@@ -40,6 +39,8 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
     setDirty(formState.isDirty)
   }, [formState.isDirty, setDirty])
 
+  // useFormDraft(watch, setValue, LOCAL_STORAGE_KEY[type === 'create' ? 'productCreate' : 'productUpdate'])
+
   const handleSlugify = () => {
     form.setValue('slug', slugify(form.getValues('name'), { lower: true }))
   }
@@ -56,6 +57,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
         if (!response.success) {
           toast({ variant: 'destructive', description: response.message })
         } else {
+          // localStorage.removeItem('draft:productForm')
           toast({ description: response.message })
         }
       }
