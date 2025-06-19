@@ -11,7 +11,8 @@
     "preload": "npx tsx ./_mock/pre-load.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "email": "cp .env ./node_modules/react-email && email dev --dir mailer --port 3001"
+    "dev:clean": "rm -rf .next && next dev",
+    "email": "cp .env ./node_modules/react-email && mailer dev --dir mailer --port 3001"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
@@ -69,6 +70,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "^1.2.5",
     "uploadthing": "^7.5.2",
+    "use-debounce": "^10.0.5",
     "uuid": "^11.1.0",
     "vaul": "^1.1.2",
     "ws": "^8.18.0",

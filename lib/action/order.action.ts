@@ -41,7 +41,7 @@ export async function createOrder() {
   try {
     const session = await auth()
     if (!session) throw new Error(transl('error.user_not_authenticated'))
-    const bag = await getMyBag()
+    const bag    = await getMyBag()
     const userId = session?.user?.id
     if (!userId) throw new Error(transl('error.user_not_found'))
     const user = await getUserById(userId)

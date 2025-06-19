@@ -5,7 +5,7 @@ import { PATH_DIR } from 'hgss-dir'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm, useFieldArray } from 'react-hook-form'
-import { useToast, usePreventNavigation, useFormState } from 'hook'
+import { useToast, usePreventNavigation, useFormState, useFormDraft } from 'hook'
 import slugify from 'slugify'
 import { Plus, MoveUpRight } from 'lucide-react'
 import { ProductSchema, UpdateProductSchema, productDefaultValue } from 'lib/schema'
@@ -14,6 +14,7 @@ import { Form } from 'component/ui'
 import { BannerUploadField, SpecificationField } from 'component/admin/custom-field'
 import { LoadingBtn } from 'component/shared/btn'
 import { RHFFormField, RHFFormDropzone, RHFCheckbox } from 'component/shared/rhf'
+import { LOCAL_STORAGE_KEY } from 'config/cache.config'
 import { capitalize, delay, transl } from 'lib/util'
 
 const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
@@ -25,13 +26,13 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
     defaultValues: product && type === 'update' ? product : productDefaultValue
   })
 
-  const { control, formState, register, handleSubmit } = form
+  const { control, formState, register, handleSubmit, watch, setValue } = form
   const { errors }                                     = formState
   const images                                         = form.watch('images')
   const isFeatured                                     = form.watch('isFeatured')
   const banner                                         = form.watch('banner')
 
-  const { fields, append, remove } = useFieldArray<CreateProduct>({ control, name: 'specifications' as never })
+  const { fields, append, remove  } = useFieldArray<CreateProduct>({ control, name: 'specifications' as never })
 
   usePreventNavigation(isDirty)
 
@@ -39,7 +40,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
     setDirty(formState.isDirty)
   }, [formState.isDirty, setDirty])
 
-  // useFormDraft(watch, setValue, LOCAL_STORAGE_KEY[type === 'create' ? 'productCreate' : 'productUpdate'])
+  useFormDraft(watch, setValue, LOCAL_STORAGE_KEY[type === 'create' ? 'productCreate' : 'productUpdate'])
 
   const handleSlugify = () => {
     form.setValue('slug', slugify(form.getValues('name'), { lower: true }))
@@ -57,7 +58,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
         if (!response.success) {
           toast({ variant: 'destructive', description: response.message })
         } else {
-          // localStorage.removeItem('draft:productForm')
+          localStorage.removeItem(LOCAL_STORAGE_KEY.productCreate)
           toast({ description: response.message })
         }
       }
@@ -67,6 +68,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
         if (!response.success) {
           toast({ variant: 'destructive', description: response.message })
         } else {
+          localStorage.removeItem(LOCAL_STORAGE_KEY.productUpdate)
           toast({ description: response.message })
         }
       }
