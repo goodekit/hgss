@@ -97,6 +97,8 @@ export const config = {
           if (sessionBagId) {
             const sessionBag = await prisma.bag.findFirst({ where: { sessionBagId } })
             if (sessionBag && !sessionBag.userId) {
+            // only update the session bag if it is not already associated with a user
+            // ensures that bags already linked to a user are intentionally left unchanged
               await prisma.bag.deleteMany({ where: { userId: dbUser.id } })
               await prisma.bag.update({ where: { id: sessionBag.id }, data: { userId: dbUser.id } })
               await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
