@@ -1,11 +1,10 @@
 import { FC, Fragment } from 'react'
-import { en } from 'public/locale'
 import { _mockData } from '_mock'
-import { KEY } from 'lib'
 import { getAllGalleryItems } from 'lib/action'
 import { NoResult, Pagination } from 'component/shared'
 import { PageTitle } from 'component/shared/title'
 import { GalleryLightBox } from 'component/module/gallery'
+import { KEY, transl } from 'lib'
 
 const DEFAULT_QUERY = 'all'
 interface GalleryPageProps {
@@ -25,7 +24,7 @@ const GalleryPage: FC<GalleryPageProps> = async ({ searchParams }) => {
     <Fragment>
       <div className="grid md:grid-cols-5 md:gap-5">
         <div className={'flex-between'}>
-          <PageTitle title={en.gallery.label} />
+          <PageTitle title={transl('gallery.label')} />
         </div>
         <div className="md:col-span-5 space-y-4">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
