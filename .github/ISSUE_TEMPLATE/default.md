@@ -1,19 +1,7 @@
 ---
-name: Default Issue Template
-about: Create a report to help us improve
-title: 'HGSS-Client :'
-labels:
-assignees: ''
+name: General question
+about: If you have a general question.
 ---
-
-**Describe the issue**
-A clear and concise description of what the issue is.
-
-**To Reproduce**
-
-Steps to reproduce the behavior:
-
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4.
+<!--
+    Your feedback and support is greatly appreciated, thanks for contributing!
+-->
