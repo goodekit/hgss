@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { en } from 'public/locale'
 import { AlertDialog, AlertDialogTitle, AlertDialogContent, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from 'component/ui'
+import { transl } from 'lib/util'
 
 interface ProtectNavDialgProps {
   open               : boolean
@@ -12,11 +12,11 @@ const ProtectNavDialg: FC<ProtectNavDialgProps> = ({ open, setOpen, confirmedNav
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
-      <AlertDialogTitle>{en.message.default.title}</AlertDialogTitle>
-        <p>{en.message.unsaved_changes.description}</p>
+      <AlertDialogTitle>{transl('message.default.title')}</AlertDialogTitle>
+        <p>{transl('message.unsaved_changes.description')}</p>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setOpen(false)}>{en.stay.label}</AlertDialogCancel>
-          <AlertDialogAction onClick={confirmedNavigation}>{en.leave.label}</AlertDialogAction>
+          <AlertDialogCancel onClick={() => setOpen(false)}>{transl('stay.label')}</AlertDialogCancel>
+          <AlertDialogAction className={'text-black'} onClick={confirmedNavigation}>{transl('leave.label')}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
