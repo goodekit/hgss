@@ -86,9 +86,9 @@ export default function GalleryLightbox({ items, moduleType = 'user' }: GalleryL
                 onClick={() => setIndex(i)}
                 className={'h-[250px] w-full object-cover object-center cursor-zoom-in'}
               />
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex-col items-center justify-center space-y-2 opacity-0 group-hover:opacity-100 flex transition-opacity">
-                <Button size={'sm'} onClick={() => setIndex(i)}>{<View />}</Button>
-                <LinkBtn variant={'outline'} href={PATH_DIR.ADMIN.GALLERY_VIEW(item.galleryId)} className={'text-button'} size={'sm'}>{<SquarePen/>}</LinkBtn>
+              <div className={"absolute inset-0 bg-black bg-opacity-50 flex-col items-center justify-center space-y-2 opacity-0 group-hover:opacity-100 flex transition-opacity"}>
+                <Button size={'sm'} className={'text-black hover:text-white  hover:bg-gray-600 bg-gray-400'} onClick={() => setIndex(i)}>{<View />}</Button>
+                <LinkBtn variant={'outline'} href={PATH_DIR.ADMIN.GALLERY_VIEW(item.galleryId)} className={'text-button hover: bg-gray-400 border-none'} size={'sm'}>{<SquarePen/>}</LinkBtn>
                 <DeleteDialg id={item.id} label={<FileX2/>} variant={'destructive'} action={deleteGalleryItem} description={lastItemInAnAlbum(item)} />
                 <DeleteDialg id={item.galleryId} label={<FolderX />} variant={'destructive'} action={deleteGallery} description={multipleItemsInAnAlbum(item)} />
               </div>

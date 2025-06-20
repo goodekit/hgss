@@ -4,9 +4,9 @@ import { Footer } from 'component/shared/footer/footer'
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <div className="flex h-screen flex-col">
+    <div className={"flex h-screen flex-col"}>
       <Header />
-      <main className="flex-1 wrapper">{children}</main>
+      <main className={"flex-1 wrapper"}>{children}</main>
       <Footer />
     </div>
   )

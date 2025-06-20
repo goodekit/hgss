@@ -1,7 +1,6 @@
 'use client'
 
 import { FC, Fragment, useTransition, useState, JSX } from 'react'
-import { en } from 'public/locale'
 import { useToast } from 'hook'
 import { systemPalette } from 'hgss-design'
 import { useTheme } from 'next-themes'
@@ -19,7 +18,7 @@ import {
   AlertDialogFooter
 } from 'component/ui'
 import { EllipsisLoader } from 'component/shared/loader'
-import { delay } from 'lib/util'
+import { delay, transl } from 'lib/util'
 import { KEY } from 'lib/constant'
 
 interface DeleteDialg {
@@ -64,18 +63,18 @@ const DeleteDialg: FC<DeleteDialg> = ({ id, action, children, label, variant, ti
       </AlertDialogTrigger>
       <AlertDialogContent className={'special-elite'}>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title ? title : en.message.default.title}</AlertDialogTitle>
-          <AlertDialogDescription>{description ? description : en.message.confirm_delete_order.description}</AlertDialogDescription>
+          <AlertDialogTitle>{title ? title : transl('message.default.title')}</AlertDialogTitle>
+          <AlertDialogDescription>{description ? description : transl('message.confirm_delete_order.description')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{en.cancel.label}</AlertDialogCancel>
+          <AlertDialogCancel>{transl('cancel.label')}</AlertDialogCancel>
           <AlertDialogAction disabled={isPending} onClick={handleDeleteOrder} style={{ backgroundColor: systemPalette[mode].action.destructive }}>
             {isPending ? (
               <Fragment>
-                <i>{en.loading.delete_order}</i> <EllipsisLoader />
+                <i>{transl('loading.delete_order')}</i> <EllipsisLoader />
               </Fragment>
             ) : (
-              en.delete.label
+              transl('delete.label')
             )}
           </AlertDialogAction>
         </AlertDialogFooter>
