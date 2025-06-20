@@ -1,14 +1,13 @@
 'use client'
 
 import { Fragment, useState, useRef, useEffect } from 'react'
-import { en } from 'public/locale'
 import { useFormState } from 'hook'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 import { AlertDialogTitle, AlertDialog, AlertDialogContent, AlertDialogDescription,  AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from 'component/ui'
 import { LinkBtn } from 'component/shared/btn'
-import { cn } from 'lib'
+import { cn, transl } from 'lib'
 
 interface ProtectedNavLinkProps {
   href      : string
@@ -73,11 +72,11 @@ const ProtectedNavLink: React.FC<ProtectedNavLinkProps> = ({ href, children, cla
       {showDialog && (
         <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
           <AlertDialogContent>
-            <AlertDialogTitle>{en.message.default.title}</AlertDialogTitle>
-            <AlertDialogDescription>{en.message.unsaved_changes.description}</AlertDialogDescription>
+            <AlertDialogTitle>{transl('message.default.title')}</AlertDialogTitle>
+            <AlertDialogDescription>{transl('message.unsaved_changes.description')}</AlertDialogDescription>
             <AlertDialogFooter>
-              <AlertDialogCancel onClick={() => setShowDialog(false)}>{en.cancel.label}</AlertDialogCancel>
-              <AlertDialogAction onClick={confirmNavigation}>{en.leave.label}</AlertDialogAction>
+              <AlertDialogCancel  onClick={() => setShowDialog(false)}>{transl('cancel.label')}</AlertDialogCancel>
+              <AlertDialogAction className={'text-white bg-red-600 border-none hover:bg-red-700'} onClick={confirmNavigation}>{transl('leave.label')}</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
