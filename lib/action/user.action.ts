@@ -120,7 +120,7 @@ export async function signUpUser(data: SignUp) {
       const hashedPassword   = await hash(password)
       await prisma.user.create({ data: { name, email, password: hashedPassword, avatar: avatarUrl } })
       await signIn('credentials', { email, password: unhashedPassword, redirect: false })
-      // count the sign-in logs /last time logged in
+      // TODO: count the sign-in logs /last time logged in
       // await prisma.user.update({ where: { email }, data: { failedSignInAttempts: 0, lastFailedAttempt: null }})
       return SystemLogger.response(transl('success.sign_in_welcome', { name }), CODE.CREATED, TAG)
   } catch (error) {
