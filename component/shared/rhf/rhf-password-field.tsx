@@ -69,27 +69,6 @@ const RHFPasswordField = <TSchema extends ZodSchema, TName extends Path<z.infer<
       ) : (
         FormPasswordFieldComponent
       )
-      // <div>
-      //   <Label htmlFor={name}>{label}</Label>
-      //   <div className="relative">
-      //     <Input
-      //       id={name}
-      //       aria-label={'password-toggle'}
-      //       {...register(name)}
-      //       name={name}
-      //       type={showPassword ? KEY.TEXT : KEY.PASSWORD}
-      //       autoComplete={KEY.PASSWORD}
-      //       placeholder={transl(`form.${formKey}.placeholder` as const)}
-      //       disabled={disabled}
-      //       required
-      //     />
-      //     <button type={'button'} onClick={togglePassword} className={'absolute inset-y-0 right-3 items-center flex text-muted-foreground'}>
-      //       {showPassword ? <EyeOffIcon size={15} /> : <EyeIcon size={15} />}
-      //     </button>
-      //   </div>
-      //   {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
-      // </div>
-
 }
 
 export default RHFPasswordField
