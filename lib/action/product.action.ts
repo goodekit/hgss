@@ -170,7 +170,7 @@ export async function getAllCategories() {
  */
 export async function createProduct(data: CreateProduct) {
   try {
-    const product = ProductSchema.parse(data)
+    const product    = ProductSchema.parse(data)
     const newProduct = await prisma.product.create({ data: product })
     await invalidateCache(CACHE_KEY.productById(newProduct.id))
     revalidatePath(PATH_DIR.ADMIN.PRODUCT)
