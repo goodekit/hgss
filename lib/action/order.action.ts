@@ -1,7 +1,6 @@
 'use server'
 
 import { auth } from 'auth'
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { revalidatePath } from 'next/cache'
@@ -70,11 +69,9 @@ export async function createOrder() {
 
     const createdOrderId = await prisma.$transaction(async (tx) => {
         const createdOrder = await tx.order.create({ data: order })
-        // create order items from bag items
         for (const item of bag.items as BagItem[]) {
             await tx.orderItem.create({ data: { ...item, price: item.price, orderId: createdOrder.id } })
         }
-        // clear bag
         const clearedBag = { items: [], totalPrice: 0, taxPrice: 0, shippingPrice: 0, itemsPrice: 0 }
         await tx.bag.update({ where: { id: bag.id }, data: clearedBag })
         return createdOrder.id
@@ -145,10 +142,10 @@ export async function createPayPalOrder(orderId: string) {
 export async function approvePayPalOrder(orderId: string, data: { orderID: string }) {
   try {
     const order = await prisma.order.findFirst({ where: { id: orderId }})
-    if (!order) throw new Error(en.error.order_not_found)
+    if (!order) throw new Error(transl('error.order_not_found'))
     const captureData = await paypal.capturePayment(data.orderID)
    if (!captureData || captureData.id !== (order.paymentResult as PaymentResult)?.id || captureData.status !== 'COMPLETED') {
-      throw new Error(en.error.paypal_payment_error)
+      throw new Error(transl('error.paypal_payment_error'))
    }
 
     await updateOrderToPaid({
@@ -192,14 +189,14 @@ export async function updateOrderToPaid({ orderId, paymentResult }: { orderId: s
     await tx.order.update({ where: { id: orderId }, data: { isPaid: true, paidAt: new Date(), paymentResult }})
   })
   const updatedOrder = await prisma.order.findFirst({ where: { id: orderId }, include: { orderitems: true, user: { select: { name: true, email: true }} }})
-  if (!updatedOrder) throw new Error(en.error.order_not_found)
+  if (!updatedOrder) throw new Error(transl('error.order_not_found'))
 
-  sendPurchaseReceipt({
+  await sendPurchaseReceipt({
     order: {
       ...updatedOrder,
       shippingAddress: updatedOrder.shippingAddress as ShippingAddress,
       paymentResult  : updatedOrder.paymentResult as PaymentResult,
-      user: {
+      user           : {
         ...updatedOrder.user,
         name: updatedOrder.user.name ?? '',
       },
@@ -213,7 +210,7 @@ export async function getMyOrders({ limit = GLOBAL.PAGE_SIZE, page }: AppPaginat
     ttl    : CACHE_TTL.myOrders,
     fetcher: async () => {
       const session = await auth()
-      if (!session) throw new Error(en.error.user_not_authenticated)
+      if (!session) throw new Error(transl('error.user_not_authenticated'))
       const orders = await prisma.order.findMany({ where: { userId: session?.user?.id}, orderBy:{ createdAt:'desc' }, take: limit, skip: (page - 1) * limit })
 
       const dataCount = await prisma.order.count({ where: {userId: session?.user?.id }})
@@ -227,10 +224,10 @@ export async function getMyOrders({ limit = GLOBAL.PAGE_SIZE, page }: AppPaginat
  * Retrieves a summary of orders, including counts, total sales, sales data by month, and latest sales.
  *
  * @returns {Promise<{
- *   count: { orders: number; products: number; user: number };
- *   totalSales: { _sum: { totalPrice: number | null } };
- *   salesData: Array<{ month: string; totalSales: number }>;
- *   latestSales: Array<{ createdAt: Date; user: { name: string } }>;
+ * count      : { orders: number; products: number; user: number };
+ * totalSales : { _sum: { totalPrice: number | null } };
+ * salesData  : Array<{ month: string; totalSales: number }>;
+ * latestSales: Array<{ createdAt: Date; user: { name: string } }>;
  * }>} A promise that resolves to an object containing the summary report.
  */
 export async function getOrderSummary() {
