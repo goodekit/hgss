@@ -742,7 +742,6 @@ export const en = {
     password_reset_sent: {
       description: 'Password Reset link has been sent to your Email',
       check_email: `You have a valid reset link sent in your email account, please check before requesting for a new one.`,
-
     }
   },
   validation: {
