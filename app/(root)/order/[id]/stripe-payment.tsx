@@ -6,7 +6,8 @@ import { useTheme } from 'next-themes'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, LinkAuthenticationElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { TapeBtn } from 'component/shared/btn'
-import { formatCurrency, themeToggle } from 'lib/util'
+import { EllipsisLoader } from 'component/shared/loader'
+import { formatCurrency, themeToggle, transl } from 'lib/util'
 
 interface StripePaymentProps {
   priceInCents: number
@@ -51,7 +52,7 @@ const StripePayment: FC<StripePaymentProps> = ({ priceInCents, orderId, clientSe
         <div>
             <LinkAuthenticationElement onChange={(e) => setEmail(e.value.email)}/>
         </div>
-        <TapeBtn textSize={'text-lg'} className={'texture-3-bg'}  disabled={stripe === null || elements === null || loading} label={loading ? en.loading.processing : `${en.purchase.label} ${formatCurrency(priceInCents / 100)}`}/>
+        <TapeBtn textSize={'text-lg'} className={'texture-3-bg'}  disabled={stripe === null || elements === null || loading} label={loading ? <div className={'flex justify-center'}><i>{transl('loading.processing')}</i><span><EllipsisLoader /></span></div> : `${transl('purchase.label')} ${formatCurrency(priceInCents / 100)}`}/>
       </form>
     )
   }
