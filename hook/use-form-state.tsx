@@ -6,6 +6,6 @@ interface FormState {
 }
 
 export const useFormState = create<FormState>((set) => ({
-  isDirty: false,
+  isDirty : false,
   setDirty: (dirty) => set({ isDirty: dirty })
 }))
