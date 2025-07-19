@@ -41,3 +41,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+stripe_backup_code.txt
