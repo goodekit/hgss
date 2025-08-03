@@ -1,15 +1,20 @@
 {
     "redirects": [
         {
+            "source"     : "/search",
+            "destination": "/",
+            "permanent"  : false
+        },
+        {
             "source": "/(.*)",
             "has": [
                 {
-                    "type": "host",
+                    "type" : "host",
                     "value": "homegrownspeed.shop"
                 }
             ],
             "destination": "https://homegrownspeed.shop/$1",
-            "permanent": true
+            "permanent"  : true
         }
     ]
 }
