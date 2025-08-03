@@ -27,11 +27,11 @@ const OrderViewPage: FC<OrderViewPageProps> = async ({ params }) => {
 
   if (order.paymentMethod === STRIPE && !order.isPaid) {
     const stripe = new Stripe(GLOBAL.STRIPE.STRIPE_SECRET_KEY as string)
-    // create payment intent
     try {
        const paymentIntent = await stripe.paymentIntents.create({
          amount                   : Math.round(Number(order.totalPrice) * 100),
          currency                 : GLOBAL.PRICES.CURRENCY,
+         receipt_email            : order.user.email,
          metadata                 : { orderId: order.id },
          automatic_payment_methods: { enabled: true }
        })
