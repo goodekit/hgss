@@ -79,7 +79,7 @@ export async function createOrder() {
     if (!createdOrderId) throw new Error(transl('error.order_not_created'))
     await invalidateCache(CACHE_KEY.orderById(createdOrderId))
     revalidatePath(PATH_DIR.ORDER)
-    return SystemLogger.response(`${transl('success.order_created')} - ${createdOrderId}`, CODE.CREATED, TAG)
+    return SystemLogger.response(`${transl('success.order_created')} - ${createdOrderId}`, CODE.CREATED, TAG, PATH_DIR.ORDER_VIEW(createdOrderId))
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
