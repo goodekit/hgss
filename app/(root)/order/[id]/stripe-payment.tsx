@@ -1,5 +1,4 @@
 import { FC, FormEvent, useState } from 'react'
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { useTheme } from 'next-themes'
@@ -38,9 +37,9 @@ const StripePayment: FC<StripePaymentProps> = ({ priceInCents, orderId, clientSe
             }
         }).then(({ error }) => {
             if (error?.type === 'card_error' || error?.type === 'validation_error') {
-                setErrorMessage(error?.message ?? en.error.unknown_error)
+                setErrorMessage(error?.message ?? transl('error.unknown_error'))
             } else {
-                setErrorMessage(en.error.unknown_error)
+                setErrorMessage(transl('error.unknown_error'))
             }
         }).finally(() => setLoading(false))
     }

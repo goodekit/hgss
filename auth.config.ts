@@ -6,6 +6,8 @@ export const authConfig = {
     providers: [],
     callbacks: {
         authorized({ request, auth }: any) {
+                const hostname = request.headers.get('host')
+
                 const protectedPaths = [
                   /\/shipping/,
                   /\/payment/,
@@ -30,6 +32,7 @@ export const authConfig = {
                   response.cookies.set('sessionBagId', sessionBagId)
                   return response
                 }
+                if (hostname === 'dev.homegrownspeed.shop') return true
                 return true
             }
     }
