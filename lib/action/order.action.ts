@@ -155,7 +155,7 @@ export async function approvePayPalOrder(orderId: string, data: { orderID: strin
         status       : captureData.status,
         email_address: captureData.payer.email_address,
         pricePaid    : captureData.purchase_units[0]?.payments?.captures[0]?.amount?.value,
-      },
+      }
     })
     await invalidateCache(CACHE_KEY.orderById(orderId))
     revalidatePath(PATH_DIR.ORDER_VIEW(orderId))
