@@ -10,6 +10,7 @@ import { CACHE_KEY } from 'config/cache.config'
 import { compare } from 'lib/encrypt'
 import { KEY } from 'lib/constant'
 import { authConfig } from './auth.config'
+import { transl } from 'lib'
 
 export type SessionStrategyType = 'jwt' | 'database' | undefined
 
@@ -56,6 +57,14 @@ export const config = {
   ],
   callbacks: {
     async session({ session, user, trigger, token }: any) {
+      if (session?.user?.id) {
+        const exists = await prisma.user.findUnique({ where: { id: session.user.id } })
+        if (!exists) {
+          (await cookies()).delete('next-auth.session-token')
+          throw new Error('Session is stale, please log in again')
+        }
+      }
+
       session.user.id   = token.id
       session.user.role = token.role
       session.user.name = token.name
@@ -67,40 +76,59 @@ export const config = {
 
     async jwt({ token, user, trigger, session }: any) {
       if (user) {
-        let dbUser = await prisma.user.findUnique({
+        let newOrExistingUser = await prisma.user.findUnique({
           where: { email: user.email! }
         })
-        if (!dbUser) {
-          dbUser = await prisma.user.create({
+        if (!newOrExistingUser) {
+          newOrExistingUser = await prisma.user.create({
             data: {
               email: user.email!,
-              name : user.name ?? user.email!.split('@')[0],
-              role : 'user'
+              name: user.name ?? user.email!.split('@')[0],
+              role: 'user'
             }
           })
         }
-        token.id   = dbUser.id
-        token.sub  = dbUser.id
-        token.role = dbUser.role
-        token.name = dbUser.name
+        token.id                = newOrExistingUser.id
+        token.sub               = newOrExistingUser.id
+        token.role              = newOrExistingUser.role
+        token.name              = newOrExistingUser.name
+        token.lastInvalidatedAt = newOrExistingUser.lastInvalidatedAt.getTime()
 
-        if (dbUser.name === 'NO_NAME') {
-          const name = dbUser.email!.split('@')[0]
-          await prisma.user.update({ where: { id: dbUser.id }, data: { name } })
-          token.name = name
-        }
+        if (token?.id) {
+          const userFromToken = await prisma.user.findUnique({
+            where : { id: token.id },
+            select: { lastInvalidatedAt: true }
+          })
 
-        if (trigger === 'signIn' || trigger === 'signUp') {
-          const cookiesObject = await cookies()
-          const sessionBagId  = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
-          if (sessionBagId) {
-            const sessionBag = await prisma.bag.findFirst({ where: { sessionBagId } })
-            if (sessionBag && !sessionBag.userId) {
-            // only update the session bag if it is not already associated with a user
-            // ensures that bags already linked to a user are intentionally left unchanged
-              await prisma.bag.deleteMany({ where: { userId: dbUser.id } })
-              await prisma.bag.update({ where: { id: sessionBag.id }, data: { userId: dbUser.id } })
-              await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
+          if (!userFromToken) {
+            throw new Error(transl('error.user_not_found_reauth'))
+          }
+
+          const tokenIssuedAt   = (token.iat as number) * 1000
+          const lastInvalidated = userFromToken.lastInvalidatedAt.getTime()
+
+          if (tokenIssuedAt < lastInvalidated) {
+            throw new Error('error.session_stale')
+          }
+
+          if (newOrExistingUser.name === 'NO_NAME') {
+            const name = newOrExistingUser.email!.split('@')[0]
+            await prisma.user.update({ where: { id: newOrExistingUser.id }, data: { name } })
+            token.name = name
+          }
+
+          if (trigger === 'signIn' || trigger === 'signUp') {
+            const cookiesObject = await cookies()
+            const sessionBagId  = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
+            if (sessionBagId) {
+              const sessionBag = await prisma.bag.findFirst({ where: { sessionBagId } })
+              if (sessionBag && !sessionBag.userId) {
+              // only update the session bag if it is not already associated with a user
+              // ensures that bags already linked to a user are intentionally left unchanged
+                await prisma.bag.deleteMany({ where: { userId: newOrExistingUser.id } })
+                await prisma.bag.update({ where: { id: sessionBag.id }, data: { userId: newOrExistingUser.id } })
+                await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
+              }
             }
           }
         }
