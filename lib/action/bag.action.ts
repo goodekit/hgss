@@ -1,7 +1,6 @@
 "use server"
 
 import { cookies } from 'next/headers'
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { CACHE_KEY } from 'config/cache.config'
@@ -63,7 +62,7 @@ const calculatePrices = (items: BagItem[]) => {
 export async function addItemToBag(data: BagItem) {
   try {
     const sessionBagId = (await cookies()).get(KEY.SESSION_BAG_ID)?.value
-    if (!sessionBagId) throw new Error(en.error.sesssion_not_found)
+    if (!sessionBagId) throw new Error(transl('error.sesssion_not_found'))
     const session = await auth()
     const userId = session?.user?.id ? (session.user.id as string) : undefined
 
@@ -79,14 +78,9 @@ export async function addItemToBag(data: BagItem) {
         sessionBagId,
         ...calculatePrices([item])
       })
-      console.log('new bag: ', newBag)
-      console.log('add item to bag??')
-
       await prisma.bag.create({ data: newBag })
       await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
       revalidatePath(PATH_DIR.PRODUCT_VIEW(product.slug))
-
-      console.log('did it get to this point?')
       return RESPONSE.SUCCESS(`${product.name} added to bag`)
     } else {
       const existItem = (bag.items as BagItem[]).find((x) => x.productId === item.productId)
@@ -100,7 +94,7 @@ export async function addItemToBag(data: BagItem) {
         if (foundItem) {
           foundItem.qty = existItem.qty + 1
         } else {
-          throw new Error(en.error.no_existing_item)
+          throw new Error(transl('error.no_existing_item'))
         }
       } else {
         //still check stock
@@ -116,7 +110,6 @@ export async function addItemToBag(data: BagItem) {
       return SystemLogger.response(`${product.name} ${existItem ? 'updated in' : 'added to'} bag`, CODE.OK, TAG)
     }
   } catch (error) {
-    console.log('error: ', error)
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
 }

@@ -812,6 +812,7 @@ export const en = {
     product_not_found         : 'Product not found',
     send_email                : `Error occured while sending email`,
     sesssion_not_found        : 'Session bag id not found',
+    session_stale             : 'Session is stale, please sign-in again',
     too_many_attempt          : `Too many attempts, try again in {min}m {sec}s`,
     unable_delete             : 'Unable to delete file',
     unable_upload             : 'Unable to upload file',
@@ -820,6 +821,7 @@ export const en = {
     update_order_paid         : 'updateOrderToPaid failed',
     user_not_authenticated    : 'User not authenticated',
     user_not_authorized       : 'User not authorized',
-    user_not_found            : 'User not found'
+    user_not_found            : 'User not found',
+    user_not_found_reauth     : 'User not found, sign-in again',
   }
 }
