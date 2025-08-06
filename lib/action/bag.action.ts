@@ -79,9 +79,14 @@ export async function addItemToBag(data: BagItem) {
         sessionBagId,
         ...calculatePrices([item])
       })
+      console.log('new bag: ', newBag)
+      console.log('add item to bag??')
+
       await prisma.bag.create({ data: newBag })
       await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
       revalidatePath(PATH_DIR.PRODUCT_VIEW(product.slug))
+
+      console.log('did it get to this point?')
       return RESPONSE.SUCCESS(`${product.name} added to bag`)
     } else {
       const existItem = (bag.items as BagItem[]).find((x) => x.productId === item.productId)
@@ -111,6 +116,7 @@ export async function addItemToBag(data: BagItem) {
       return SystemLogger.response(`${product.name} ${existItem ? 'updated in' : 'added to'} bag`, CODE.OK, TAG)
     }
   } catch (error) {
+    console.log('error: ', error)
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
 }
