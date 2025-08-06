@@ -183,3 +183,11 @@ model Review {
   product            Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model ContactAndEnquiry {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String   @default("NO_NAME")
+  email     String
+  message   String
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+}

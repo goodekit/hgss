@@ -78,7 +78,8 @@ export const en = {
     description: 'Contact us for any enquiries'
   },
   contact_and_custom_inquiries: {
-    label: 'Contact & Custom Inquiries'
+    label      : 'Contact & Custom Inquiries',
+    description: 'Need something you don’t see on our product line?'
   },
   continue: {
     label      : 'Continue',
