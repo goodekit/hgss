@@ -1,16 +1,15 @@
 import { FC } from 'react'
 import { Metadata } from 'next'
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { notFound } from 'next/navigation'
 import { auth } from 'auth'
 import Stripe from 'stripe'
 import { STRIPE } from 'lib/schema'
 import { getOrderById } from 'lib/action'
-import { KEY } from 'lib'
+import { KEY, transl } from 'lib'
 import OrderViewTable from './order-view-table'
 
-export const metadata: Metadata = { title: en.order_overview.label }
+export const metadata: Metadata = { title: transl('order_overview.label') }
 
 interface OrderViewPageProps {
   params: Promise<{ id: string }>
