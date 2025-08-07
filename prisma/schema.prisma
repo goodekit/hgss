@@ -74,6 +74,7 @@ model User {
   Order                Order[]
   Review               Review[]
   PasswordResetToken   PasswordResetToken[]
+  ContactAndEnquiry    ContactAndEnquiry[]
 }
 
 model Account {
@@ -185,9 +186,12 @@ model Review {
 }
 
 model ContactAndEnquiry {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name      String   @default("NO_NAME")
-  email     String
-  message   String
-  createdAt DateTime @default(now()) @db.Timestamp(6)
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String   @default("NO_NAME")
+  email       String
+  message     String
+  attachments String[]
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  userId      String   @db.Uuid
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
