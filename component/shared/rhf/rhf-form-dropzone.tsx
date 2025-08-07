@@ -25,21 +25,24 @@ interface RHFFormDropzoneProps<TSchema extends ZodSchema> {
   form       : UseFormReturn<z.infer<TSchema>>
   withLabel ?: boolean
   folderName?: S3FolderName
+  maxLimit  ?: number
 }
 
-const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, formKey, form, withLabel = true, folderName }: RHFFormDropzoneProps<TSchema>) => {
+const { MAX_UPLOAD_SIZE_GALLERY } = GLOBAL.LIMIT
+
+const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, formKey, form, withLabel = true, folderName, maxLimit = MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024 }: RHFFormDropzoneProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
-  const { toast } = useToast()
+  const { toast }                           = useToast()
 
   const handleUploadComplete = (res: { url: string }[]) => {
     const currentImages = form.getValues(name) as string[]
-    const newUrls = res.map((r) => r.url).filter((url) => !currentImages.includes(url))
+    const newUrls       = res.map((r) => r.url).filter((url) => !currentImages.includes(url))
     form.setValue(name, [...currentImages, ...newUrls] as FieldName)
   };
 
   const handleDelete = async (index: number) => {
     const currentImages = form.getValues(name) as string[]
-    const result = await deleteImage({ currentImages, index })
+    const result        = await deleteImage({ currentImages, index })
     if (result?.success) {
       const updatedImages = currentImages.filter((_, _i) => _i != index)
       form.setValue(name, updatedImages as PathValue<z.infer<TSchema>, Path<z.infer<TSchema>>>)
@@ -53,13 +56,11 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
     const files = e.target.files
     if (!files) return
 
-    const maxLimit = GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024
-
     const urls: { url: string }[] = []
     for (const file of files) {
       if (file.size > maxLimit) {
-        toast({ variant: 'destructive', description: `File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit` })
-        throw new Error(`File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit`)
+        toast({ variant: 'destructive', description: `File exceeds the ${MAX_UPLOAD_SIZE_GALLERY}MB limit` })
+        throw new Error(`File exceeds the ${MAX_UPLOAD_SIZE_GALLERY}MB limit`)
       }
 
       const formData = new FormData()
