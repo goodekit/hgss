@@ -43,9 +43,9 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
     if (result?.success) {
       const updatedImages = currentImages.filter((_, _i) => _i != index)
       form.setValue(name, updatedImages as PathValue<z.infer<TSchema>, Path<z.infer<TSchema>>>)
-      toast({ description: en.success.file_deleted })
+      toast({ description: transl('success.file_deleted') })
     } else {
-      toast({ variant: 'destructive', description: en.error.unable_delete })
+      toast({ variant: 'destructive', description: transl('error.unable_delete') })
     }
   }
 
@@ -87,12 +87,12 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
           })
           if (urls.length) handleUploadComplete(urls)
         } else {
-          toast({ variant:  'destructive', description: en.error.unable_upload })
+          toast({ variant:  'destructive', description: transl('error.unable_upload') })
         }
       }
 
       xhr.onerror = () => {
-        toast({ variant: 'destructive', description: en.error.unable_upload })
+        toast({ variant: 'destructive', description: transl('error.unable_upload') })
       }
 
       xhr.open('POST', PATH_DIR.UPLOAD)
