@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
-import { FC, Fragment, useTransition } from 'react'
-import { en } from 'public/locale'
-import { PATH_DIR } from 'hgss-dir'
-import { useRouter } from 'next/navigation'
+import { FC, Fragment, useTransition, useState } from 'react'
+import { GLOBAL } from 'hgss'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { ContactMessageSchema, contactMessageDefaultValue } from 'lib/schema'
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import { useToast } from 'hook'
+import { ContactAndEnquiriesSchema, contactAndEnquiryDefaultValue } from 'lib/schema'
 import { Form } from 'component/ui/form'
-import { RHFFormField } from 'component/shared/rhf'
+import { RHFFormField, RHFFormDropzone } from 'component/shared/rhf'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
+import { transl } from 'lib'
 
 interface ContactFormProps {
     user?: { name: string, email: string }
@@ -19,38 +19,62 @@ interface ContactFormProps {
 
 const ContactForm: FC<ContactFormProps> = ({ user }) => {
   const [isPending, startTransition] = useTransition()
-  const form                         = useForm<ContactMessage>({
-    resolver     : zodResolver(ContactMessageSchema),
-    defaultValues: contactMessageDefaultValue(user)
+  const [submitted, setSubmitted]    = useState(false)
+  const form                         = useForm<CreateContactAndEnquiry>({
+    resolver     : zodResolver(ContactAndEnquiriesSchema),
+    defaultValues: contactAndEnquiryDefaultValue(user)
   })
-//   const router                    = useRouter()
-//   const { toast }                 = useToast()
-  const { control, handleSubmit } = form
+  //   const router                    = useRouter()
+  const { toast }                        = useToast()
+  const { control, handleSubmit, watch } = form
+  const attachments                      = watch('attachments')
 
-  const onSubmit: SubmitHandler<ContactMessage> = async (data) => {
-    // startTransition(async () => {
-    // //   const response = await updateUserAddress(data)
-    // //   if (!response.success) {
-    // //     toast({variant: 'destructive', description: response.message})
-    // //     return
-    // //   }
-    //   router.push(PATH_DIR.PAYMENT)
-    // })
+  const onSubmit: SubmitHandler<CreateContactAndEnquiry> = async (data) => {
+    startTransition(async () => {
+      const res = await fetch('/api/contact', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify(data)
+      })
+
+      console.log('res: ', res)
+
+      if (!res.ok) {
+        let errorResponse
+        try {
+          errorResponse = await res.json()
+        } catch (error) {
+          errorResponse = { error: transl('error.unknown_error') }
+        }
+        toast({ variant: 'destructive', description: errorResponse.error })
+        return
+      }
+      form.reset()
+      setSubmitted(true)
+      toast({ description: `Enquiry sent` })
+    })
   }
+
+  /**
+  * - add a webhook to resend that checks if its been read;
+  * - display the enquiries sent?
+  *
+ */
 
   return (
     <Fragment>
-      <div className="max-w-md mx-auto space-y-4">
-        <h1 className="h2-bold mt-4">{en.contact_and_custom_inquiries.label}</h1>
-        <p className="text-sm text-muted-foreground special-elite">{en.contact.description}</p>
-        <Form {...form}>
-          <form method={'post'} onSubmit={handleSubmit(onSubmit)} className="space-y-4 special-elite">
+      <div className={'max-w-md mx-auto space-y-4'}>
+        <h1 className={'h2-bold mt-4'}>{transl('contact_and_custom_enquiries.label')}</h1>
+        <p className={'text-sm text-muted-foreground special-elite'}>{transl('contact_and_custom_enquiries.description')}</p>
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className={'space-y-4 special-elite'}>
             <RHFFormField control={control} name={'name'} formKey={'name'} disabled={user && true} />
             <RHFFormField control={control} name={'email'} formKey={'email'} disabled={user && true} />
             <RHFFormField control={control} name={'message'} formKey={'message'} type={'textarea'} />
-            <TapeBtn label={isPending ? <EllipsisLoader /> : en.send_message.label} className={'w-full texture-4-bg'} />
+            <RHFFormDropzone control={control} name={'attachments'} formKey={'attachments'} images={attachments} form={form} folderName={'contact-and-enquiry'} maxLimit={GLOBAL.LIMIT.MAX_IMAGE_ATTACHMENT_ENQUIRY} />
+            <TapeBtn label={isPending ? <EllipsisLoader /> : transl('send_message.label')} className={'w-full texture-4-bg'} disabled={submitted} />
           </form>
-        </Form>
+        </FormProvider>
       </div>
     </Fragment>
   )
