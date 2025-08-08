@@ -1,7 +1,30 @@
 import { JSX, ReactNode } from 'react'
 import { z, ZodError } from 'zod'
 import { Prisma } from '@prisma/client'
-import { CODE, ProductSchema, BagSchema, BagItemSchema, BagSchema, ShippingAddressSchema, OrderSchema, PaymentMethodSchema, OrderItemSchema, PaymentResultSchema, UpdateUserSchema, UpdateUserAccountSchema, UpdateProductSchema, ContactMessageSchema, GalleryItemSchema, GallerySchema, UpdateGallerySchema, UpdateGallerySchema, ResetPasswordSchema, ForgotPasswordSchema, SignUpSchema, SignInSchema } from 'lib/schema'
+import {
+  CODE,
+  ProductSchema,
+  BagSchema,
+  BagItemSchema,
+  BagSchema,
+  ShippingAddressSchema,
+  OrderSchema,
+  PaymentMethodSchema,
+  OrderItemSchema,
+  PaymentResultSchema,
+  UpdateUserSchema,
+  UpdateUserAccountSchema,
+  UpdateProductSchema,
+  ContactAndEnquiriesSchema,
+  GalleryItemSchema,
+  GallerySchema,
+  UpdateGallerySchema,
+  UpdateGallerySchema,
+  ResetPasswordSchema,
+  ForgotPasswordSchema,
+  SignUpSchema,
+  SignInSchema
+} from 'lib/schema'
 import { ReviewSchema } from 'lib/schema/review-schema'
 
 declare global {
