@@ -1,5 +1,5 @@
 export const GLOBAL = {
-  APP_NAME               : process.env.NEXT_PUBLIC_APP_NAME || 'Homegrown-Speedshop',
+  APP_NAME               : process.env.NEXT_PUBLIC_APP_NAME || 'Homegrown Speed Shop',
   APP_VERSION            : process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0',
   APP_DESCRIPTION        : process.env.NEXT_PUBLIC_APP_DESCRIPTION || 'Classic car parts, accessories and requests',
   AVATAR_API             : process.env.NEXT_PUBLIC_AVATAR_API || `https://api.dicebear.com/7.x/avataaars/`,
@@ -16,13 +16,16 @@ export const GLOBAL = {
   LOCALE                 : process.env.NEXT_PUBLIC_LOCALE || 'en-NZ',
   USER_ROLES             : process.env.USER_ROLES && process.env.USER_ROLES.split(';') || ['user', 'admin'],
   LIMIT                  : {
-                            ADMIN_ORDERS              : 10,
-                            USER_ORDERS               : 10,
-                            PRODUCT_SPECS_MAX         : 5,
-                            MAX_UPLOAD_SIZE_GALLERY   : 5,                                           // MB,
-                            RESET_PASSWORD_LINK_EXPIRY: new Date(Date.now() + 3 * 60 * 60 * 1000),   // HOUR
-                            SIGNIN_TTL                : 15 * 60,                              //15 MIN
-                            SIGNIN_ATTEMPT_MAX        : 5
+                            ADMIN_ORDERS                : 10,
+                            USER_ORDERS                 : 10,
+                            PRODUCT_SPECS_MAX           : 5,
+                            MAX_UPLOAD_SIZE_GALLERY     : 5,                                           // MB,
+                            MAX_IMAGE_ATTACHMENT_ENQUIRY: 4,
+                            MAX_ALLOWED_ENQUIRY         : 5,
+                            WAIT_TIME_ENQUIRY           : 24 * 60 * 60 * 1000 * 7,                     // MB,
+                            RESET_PASSWORD_LINK_EXPIRY  : new Date(Date.now() + 3 * 60 * 60 * 1000),   // HOUR
+                            SIGNIN_TTL                  : 15 * 60,                                     //15 MIN
+                            SIGNIN_ATTEMPT_MAX          : 5,
                           },
   PAGE_SIZE             : 8,
   PAGE_SIZE_GALLERY     : 8,
@@ -66,18 +69,21 @@ export const GLOBAL = {
                             }
                           },
   RESEND                  : {
-                          RESEND_API_KEY: process.env.RESEND_API_KEY || '',
-                          SENDER_EMAIL  : process.env.SENDER_EMAIL || 'onboarding@resend.dev'
+                            RESEND_API_KEY                    : process.env.RESEND_API_KEY || '',
+                            SENDER_EMAIL                      : process.env.SENDER_EMAIL || 'onboarding@resend.dev',
+                            CONTACT_AND_ENQUIRY_RECEIVER_EMAIL: process.env.CONTACT_AND_ENQUIRY_RECEIVER_EMAIL || '',
+                            CONTACT_AND_ENQUIRY_SENDER_EMAIL  : process.env.CONTACT_AND_ENQUIRY_SENDER_EMAIL || ''
                           },
   RYBBIT                  : `https://app.rybbit.io/api/script.js`,
   AWS                   : {
-                            ACCESS_KEY_ID    : process.env.AWS_ACCESS_KEY_ID || "",
-                            SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
-                            REGION           : process.env.AWS_REGION || "",
-                            S3_BUCKET_NAME   : process.env.AWS_S3_BUCKET_NAME || "",
-                            S3_BUCKET_USER   : process.env.AWS_S3_BUCKET_USER || "",
-                            SIGNED_URL_EXP   : Number(process.env.AWS_SIGNED_URL_EXP) || 60,
-                            PUBLIC_URL       : `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
-                            IMAGE_TYPE       : 'image/webp'
+                            ACCESS_KEY_ID      : process.env.AWS_ACCESS_KEY_ID || "",
+                            SECRET_ACCESS_KEY  : process.env.AWS_SECRET_ACCESS_KEY || "",
+                            REGION             : process.env.AWS_REGION || "",
+                            S3_BUCKET_NAME     : process.env.AWS_S3_BUCKET_NAME || "",
+                            S3_BUCKET_USER     : process.env.AWS_S3_BUCKET_USER || "",
+                            SIGNED_URL_EXP     : Number(process.env.AWS_SIGNED_URL_EXP) || 60,
+                            PUBLIC_URL         : `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+                            IMAGE_TYPE         : 'image/webp',
+                            IMAGE_TYPES_ALLOWED: ['jpg', 'jpeg', 'png', 'gif', 'webp']
   },
 }
