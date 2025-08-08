@@ -17,10 +17,10 @@ import { cn, transl, truncate } from 'lib/util'
 
 type FormKeyLocale = keyof typeof en.form
 
-interface RHFFormDropzoneProps<TSchema extends ZodSchema> {
+interface RHFFormDropzoneProps<TSchema extends ZodSchema, TImages = string[] | string> {
   control    : Control<z.infer<TSchema>>
   formKey    : FormKeyLocale
-  images     : string[] | string
+  images     : TImages
   name       : Path<z.infer<TSchema>>
   form       : UseFormReturn<z.infer<TSchema>>
   withLabel ?: boolean
@@ -30,7 +30,7 @@ interface RHFFormDropzoneProps<TSchema extends ZodSchema> {
 
 const { MAX_UPLOAD_SIZE_GALLERY } = GLOBAL.LIMIT
 
-const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, formKey, form, withLabel = true, folderName, maxLimit = MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024 }: RHFFormDropzoneProps<TSchema>) => {
+const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>({ control, name, images, formKey, form, withLabel = true, folderName, maxLimit = MAX_UPLOAD_SIZE_GALLERY }: RHFFormDropzoneProps<TSchema, TImages>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast }                           = useToast()
 
@@ -58,9 +58,14 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
 
     const urls: { url: string }[] = []
     for (const file of files) {
-      if (file.size > maxLimit) {
+      if (file.size > (maxLimit * 1024 * 1024)) {
         toast({ variant: 'destructive', description: `File exceeds the ${MAX_UPLOAD_SIZE_GALLERY}MB limit` })
         throw new Error(`File exceeds the ${MAX_UPLOAD_SIZE_GALLERY}MB limit`)
+      }
+
+      if (!file.type.startsWith('image/')) {
+        toast({ variant: 'destructive', description: transl('error.images_allowed') })
+        continue
       }
 
       const formData = new FormData()
@@ -88,12 +93,28 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
           })
           if (urls.length) handleUploadComplete(urls)
         } else {
-          toast({ variant:  'destructive', description: transl('error.unable_upload') })
+          const { error } = JSON.parse(xhr.responseText)
+          setUploadProgress((_prev) => {
+            const newProgress = { ..._prev }
+            delete newProgress[file.name]
+            return newProgress
+          })
+          form.setValue(name, [] as PathValue<z.infer<TSchema>, Path<z.infer<TSchema>>>)
+          form.trigger(name)
+          toast({ variant:  'destructive', description: error || transl('error.unable_upload') })
         }
       }
 
       xhr.onerror = () => {
-        toast({ variant: 'destructive', description: transl('error.unable_upload') })
+        const { error } = JSON.parse(xhr.responseText)
+        setUploadProgress((_prev) => {
+          const newProgress =  {..._prev}
+          delete newProgress[file.name]
+          return newProgress
+        })
+        form.setValue(name, [] as PathValue<z.infer<TSchema>, Path<z.infer<TSchema>>>)
+        form.trigger(name)
+        toast({ variant: 'destructive', description: error || transl('error.unable_upload') })
       }
 
       xhr.open('POST', PATH_DIR.UPLOAD)
@@ -107,7 +128,7 @@ const RHFFormDropzone = <TSchema extends ZodSchema>({ control, name, images, for
       name={name}
       render={() => (
         <FormItem className={'w-full'}>
-          {withLabel && <FormLabel>{en.form[formKey].label}</FormLabel>}
+          {withLabel && <FormLabel>{transl(`form.${formKey}.label`)}</FormLabel>}
           <Card>
             <CardContent className={'space-y-2 mt-2 min-h-32'}>
               <div className={"flex flex-col md:flex-row flex-start h-32 space-x-2"}>
