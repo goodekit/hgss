@@ -88,29 +88,29 @@ declare global {
     user     ?: { name: string | null }
   }
 
-  export type SignIn            = z.infer<typeof SignInSchema>
-  export type SignUp            = z.infer<typeof SignUpSchema>
-  export type Bag               = z.infer<typeof BagSchema>
-  export type BagItem           = z.infer<typeof BagItemSchema>
-  export type ContactMessage    = z.infer<typeof ContactMessageSchema>
-  export type ShippingAddress   = z.infer<typeof ShippingAddressSchema>
-  export type OrderItem         = z.infer<typeof OrderItemSchema>
-  export type PaymentResult     = z.infer<typeof PaymentResultSchema>
-  export type UpdateUser        = z.infer<typeof UpdateUserSchema>
-  export type UpdateUserAccount = z.infer<typeof UpdateUserAccountSchema>
-  export type CreateProduct     = z.infer<typeof ProductSchema>
-  export type UpdateProduct     = z.infer<typeof UpdateProductSchema>
-  export type ReviewType        = z.infer<typeof ReviewSchema>
-  export type PaymentMethod     = z.infer<typeof PaymentMethodSchema>
-  export type ForgotPassword    = z.infer<typeof ForgotPasswordSchema>
-  export type ResetPassword     = z.infer<typeof ResetPasswordSchema>
-  export type CreateGallery     = z.infer<typeof GallerySchema>
-  export type CreateGalleryItem = z.infer<typeof GalleryItemSchema>
-  export type UpdateGallery     = z.infer<typeof UpdateGallerySchema>
-  export type UpdateGalleryItem = z.infer<typeof UpdateGalleryItemSchema>
-  export type SalesData         = { month: string, totalSales: number }[]
+  export type SignIn                  = z.infer<typeof SignInSchema>
+  export type SignUp                  = z.infer<typeof SignUpSchema>
+  export type Bag                     = z.infer<typeof BagSchema>
+  export type BagItem                 = z.infer<typeof BagItemSchema>
+  export type ShippingAddress         = z.infer<typeof ShippingAddressSchema>
+  export type OrderItem               = z.infer<typeof OrderItemSchema>
+  export type PaymentResult           = z.infer<typeof PaymentResultSchema>
+  export type UpdateUser              = z.infer<typeof UpdateUserSchema>
+  export type UpdateUserAccount       = z.infer<typeof UpdateUserAccountSchema>
+  export type CreateProduct           = z.infer<typeof ProductSchema>
+  export type UpdateProduct           = z.infer<typeof UpdateProductSchema>
+  export type CreateContactAndEnquiry = z.infer<typeof ContactAndEnquiriesSchema>
+  export type ReviewType              = z.infer<typeof ReviewSchema>
+  export type PaymentMethod           = z.infer<typeof PaymentMethodSchema>
+  export type ForgotPassword          = z.infer<typeof ForgotPasswordSchema>
+  export type ResetPassword           = z.infer<typeof ResetPasswordSchema>
+  export type CreateGallery           = z.infer<typeof GallerySchema>
+  export type CreateGalleryItem       = z.infer<typeof GalleryItemSchema>
+  export type UpdateGallery           = z.infer<typeof UpdateGallerySchema>
+  export type UpdateGalleryItem       = z.infer<typeof UpdateGalleryItemSchema>
+  export type SalesData               = { month: string, totalSales: number }[]
 
-  export type S3FolderName = 'product'| 'gallery'| 'banner' | 'upload'
+  export type S3FolderName = 'product'| 'gallery'| 'banner' | 'upload' | 'contact-and-enquiry'
 
   export interface TblCell {
     id        : string
