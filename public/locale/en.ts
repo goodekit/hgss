@@ -77,8 +77,8 @@ export const en = {
     label      : 'Contact',
     description: 'Contact us for any enquiries'
   },
-  contact_and_custom_inquiries: {
-    label      : 'Contact & Custom Inquiries',
+  contact_and_custom_enquiries: {
+    label      : 'Contact & Custom Enquiries',
     description: 'Need something you don’t see on our product line?'
   },
   continue: {
@@ -711,6 +711,7 @@ export const en = {
   },
   smtp: {
     contact_and_enquiry: {
+      title  : `Enquiries`,
       subject: `New Enquiry from {name}`,
     },
     reset_password: {
@@ -794,6 +795,7 @@ export const en = {
     expired_token             : `Token expired`,
     failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
     gallery_save              : 'An error occurred while saving the gallery',
+    images_allowed            : `only image types are allowed`,
     invalid_cache_key         : `invalid cache key:{key}`,
     invalid_credentials       : 'Invalid credentials',
     invalid_file_key          : 'Invalid file key',
