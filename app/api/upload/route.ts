@@ -1,10 +1,9 @@
 import { GLOBAL } from 'hgss'
-import { en } from 'public/locale'
 import { NextRequest, NextResponse } from 'next/server'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { v4 as uuidv4 } from 'uuid'
 import sharp from 'sharp'
-import { CODE } from 'lib'
+import { CODE, transl } from 'lib'
 
 const s3 = new S3Client({
   region: GLOBAL.AWS.REGION,
@@ -19,9 +18,9 @@ export async function POST(req: NextRequest) {
   const file       = formData.get('file') as File
   const folderName = (formData.get('folderName') as S3FolderName) || 'upload'
 
-  if (!file) return NextResponse.json({ error: en.error.no_file }, { status: CODE.BAD_REQUEST })
+  if (!file) return NextResponse.json({ error: transl('error.no_file') }, { status: CODE.BAD_REQUEST })
 
-  const allowedFolders = ['product', 'gallery', 'banner']
+  const allowedFolders: S3FolderName[] = ['product', 'gallery', 'banner', 'contact-and-enquiry']
   if (!allowedFolders.includes(folderName)) {
     return NextResponse.json({ error: 'Invalid folder' }, { status: CODE.BAD_REQUEST })
   }

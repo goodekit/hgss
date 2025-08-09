@@ -1,6 +1,5 @@
 "use server"
 
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { Prisma } from '@prisma/client'
@@ -67,7 +66,7 @@ export async function deleteProductImage(args: ImageInput) {
       )
       return { success: true }
     } catch (error) {
-      console.error(en.error.unable_delete, error)
+      console.error(transl('error.unable_delete'), error)
       return { success: false, error }
     }
 }

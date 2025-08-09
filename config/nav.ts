@@ -22,7 +22,7 @@ const OVERVIEW = 'overview'
 export const NAV_CONFIG = [
     {title: en.product.products.label, href: connect(PRODUCT), className: 'texture-8-bg' },
     {title: en.gallery.label, href: connect(GALLERY), className: 'texture-4-bg'},
-    {title: en.contact_and_custom_inquiries.label, href: connect(CONTACT), className: 'texture-2-bg'},
+    {title: en.contact_and_custom_enquiries.label, href: connect(CONTACT), className: 'texture-2-bg'},
 ]
 
 export const NAV_CONFIG_USER = [

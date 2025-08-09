@@ -20,11 +20,12 @@ export const shippingAddressDefaultValue = {
   country      : '',
 }
 
-export const contactMessageDefaultValue = (user?: UserBase) => {
+export const contactAndEnquiryDefaultValue = (user?: UserBase) => {
   return {
-    name   : user && user.name || '',
-    email  : user && user.email || '',
-    message: ''
+    name       : user && user.name || '',
+    email      : user && user.email || '',
+    message    : '',
+    attachments: []
   }
 }
 

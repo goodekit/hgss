@@ -29,7 +29,7 @@ class AppLogger {
     console.error(`ERROR: ${errorRaw}`, `TAG: ${TAG_FORMAT(tag)}`, targetLineInfo, content)
   }
 
-  public response(message: string, code?: CODE, tag: string = TAG_DEFAULT, redirectTo?: string, data?: unknown) {
+  public response(message: string, code?: CODE, _tag: string = TAG_DEFAULT, redirectTo?: string, data?: unknown) {
     return RESPONSE.SUCCESS(message, code, redirectTo, data)
   }
 
