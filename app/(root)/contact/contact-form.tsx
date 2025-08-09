@@ -25,9 +25,9 @@ const ContactForm: FC<ContactFormProps> = ({ user }) => {
     defaultValues: contactAndEnquiryDefaultValue(user)
   })
   //   const router                    = useRouter()
-  const { toast }                        = useToast()
-  const { control, handleSubmit, watch } = form
-  const attachments                      = watch('attachments')
+  const { toast }                                               = useToast()
+  const { control, handleSubmit, watch, formState: { errors } } = form
+  const attachments                                             = watch('attachments')
 
   const onSubmit: SubmitHandler<CreateContactAndEnquiry> = async (data) => {
     startTransition(async () => {
@@ -36,8 +36,6 @@ const ContactForm: FC<ContactFormProps> = ({ user }) => {
         headers: { 'Content-Type': 'application/json' },
         body   : JSON.stringify(data)
       })
-
-      console.log('res: ', res)
 
       if (!res.ok) {
         let errorResponse
@@ -66,12 +64,21 @@ const ContactForm: FC<ContactFormProps> = ({ user }) => {
       <div className={'max-w-md mx-auto space-y-4'}>
         <h1 className={'h2-bold mt-4'}>{transl('contact_and_custom_enquiries.label')}</h1>
         <p className={'text-sm text-muted-foreground special-elite'}>{transl('contact_and_custom_enquiries.description')}</p>
+        {errors.attachments && <p className="text-red-500 text-sm">{String(errors.attachments.message)}</p>}
         <FormProvider {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className={'space-y-4 special-elite'}>
             <RHFFormField control={control} name={'name'} formKey={'name'} disabled={user && true} />
             <RHFFormField control={control} name={'email'} formKey={'email'} disabled={user && true} />
             <RHFFormField control={control} name={'message'} formKey={'message'} type={'textarea'} />
-            <RHFFormDropzone control={control} name={'attachments'} formKey={'attachments'} images={attachments} form={form} folderName={'contact-and-enquiry'} maxLimit={GLOBAL.LIMIT.MAX_IMAGE_ATTACHMENT_ENQUIRY} />
+            <RHFFormDropzone
+              control={control}
+              name={'attachments'}
+              formKey={'attachments'}
+              images={attachments}
+              form={form}
+              folderName={'contact-and-enquiry'}
+              maxLimit={GLOBAL.LIMIT.MAX_IMAGE_ATTACHMENT_ENQUIRY}
+            />
             <TapeBtn label={isPending ? <EllipsisLoader /> : transl('send_message.label')} className={'w-full texture-4-bg'} disabled={submitted} />
           </form>
         </FormProvider>
