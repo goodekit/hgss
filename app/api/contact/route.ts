@@ -17,23 +17,13 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Unauthenticated' }, { status: CODE.UNAUTHORIZED })
     }
 
-    console.log('body: POST',body)
-
-    const formAttachments = body.attachments?.map(_url => ({
-        path       : _url,
-        filename   : _url.filename?.split('/').pop() || 'attachment',
-        contentType: `image/${_url.contentType?.split('.').pop()?.toLowerCase() || 'webp'}`
-    }))
-
-    const result    = ContactAndEnquiriesSchema.safeParse({ ...body, attachments: formAttachments})
+    const result = ContactAndEnquiriesSchema.safeParse(body)
 
     if (!result.success) {
-        return NextResponse.json({ error: 'Invalid Input' }, { status: CODE.BAD_REQUEST })
+        return NextResponse.json({ error: 'Invalid input' }, { status: CODE.BAD_REQUEST })
     }
 
     const { name, email, message, attachments } = result.data
-
-    console.log('result.data', result.data)
 
     const userEnquiries = await prisma.user.findUnique({ where: { id: userId }, select: { ContactAndEnquiry: true } })
     const earliest      = await prisma.contactAndEnquiry.findFirst({ orderBy: { createdAt: 'asc' }})
@@ -51,18 +41,21 @@ export async function POST(req: Request) {
             }
         }
     }
-    for (const url of attachments) {
-        const allowedImageExtensions = GLOBAL.AWS.IMAGE_TYPES_ALLOWED.join('|')
-        const imageRegex             = new RegExp(`\\.(${allowedImageExtensions})$`, 'i')
-        if (!imageRegex.test(url.path)) {
-          return NextResponse.json({ error: transl('error.images_allowed') })
+
+    if (attachments?.length) {
+        for (const url of attachments) {
+            const allowedImageExtensions = GLOBAL.AWS.IMAGE_TYPES_ALLOWED.join('|')
+            const imageRegex             = new RegExp(`\\.(${allowedImageExtensions})$`, 'i')
+            if (!imageRegex.test(url)) {
+              return NextResponse.json({ error: transl('error.images_allowed') })
+            }
         }
     }
 
-    await prisma.contactAndEnquiry.create({ data: { name, email, message, userId }})
-    const newContactAndEnquiry = await sendContactAndEnquiry({ userEmail: email, name, message, attachments })
+    // TODO: rhf dropzone should not upload the photo until form is submitted
 
-    console.log('newContactAndEnquiry: ', newContactAndEnquiry)
+    await prisma.contactAndEnquiry.create({ data: { name, email, message, userId, attachments }})
+    const newContactAndEnquiry = await sendContactAndEnquiry({ userEmail: email, name, message, attachments })
 
     if (newContactAndEnquiry && 'error' in newContactAndEnquiry && newContactAndEnquiry.error) {
       return NextResponse.json({ error: `Failed to send email [${TAG}]: ${newContactAndEnquiry.error.message}`})
