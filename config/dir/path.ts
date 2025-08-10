@@ -7,6 +7,10 @@ const protect = () => {
 }
 
 export const PROTECTED_ROUTES = protect()
+
+const _API  = 'api'
+const _USER = 'user'
+
 export const PATH_DIR = {
   ADMIN           : {
                       GALLERY       : connect('admin', 'gallery'),
@@ -20,6 +24,11 @@ export const PATH_DIR = {
                       USER          : connect('admin', 'user'),
                       USER_VIEW     : (userId: string) => connect('connect', 'user', userId)
                     },
+  API             : {
+                      ASK   : connect(_API, 'ask'),
+                      UPLOAD: connect(_API, 'upload')
+                    },
+  ASK             : connect('ask'),
   BAG             : connect('bag'),
   CHECKOUT        : connect('order', 'checkout'),
   CONTACT         : connect('contact'),
@@ -45,7 +54,7 @@ export const PATH_DIR = {
   UPLOAD          : connect('api', 'upload'),
   UPLOAD_GENERIC  : (folder: string) => connect('api', 'upload', folder),
   USER            : {
-                      ACCOUNT: connect('user', 'account'),
-                      ORDER  : connect('user', 'order'),
+                      ACCOUNT: connect(_USER, 'account'),
+                      ORDER  : connect(_USER, 'order'),
   }
 }

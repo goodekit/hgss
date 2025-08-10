@@ -1,7 +1,6 @@
 'use client'
 
 import { FC, Fragment, useTransition } from 'react'
-import { en } from 'public/locale'
 import { PATH_DIR } from 'hgss-dir'
 import { useRouter } from 'next/navigation'
 import { useToast } from 'hook'
@@ -18,8 +17,8 @@ interface BagTableProps {
 
 const BagTable: FC<BagTableProps> = ({ bag }) => {
   const [isPending, startTransition] = useTransition()
-  const { toast } = useToast()
-  const router = useRouter()
+  const { toast }                    = useToast()
+  const router                       = useRouter()
 
   const subtotal = bag  && bag.items.reduce((acc, item) => acc + item.qty, 0)
 
@@ -47,22 +46,22 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
 
   return (
     <Fragment>
-      <h1 className="py-4 h2-bold">{en.your_bag.label}</h1>
+      <h1 className={"py-4 h2-bold"}>{transl('your_bag.label')}</h1>
       {!bag || bag.items.length === 0 ? (
         <div className={'special-elite'}>
-          {en.bag_empty} <LinkBtn href={PATH_DIR.ROOT} variant={'secondary'}>{en.go_shopping}</LinkBtn>
+          {transl('bag_empty')} <LinkBtn href={PATH_DIR.ROOT} variant={'secondary'}>{transl('go_shopping')}</LinkBtn>
         </div>
       ) : (
-        <div className="grid md:grid-cols-4 md:gap-5 special-elite">
-          <div className="overflow-x-auto md:col-span-3">
+        <div className={"grid md:grid-cols-4 md:gap-5 special-elite"}>
+          <div className={"overflow-x-auto md:col-span-3"}>
             <Table>
               <BagTableHead />
               <BagTableBody bagItems={bag.items} isPending={isPending} handleMinus={handleRemoveItem} handlePlus={handleAddItem} withQtyController />
             </Table>
           </div>
-          <Card className="rounded-sm shadow-none border-none">
-            <CardContent className="space-y-8">
-              <div className="text-xl justify-between flex">
+          <Card className={"rounded-sm shadow-none border-none"}>
+            <CardContent className={"space-y-8"}>
+              <div className={"text-xl justify-between flex"}>
                 <div>
                   {transl('subtotal.label')} &nbsp;
                   <Badge variant={'outline'} className="text-md">
@@ -70,7 +69,7 @@ const BagTable: FC<BagTableProps> = ({ bag }) => {
                   </Badge>
                   &nbsp;&nbsp;
                 </div>
-                <span className="font-bold"> {formatCurrency(bag.itemsPrice)}</span>
+                <span className={"font-bold"}> {formatCurrency(bag.itemsPrice)}</span>
               </div>
               <TapeBtn textSize={'text-lg'} className={'w-full texture-4-bg'} disabled={isPending} onClick={handleNavigateCheckout} type={'button'} label=  {isPending ? <EllipsisLoader /> : ( <span> {'->'} {transl('proceed_to_checkout.label')}</span>)} />
             </CardContent>

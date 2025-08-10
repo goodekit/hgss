@@ -1,27 +1,24 @@
 import { Fragment } from 'react'
+import { PATH_DIR } from 'hgss-dir'
 import { auth } from 'auth'
 import { BackBtn } from 'component/shared'
 import { revalidate } from 'lib/util'
-import ContactForm from './contact-form'
+import ContactForm from './ask-form'
 
 const ContactPage = async () => {
   const session = await auth()
   const user  = session?.user
 
   if (!user) {
-    revalidate('/contact')
+    revalidate(PATH_DIR.ASK)
   }
 
   return (
     <Fragment>
-      <div className="mb-12">
+      <div className={"mb-12"}>
         <BackBtn />
       </div>
-      <div className="grid md:grid-cols-5 md:gap-5">
-        <div className="md:col-span-5 space-y-4">
-          <ContactForm user={user as UserBase} />
-        </div>
-      </div>
+      <ContactForm user={user as UserBase} />
     </Fragment>
   )
 }
