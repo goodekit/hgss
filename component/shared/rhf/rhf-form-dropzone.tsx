@@ -58,7 +58,9 @@ const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>
     const files = e.target.files
     if (!files) return
 
-    if (Array.isArray(files) && files.length >= maxLimit) {
+    const currentImages       = Array.isArray(images) ? images.length : images ? 1 : 0
+    const totalAfterSelection = currentImages + files.length
+    if (totalAfterSelection > maxLimit) {
       toast({ variant: 'destructive', description: transl('error.images_max_exceeded', { limit: maxLimit }) })
       return
     }
