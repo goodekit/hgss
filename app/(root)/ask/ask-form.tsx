@@ -29,7 +29,7 @@ const AskForm: FC<AskFormProps> = ({ user }) => {
   const { control, handleSubmit, watch } = form
   const attachments                      = watch('attachments')
 
-  useCleanupUnsubmittedImages(form, 'attachments')
+  useCleanupUnsubmittedImages(form, 'attachments', '__submitted')
 
   const onSubmit: SubmitHandler<CreateContactAndEnquiry> = async (data) => {
     startTransition(async () => {
@@ -61,6 +61,7 @@ const AskForm: FC<AskFormProps> = ({ user }) => {
       }
       form.reset()
       setSubmitted(true)
+      form.setValue('__submitted', true)
       toast({ description: transl('success.enquiry_sent') })
     })
   }
