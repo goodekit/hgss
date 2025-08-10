@@ -14,11 +14,11 @@ import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
 import { transl } from 'lib'
 
-interface ContactFormProps {
+interface AskFormProps {
     user?: { name: string, email: string }
 }
 
-const ContactForm: FC<ContactFormProps> = ({ user }) => {
+const AskForm: FC<AskFormProps> = ({ user }) => {
   const [isPending, startTransition] = useTransition()
   const [submitted, setSubmitted]    = useState(false)
   const form                         = useForm<CreateContactAndEnquiry>({
@@ -90,4 +90,4 @@ const ContactForm: FC<ContactFormProps> = ({ user }) => {
   )
 }
 
-export default ContactForm
+export default AskForm
