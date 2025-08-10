@@ -19,17 +19,22 @@ import { deleteImage } from 'lib/action'
  * @template TSchema - The Zod schema type for the form.
  * @param form {UseFormReturn<z.infer<TSchema>>} The react-hook-form instance managing the form state.
  * @param name {Path<z.infer<TSchema>>} The field path (string or string[]) containing the image URL(s) to clean up if unsubmitted.
+ * @param submittedFieldName {Path<z.infer<TSchema>>} Optional field path indicating form submission state. Defaults to '__submitted'.
  *
  * @remarks
  * - Works for both single string and string[] attachment fields.
  * - Listens to both browser unload events and Next.js route/pathname changes to trigger cleanup.
  * - Deletions are performed asynchronously and immediately on navigation or unload.
+ * - Cleanup is skipped if the form is marked as submitted.
  */
-export function useCleanupUnsubmittedImages<TSchema extends ZodSchema>(form:UseFormReturn<z.infer<TSchema>> , name: Path<z.infer<TSchema>>) {
+export function useCleanupUnsubmittedImages<TSchema extends ZodSchema>(form:UseFormReturn<z.infer<TSchema>>, name: Path<z.infer<TSchema>>, submittedFieldName: Path<z.infer<TSchema>> = '__submitted' as  Path<z.infer<TSchema>>) {
     const pathname = usePathname()
 
     useEffect(() => {
         const cleanup = async () => {
+            const isSubmitted = form.getValues(submittedFieldName)
+            if (isSubmitted) return
+
             const images = form.getValues(name)
             if (Array.isArray(images)) {
                 for (let i = 0; i < images.length; i++) {
@@ -43,19 +48,19 @@ export function useCleanupUnsubmittedImages<TSchema extends ZodSchema>(form:UseF
             cleanup()
         }
 
-        const handleVisibilityChange = () => {
-          if (document.visibilityState === 'hidden') {
-            cleanup()
-          }
-        }
+        // const handleVisibilityChange = () => {
+        //   if (document.visibilityState === 'hidden') {
+        //     cleanup()
+        //   }
+        // }
 
         window.addEventListener('beforeunload', handleBeforeUnload)
-        document.addEventListener('visibilitychange', handleVisibilityChange)
+        // document.addEventListener('visibilitychange', handleVisibilityChange)
 
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload)
-            document.removeEventListener('visibilitychange', handleVisibilityChange)
+            // document.removeEventListener('visibilitychange', handleVisibilityChange)
             cleanup()
         }
-    }, [pathname, form, name])
+    }, [pathname, form, name, submittedFieldName])
 }
