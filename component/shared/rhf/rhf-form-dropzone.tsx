@@ -34,6 +34,8 @@ const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast }                           = useToast()
 
+  const isMaxLimitReached = Array.isArray(images) && images.length >= maxLimit || typeof images === 'string' && maxLimit <= 1
+
   const handleUploadComplete = (res: { url: string }[]) => {
     const currentImages = form.getValues(name) as string[]
     const newUrls       = res.map((r) => r.url).filter((url) => !currentImages.includes(url))
@@ -56,11 +58,16 @@ const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>
     const files = e.target.files
     if (!files) return
 
+    if (Array.isArray(files) && files.length >= maxLimit) {
+      toast({ variant: 'destructive', description: transl('error.images_max_exceeded', { limit: maxLimit }) })
+      return
+    }
+
     const urls: { url: string }[] = []
     for (const file of files) {
       if (file.size > (maxLimit * 1024 * 1024)) {
-        toast({ variant: 'destructive', description: `File exceeds the ${MAX_UPLOAD_SIZE_GALLERY}MB limit` })
-        throw new Error(`File exceeds the ${MAX_UPLOAD_SIZE_GALLERY}MB limit`)
+        toast({ variant: 'destructive', description: `File exceeds the ${maxLimit}MB limit` })
+        throw new Error(`File exceeds the ${maxLimit}MB limit`)
       }
 
       if (!file.type.startsWith('image/')) {
@@ -153,10 +160,10 @@ const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>
                       </div>
                     ))}
                 </div>
-                <FormControl className={'space-y-2 my-2 text-md '}>
-                  <label className={"inline-block px-4 py-2 text-sm font-medium text-black hover:dark:text-white bg-punkpink cursor-pointer hover:bg-pink-500 hover:font-bold transition rounded-sm"}>
+                <FormControl className={cn('space-y-2 my-2 text-md')}>
+                  <label className={cn("inline-block px-4 py-2 text-sm font-medium rounded-sm transition", isMaxLimitReached ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50' : 'text-black  hover:dark:text-white bg-punkpink cursor-pointer hover:bg-pink-500 hover:font-bold')}>
                     {transl('upload_images.label')}
-                    <input type="file" accept="image/*" multiple max={4} onChange={(e) => handleUpload(e)} className={'hidden'} />
+                    <input type="file" accept="image/*" multiple max={maxLimit} onChange={(e) => handleUpload(e)} className={'hidden'} disabled={isMaxLimitReached} />
                   </label>
                 </FormControl>
               </div>
