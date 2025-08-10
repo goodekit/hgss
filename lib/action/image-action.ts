@@ -1,8 +1,8 @@
 'use server'
 
-import { en } from "public/locale"
 import { GLOBAL } from 'hgss'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
+import { transl } from "lib/util"
 
 
 const s3 = new S3Client({
@@ -33,20 +33,20 @@ const s3 = new S3Client({
  */
 export async function deleteImage(args: ImageInput) {
   const getFileKeyFromUrl = (url: string) => {
-    try {
-      const urlParts = url?.split('/')
-      const keyParts = urlParts.slice(3)
-      return keyParts.join('/')
-    } catch (error) {
-      console.error(en.error.failed_extract_file_key, error)
-      return null
+      try {
+        const urlParts = url?.split('/')
+        const keyParts = urlParts.slice(3)
+        return keyParts.join('/')
+      } catch (error) {
+        console.error(transl('error.failed_extract_file_key'), error)
+        return null
+      }
     }
-  }
 
   const imageToDelete = 'index' in args ? args?.currentImages[args.index] : args.currentImages
   const fileKey = getFileKeyFromUrl(imageToDelete)
 
-  if (!fileKey) return { success: false, error: en.error.invalid_file_key }
+  if (!fileKey) return { success: false, error: transl('error.invalid_file_key') }
 
     try {
       await s3.send(
@@ -57,7 +57,7 @@ export async function deleteImage(args: ImageInput) {
       )
       return { success: true }
     } catch (error) {
-      console.error(en.error.unable_delete, error)
+      console.error(transl('error.unable_delete'), error)
       return { success: false, error }
     }
 }
