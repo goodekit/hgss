@@ -14,13 +14,13 @@ export async function POST(req: Request) {
     const userId                        = session?.user?.id
 
     if (!userId) {
-        return NextResponse.json({ error: 'Unauthenticated' }, { status: CODE.UNAUTHORIZED })
+        return NextResponse.json({ error: transl('error.user_not_authenticated') }, { status: CODE.UNAUTHORIZED })
     }
 
     const result = ContactAndEnquiriesSchema.safeParse(body)
 
     if (!result.success) {
-        return NextResponse.json({ error: 'Invalid input' }, { status: CODE.BAD_REQUEST })
+        return NextResponse.json({ error: transl('error.invalid_input') }, { status: CODE.BAD_REQUEST })
     }
 
     const { name, email, message, attachments } = result.data
@@ -51,8 +51,6 @@ export async function POST(req: Request) {
             }
         }
     }
-
-    // TODO: rhf dropzone should not upload the photo until form is submitted
 
     await prisma.contactAndEnquiry.create({ data: { name, email, message, userId, attachments }})
     const newContactAndEnquiry = await sendContactAndEnquiry({ userEmail: email, name, message, attachments })
