@@ -51,7 +51,7 @@ const RHFFormField = <TSchema extends ZodSchema, TName extends Path<z.infer<TSch
         )
         :
         type === 'textarea' ? (
-          <Textarea disabled={disabled} placeholder={transl(`form.${formKey}.placeholder` as const)} {...field} className={cn('resize-none', !withBorder && 'border-none')} />
+          <Textarea disabled={disabled} placeholder={transl(`form.${formKey}.placeholder` as const)} {...field} className={cn('resize-none h-40', !withBorder && 'border-none')}  />
         )
         :
         type === 'input' ?
