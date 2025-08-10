@@ -711,7 +711,7 @@ export const en = {
   },
   smtp: {
     contact_and_enquiry: {
-      title  : `Enquiries`,
+      title  : `Enquiry`,
       subject: `New Enquiry from {name}`,
     },
     reset_password: {
@@ -764,6 +764,7 @@ export const en = {
     contact_and_enquiry_sent: 'Contact and Enquiry sent',
     created                 : 'Document created',
     deleted                 : 'Document deleted',
+    enquiry_sent            : `Enquiry sent`,
     updated                 : 'Document updated',
     file_deleted            : 'File deleted',
     order_created           : 'Order created',
@@ -796,9 +797,11 @@ export const en = {
     failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
     gallery_save              : 'An error occurred while saving the gallery',
     images_allowed            : `only image types are allowed`,
+    images_max_exceeded       : `Max limit ({limit}) exceeded`,
     invalid_cache_key         : `invalid cache key:{key}`,
     invalid_credentials       : 'Invalid credentials',
     invalid_file_key          : 'Invalid file key',
+    invalid_input             : `Invalid input`,
     invalid_token             : 'Invalid token',
     invalid_payment_method    : 'Invalid payment method',
     item_not_found            : 'Item not found',
