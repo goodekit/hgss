@@ -69,7 +69,7 @@ export const fr = {
     label: 'Contact',
     description: 'Contact us for any enquiries'
   },
-  contact_and_custom_inquiries: {
+  contact_and_custom_enquiries: {
     label: 'Contact & Custom Inquiries'
   },
   continue: {

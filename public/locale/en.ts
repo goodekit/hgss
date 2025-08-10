@@ -77,8 +77,9 @@ export const en = {
     label      : 'Contact',
     description: 'Contact us for any enquiries'
   },
-  contact_and_custom_inquiries: {
-    label: 'Contact & Custom Inquiries'
+  contact_and_custom_enquiries: {
+    label      : 'Contact & Custom Enquiries',
+    description: 'Need something you don’t see on our product line?'
   },
   continue: {
     label      : 'Continue',
@@ -166,6 +167,10 @@ export const en = {
     label: 'Filtered by'
   },
   form: {
+    attachments: {
+      label      : 'Attachments',
+      placeholder: `Upload attachments in JPEG, PNG, or JPG format`
+    },
     reset_password: {
       label      : 'Reset Password',
       placeholder: 'We will send you an email to reset your password'
@@ -705,6 +710,10 @@ export const en = {
     copyright_notice: `All rights reserved.`
   },
   smtp: {
+    contact_and_enquiry: {
+      title  : `Enquiry`,
+      subject: `New Enquiry from {name}`,
+    },
     reset_password: {
       subject: `Your Password Reset Request`,
       title  : `Homegrown-Speedshop Password Reset`,
@@ -752,41 +761,47 @@ export const en = {
     required_default : `{field} is required`
   },
   success: {
-    created             : 'Document created',
-    deleted             : 'Document deleted',
-    updated             : 'Document updated',
-    file_deleted        : 'File deleted',
-    order_created       : 'Order created',
-    order_deleted       : 'Order deleted',
-    order_delivered     : 'Order delivered',
-    order_paid          : 'Your order has been paid',
-    password_updated    : `Successful, password updated`,
-    product_created     : 'Product created',
-    product_deleted     : 'Product deleted',
-    product_updated     : 'Product updated',
-    password_reset_sent : 'Password reset token sent',
-    review_updated      : 'Review updated',
-    sign_in_welcome_back: `Welcome back, {name}!`,
-    sign_in_welcome     : `Welcome, {name}!`,
-    update_order_paid   : 'updateOrderToPaid was successful',
-    user_created        : 'User created',
-    user_deleted        : 'User deleted',
-    user_updated        : 'User updated',
-    user_signed_up      : 'User signed up',
-    user_signed_in      : 'User signed in',
-    valid_token         : `Successful, Token valid`
+    contact_and_enquiry_sent: 'Contact and Enquiry sent',
+    created                 : 'Document created',
+    deleted                 : 'Document deleted',
+    enquiry_sent            : `Enquiry sent`,
+    updated                 : 'Document updated',
+    file_deleted            : 'File deleted',
+    order_created           : 'Order created',
+    order_deleted           : 'Order deleted',
+    order_delivered         : 'Order delivered',
+    order_paid              : 'Your order has been paid',
+    password_updated        : `Successful, password updated`,
+    product_created         : 'Product created',
+    product_deleted         : 'Product deleted',
+    product_updated         : 'Product updated',
+    password_reset_sent     : 'Password reset token sent',
+    review_updated          : 'Review updated',
+    sign_in_welcome_back    : `Welcome back, {name}!`,
+    sign_in_welcome         : `Welcome, {name}!`,
+    update_order_paid       : 'updateOrderToPaid was successful',
+    user_created            : 'User created',
+    user_deleted            : 'User deleted',
+    user_updated            : 'User updated',
+    user_signed_up          : 'User signed up',
+    user_signed_in          : 'User signed in',
+    valid_token             : `Successful, Token valid`
   },
   error: {
     account_locked            : 'Account temporarily locked. Contact support.',
     bag_empty                 : 'Bag is empty',
     bag_not_found             : 'Bag not found',
+    enquiries_max_limit       : `You have already hit the max limit for enquiries, you have {time} til you can send an enquiry again`,
     exists_reset_password     : `Valid reset password request already exists in your mailbox`,
     expired_token             : `Token expired`,
     failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
     gallery_save              : 'An error occurred while saving the gallery',
+    images_allowed            : `only image types are allowed`,
+    images_max_exceeded       : `Max limit ({limit}) exceeded`,
     invalid_cache_key         : `invalid cache key:{key}`,
     invalid_credentials       : 'Invalid credentials',
     invalid_file_key          : 'Invalid file key',
+    invalid_input             : `Invalid input`,
     invalid_token             : 'Invalid token',
     invalid_payment_method    : 'Invalid payment method',
     item_not_found            : 'Item not found',
@@ -812,6 +827,7 @@ export const en = {
     product_not_found         : 'Product not found',
     send_email                : `Error occured while sending email`,
     sesssion_not_found        : 'Session bag id not found',
+    session_stale             : 'Session is stale, please sign-in again',
     too_many_attempt          : `Too many attempts, try again in {min}m {sec}s`,
     unable_delete             : 'Unable to delete file',
     unable_upload             : 'Unable to upload file',
@@ -820,6 +836,7 @@ export const en = {
     update_order_paid         : 'updateOrderToPaid failed',
     user_not_authenticated    : 'User not authenticated',
     user_not_authorized       : 'User not authorized',
-    user_not_found            : 'User not found'
+    user_not_found            : 'User not found',
+    user_not_found_reauth     : 'User not found, sign-in again',
   }
 }
