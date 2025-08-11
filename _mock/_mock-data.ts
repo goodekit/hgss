@@ -50,7 +50,8 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
       stock         : 10,
       category      : 'Automotive',
       banner        : '',
-      isFeatured    : false
+      isFeatured    : false,
+      __submitted   : false
     },
     {
       model      : '[EP70/71] Toyota Starlet',
@@ -65,9 +66,11 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
       stock         : 10,
       category      : 'Automotive',
       banner        : '',
-      isFeatured    : false
+      isFeatured    : false,
         //      rating: 0,
         // numReviews: 0
+      __submitted   : false
+
     },
     {
       model      : '2EE Toyota',
@@ -90,7 +93,8 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
       stock         : 10,
       category      : 'Automotive',
       banner        : '',
-      isFeatured    : false
+      isFeatured    : false,
+      __submitted   : false
         // rating: '0',
         // numReviews: 5
     },
@@ -107,7 +111,8 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
       stock         : 10,
       category      : 'Automotive',
       banner        : '',
-      isFeatured    : false
+      isFeatured    : false,
+      __submitted   : false
         // rating: 0,
         // numReviews: 0
     },
@@ -124,7 +129,8 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
       stock         : 10,
       category      : 'Automotive',
       banner        : '',
-      isFeatured    : false
+      isFeatured    : false,
+      __submitted   : false
     },
     {
       model      : '[EP70/71] Toyota Starlet',
@@ -139,7 +145,8 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
       stock         : 10,
       category      : 'Automotive',
       banner        : '',
-      isFeatured    : false
+      isFeatured    : false,
+      __submitted   : false
     },
     {
       model      : '[EP70/71] Toyota Starlet',
@@ -154,7 +161,8 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
       stock         : 10,
       category      : 'Automotive',
       banner        : '',
-      isFeatured    : false
+      isFeatured    : false,
+      __submitted   : false
       // numReviews    : 0
     },
     {
@@ -178,6 +186,7 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
       stock         : 10,
       category      : 'Automotive',
       banner        : '',
+      __submitted   : false,
       isFeatured    : false
       // numReviews    : 0
     },
@@ -194,7 +203,8 @@ export const _mockData: { users: UserExtended[]; products: CreateProduct[]; gall
      stock         : 10,
      category      : 'Automotive',
      banner        : '',
-     isFeatured    : false
+     isFeatured    : false,
+     __submitted   : false
     }
   ],
   gallery: [
