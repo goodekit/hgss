@@ -11,7 +11,9 @@ export const GallerySchema = z.object({
   title       : z.string().min(3, 'Title is required'),
   description : z.string(),
   cover       : z.string(),
-  galleryItems: z.array(GalleryItemSchema).min(1, 'At least one gallery item is required')
+  galleryItems: z.array(GalleryItemSchema).min(1, 'At least one gallery item is required'),
+  __submitted : z.boolean().default(false)
+
 })
 
 export const UpdateGalleryItemSchema = GalleryItemSchema.extend({
