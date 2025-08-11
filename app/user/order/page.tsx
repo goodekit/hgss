@@ -7,7 +7,7 @@ import { TooltpGoBadge } from 'component/shared/tooltp'
 import { Pagination, DeleteDialg, BackBtn, NoResult } from 'component/shared'
 import { formatCurrency, formatDateTime, formatId, transl } from 'lib/util'
 
-export const metadata: Metadata = { title: 'My Orders' }
+export const metadata: Metadata = { title: transl('my_order.plural') }
 
 interface UserOrdersPageProps {
   searchParams: Promise<{ page: string }>
