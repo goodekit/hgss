@@ -7,7 +7,7 @@ import { TooltpGoBadge } from 'component/shared/tooltp'
 import { Pagination, DeleteDialg, BackBtn, NoResult } from 'component/shared'
 import { formatCurrency, formatDateTime, formatId, transl } from 'lib/util'
 
-export const metadata: Metadata = { title: 'My Orders' }
+export const metadata: Metadata = { title: transl('my_order.plural') }
 
 interface UserOrdersPageProps {
   searchParams: Promise<{ page: string }>
@@ -35,7 +35,7 @@ const UserOrdersPage = async ({ searchParams }: UserOrdersPageProps) => {
         id: 'id',
         value: (
           <div className={'flex flex-row items-center'}>
-           <TooltpGoBadge trigger={formatId(item.id)} href={PATH_DIR.ORDER_VIEW(item.id)} content={`${transl('go_to.label')} this order`} />
+            <TooltpGoBadge trigger={formatId(item.id)} href={PATH_DIR.ORDER_VIEW(item.id)} content={`${transl('go_to.label')} this order`} />
           </div>
         ),
         align: 'left'
@@ -44,13 +44,13 @@ const UserOrdersPage = async ({ searchParams }: UserOrdersPageProps) => {
       { id: 'total', value: formatCurrency(item.totalPrice), align: 'left' },
       {
         id: 'paid',
-        value: <Badge variant={item.isPaid ? 'default' : 'destructive'}>{item.isPaid ? formatDateTime(item.paidAt!).dateTime : 'Not paid'}</Badge>,
+        value: <Badge variant={item.isPaid ? 'outline' : 'destructive'}>{item.isPaid ? formatDateTime(item.paidAt!).dateTime : 'Not paid'}</Badge>,
         align: 'center'
       },
       {
         id: 'delivered',
         value: (
-          <Badge variant={item.isDelivered ? 'secondary' : 'destructive'}>
+          <Badge variant={item.isDelivered ? 'outline' : 'destructive'}>
             {item.isDelivered ? formatDateTime(item.deliveredAt!).dateTime : 'Not delivered'}
           </Badge>
         ),

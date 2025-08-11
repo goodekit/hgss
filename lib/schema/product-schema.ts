@@ -20,7 +20,8 @@ export const ProductSchema = z.object({
   images        : z.array(z.string()).min(1, transl('validation.min_image_default', { module: 'Product', value: 1 })),
   isFeatured    : z.boolean(),
   banner        : z.string().nullable(),
-  price         : currency.refine((num) => Number(num) > Number(PRICE_MIN), transl('error.price_min', { amount: PRICE_MIN }))
+  price         : currency.refine((num) => Number(num) > Number(PRICE_MIN), transl('error.price_min', { amount: PRICE_MIN })),
+  __submitted   : z.boolean().default(false)
 })
 
 export const UpdateProductSchema = ProductSchema.extend({

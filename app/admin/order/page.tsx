@@ -54,13 +54,13 @@ const AdminOrdersPage = async ({ searchParams }: AdminOrdersPageProps) => {
       { id: 'total', value: formatCurrency(item.totalPrice), align: 'left' },
       {
         id: 'paid',
-        value: <Badge variant={item.isPaid ? 'secondary' : 'destructive'}>{item.isPaid ? formatDateTime(item.paidAt!).dateTime : 'Not paid'}</Badge>,
+        value: <Badge variant={item.isPaid ? 'outline' : 'destructive'}>{item.isPaid ? formatDateTime(item.paidAt!).dateTime : 'Not paid'}</Badge>,
         align: 'center'
       },
       {
         id: 'delivered',
         value: (
-          <Badge variant={item.isDelivered ? 'secondary' : 'destructive'}>
+          <Badge variant={item.isDelivered ? 'outline' : 'destructive'}>
             {item.isDelivered ? formatDateTime(item.deliveredAt!).dateTime : 'Not delivered'}
           </Badge>
         ),

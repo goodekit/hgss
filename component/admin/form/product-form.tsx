@@ -5,7 +5,7 @@ import { PATH_DIR } from 'hgss-dir'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm, useFieldArray } from 'react-hook-form'
-import { useToast, usePreventNavigation, useFormState, useFormDraft } from 'hook'
+import { useToast, usePreventNavigation, useFormState, useFormDraft, useCleanupUnsubmittedImages } from 'hook'
 import slugify from 'slugify'
 import { Plus, MoveUpRight } from 'lucide-react'
 import { ProductSchema, UpdateProductSchema, productDefaultValue } from 'lib/schema'
@@ -41,6 +41,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
   }, [formState.isDirty, setDirty])
 
   useFormDraft(watch, setValue, LOCAL_STORAGE_KEY[type === 'create' ? 'productCreate' : 'productUpdate'])
+  useCleanupUnsubmittedImages(form, 'images', '__submitted')
 
   const handleSlugify = () => {
     form.setValue('slug', slugify(form.getValues('name'), { lower: true }))
@@ -72,6 +73,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
           toast({ description: response.message })
         }
       }
+      form.setValue('__submitted', true)
       router.push(PATH_DIR.ADMIN.PRODUCT)
     } catch (error) {
       toast({

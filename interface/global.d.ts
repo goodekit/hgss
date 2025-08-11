@@ -19,7 +19,7 @@ import {
   GalleryItemSchema,
   GallerySchema,
   UpdateGallerySchema,
-  UpdateGallerySchema,
+  UpdateGalleryItemSchema,
   ResetPasswordSchema,
   ForgotPasswordSchema,
   SignUpSchema,

@@ -380,6 +380,10 @@ export const en = {
     label      : 'Money Back Guarantee',
     description: ' days money back guarantee'
   },
+  my_order: {
+    label : `My Order`,
+    plural: `My Orders`
+  },
   navigation: {
     account: {
       label: 'Account'
@@ -754,11 +758,12 @@ export const en = {
     }
   },
   validation: {
-    price_format     : 'Price must have exactly 2 decimal places',
-    min_default      : `{field} must be at least {value} characters`,
-    max_default      : `{field} must not be over {value} characters`,
-    min_image_default: `{module} should have at least {value} image`,
-    required_default : `{field} is required`
+    price_format         : 'Price must have exactly 2 decimal places',
+    gallery_item_required: `At least one gallery item is required`,
+    min_default          : `{field} must be at least {value} characters`,
+    max_default          : `{field} must not be over {value} characters`,
+    min_image_default    : `{module} should have at least {value} image`,
+    required_default     : `{field} is required`
   },
   success: {
     contact_and_enquiry_sent: 'Contact and Enquiry sent',
