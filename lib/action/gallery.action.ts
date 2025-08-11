@@ -167,7 +167,7 @@ export async function createGalleryItem(data: CreateGalleryItem) {
  */
 export async function createGallery(data: CreateGallery) {
   try {
-    const parsed                    = GallerySchema.parse(data)
+    const parsed                    = GallerySchema.omit({ __submitted: true }).parse(data)
     const { galleryItems, ...rest } = parsed
 
     const newGallery = await prisma.gallery.create({
@@ -186,7 +186,7 @@ export async function createGallery(data: CreateGallery) {
     })
 
     if (!galleryItems || galleryItems.length === 0) {
-      throw new Error('At least one gallery item must be provided')
+      throw new Error(transl('validation.gallery_item_required'))
     }
     await invalidateCache(CACHE_KEY.galleryById(newGallery.id))
     revalidatePath(PATH_DIR.ADMIN.GALLERY)
