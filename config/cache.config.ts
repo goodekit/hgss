@@ -1,4 +1,5 @@
 export const CACHE_KEY = {
+  enquiriesLimit  : (ip: string) => `enquiries_limit:${ip}`,
   products        : (page = 1) => `cache:products:page=${page}`,
   productById     : (id: string) => `cache:product:${id}`,
   productBySlug   : (slug: string) => `cache:product:${slug}`,
