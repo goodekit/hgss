@@ -49,11 +49,11 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
     const file = e.target.files?.[0]
     if (!file) return
 
-    const maxLimit = GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024
+    const maxFileSizeLimit = GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024
 
-    if (file.size > maxLimit) {
-      toast({ variant: 'destructive', description: `File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit` })
-      throw new Error(`File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit`)
+    if (file.size > maxFileSizeLimit) {
+      toast({ variant: 'destructive', description: `File exceeds the ${maxFileSizeLimit}MB limit` })
+      throw new Error(`File exceeds the ${maxFileSizeLimit}MB limit`)
     }
 
     const formData = new FormData()
