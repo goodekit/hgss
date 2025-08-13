@@ -18,23 +18,24 @@ import { cn, transl, truncate } from 'lib/util'
 type FormKeyLocale = keyof typeof en.form
 
 interface RHFFormDropzoneProps<TSchema extends ZodSchema, TImages = string[] | string> {
-  control    : Control<z.infer<TSchema>>
-  formKey    : FormKeyLocale
-  images     : TImages
-  name       : Path<z.infer<TSchema>>
-  form       : UseFormReturn<z.infer<TSchema>>
-  withLabel ?: boolean
-  folderName?: S3FolderName
-  maxLimit  ?: number
+  control          : Control<z.infer<TSchema>>
+  formKey          : FormKeyLocale
+  images           : TImages
+  name             : Path<z.infer<TSchema>>
+  form             : UseFormReturn<z.infer<TSchema>>
+  withLabel       ?: boolean
+  folderName      ?: S3FolderName
+  maxLimitFileSize?: number
+  maxLimitQty     ?: number
 }
 
-const { MAX_UPLOAD_SIZE_GALLERY } = GLOBAL.LIMIT
+const { MAX_UPLOAD_SIZE_GALLERY, MAX_PHOTO_QTY_GALLERY } = GLOBAL.LIMIT
 
-const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>({ control, name, images, formKey, form, withLabel = true, folderName, maxLimit = MAX_UPLOAD_SIZE_GALLERY }: RHFFormDropzoneProps<TSchema, TImages>) => {
+const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>({ control, name, images, formKey, form, withLabel = true, folderName, maxLimitFileSize = MAX_UPLOAD_SIZE_GALLERY, maxLimitQty = MAX_PHOTO_QTY_GALLERY,  }: RHFFormDropzoneProps<TSchema, TImages>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const { toast }                           = useToast()
 
-  const isMaxLimitReached = Array.isArray(images) && images.length >= maxLimit || typeof images === 'string' && maxLimit <= 1
+  const isMaxLimitReached = Array.isArray(images) && images.length >= maxLimitQty || typeof images === 'string' && maxLimitQty <= 1
 
   const handleUploadComplete = (res: { url: string }[]) => {
     const currentImages = form.getValues(name) as string[]
@@ -60,16 +61,17 @@ const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>
 
     const currentImages       = Array.isArray(images) ? images.length : images ? 1 : 0
     const totalAfterSelection = currentImages + files.length
-    if (totalAfterSelection > maxLimit) {
-      toast({ variant: 'destructive', description: transl('error.images_max_exceeded', { limit: maxLimit }) })
+    if (totalAfterSelection > maxLimitQty) {
+      toast({ variant: 'destructive', description: transl('error.images_max_exceeded', { limit: maxLimitQty }) })
       return
     }
 
     const urls: { url: string }[] = []
     for (const file of files) {
-      if (file.size > (maxLimit * 1024 * 1024)) {
-        toast({ variant: 'destructive', description: `File exceeds the ${maxLimit}MB limit` })
-        throw new Error(`File exceeds the ${maxLimit}MB limit`)
+      const uploadFileSize = maxLimitFileSize
+      if (file.size > (uploadFileSize * 1024 * 1024)) {
+        toast({ variant: 'destructive', description: `File exceeds the ${uploadFileSize}MB limit` })
+        throw new Error(`File exceeds the ${uploadFileSize}MB limit`)
       }
 
       if (!file.type.startsWith('image/')) {
@@ -165,7 +167,7 @@ const RHFFormDropzone = <TSchema extends ZodSchema, TImages = string[] | string>
                 <FormControl className={cn('space-y-2 my-2 text-md')}>
                   <label className={cn("inline-block px-4 py-2 text-sm font-medium rounded-sm transition", isMaxLimitReached ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50' : 'text-black  hover:dark:text-white bg-punkpink cursor-pointer hover:bg-pink-500 hover:font-bold')}>
                     {transl('upload_images.label')}
-                    <input type="file" accept="image/*" multiple max={maxLimit} onChange={(e) => handleUpload(e)} className={'hidden'} disabled={isMaxLimitReached} />
+                    <input type="file" accept="image/*" multiple max={maxLimitQty} onChange={(e) => handleUpload(e)} className={'hidden'} disabled={isMaxLimitReached} />
                   </label>
                 </FormControl>
               </div>
