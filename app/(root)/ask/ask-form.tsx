@@ -42,9 +42,10 @@ const AskForm: FC<AskFormProps> = ({ user }) => {
       if (!res.ok) {
         let errorResponse
         try {
-          errorResponse = await res.json()
+                errorResponse = await res.json()
+                errorResponse = errorResponse ? errorResponse : { error: 'Unknown Err' }
         } catch (error) {
-          errorResponse = { error: transl('error.unknown_error') }
+          errorResponse = { error: (error as AppError)?.message || 'Unknown Err'}
         }
         const currentAttachments = form.getValues('attachments')
 
@@ -55,7 +56,6 @@ const AskForm: FC<AskFormProps> = ({ user }) => {
         } else if (typeof currentAttachments === 'string') {
           await deleteImage({ currentImages: currentAttachments })
         }
-
         toast({ variant: 'destructive', description: errorResponse.error })
         return
       }
@@ -74,8 +74,8 @@ const AskForm: FC<AskFormProps> = ({ user }) => {
         <FormProvider {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className={'grid grid-cols-1 md:grid-cols-4 gap-6 special-elite mx-auto py-5'}>
             <div className={'space-y-4 md:col-span-1'}>
-              <RHFFormField control={control} name={'name'} formKey={'name'} disabled={user && true} />
-              <RHFFormField control={control} name={'email'} formKey={'email'} disabled={user && true} />
+              <RHFFormField control={control} name={'name'} formKey={'name'} />
+              <RHFFormField control={control} name={'email'} formKey={'email'} />
             </div>
             <div className={'space-y-4 md:col-span-3'}>
               <RHFFormField control={control} name={'message'} formKey={'message'} type={'textarea'} />
