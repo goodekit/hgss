@@ -1,6 +1,7 @@
 'use client'
 
 import { FC, Fragment, useEffect } from 'react'
+import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -112,7 +113,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
             <SpecificationField fields={fields} register={register} onClick={() => append('')} remove={remove} />
           </div>
           <div className={"upload-field flex flex-col md:flex-row gap-4"}>
-            <RHFFormDropzone control={control} name={'images'} formKey={'images'} images={images} form={form} folderName={'product'} />
+            <RHFFormDropzone control={control} name={'images'} formKey={'images'} images={images} form={form} folderName={'product'} maxLimitFileSize={GLOBAL.LIMIT.MAX_UPLOAD_SIZE_PRODUCT} maxLimitQty={GLOBAL.LIMIT.MAX_PHOTO_QTY_PRODUCT} />
           </div>
           <div className={"upload-field gap-4 h-auto"}>
             <RHFFormField control={control} name={'description'} formKey={'description'} type={'textarea'} withWrapper={false} />

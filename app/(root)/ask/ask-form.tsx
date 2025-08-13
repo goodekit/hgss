@@ -79,7 +79,7 @@ const AskForm: FC<AskFormProps> = ({ user }) => {
             </div>
             <div className={'space-y-4 md:col-span-3'}>
               <RHFFormField control={control} name={'message'} formKey={'message'} type={'textarea'} />
-              <RHFFormDropzone control={control} name={'attachments'} formKey={'attachments'} images={attachments} form={form} folderName={'contact-and-enquiry'} maxLimit={GLOBAL.LIMIT.MAX_IMAGE_ATTACHMENT_ENQUIRY} />
+              <RHFFormDropzone control={control} name={'attachments'} formKey={'attachments'} images={attachments} form={form} folderName={'contact-and-enquiry'} maxLimitQty={GLOBAL.LIMIT.MAX_IMAGE_ATTACHMENT_ENQUIRY} maxLimitFileSize={GLOBAL.LIMIT.MAX_UPLOAD_SIZE_ENQUIRY} />
               <div className={'flex justify-end'}>
                 <TapeBtn label={isPending ? <EllipsisLoader /> : transl('send_message.label')} className={'w-full md:w-[300px] texture-4-bg'} disabled={submitted} />
               </div>

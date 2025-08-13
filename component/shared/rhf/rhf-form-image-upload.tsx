@@ -1,18 +1,18 @@
 "use client"
 
 import { useState } from 'react'
-import { z, ZodSchema } from 'zod'
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
-import { Control, Path, UseFormReturn } from 'react-hook-form'
+import { PATH_DIR } from 'hgss-dir'
 import Image from 'next/image'
+import { en } from 'public/locale'
+import { z, ZodSchema } from 'zod'
+import { Control, Path, UseFormReturn } from 'react-hook-form'
 import { useToast } from 'hook'
 import { X, ImageUp } from 'lucide-react'
 import { deleteImage } from 'lib/action'
-import { cn } from 'lib'
+import { cn, transl } from 'lib'
 import { FormField, FormLabel, FormMessage, FormItem, FormControl } from 'component/ui/form'
 import { Card, CardContent } from 'component/ui/card'
-import { PATH_DIR } from 'hgss-dir'
 
 type FormKeyLocale = keyof typeof en.form
 
@@ -39,9 +39,9 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
     const result       = await deleteImage({ currentImages: currentImage })
     if (result?.success) {
       form.setValue(name, '' as SetFieldName)
-      toast({ description: en.success.file_deleted })
+      toast({ description: transl('success.file_deleted') })
     } else {
-      toast({ variant: 'destructive', description: en.error.unable_delete })
+      toast({ variant: 'destructive', description: transl('error.unable_delete') })
     }
   }
 
@@ -49,11 +49,11 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
     const file = e.target.files?.[0]
     if (!file) return
 
-    const maxLimit = GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024
+    const maxFileSizeLimit = GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY * 1024 * 1024
 
-    if (file.size > maxLimit) {
-      toast({ variant: 'destructive', description: `File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit` })
-      throw new Error(`File exceeds the ${GLOBAL.LIMIT.MAX_UPLOAD_SIZE_GALLERY}MB limit`)
+    if (file.size > maxFileSizeLimit) {
+      toast({ variant: 'destructive', description: `File exceeds the ${maxFileSizeLimit}MB limit` })
+      throw new Error(`File exceeds the ${maxFileSizeLimit}MB limit`)
     }
 
     const formData = new FormData()
@@ -80,12 +80,12 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
           return copy
         })
       } else {
-        toast({ variant: 'destructive', description: en.error.unable_upload })
+        toast({ variant: 'destructive', description: transl('error.unable_upload') })
       }
     }
 
     xhr.onerror = () => {
-      toast({ variant: 'destructive', description: en.error.unable_upload })
+      toast({ variant: 'destructive', description: transl('error.unable_upload') })
     }
 
     xhr.open('POST', PATH_DIR.UPLOAD)
@@ -98,7 +98,7 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
       name={name}
       render={() => (
         <FormItem className={'w-full'}>
-          {withLabel && <FormLabel>{en.form[formKey].label}</FormLabel>}
+          {withLabel && <FormLabel>{transl(`form.${formKey}.label`)}</FormLabel>}
           <Card>
             <CardContent className={'space-y-2 mt-2 '}>
                   {image && (
@@ -116,7 +116,7 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
                     {!image && (
                       <div className="flex flex-col items-center justify-center">
                         <ImageUp size={40} />
-                        {en.upload.description}
+                        {transl('upload.description')}
                       </div>
                     )}
                     <input disabled={image !== ''} type="file" accept="image/*" onChange={(e) => handleUpload(e)} className={'hidden'} />

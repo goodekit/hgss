@@ -19,7 +19,11 @@ export const GLOBAL = {
                             USER_ORDERS                 : 10,
                             PRODUCT_SPECS_MAX           : 5,
                             MAX_UPLOAD_SIZE_GALLERY     : 7,                                           // MB,
+                            MAX_UPLOAD_SIZE_ENQUIRY     : 7,                                           // MB,
+                            MAX_UPLOAD_SIZE_PRODUCT     : 7,                                           // MB,
                             MAX_IMAGE_ATTACHMENT_ENQUIRY: 4,
+                            MAX_PHOTO_QTY_GALLERY       : 5,
+                            MAX_PHOTO_QTY_PRODUCT       : 5,
                             MAX_ALLOWED_ENQUIRY         : 10,
                             WAIT_TIME_ENQUIRY           : 24 * 60 * 60 * 1000 * 7,                     // MB,
                             RESET_PASSWORD_LINK_EXPIRY  : new Date(Date.now() + 3 * 60 * 60 * 1000),   // HOUR
