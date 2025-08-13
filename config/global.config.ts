@@ -20,7 +20,7 @@ export const GLOBAL = {
                             PRODUCT_SPECS_MAX           : 5,
                             MAX_UPLOAD_SIZE_GALLERY     : 7,                                           // MB,
                             MAX_IMAGE_ATTACHMENT_ENQUIRY: 4,
-                            MAX_ALLOWED_ENQUIRY         : 5,
+                            MAX_ALLOWED_ENQUIRY         : 10,
                             WAIT_TIME_ENQUIRY           : 24 * 60 * 60 * 1000 * 7,                     // MB,
                             RESET_PASSWORD_LINK_EXPIRY  : new Date(Date.now() + 3 * 60 * 60 * 1000),   // HOUR
                             SIGNIN_TTL                  : 15 * 60,                                     //15 MIN
