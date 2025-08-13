@@ -11,9 +11,9 @@ export const AttachmentSchema = z.object({
 }) satisfies z.ZodType<Attachment>
 
 export const ContactAndEnquiriesSchema = z.object({
-  name       : z.string().min(3, 'Name must be at least 3 characters').max(255),
-  email      : z.string().email().min(5, 'Email must be at least 5 characters'),
-  message    : z.string().min(5, transl('validation.min_default', { field: 'Message', value: 5 })).max(500, 'Message cannot exceed 500 characters'),
+  name       : z.string().min(3, transl('validation.min_default', { field: 'Name', value: 3 })).max(255, transl('validation.max_default', { field: 'Name', value: 255 })),
+  email      : z.string().email(transl('validation.required_default', { field: 'Email' })),
+  message    : z.string().min(5, transl('validation.min_default', { field: 'Message', value: 5 })).max(1000, transl('validation.max_default', { field: 'Message', value: 1000 })),
   attachments: z.array(z.string().url()).max(GLOBAL.LIMIT.MAX_IMAGE_ATTACHMENT_ENQUIRY, `Max ${GLOBAL.LIMIT.MAX_IMAGE_ATTACHMENT_ENQUIRY} images allowed`).optional(),
   __submitted: z.boolean().default(false),
 })
