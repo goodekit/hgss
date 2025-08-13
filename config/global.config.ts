@@ -18,7 +18,7 @@ export const GLOBAL = {
                             ADMIN_ORDERS                : 10,
                             USER_ORDERS                 : 10,
                             PRODUCT_SPECS_MAX           : 5,
-                            MAX_UPLOAD_SIZE_GALLERY     : 5,                                           // MB,
+                            MAX_UPLOAD_SIZE_GALLERY     : 7,                                           // MB,
                             MAX_IMAGE_ATTACHMENT_ENQUIRY: 4,
                             MAX_ALLOWED_ENQUIRY         : 5,
                             WAIT_TIME_ENQUIRY           : 24 * 60 * 60 * 1000 * 7,                     // MB,
@@ -84,5 +84,8 @@ export const GLOBAL = {
                             PUBLIC_URL         : `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
                             IMAGE_TYPE         : 'image/webp',
                             IMAGE_TYPES_ALLOWED: ['jpg', 'jpeg', 'png', 'gif', 'webp']
-  },
+                          },
+  HASH                  :{
+                            SALT_ROUNDS: Number(process.env.SALT_ROUNDS) || 10
+                          }
 }
