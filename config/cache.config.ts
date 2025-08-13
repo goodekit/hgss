@@ -16,7 +16,7 @@ export const CACHE_KEY = {
   orderById       : (id: string) => `cache:order:${id}`,
   orderSummary    : `cache:orders:summary`,
   users           : (page = 1) => `cache:users:page=${page}`,
-  userById        : (id: string) => `cache: user:${id}`
+  userById        : (id: string) => `cache:user:${id}`
 }
 
 export const CACHE_TTL = {
