@@ -35,8 +35,8 @@ async function generateAccessToken() {
   const url  = join(base, 'v1', 'oauth2', 'token')
 
   const response = await fetch(url, {
-    method: 'POST',
-    body: 'grant_type=client_credentials',
+    method : 'POST',
+    body   : 'grant_type=client_credentials',
     headers: { Authorization: `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' }
   })
 

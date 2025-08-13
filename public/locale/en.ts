@@ -167,6 +167,10 @@ export const en = {
     label: 'Filtered by'
   },
   form: {
+    old_password : {
+      label      : 'Old Password',
+      placeholder: 'Enter your Old Password'
+    },
     attachments: {
       label      : 'Attachments',
       placeholder: `Upload attachments in JPEG, PNG, or JPG format`
@@ -760,9 +764,14 @@ export const en = {
   validation: {
     price_format         : 'Price must have exactly 2 decimal places',
     gallery_item_required: `At least one gallery item is required`,
+    invalid_email_format : `Invalid email format`,
     min_default          : `{field} must be at least {value} characters`,
     max_default          : `{field} must not be over {value} characters`,
     min_image_default    : `{module} should have at least {value} image`,
+    password: {
+      invalid_old: 'Invalid old password',
+      not_match  : 'Passwords do not match'
+    },
     required_default     : `{field} is required`
   },
   success: {

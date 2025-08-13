@@ -1,8 +1,8 @@
 "use client"
 
 import React, { FC, Fragment, JSX } from "react"
-import { cn } from "lib"
 import { EllipsisLoader } from 'component/shared/loader'
+import { cn } from "lib"
 
 interface TapeBtnProps {
   label     : JSX.Element | string
@@ -34,7 +34,6 @@ export const getRandomTextureClass = () => {
 }
 
 const TapeBtn: FC<TapeBtnProps> = ({ href, label, className, disabled, type = 'submit', isLink = false, onClick, icon, isPending, textSize }) => {
-//  const randomizedClasses  = NAV_CONFIG.map(() => getRandomTextureClass())
  const renderPendingState = isPending ? ( <EllipsisLoader /> ) : ( <Fragment> {label} {icon} </Fragment> )
 
   return (

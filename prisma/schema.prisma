@@ -192,6 +192,6 @@ model ContactAndEnquiry {
   message     String
   attachments String[]
   createdAt   DateTime @default(now()) @db.Timestamp(6)
-  userId      String   @db.Uuid
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String?   @db.Uuid
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
