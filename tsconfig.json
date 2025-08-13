@@ -20,7 +20,8 @@
     ],
     "paths": {
       "*": ["./*"],
-      "hgss": ["./config/global.ts"],
+      "hgss": ["./config/global.config.ts"],
+      "hgss.cache": ["./config/cache.config.ts"],
       "hgss-locale": ["./public/locale"],
       "hgss-design": ["./design/token"],
       "hgss-dir": ["./config/dir"],
