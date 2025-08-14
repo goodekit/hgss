@@ -1,4 +1,5 @@
 import { JSX, ReactNode } from 'react'
+import { en, fr, es } from 'hgss-locale'
 import { z, ZodError } from 'zod'
 import { Prisma } from '@prisma/client'
 import {
@@ -23,7 +24,8 @@ import {
   ResetPasswordSchema,
   ForgotPasswordSchema,
   SignUpSchema,
-  SignInSchema
+  SignInSchema,
+  UpdateUserPasswordSchema
 } from 'lib/schema'
 import { ReviewSchema } from 'lib/schema/review-schema'
 
@@ -104,6 +106,7 @@ declare global {
   export type PaymentMethod           = z.infer<typeof PaymentMethodSchema>
   export type ForgotPassword          = z.infer<typeof ForgotPasswordSchema>
   export type ResetPassword           = z.infer<typeof ResetPasswordSchema>
+  export type UpdateUserPassword      = z.infer<typeof UpdateUserPasswordSchema>
   export type CreateGallery           = z.infer<typeof GallerySchema>
   export type CreateGalleryItem       = z.infer<typeof GalleryItemSchema>
   export type UpdateGallery           = z.infer<typeof UpdateGallerySchema>
@@ -182,6 +185,8 @@ declare global {
   export interface AppUser<T> extends AppPage<T> { limit?: number, query: string }
   export interface AppProductsPage<T> extends AppPage<T> { query: string, category: string }
   export interface AppProductsAction<T> extends AppPage<T> { query: string, limit?: number,  category?: string, price?: string, rating?: string, sort?: string }
+
+  export type AppLocale = typeof en | typeof fr | typeof es
 
   export type AppError =
     | ZodError

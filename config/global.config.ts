@@ -12,7 +12,11 @@ export const GLOBAL = {
                             CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET
   },
   NEXTAUTH_STRATEGY      : process.env.NEXTAUTH_STRATEGY || 'jwt',
-  LOCALE                 : process.env.NEXT_PUBLIC_LOCALE || 'en-NZ',
+  LOCALE                 : {
+                            LANG_CODE: process.env.NEXT_PUBLIC_LOCALE_VERSION,
+                            LANG     : process.env.NEXT_PUBLIC_LOCALE_LANG
+                            },
+
   USER_ROLES             : process.env.USER_ROLES && process.env.USER_ROLES.split(';') || ['user', 'admin'],
   LIMIT                  : {
                             ADMIN_ORDERS                : 10,

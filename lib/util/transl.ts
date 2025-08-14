@@ -1,12 +1,11 @@
-import { en, fr, es } from 'hgss-locale'
+import { locales } from 'config/locale.config'
 
 type NestedKeys<T> = {
   [K in keyof T & string]: T[K] extends string ? K : T[K] extends Record<string, unknown> ? `${K}.${NestedKeys<T[K]>}` : never
 }[keyof T & string]
 
-type  LocaleLang = 'en' | 'fr' | 'es'
-type  LocaleKey  = NestedKeys<typeof en>
-const locales    = { en, fr, es }
+type  LocaleLang = keyof typeof locales
+type  LocaleKey  = NestedKeys<AppLocale>
 
 /**
  * Retrieves a localized message based on the provided key and optional parameters.

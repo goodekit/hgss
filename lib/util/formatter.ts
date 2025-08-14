@@ -2,7 +2,7 @@ import { GLOBAL } from "hgss"
 import { SystemLogger } from "lib/app-logger"
 
 const TAG    = "UTIL_FORMATTER"
-const LOCALE = GLOBAL.LOCALE as Intl.LocalesArgument  // default
+const LOCALE = GLOBAL.LOCALE.LANG_CODE as Intl.LocalesArgument  // default
 
 const _getUserLocale = () => {
   try {
