@@ -48,6 +48,10 @@ export const es = {
   change_file: {
     label: 'Change File'
   },
+  change_password: {
+    label: 'Change Password',
+    description: "Change your account's Password"
+  },
   checkout: {
     label: 'Checkout',
     description: 'Complete the form with your information'
@@ -57,6 +61,10 @@ export const es = {
   },
   create: {
     label: 'Create'
+  },
+  create_gallery: {
+    label: 'Create Gallery',
+    description: 'Complete the form with your gallery information'
   },
   create_product: {
     label: 'Create Product',
@@ -70,7 +78,8 @@ export const es = {
     description: 'Contact us for any enquiries'
   },
   contact_and_custom_enquiries: {
-    label: 'Contact & Custom Inquiries'
+    label: 'Contact & Custom Enquiries',
+    description: 'Need something you don’t see on our product line?'
   },
   continue: {
     label: 'Continue',
@@ -119,6 +128,20 @@ export const es = {
   delete: {
     label: 'Delete'
   },
+  delete_gallery_item: {
+    label: 'Delete Gallery Item',
+    description: 'Are you sure you want to delete this Gallery Item?'
+  },
+  delete_image: {
+    label: 'Delete Image',
+    description: 'Are you sure you want to delete this image?',
+    description_last_image: 'This is the last image in the Album, deleting this will delete the album, are you sure you want to continue?'
+  },
+  delete_album: {
+    label: 'Delete Album',
+    description: 'Are you sure you want to delete this Album?',
+    description_multiple: 'There are multiple images in the album, are you sure you want to delete this album?'
+  },
   delivered_at: {
     label: 'Delivered At'
   },
@@ -144,6 +167,34 @@ export const es = {
     label: 'Filtered by'
   },
   form: {
+    old_password: {
+      label: 'Old Password',
+      placeholder: 'Enter your Old Password'
+    },
+    attachments: {
+      label: 'Attachments',
+      placeholder: `Upload attachments in JPEG, PNG, or JPG format`
+    },
+    reset_password: {
+      label: 'Reset Password',
+      placeholder: 'We will send you an email to reset your password'
+    },
+    forgot_password: {
+      label: 'Forgot Password',
+      placeholder: 'Forgot Password?'
+    },
+    image: {
+      label: 'Image',
+      placeholder: 'Add Image'
+    },
+    gallery_item: {
+      label: 'Gallery Item',
+      placeholder: 'Add Gallery Item'
+    },
+    cover: {
+      label: 'Cover',
+      placeholder: 'Add cover'
+    },
     specifications: {
       label: 'Specifications',
       placeholder: 'Add Specification'
@@ -333,6 +384,10 @@ export const es = {
     label: 'Money Back Guarantee',
     description: ' days money back guarantee'
   },
+  my_order: {
+    label: `My Order`,
+    plural: `My Orders`
+  },
   navigation: {
     account: {
       label: 'Account'
@@ -472,6 +527,11 @@ export const es = {
   remove: {
     label: 'Remove'
   },
+  reset_password: {
+    label: 'Reset Password',
+    description: 'We will send you an email to reset your password',
+    button: 'Send Password Reset Email'
+  },
   review: {
     label: 'Review',
     reviews: {
@@ -538,6 +598,9 @@ export const es = {
   sort_by: {
     label: 'Sort by'
   },
+  stats: {
+    label: 'Stats'
+  },
   status: {
     label: 'Status'
   },
@@ -577,6 +640,14 @@ export const es = {
     description: 'Complete the form with your information',
     toast: 'User name updated'
   },
+  update_gallery: {
+    label: 'Update Gallery',
+    description: 'Complete the form with your gallery information'
+  },
+  update_password: {
+    label: 'Update Password',
+    description: "Update your account's password"
+  },
   update_product: {
     label: 'Update Product',
     description: 'Complete the form with your product information'
@@ -585,9 +656,27 @@ export const es = {
     label: 'Update User',
     description: 'Complete the form with your user information'
   },
+  upload: {
+    label: 'Upload',
+    description: 'Click to Upload'
+  },
+  upload_image: {
+    label: 'Upload Image'
+  },
+  upload_images: {
+    label: 'Upload Image/s'
+  },
   upload_banner: {
     label: 'Upload Banner',
     description: 'Drag and drop an image here or click to upload'
+  },
+  upload_cover: {
+    label: 'Upload Cover',
+    description: 'Click to upload cover'
+  },
+  uploaded: {
+    label: 'Uploaded',
+    description: 'File Uploaded'
   },
   user: {
     label: 'User',
@@ -625,6 +714,22 @@ export const es = {
     label: 'Write a Review',
     description: 'Share your thoughts on this product with other customers'
   },
+  legal: {
+    copyright_notice: `All rights reserved.`
+  },
+  smtp: {
+    contact_and_enquiry: {
+      title: `Enquiry`,
+      subject: `New Enquiry from {name}`
+    },
+    reset_password: {
+      subject: `Your Password Reset Request`,
+      title: `Homegrown-Speedshop Password Reset`,
+      body_1: `We received a request to reset your password. Click the button below to choose a new password: `,
+      body_2: `If you don't use this link within 3 hours, it will expire.`,
+      button: `Reset Password`
+    }
+  },
   message: {
     default: {
       title: 'Are you sure?',
@@ -650,45 +755,102 @@ export const es = {
       title: 'Thank you for your purchase',
       description: 'Your order has been placed successfully.',
       we_are_processing: 'We are processing your order and will send you a confirmation email shortly.'
+    },
+    password_reset_sent: {
+      description: 'Password Reset link has been sent to your Email',
+      check_email: `You have a valid reset link sent in your email account, please check before requesting for a new one.`
     }
   },
+  validation: {
+    price_format: 'Price must have exactly 2 decimal places',
+    gallery_item_required: `At least one gallery item is required`,
+    invalid_email_format: `Invalid email format`,
+    min_default: `{field} must be at least {value} characters`,
+    max_default: `{field} must not be over {value} characters`,
+    min_image_default: `{module} should have at least {value} image`,
+    password: {
+      invalid_old: 'Invalid old password',
+      not_match: 'Passwords do not match'
+    },
+    required_default: `{field} is required`
+  },
   success: {
+    contact_and_enquiry_sent: 'Contact and Enquiry sent',
+    created: 'Document created',
+    deleted: 'Document deleted',
+    enquiry_sent: `Enquiry sent`,
+    updated: 'Document updated',
+    file_deleted: 'File deleted',
     order_created: 'Order created',
     order_deleted: 'Order deleted',
     order_delivered: 'Order delivered',
     order_paid: 'Your order has been paid',
+    password_updated: `Successful, password updated`,
     product_created: 'Product created',
     product_deleted: 'Product deleted',
     product_updated: 'Product updated',
+    password_reset_sent: 'Password reset token sent',
+    review_updated: 'Review updated',
+    sign_in_welcome_back: `Welcome back, {name}!`,
+    sign_in_welcome: `Welcome, {name}!`,
     update_order_paid: 'updateOrderToPaid was successful',
     user_created: 'User created',
     user_deleted: 'User deleted',
     user_updated: 'User updated',
     user_signed_up: 'User signed up',
     user_signed_in: 'User signed in',
-    review_updated: 'Review updated'
+    valid_token: `Successful, Token valid`
   },
   error: {
+    account_locked: 'Account temporarily locked. Contact support.',
     bag_empty: 'Bag is empty',
     bag_not_found: 'Bag not found',
+    enquiries_max_limit: `You have already hit the max limit for enquiries, you have {time} til you can send an enquiry again`,
+    exists_reset_password: `Valid reset password request already exists in your mailbox`,
+    expired_token: `Token expired`,
+    failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
+    gallery_save: 'An error occurred while saving the gallery',
+    images_allowed: `only image types are allowed`,
+    images_max_exceeded: `Max limit ({limit}) exceeded`,
+    invalid_cache_key: `invalid cache key:{key}`,
     invalid_credentials: 'Invalid credentials',
+    invalid_file_key: 'Invalid file key',
+    invalid_input: `Invalid input`,
+    invalid_token: 'Invalid token',
     invalid_payment_method: 'Invalid payment method',
     item_not_found: 'Item not found',
+    failed_create_product: 'An error occurred while creating the product',
+    failed_extract_file_key: 'Failed extracting the file key',
+    failed_sign_up: `Error occurred while signing-up`,
+    failed_delete_file: 'Failed to delete file',
+    fix_form_errors: 'Please fix form errors before submitting.',
+    form: 'Please fix form errors before submitting.',
+    no_file: 'No file',
     no_existing_item: 'No existing item to add on',
     no_shipping_address: 'No shipping address',
     no_payment_method: 'No payment method selected',
+    not_found: 'Document not found',
     order_paid: 'Order is already paid',
     order_not_created: 'Order not created',
     order_not_found: 'Order not found',
     order_not_paid: 'Order not paid',
+    password_mismatch: `Password mismatch`,
     paypal_default: "PayPal: Error Occured'",
     paypal_payment_error: 'Error occurred while processing PayPal payment',
+    price_min: 'Price must be greater than {amount}',
     product_not_found: 'Product not found',
+    send_email: `Error occured while sending email`,
     sesssion_not_found: 'Session bag id not found',
+    session_stale: 'Session is stale, please sign-in again',
+    too_many_attempt: `Too many attempts, try again in {min}m {sec}s`,
+    unable_delete: 'Unable to delete file',
+    unable_upload: 'Unable to upload file',
     unknown_error: 'Unknown error occurred',
+    unknown_error_sign_in: `Unknown error occurred: {error}`,
     update_order_paid: 'updateOrderToPaid failed',
     user_not_authenticated: 'User not authenticated',
     user_not_authorized: 'User not authorized',
-    user_not_found: 'User not found'
+    user_not_found: 'User not found',
+    user_not_found_reauth: 'User not found, sign-in again'
   }
 }
