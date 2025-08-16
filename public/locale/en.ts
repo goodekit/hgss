@@ -167,6 +167,10 @@ export const en = {
     label: 'Filtered by'
   },
   form: {
+    ship_to: {
+      label      : `Ship to`,
+      placeholder: `Add the Shipping Address`
+    },
     old_password : {
       label      : 'Old Password',
       placeholder: 'Enter your Old Password'
@@ -521,6 +525,9 @@ export const en = {
   query: {
     label: 'Query'
   },
+  save_and_continue: {
+    label: 'Save & Continue'
+  },
   rating: {
     label: 'Rating'
   },
@@ -566,7 +573,7 @@ export const en = {
   },
   shipping_address: {
     label      : 'Shipping Address',
-    description: 'Complete the form with your shipping address'
+    description: 'Complete the form with your preferred shipping address'
   },
   shop_itb_kit: {
     label        : 'In The Bag Kit',
