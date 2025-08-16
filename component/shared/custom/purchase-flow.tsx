@@ -1,25 +1,17 @@
 import { Fragment } from 'react'
 import { GLOBAL } from 'hgss'
-import { cn } from 'lib/util'
+import { cn, transl } from 'lib/util'
 
-interface BaseLocale  {
-  purchase_flow: Record<string, {label: string, description: string, completed: string}>
-}
+type ProcessFlowLocaleKey = keyof AppLocale['purchase_flow']
 
-type ProcessFlowLocaleKey<T extends BaseLocale> = keyof T['purchase_flow']
-interface PurchaseFlowProps<T extends BaseLocale> {
-  locale: T
-  current?: number
-}
-
-const PurchaseFlow = <T extends BaseLocale> ({ locale, current = 0 }: PurchaseFlowProps<T>) => {
+const PurchaseFlow = ({ current = 0 }) => {
   const lastElement = GLOBAL.PURCHASE_FLOW[GLOBAL.PURCHASE_FLOW.length - 1]
   return (
-    <div className="flex-between flex-row space-x-2 space-y-2 mb-10 special-elite">
-      {(GLOBAL.PURCHASE_FLOW as ProcessFlowLocaleKey<T>[]).map((step, index) => (
-        <Fragment key={index}>
+    <div className={"flex-between flex-row space-x-2 space-y-2 mb-10 special-elite"}>
+      {(GLOBAL.PURCHASE_FLOW).map((step, index) => (
+        <Fragment key={step}>
           <div className={cn('p-2 w-56 rounded-sm text-center text-sm', index === current && 'bg-secondary', index < current && 'opacity-40')}>
-            {index < current ? locale.purchase_flow[step as string].completed : locale.purchase_flow[step as string].label}
+            {index < current ? transl(`purchase_flow.${step as ProcessFlowLocaleKey}.completed`) : transl(`purchase_flow.${step as ProcessFlowLocaleKey}.label`)}
           </div>
           {step !== lastElement && <hr className={cn('w-16 border-t mx-2', index < current ? 'border-green-500' : 'border-gray-300')} />}
         </Fragment>
