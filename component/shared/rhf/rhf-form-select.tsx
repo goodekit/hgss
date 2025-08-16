@@ -5,6 +5,7 @@ import { en } from 'hgss-locale'
 import { Control, ControllerRenderProps, Path } from 'react-hook-form'
 import { FormField, FormControl, FormLabel, FormMessage, FormItem } from 'component/ui/form'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from 'component/ui/select'
+import { transl } from 'lib'
 
 type FormKeyLocale = keyof typeof en.form
 
@@ -30,11 +31,11 @@ const RHFFormSelect = <TSchema extends ZodSchema, TName extends Path<z.infer<TSc
     name={name}
     render={({ field }: RHFFormSelectControllerRender<TSchema, TName>) => (
       <FormItem className={"w-full"}>
-        <FormLabel>{en.form[formKey].label}</FormLabel>
+        <FormLabel>{transl(`form.${formKey}.label`)}</FormLabel>
         <Select onValueChange={field.onChange} value={field.value.toString()}  defaultValue={defaultOption}>
           <FormControl>
             <SelectTrigger disabled={disabled}>
-            <SelectValue placeholder={en.form[formKey].placeholder} defaultValue={defaultOption}/>
+            <SelectValue placeholder={transl(`form.${formKey}.placeholder`)} defaultValue={defaultOption}/>
             </SelectTrigger>
           </FormControl>
           <SelectContent>
