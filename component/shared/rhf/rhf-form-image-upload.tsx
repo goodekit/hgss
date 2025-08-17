@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import Image from 'next/image'
-import { en } from 'public/locale'
 import { z, ZodSchema } from 'zod'
 import { Control, Path, UseFormReturn } from 'react-hook-form'
 import { useToast } from 'hook'
@@ -14,7 +13,7 @@ import { cn, transl } from 'lib'
 import { FormField, FormLabel, FormMessage, FormItem, FormControl } from 'component/ui/form'
 import { Card, CardContent } from 'component/ui/card'
 
-type FormKeyLocale = keyof typeof en.form
+type FormKeyLocale = keyof AppLocale['form']
 
 interface RHFFormImageUploadProps<TSchema extends ZodSchema> {
   control    : Control<z.infer<TSchema>>
@@ -28,7 +27,7 @@ interface RHFFormImageUploadProps<TSchema extends ZodSchema> {
 
 const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, formKey, form, withLabel = true, folderName }: RHFFormImageUploadProps<TSchema>) => {
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
-  const { toast } = useToast()
+  const { toast }                           = useToast()
 
   const handleUploadComplete = (res: { url: string }) => {
     form.setValue(name, res.url as SetFieldName)

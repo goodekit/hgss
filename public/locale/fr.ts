@@ -8,7 +8,7 @@ export const fr = {
   all: {
     label: 'All'
   },
-  add_to_bag: 'Add to Bag',
+  add_to_bag   : 'Add to Bag',
   archived_user: {
     label: 'Archived User'
   },
@@ -16,7 +16,7 @@ export const fr = {
     label: 'Admin'
   },
   all_day_support: {
-    label: '24/7 Support',
+    label      : '24/7 Support',
     description: 'Get support whenever you need it'
   },
   already_have_account: {
@@ -29,18 +29,18 @@ export const fr = {
     label: 'Appearance'
   },
   bag: {
-    label: 'Bag',
+    label      : 'Bag',
     description: 'Complete the form with your bag information',
-    bag: {
+    bag        : {
       label: 'Bag'
     }
   },
   bag_empty: 'Bag is empty',
-  cancel: {
+  cancel   : {
     label: 'Cancel'
   },
   category: {
-    label: 'Category',
+    label     : 'Category',
     categories: {
       label: 'Categories'
     }
@@ -49,11 +49,11 @@ export const fr = {
     label: 'Change File'
   },
   change_password: {
-    label: 'Change Password',
+    label      : 'Change Password',
     description: "Change your account's Password"
   },
   checkout: {
-    label: 'Checkout',
+    label      : 'Checkout',
     description: 'Complete the form with your information'
   },
   clear: {
@@ -63,43 +63,43 @@ export const fr = {
     label: 'Create'
   },
   create_gallery: {
-    label: 'Create Gallery',
+    label      : 'Create Gallery',
     description: 'Complete the form with your gallery information'
   },
   create_product: {
-    label: 'Create Product',
+    label      : 'Create Product',
     description: 'Complete the form with your product information'
   },
   confirm: {
     label: 'Confirm'
   },
   contact: {
-    label: 'Contact',
+    label      : 'Contact',
     description: 'Contact us for any enquiries'
   },
   contact_and_custom_enquiries: {
-    label: 'Contact & Custom Enquiries',
+    label      : 'Contact & Custom Enquiries',
     description: 'Need something you don’t see on our product line?'
   },
   continue: {
-    label: 'Continue',
+    label      : 'Continue',
     description: 'Continue to the next step'
   },
   custom_enquiry: {
-    label: 'Custom Enquiry',
-    description: 'Contact us for custom enquiries',
+    label           : 'Custom Enquiry',
+    description     : 'Contact us for custom enquiries',
     custom_enquiries: {
       label: 'Custom Enquiries'
     }
   },
   customer: {
-    label: 'Customer',
+    label    : 'Customer',
     customers: {
       label: 'Customers'
     }
   },
   customer_review: {
-    label: 'Customer Review',
+    label           : 'Customer Review',
     customer_reviews: {
       label: 'Customer Reviews'
     }
@@ -112,16 +112,16 @@ export const fr = {
   },
   day: {
     label: 'Day',
-    days: {
+    days : {
       label: 'Days'
     }
   },
   deal_has_ended: {
-    label: 'Deal has ended',
+    label      : 'Deal has ended',
     description: "This deal has ended. Don't worry, we have more deals for you!"
   },
   deal_of_the_month: {
-    label: 'Deal of the Month',
+    label      : 'Deal of the Month',
     description:
       "Every purchase comes with exclusive perks and offers, making this month a celebration of savvy choices and smart deals. Don't miss out!"
   },
@@ -129,17 +129,17 @@ export const fr = {
     label: 'Delete'
   },
   delete_gallery_item: {
-    label: 'Delete Gallery Item',
+    label      : 'Delete Gallery Item',
     description: 'Are you sure you want to delete this Gallery Item?'
   },
   delete_image: {
-    label: 'Delete Image',
-    description: 'Are you sure you want to delete this image?',
+    label                 : 'Delete Image',
+    description           : 'Are you sure you want to delete this image?',
     description_last_image: 'This is the last image in the Album, deleting this will delete the album, are you sure you want to continue?'
   },
   delete_album: {
-    label: 'Delete Album',
-    description: 'Are you sure you want to delete this Album?',
+    label               : 'Delete Album',
+    description         : 'Are you sure you want to delete this Album?',
     description_multiple: 'There are multiple images in the album, are you sure you want to delete this album?'
   },
   delivered_at: {
@@ -148,7 +148,7 @@ export const fr = {
   department: {
     label: 'Department'
   },
-  description: 'This is an example of i18n with Next.js',
+  description      : 'This is an example of i18n with Next.js',
   dont_have_account: {
     label: "Don't have an account?"
   },
@@ -156,164 +156,168 @@ export const fr = {
     label: 'Edit'
   },
   edit_review: {
-    label: 'Edit Your Review',
+    label      : 'Edit Your Review',
     description: 'Edit your review'
   },
   flexible_payment: {
-    label: 'Flexible Payment',
+    label      : 'Flexible Payment',
     description: 'Pay with Credit Card, PayPal or Cash on Delivery'
   },
   filtered_by: {
     label: 'Filtered by'
   },
   form: {
+    ship_to: {
+      label      : `Ship to`,
+      placeholder: `Add the Shipping Address`
+    },
     old_password: {
-      label: 'Old Password',
+      label      : 'Old Password',
       placeholder: 'Enter your Old Password'
     },
     attachments: {
-      label: 'Attachments',
+      label      : 'Attachments',
       placeholder: `Upload attachments in JPEG, PNG, or JPG format`
     },
     reset_password: {
-      label: 'Reset Password',
+      label      : 'Reset Password',
       placeholder: 'We will send you an email to reset your password'
     },
     forgot_password: {
-      label: 'Forgot Password',
+      label      : 'Forgot Password',
       placeholder: 'Forgot Password?'
     },
     image: {
-      label: 'Image',
+      label      : 'Image',
       placeholder: 'Add Image'
     },
     gallery_item: {
-      label: 'Gallery Item',
+      label      : 'Gallery Item',
       placeholder: 'Add Gallery Item'
     },
     cover: {
-      label: 'Cover',
+      label      : 'Cover',
       placeholder: 'Add cover'
     },
     specifications: {
-      label: 'Specifications',
+      label      : 'Specifications',
       placeholder: 'Add Specification'
     },
     model: {
-      label: 'Model',
+      label      : 'Model',
       placeholder: 'Add the Model'
     },
     message: {
-      label: 'Message',
+      label      : 'Message',
       placeholder: 'Compose your message'
     },
     password: {
-      label: 'Password',
+      label      : 'Password',
       placeholder: 'Enter your password'
     },
     confirm_password: {
-      label: 'Confirm Password',
+      label      : 'Confirm Password',
       placeholder: 'Confirm your password'
     },
     rating: {
-      label: 'Rating',
+      label      : 'Rating',
       placeholder: 'Enter the rating'
     },
     title: {
-      label: 'Title',
+      label      : 'Title',
       placeholder: 'Enter the title'
     },
     name: {
-      label: 'Name',
+      label      : 'Name',
       placeholder: 'Enter name'
     },
     slug: {
-      label: 'Slug',
+      label      : 'Slug',
       placeholder: 'Enter the slug or generate'
     },
     category: {
-      label: 'Category',
+      label      : 'Category',
       placeholder: 'Enter the category'
     },
     banner: {
-      label: 'Banner',
+      label      : 'Banner',
       placeholder: 'Upload the banner'
     },
     brand: {
-      label: 'Brand',
+      label      : 'Brand',
       placeholder: 'Enter the brand'
     },
     price: {
-      label: 'Price',
+      label      : 'Price',
       placeholder: 'Enter the price'
     },
     role: {
-      label: 'Role',
+      label      : 'Role',
       placeholder: 'Enter the role'
     },
     stock: {
-      label: 'Stock',
+      label      : 'Stock',
       placeholder: 'Enter the stock count'
     },
     images: {
-      label: 'Images',
+      label      : 'Images',
       placeholder: 'Upload the images'
     },
     featured: {
-      label: 'Featured Product',
+      label      : 'Featured Product',
       placeholder: 'Set as a featured product'
     },
     description: {
-      label: 'Description',
+      label      : 'Description',
       placeholder: 'Enter the description'
     },
     first_name: {
-      label: 'First Name',
+      label      : 'First Name',
       placeholder: 'Enter your first name'
     },
     last_name: {
-      label: 'Last Name',
+      label      : 'Last Name',
       placeholder: 'Enter your last name'
     },
     full_name: {
-      label: 'Full Name',
+      label      : 'Full Name',
       placeholder: 'Enter your full name'
     },
     email: {
-      label: 'Email',
+      label      : 'Email',
       placeholder: 'Enter your email'
     },
     phone: {
-      label: 'Phone',
+      label      : 'Phone',
       placeholder: 'Enter your phone'
     },
     address: {
-      label: 'Address',
+      label      : 'Address',
       placeholder: 'Enter your address'
     },
     street: {
-      label: 'Street',
+      label      : 'Street',
       placeholder: 'Enter your street'
     },
     city: {
-      label: 'City',
+      label      : 'City',
       placeholder: 'Enter your city'
     },
     state: {
-      label: 'State',
+      label      : 'State',
       placeholder: 'Enter your state'
     },
     postal_code: {
-      label: 'Postal Code',
+      label      : 'Postal Code',
       placeholder: 'Enter your postal code'
     },
     country: {
-      label: 'Country',
+      label      : 'Country',
       placeholder: 'Enter your country'
     }
   },
   free_shipping: {
-    label: 'Free Shipping',
+    label      : 'Free Shipping',
     description: 'Free shipping on orders above '
   },
   gallery: {
@@ -323,12 +327,12 @@ export const fr = {
     label: 'Generate'
   },
   go_back: 'Go Back',
-  go_to: {
+  go_to  : {
     label: 'Go to'
   },
-  go_to_bag: 'Go to Bag',
+  go_to_bag  : 'Go to Bag',
   go_shopping: 'Go Shopping',
-  home: {
+  home       : {
     label: 'Home'
   },
   hour: {
@@ -338,7 +342,7 @@ export const fr = {
     }
   },
   image: {
-    label: 'Image',
+    label : 'Image',
     images: {
       label: 'Images'
     }
@@ -359,14 +363,14 @@ export const fr = {
     label: 'Leave'
   },
   loading: {
-    delete_order: 'Deleting Order',
-    processing: 'Processing',
-    leaving: 'Leaving',
-    loading: 'Loading',
+    delete_order     : 'Deleting Order',
+    processing       : 'Processing',
+    leaving          : 'Leaving',
+    loading          : 'Loading',
     loading_countdown: 'Loading Countdown',
-    saving: 'Saving',
-    updating: 'Updating',
-    uploading: 'Uploading'
+    saving           : 'Saving',
+    updating         : 'Updating',
+    uploading        : 'Uploading'
   },
   mark_paid: {
     label: 'Mark as Paid'
@@ -375,17 +379,17 @@ export const fr = {
     label: 'Mark as Delivered'
   },
   minute: {
-    label: 'Minute',
+    label  : 'Minute',
     minutes: {
       label: 'Minutes'
     }
   },
   money_back_guarantee: {
-    label: 'Money Back Guarantee',
+    label      : 'Money Back Guarantee',
     description: ' days money back guarantee'
   },
   my_order: {
-    label: `My Order`,
+    label : `My Order`,
     plural: `My Orders`
   },
   navigation: {
@@ -396,7 +400,7 @@ export const fr = {
       label: 'Bag'
     },
     order: {
-      label: 'Order',
+      label : 'Order',
       orders: {
         label: 'Orders'
       }
@@ -418,9 +422,9 @@ export const fr = {
     label: 'or'
   },
   order: {
-    label: 'Order',
+    label      : 'Order',
     description: 'Complete the form with your order information',
-    orders: {
+    orders     : {
       label: 'Orders'
     }
   },
@@ -452,13 +456,13 @@ export const fr = {
     label: 'Payment'
   },
   payment_method: {
-    label: 'Payment Method',
+    label      : 'Payment Method',
     description: 'Select your preferred payment method'
   },
   place_order: {
-    label: 'Place Order',
+    label      : 'Place Order',
     description: 'Place your order',
-    pending: 'Placing Order'
+    pending    : 'Placing Order'
   },
   please: {
     label: 'Please'
@@ -467,7 +471,7 @@ export const fr = {
     label: 'Previous'
   },
   price: {
-    label: 'Price',
+    label : 'Price',
     prices: {
       label: 'Prices'
     }
@@ -479,7 +483,7 @@ export const fr = {
     label: 'Proceed to Checkout'
   },
   product: {
-    label: 'Product',
+    label   : 'Product',
     products: {
       label: 'Products'
     }
@@ -492,24 +496,24 @@ export const fr = {
   },
   purchase_flow: {
     user_sign_in: {
-      label: 'User Sign In',
+      label      : 'User Sign In',
       description: 'Complete the form with your user information',
-      completed: 'User Signed in'
+      completed  : 'User Signed in'
     },
     shipping: {
-      label: 'Shipping',
+      label      : 'Shipping',
       description: 'Complete the form with your shipping information',
-      completed: 'Shipping Filled'
+      completed  : 'Shipping Filled'
     },
     payment: {
-      label: 'Payment',
+      label      : 'Payment',
       description: 'Complete the form with your payment information',
-      completed: 'Payment Filled'
+      completed  : 'Payment Filled'
     },
     place_order: {
-      label: 'Place Order',
+      label      : 'Place Order',
       description: 'Place your order',
-      completed: 'Order Placed'
+      completed  : 'Order Placed'
     }
   },
   purchase_order: {
@@ -528,12 +532,12 @@ export const fr = {
     label: 'Remove'
   },
   reset_password: {
-    label: 'Reset Password',
+    label      : 'Reset Password',
     description: 'We will send you an email to reset your password',
-    button: 'Send Password Reset Email'
+    button     : 'Send Password Reset Email'
   },
   review: {
-    label: 'Review',
+    label  : 'Review',
     reviews: {
       label: 'Reviews'
     }
@@ -541,15 +545,18 @@ export const fr = {
   sales: {
     label: 'Sales'
   },
+  save_and_continue: {
+    label: 'Save & Continue'
+  },
   search: {
-    label: 'Search',
+    label      : 'Search',
     placeholder: 'Looking for something?'
   },
   search_product: {
     label: 'Search Product'
   },
   second: {
-    label: 'Second',
+    label  : 'Second',
     seconds: {
       label: 'Seconds'
     }
@@ -561,38 +568,38 @@ export const fr = {
     label: 'Send Message'
   },
   shipping: {
-    label: 'Shipping',
+    label      : 'Shipping',
     description: 'Complete the form with your shipping information'
   },
   shipping_address: {
-    label: 'Shipping Address',
+    label      : 'Shipping Address',
     description: 'Complete the form with your shipping address'
   },
   shop_itb_kit: {
-    label: 'In The Bag Kit',
-    description: 'Get the In The Bag Kit for free with every purchase',
+    label        : 'In The Bag Kit',
+    description  : 'Get the In The Bag Kit for free with every purchase',
     shop_itb_kits: {
       label: 'Shop ITB Kits'
     }
   },
   shop_part: {
-    label: 'Shop Part',
+    label      : 'Shop Part',
     description: 'Shop this part',
-    shop_parts: {
+    shop_parts : {
       label: 'Shop Parts'
     }
   },
   sign_in: {
-    label: 'Sign in',
+    label      : 'Sign in',
     description: 'Sign in to your account',
-    google: 'Sign in with Google'
+    google     : 'Sign in with Google'
   },
   sign_up: {
-    label: 'Sign up',
+    label      : 'Sign up',
     description: 'Complete the form with your information'
   },
   sign_out: {
-    label: 'Sign out',
+    label      : 'Sign out',
     description: 'Complete the form with your information'
   },
   sort_by: {
@@ -608,7 +615,7 @@ export const fr = {
     label: 'Stay'
   },
   stripe_checkout: {
-    label: 'Stripe Checkout',
+    label      : 'Stripe Checkout',
     description: 'Complete the form with your payment information'
   },
   submit: {
@@ -636,28 +643,28 @@ export const fr = {
     label: 'Update'
   },
   update_account: {
-    label: 'Update Account',
+    label      : 'Update Account',
     description: 'Complete the form with your information',
-    toast: 'User name updated'
+    toast      : 'User name updated'
   },
   update_gallery: {
-    label: 'Update Gallery',
+    label      : 'Update Gallery',
     description: 'Complete the form with your gallery information'
   },
   update_password: {
-    label: 'Update Password',
+    label      : 'Update Password',
     description: "Update your account's password"
   },
   update_product: {
-    label: 'Update Product',
+    label      : 'Update Product',
     description: 'Complete the form with your product information'
   },
   update_user: {
-    label: 'Update User',
+    label      : 'Update User',
     description: 'Complete the form with your user information'
   },
   upload: {
-    label: 'Upload',
+    label      : 'Upload',
     description: 'Click to Upload'
   },
   upload_image: {
@@ -667,21 +674,21 @@ export const fr = {
     label: 'Upload Image/s'
   },
   upload_banner: {
-    label: 'Upload Banner',
+    label      : 'Upload Banner',
     description: 'Drag and drop an image here or click to upload'
   },
   upload_cover: {
-    label: 'Upload Cover',
+    label      : 'Upload Cover',
     description: 'Click to upload cover'
   },
   uploaded: {
-    label: 'Uploaded',
+    label      : 'Uploaded',
     description: 'File Uploaded'
   },
   user: {
-    label: 'User',
+    label      : 'User',
     description: 'Complete the form with your user information',
-    users: {
+    users      : {
       label: 'Users'
     }
   },
@@ -695,7 +702,7 @@ export const fr = {
     label: 'View Order Receipt'
   },
   view_product: {
-    label: 'View Product',
+    label        : 'View Product',
     view_products: {
       label: 'View Products'
     }
@@ -703,7 +710,7 @@ export const fr = {
   view_all_products: {
     label: 'View All Products'
   },
-  welcome: 'Welcome to our site',
+  welcome : 'Welcome to our site',
   your_bag: {
     label: 'Your Bag'
   },
@@ -711,7 +718,7 @@ export const fr = {
     label: 'No results found'
   },
   write_review: {
-    label: 'Write a Review',
+    label      : 'Write a Review',
     description: 'Share your thoughts on this product with other customers'
   },
   legal: {
@@ -719,41 +726,41 @@ export const fr = {
   },
   smtp: {
     contact_and_enquiry: {
-      title: `Enquiry`,
+      title  : `Enquiry`,
       subject: `New Enquiry from {name}`
     },
     reset_password: {
       subject: `Your Password Reset Request`,
-      title: `Homegrown-Speedshop Password Reset`,
-      body_1: `We received a request to reset your password. Click the button below to choose a new password: `,
-      body_2: `If you don't use this link within 3 hours, it will expire.`,
-      button: `Reset Password`
+      title  : `Homegrown-Speedshop Password Reset`,
+      body_1 : `We received a request to reset your password. Click the button below to choose a new password: `,
+      body_2 : `If you don't use this link within 3 hours, it will expire.`,
+      button : `Reset Password`
     }
   },
   message: {
     default: {
-      title: 'Are you sure?',
+      title      : 'Are you sure?',
       description: 'This is a message'
     },
     confirm_delete_order: {
-      title: 'Confirm Delete Order',
+      title      : 'Confirm Delete Order',
       description: 'This action cannot be undone and is irreversible.'
     },
     unsaved_changes: {
-      title: 'Are you sure?',
+      title      : 'Are you sure?',
       description: 'You have unsaved changes. Are you sure you want to leave?'
     },
     currently_no_reviews: {
-      title: 'No Reviews',
+      title      : 'No Reviews',
       description: 'There are currently no reviews for this product.'
     },
     to_write_review: {
-      title: 'Write a Review',
+      title      : 'Write a Review',
       description: ' to write a review.'
     },
     thanks_for_purchase: {
-      title: 'Thank you for your purchase',
-      description: 'Your order has been placed successfully.',
+      title            : 'Thank you for your purchase',
+      description      : 'Your order has been placed successfully.',
       we_are_processing: 'We are processing your order and will send you a confirmation email shortly.'
     },
     password_reset_sent: {
@@ -762,95 +769,95 @@ export const fr = {
     }
   },
   validation: {
-    price_format: 'Price must have exactly 2 decimal places',
+    price_format         : 'Price must have exactly 2 decimal places',
     gallery_item_required: `At least one gallery item is required`,
-    invalid_email_format: `Invalid email format`,
-    min_default: `{field} must be at least {value} characters`,
-    max_default: `{field} must not be over {value} characters`,
-    min_image_default: `{module} should have at least {value} image`,
-    password: {
+    invalid_email_format : `Invalid email format`,
+    min_default          : `{field} must be at least {value} characters`,
+    max_default          : `{field} must not be over {value} characters`,
+    min_image_default    : `{module} should have at least {value} image`,
+    password             : {
       invalid_old: 'Invalid old password',
-      not_match: 'Passwords do not match'
+      not_match  : 'Passwords do not match'
     },
     required_default: `{field} is required`
   },
   success: {
     contact_and_enquiry_sent: 'Contact and Enquiry sent',
-    created: 'Document created',
-    deleted: 'Document deleted',
-    enquiry_sent: `Enquiry sent`,
-    updated: 'Document updated',
-    file_deleted: 'File deleted',
-    order_created: 'Order created',
-    order_deleted: 'Order deleted',
-    order_delivered: 'Order delivered',
-    order_paid: 'Your order has been paid',
-    password_updated: `Successful, password updated`,
-    product_created: 'Product created',
-    product_deleted: 'Product deleted',
-    product_updated: 'Product updated',
-    password_reset_sent: 'Password reset token sent',
-    review_updated: 'Review updated',
-    sign_in_welcome_back: `Welcome back, {name}!`,
-    sign_in_welcome: `Welcome, {name}!`,
-    update_order_paid: 'updateOrderToPaid was successful',
-    user_created: 'User created',
-    user_deleted: 'User deleted',
-    user_updated: 'User updated',
-    user_signed_up: 'User signed up',
-    user_signed_in: 'User signed in',
-    valid_token: `Successful, Token valid`
+    created                 : 'Document created',
+    deleted                 : 'Document deleted',
+    enquiry_sent            : `Enquiry sent`,
+    updated                 : 'Document updated',
+    file_deleted            : 'File deleted',
+    order_created           : 'Order created',
+    order_deleted           : 'Order deleted',
+    order_delivered         : 'Order delivered',
+    order_paid              : 'Your order has been paid',
+    password_updated        : `Successful, password updated`,
+    product_created         : 'Product created',
+    product_deleted         : 'Product deleted',
+    product_updated         : 'Product updated',
+    password_reset_sent     : 'Password reset token sent',
+    review_updated          : 'Review updated',
+    sign_in_welcome_back    : `Welcome back, {name}!`,
+    sign_in_welcome         : `Welcome, {name}!`,
+    update_order_paid       : 'updateOrderToPaid was successful',
+    user_created            : 'User created',
+    user_deleted            : 'User deleted',
+    user_updated            : 'User updated',
+    user_signed_up          : 'User signed up',
+    user_signed_in          : 'User signed in',
+    valid_token             : `Successful, Token valid`
   },
   error: {
-    account_locked: 'Account temporarily locked. Contact support.',
-    bag_empty: 'Bag is empty',
-    bag_not_found: 'Bag not found',
-    enquiries_max_limit: `You have already hit the max limit for enquiries, you have {time} til you can send an enquiry again`,
-    exists_reset_password: `Valid reset password request already exists in your mailbox`,
-    expired_token: `Token expired`,
+    account_locked            : 'Account temporarily locked. Contact support.',
+    bag_empty                 : 'Bag is empty',
+    bag_not_found             : 'Bag not found',
+    enquiries_max_limit       : `You have already hit the max limit for enquiries, you have {time} til you can send an enquiry again`,
+    exists_reset_password     : `Valid reset password request already exists in your mailbox`,
+    expired_token             : `Token expired`,
     failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
-    gallery_save: 'An error occurred while saving the gallery',
-    images_allowed: `only image types are allowed`,
-    images_max_exceeded: `Max limit ({limit}) exceeded`,
-    invalid_cache_key: `invalid cache key:{key}`,
-    invalid_credentials: 'Invalid credentials',
-    invalid_file_key: 'Invalid file key',
-    invalid_input: `Invalid input`,
-    invalid_token: 'Invalid token',
-    invalid_payment_method: 'Invalid payment method',
-    item_not_found: 'Item not found',
-    failed_create_product: 'An error occurred while creating the product',
-    failed_extract_file_key: 'Failed extracting the file key',
-    failed_sign_up: `Error occurred while signing-up`,
-    failed_delete_file: 'Failed to delete file',
-    fix_form_errors: 'Please fix form errors before submitting.',
-    form: 'Please fix form errors before submitting.',
-    no_file: 'No file',
-    no_existing_item: 'No existing item to add on',
-    no_shipping_address: 'No shipping address',
-    no_payment_method: 'No payment method selected',
-    not_found: 'Document not found',
-    order_paid: 'Order is already paid',
-    order_not_created: 'Order not created',
-    order_not_found: 'Order not found',
-    order_not_paid: 'Order not paid',
-    password_mismatch: `Password mismatch`,
-    paypal_default: "PayPal: Error Occured'",
-    paypal_payment_error: 'Error occurred while processing PayPal payment',
-    price_min: 'Price must be greater than {amount}',
-    product_not_found: 'Product not found',
-    send_email: `Error occured while sending email`,
-    sesssion_not_found: 'Session bag id not found',
-    session_stale: 'Session is stale, please sign-in again',
-    too_many_attempt: `Too many attempts, try again in {min}m {sec}s`,
-    unable_delete: 'Unable to delete file',
-    unable_upload: 'Unable to upload file',
-    unknown_error: 'Unknown error occurred',
-    unknown_error_sign_in: `Unknown error occurred: {error}`,
-    update_order_paid: 'updateOrderToPaid failed',
-    user_not_authenticated: 'User not authenticated',
-    user_not_authorized: 'User not authorized',
-    user_not_found: 'User not found',
-    user_not_found_reauth: 'User not found, sign-in again'
+    gallery_save              : 'An error occurred while saving the gallery',
+    images_allowed            : `only image types are allowed`,
+    images_max_exceeded       : `Max limit ({limit}) exceeded`,
+    invalid_cache_key         : `invalid cache key:{key}`,
+    invalid_credentials       : 'Invalid credentials',
+    invalid_file_key          : 'Invalid file key',
+    invalid_input             : `Invalid input`,
+    invalid_token             : 'Invalid token',
+    invalid_payment_method    : 'Invalid payment method',
+    item_not_found            : 'Item not found',
+    failed_create_product     : 'An error occurred while creating the product',
+    failed_extract_file_key   : 'Failed extracting the file key',
+    failed_sign_up            : `Error occurred while signing-up`,
+    failed_delete_file        : 'Failed to delete file',
+    fix_form_errors           : 'Please fix form errors before submitting.',
+    form                      : 'Please fix form errors before submitting.',
+    no_file                   : 'No file',
+    no_existing_item          : 'No existing item to add on',
+    no_shipping_address       : 'No shipping address',
+    no_payment_method         : 'No payment method selected',
+    not_found                 : 'Document not found',
+    order_paid                : 'Order is already paid',
+    order_not_created         : 'Order not created',
+    order_not_found           : 'Order not found',
+    order_not_paid            : 'Order not paid',
+    password_mismatch         : `Password mismatch`,
+    paypal_default            : "PayPal: Error Occured'",
+    paypal_payment_error      : 'Error occurred while processing PayPal payment',
+    price_min                 : 'Price must be greater than {amount}',
+    product_not_found         : 'Product not found',
+    send_email                : `Error occured while sending email`,
+    sesssion_not_found        : 'Session bag id not found',
+    session_stale             : 'Session is stale, please sign-in again',
+    too_many_attempt          : `Too many attempts, try again in {min}m {sec}s`,
+    unable_delete             : 'Unable to delete file',
+    unable_upload             : 'Unable to upload file',
+    unknown_error             : 'Unknown error occurred',
+    unknown_error_sign_in     : `Unknown error occurred: {error}`,
+    update_order_paid         : 'updateOrderToPaid failed',
+    user_not_authenticated    : 'User not authenticated',
+    user_not_authorized       : 'User not authorized',
+    user_not_found            : 'User not found',
+    user_not_found_reauth     : 'User not found, sign-in again'
   }
 }

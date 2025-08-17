@@ -1,3 +1,4 @@
+import { transl } from 'lib/util'
 import { z } from 'zod'
 
 export const UpdateUserSchema = z.object({
@@ -18,9 +19,9 @@ export const ForgotPasswordSchema = z.object({
 
 export const ResetPasswordSchema = z
   .object({
-    token          : z.string().min(1, 'Token is required'),
-    email          : z.string().email().min(5, 'Email must be at least 5 characters'),
-    password       : z.string().min(6, 'Password must be at least 6 characters'),
-    confirmPassword: z.string().min(6, 'Confirm Password must be at least 6 characters')
+    token          : z.string().min(1, transl('validation.required_default', { field: 'Token' })),
+    email          : z.string().email(transl('validation.invalid_email_format')),
+    password       : z.string().min(6, transl('validation.min_default', { field: 'Password', value: 6 })),
+    confirmPassword: z.string().min(6, transl('validation.min_default', { field: 'Password', value: 6 }))
   })
-  .refine((data) => data.password === data.confirmPassword, { message: 'Passwords do not match', path: ['confirmPassword'] })
+  .refine((data) => data.password === data.confirmPassword, { message: transl('validation.password.not_match'), path: ['confirmPassword'] })

@@ -15,7 +15,7 @@ const PaymentPage = async () => {
   const user = await getUserById(userId)
   return (
     <Fragment>
-      <PurchaseFlow current={2} locale={en} />
+      <PurchaseFlow current={2} />
       <PaymentForm paymentMethod={user.paymentMethod} />
     </Fragment>
   )

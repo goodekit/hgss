@@ -7,7 +7,7 @@ import { UserMenu } from 'component/shared/header/user-menu'
 
 interface ToolbarProps {
   moduleType?: ModuleType
-  user       : User
+  user       : Session['user'],
   count      : number
   session    : Session | null
 }
@@ -20,7 +20,7 @@ export const Toolbar: FC<ToolbarProps> = ({ moduleType, user, count, session }) 
         <BagIconWithBadge itemCount={count} />
         <UserMenu session={session} />
       </nav>
-      <MobileMenu user={user as User} count={count} moduleType={moduleType} />
+      <MobileMenu user={user} count={count} moduleType={moduleType} />
     </div>
   )
 }

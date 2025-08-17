@@ -8,8 +8,10 @@ export const GLOBAL = {
   DATABASE_URL           : process.env.DATABASE_URL || '',
   ENCRYPTION_KEY         : process.env.ENCRYPTION_KEY || '',
   GOOGLE                 : {
-                            CLIENT_ID    : process.env.GOOGLE_CLIENT_ID,
-                            CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET
+                            CLIENT_ID       : process.env.GOOGLE_CLIENT_ID,
+                            CLIENT_SECRET   : process.env.GOOGLE_CLIENT_SECRET,
+                            MAPS_API_KEY    : `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&signature=${process.env.GOOGLE_MAPS_API_SECRET}&libraries=places`,
+                            MAPS_GET_COUNTRY: `https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
   },
   NEXTAUTH_STRATEGY      : process.env.NEXTAUTH_STRATEGY || 'jwt',
   LOCALE                 : {

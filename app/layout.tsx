@@ -43,6 +43,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang={KEY.EN} suppressHydrationWarning>
       <head>
         <Script src={GLOBAL.RYBBIT} data-site-id="388" strategy="afterInteractive" />
+        <Script src={GLOBAL.GOOGLE.MAPS_API_KEY} strategy="afterInteractive" />
       </head>
       <body className={`${interTight.className} ${specialElite.className} ${permanentMarker.className} ${yuseiMagic.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme={'dark'} enableSystem disableTransitionOnChange>
