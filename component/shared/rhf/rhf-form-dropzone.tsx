@@ -1,11 +1,10 @@
 "use client"
 
 import { useState } from 'react'
-import { z, ZodSchema } from 'zod'
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { IMAGE } from 'hgss-design'
 import { PATH_DIR } from 'hgss-dir'
+import { z, ZodSchema } from 'zod'
 import { Control, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import Image from 'next/image'
 import { useToast } from 'hook'
@@ -15,7 +14,7 @@ import { Card, CardContent } from 'component/ui/card'
 import { deleteImage } from 'lib/action'
 import { cn, transl, truncate } from 'lib/util'
 
-type FormKeyLocale = keyof typeof en.form
+type FormKeyLocale = keyof AppLocale['form']
 
 interface RHFFormDropzoneProps<TSchema extends ZodSchema, TImages = string[] | string> {
   control          : Control<z.infer<TSchema>>

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { en } from 'hgss-locale'
 import { z, ZodSchema } from 'zod'
 import { Control,ControllerRenderProps,  Path, useForm } from 'react-hook-form'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
@@ -10,7 +9,7 @@ import { FormField, FormControl, FormLabel, FormMessage, FormItem } from 'compon
 import { transl, cn } from 'lib/util'
 import { KEY } from "lib/constant"
 
-type FormKeyLocale = keyof typeof en.form
+type FormKeyLocale = keyof AppLocale['form']
 interface RHFPasswordFieldProps <TSchema extends ZodSchema, TName extends Path<z.infer<TSchema>>> {
     register    : (name: TName) => ReturnType<ReturnType<typeof useForm>['register']>
     control     : Control<z.infer<TSchema>>

@@ -40,7 +40,7 @@ const CheckoutPage = async () => {
 
   return (
     <Fragment>
-      <PurchaseFlow current={3} locale={en} />
+      <PurchaseFlow current={3} />
       <h1 className="py-4 h3-bold">{en.checkout.label}</h1>
       <div className="grid md:grid-cols-3 md:gap-5 special-elite">
         <div className="md:col-span-2 overflow-x-auto space-y-4">
