@@ -1,10 +1,10 @@
 'use client'
 
 import { Fragment, useEffect, useState } from 'react'
-import { en } from 'public/locale'
-import { usePathname } from 'next/navigation'
 import { PATH_DIR } from 'hgss-dir'
 import { NAV_CONFIG, NAV_CONFIG_ADMIN, NAV_CONFIG_USER } from 'hgss-nav'
+import { usePathname } from 'next/navigation'
+import { Session } from 'next-auth'
 import { signOutBasic } from 'lib/action'
 import { User2Icon, LogOut, Shield } from 'lucide-react'
 import { Sheet, SheetContent, SheetDescription, SheetTrigger, SheetTitle, Separator, Button } from 'component/ui'
@@ -12,13 +12,13 @@ import { ThemeToggle } from 'component/shared/header/theme-toggle'
 import { BagNavLink } from 'component/shared/bag'
 import { ProtectedNavLink } from 'component/shared/protect'
 import { LinkBtn } from 'component/shared/btn'
-import { charAtName, KEY } from 'lib'
+import { charAtName, KEY, transl } from 'lib'
 
-export const MobileMenuClient = ({ user, count, moduleType = 'default' }: { user: User, count: number, moduleType?: ModuleType }) => {
+export const MobileMenuClient = ({ user, count, moduleType = 'default' }: { user: Session['user'], count: number, moduleType?: ModuleType }) => {
   const [open, setOpen] = useState(false)
   const pathname        = usePathname()
   const isAdmin         = user?.role === KEY.ADMIN
-  const menuIcon        = user?.name ? charAtName(user.name) : '|~}'
+  const menuIcon        = user?.name ? charAtName(user.name) : '>'
   const NAV_CONFIG_MAP  = {
     admin  : NAV_CONFIG_ADMIN,
     user   : NAV_CONFIG_USER,
@@ -33,20 +33,20 @@ export const MobileMenuClient = ({ user, count, moduleType = 'default' }: { user
 
   const renderUser = !user ? (
     <LinkBtn href={PATH_DIR.SIGN_IN} className={'flex justify-start'}>
-      <User2Icon /> {en.sign_in.label}
+      <User2Icon /> {transl('sign_in.label')}
     </LinkBtn>
   ) : (
     <div className={"flex flex-col space-y-2 text-center special-elite"}>
       {isAdmin && (
         <Fragment>
-          <LinkBtn href={PATH_DIR.ADMIN.OVERVIEW} className={'flex justify-start'}><Shield />{en.admin.label}</LinkBtn>
+          <LinkBtn href={PATH_DIR.ADMIN.OVERVIEW} className={'flex justify-start'}><Shield />{transl('admin.label')}</LinkBtn>
           <Separator className="my-4" />
         </Fragment>
       )}
       <ThemeToggle />
       <form action={signOutBasic} className="w-full">
         <Button className={"w-full py-4 h-4 flex justify-start"} variant={'ghost'}>
-          <LogOut /> <span>{en.sign_out.label}</span>
+          <LogOut /> <span>{transl('sign_out.label')}</span>
         </Button>
       </form>
     </div>
@@ -70,9 +70,9 @@ export const MobileMenuClient = ({ user, count, moduleType = 'default' }: { user
               {!user ? null : (
                 <Fragment>
                   <ProtectedNavLink href={PATH_DIR.USER.ACCOUNT} className={'justify-start'}>
-                    {en.account.label}
+                    {transl('account.label')}
                   </ProtectedNavLink>
-                  <ProtectedNavLink href={PATH_DIR.USER.ORDER}>{en.order_history.label}</ProtectedNavLink>
+                  <ProtectedNavLink href={PATH_DIR.USER.ORDER}>{transl('order_history.label')}</ProtectedNavLink>
                 </Fragment>
               )}
             </div>
