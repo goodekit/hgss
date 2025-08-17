@@ -17,6 +17,22 @@ export const ForgotPasswordSchema = z.object({
   email: z.string().email().min(5, 'Email must be at least 5 characters')
 })
 
+export const UpdateUserPasswordSchema = z
+  .object({
+    oldPassword    : z.string().optional(),
+    password       : z.string().min(6, transl('validation.min_default',  { field: 'Password', value: 6 })).optional(),
+    confirmPassword: z.string().optional()
+  })
+  .refine(
+    (data) => {
+      if (data.password || data.confirmPassword || data.oldPassword) {
+        return data.password === data.confirmPassword
+      }
+      return true
+    },
+    { message: transl('validation.password.not_match'), path: ['confirmPassword'] }
+  )
+
 export const ResetPasswordSchema = z
   .object({
     token          : z.string().min(1, transl('validation.required_default', { field: 'Token' })),
