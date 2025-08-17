@@ -28,6 +28,6 @@
       "hgss-nav"   : ["./config/nav.ts"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "interface/lib.d.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "interface/google-autocomplete.d.ts"],
   "exclude": ["node_modules"]
 }
