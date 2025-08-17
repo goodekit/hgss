@@ -12,7 +12,7 @@ import { updateUserAddress } from 'lib/action'
 import { ShippingAddressSchema, shippingAddressDefaultValue } from 'lib/schema'
 import { Form } from 'component/ui/form'
 import { Button } from 'component/ui'
-import { RHFFormField, RHFFormCountrySelect, RHFGoogleAddressAutocomplete } from 'component/shared/rhf'
+import { RHFFormField, RHFGoogleAddressAutocomplete, RHFFormCountrySelect } from 'component/shared/rhf'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
 import { transl } from 'lib'
@@ -31,14 +31,14 @@ const ShippingAddressForm: FC<ShippingAddressFormProps> = ({ address, userName }
   const router                                           = useRouter()
   const { toast }                                        = useToast()
   const { control, handleSubmit, formState: { errors } } = form
-
-  const selectedCountry = form.watch('country')
+  const selectedCountry                                  = form.watch('country')
 
   useEffect(() => {
     if (Object.keys(errors).length > 0 && !address) {
       setIsEditMode(true)
     }
   },[errors, address])
+
 
   const handleEditToggle = () => {
     setIsEditMode(!isEdit)
