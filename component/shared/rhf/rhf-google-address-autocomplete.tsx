@@ -64,6 +64,9 @@ function RHFGoogleAddressAutocomplete<TSchema extends ZodSchema, TName extends P
     return () => autoRef.current?.removeEventListener('gmp-placechange', handler)
   })
 
+  // to avoid build err: bypass type checking by wrapping in any
+  const GmpPlaceAutocomplete = 'gmp-place-autocomplete' as any
+
   return (
     <Controller
       name={name}
@@ -77,7 +80,7 @@ function RHFGoogleAddressAutocomplete<TSchema extends ZodSchema, TName extends P
               <FormItem>
                 {label && <FormLabel>{label}</FormLabel>}
                 <FormControl>
-                  <gmp-place-autocomplete
+                  <GmpPlaceAutocomplete
                     ref={autoRef}
                     placeholder={transl('form.address.placeholder')}
                     value={parseAddress(field.value) || ''}
@@ -87,7 +90,7 @@ function RHFGoogleAddressAutocomplete<TSchema extends ZodSchema, TName extends P
                     style={{ width: '100%', padding: '2px', borderRadius: '2px' }}
                     onFocus={onFocus}
                     onBlur={onBlur}
-                    onChange={onChange}></gmp-place-autocomplete>
+                    onChange={onChange}></GmpPlaceAutocomplete>
                 </FormControl>
                 <FormMessage>{fieldState.error?.message}</FormMessage>
               </FormItem>
