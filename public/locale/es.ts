@@ -525,6 +525,9 @@ export const es = {
   query: {
     label: 'Query'
   },
+  save_and_continue: {
+    label: 'Save & Continue'
+  },
   rating: {
     label: 'Rating'
   },
@@ -545,8 +548,8 @@ export const es = {
   sales: {
     label: 'Sales'
   },
-  save_and_continue: {
-    label: 'Save & Continue'
+  save_this_address: {
+    label: `Save this address`
   },
   search: {
     label      : 'Search',
@@ -573,7 +576,7 @@ export const es = {
   },
   shipping_address: {
     label      : 'Shipping Address',
-    description: 'Complete the form with your shipping address'
+    description: 'Complete the form with your preferred shipping address'
   },
   shop_itb_kit: {
     label        : 'In The Bag Kit',
@@ -659,6 +662,9 @@ export const es = {
     label      : 'Update Product',
     description: 'Complete the form with your product information'
   },
+  update_your_address: {
+    label: `Update your address`
+  },
   update_user: {
     label      : 'Update User',
     description: 'Complete the form with your user information'
@@ -684,6 +690,9 @@ export const es = {
   uploaded: {
     label      : 'Uploaded',
     description: 'File Uploaded'
+  },
+  use_different_address: {
+    label: 'Use a different address'
   },
   user: {
     label      : 'User',
