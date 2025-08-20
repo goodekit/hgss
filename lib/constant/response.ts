@@ -18,7 +18,7 @@ export const RESPONSE = {
    * @param redirectTo
    * @returns
    */
-  ERROR: (message: string, code = CODE.INTERNAL_SERVER_ERROR, redirectTo?: string, data?: unknown) => ({ code, success: false, message, redirectTo, data }),
+  ERROR          : (message: string, code = CODE.INTERNAL_SERVER_ERROR, redirectTo?: string, data?: unknown) => ({ code, success: false, message, redirectTo, data }),
   ERROR_FORMATTED: (message: AppError, code = CODE.INTERNAL_SERVER_ERROR) => ({ code, success: false, message: errorHandler(message) }),
-  DEFAULT: { code: CODE.INTERNAL_SERVER_ERROR, success: false, message: '' }
+  DEFAULT        : { code: CODE.INTERNAL_SERVER_ERROR, success: false, message: '' }
 }
