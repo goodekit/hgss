@@ -38,7 +38,6 @@ const AccountForm = ({ user }: { user: UserPrisma }) => {
 
   const onSubmit: SubmitHandler<UpdateUser> = async (data) => {
     startTransition(async (): Promise<void> => {
-      console.log('data.address:', data?.address)
       const response = await updateUserAccount(data)
       if (!response.success) {
         toast({ variant: 'destructive', description: response.message })
@@ -60,7 +59,7 @@ const AccountForm = ({ user }: { user: UserPrisma }) => {
           <RHFFormField control={control} name={'formattedAddress'} formKey={'address'} type={'textarea'} className={'h-auto md:h-30'} disabled />
             {isEditMode && (
               <Fragment>
-                <RHFGoogleAddressAutocomplete control={control} name={FORM_KEY.address} label={transl('form.address.label')} country={'AU'} />
+                <RHFGoogleAddressAutocomplete control={control} name={FORM_KEY.address} label={transl('form.address.label')} country={'AU'} form={form} />
                 <Button type={'button'} variant={'ghost'} onClick={handleEditToggle} className={'rounded-sm transition ease-in-out px-0 place-content-start w-[100px]'}>{transl('cancel.label')}</Button>
               </Fragment>
             )}
