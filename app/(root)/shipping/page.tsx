@@ -15,7 +15,7 @@ const ShippingPage = async () => {
     if (!bag || bag.items.length === 0) redirect(PATH_DIR.BAG)
     const session = await auth()
     const userId  = session?.user?.id
-    if (!userId) throw new Error('no UserId')
+    if (!userId) throw new Error(transl(`error.user_not_authenticated`))
     const user    = await getUserById(userId)
   return (
     <Fragment>
