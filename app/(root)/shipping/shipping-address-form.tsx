@@ -3,35 +3,42 @@
 
 import { FC, Fragment, useEffect, useState, useTransition } from 'react'
 import { PATH_DIR } from 'hgss-dir'
-import { useRouter } from 'next/navigation'
-import { z } from 'zod'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
 import { useToast } from 'hook'
 import { updateUserAddress } from 'lib/action'
 import { ShippingAddressSchema, shippingAddressDefaultValue } from 'lib/schema'
 import { Form } from 'component/ui/form'
-import { Button } from 'component/ui'
+import { Button, Textarea } from 'component/ui'
 import { RHFFormField, RHFGoogleAddressAutocomplete, RHFFormCountrySelect } from 'component/shared/rhf'
 import { TapeBtn } from 'component/shared/btn'
 import { EllipsisLoader } from 'component/shared/loader'
 import { transl } from 'lib'
 
-interface ShippingAddressFormProps { address: ShippingAddress, userName?: string }
+interface ShippingAddressFormProps { address?: unknown, userName?: string }
 
 const ShippingAddressForm: FC<ShippingAddressFormProps> = ({ address, userName }) => {
+  const searchParams                          = useSearchParams()
+  const forceEdit                             = searchParams.get('edit') === 'true'
   const [isPending, startTransition]          = useTransition()
-  const [isEdit, setIsEditMode]               = useState(() => !address)
+  const [isEditMode, setIsEditMode]           = useState(() => forceEdit || !address)
   const [isAddressActive, setIsAddressActive] = useState(false)
-  const form                                  = useForm<z.infer<typeof ShippingAddressSchema>>({
+  const form                                  = useForm<ShippingAddress>({
     resolver     : zodResolver(ShippingAddressSchema),
     defaultValues: address || shippingAddressDefaultValue
   })
 
-  const router                                           = useRouter()
-  const { toast }                                        = useToast()
+  const router       = useRouter()
+  const { toast }    = useToast()
+
+
+   const [fullName, formattedAddress, selectedCountry] = useWatch({
+    control: form.control,
+    name   : ['fullName', 'formattedAddress', 'country']
+  })
+
   const { control, handleSubmit, formState: { errors } } = form
-  const selectedCountry                                  = form.watch('country')
 
   useEffect(() => {
     if (Object.keys(errors).length > 0 && !address) {
@@ -39,13 +46,18 @@ const ShippingAddressForm: FC<ShippingAddressFormProps> = ({ address, userName }
     }
   },[errors, address])
 
+  useEffect(() => {
+    if (address) {
+      form.reset(address as ShippingAddress, { keepDefaultValues: false })
+    }
+  }, [address, form])
 
   const handleEditToggle = () => {
-    setIsEditMode(!isEdit)
+    setIsEditMode(!isEditMode)
   }
 
   const handleOnBlur = () => {
-    const value = form.getValues('address')
+    const value = form.getValues('formattedAddress')
     if (value && value.length > 0) {
       setIsAddressActive(true)
     } else {
@@ -64,8 +76,13 @@ const ShippingAddressForm: FC<ShippingAddressFormProps> = ({ address, userName }
         toast({ variant: 'destructive', description: response.message })
         return
       }
-      form.reset(response.data as ShippingAddress)
-      setIsEditMode(false)
+      form.reset(response.data as ShippingAddress, { keepDefaultValues: false })
+      const isValid = await form.trigger()
+      if (isValid) {
+        setIsEditMode(false)
+      } else {
+        toast({ variant: 'destructive', description: transl(`error.clear_form_errors`) })
+      }
     })
   }
 
@@ -85,26 +102,26 @@ const ShippingAddressForm: FC<ShippingAddressFormProps> = ({ address, userName }
       <div className={'max-w-md mx-auto special-elite space-y-5'}>
         <h1 className={'h2-bold mt-4'}>{transl('shipping_address.label')}</h1>
         <div className={'flex justify-between items-center'}>
-          <p className={'text-sm text-muted-foreground'}>{isEdit ? transl('shipping_address.description') : transl('form.ship_to.label')}</p>
-
+          <p className={'text-sm text-muted-foreground'}>{isEditMode ? transl('shipping_address.description') : transl('form.ship_to.label')}</p>
         </div>
         <Form {...form}>
-          <form method={'post'} onSubmit={handleSubmit(isEdit ? onSubmit : handleContinue)} className={'space-y-5'}>
-            {isEdit && (
+          <form onSubmit={handleSubmit(isEditMode ? onSubmit : handleContinue)} className={'space-y-5'}>
+            {isEditMode && (
               <Fragment>
                 <RHFFormField control={control} name={'fullName'} formKey={'full_name'} />
                 <RHFFormCountrySelect control={control} name={'country'} formKey={'country'} />
-                <RHFGoogleAddressAutocomplete control={control} name={'address'} label={'Search your address'} country={selectedCountry} fullName={userName} onBlur={handleOnBlur} onChange={() => setIsAddressActive(true)} />
+                <RHFGoogleAddressAutocomplete control={control} name={'formattedAddress'} label={transl(`form.address.label`)} country={selectedCountry} fullName={userName} onBlur={handleOnBlur} onChange={() => setIsAddressActive(true)} form={form} />
               </Fragment>
             )}
-            {(isEdit && isAddressActive) && <Button type={'button'} variant={'ghost'} onClick={handleSubmit(handleUpdateAddress)} className={'rounded-lg transition ease-in-out'}>{'Save this address'}</Button>}
-            {!isEdit &&(
+            {(isEditMode && isAddressActive) && <Button type={'button'} variant={'ghost'} onClick={handleSubmit(handleUpdateAddress)} className={'rounded-lg transition ease-in-out'}>{transl(`save_this_address.label`)}</Button>}
+            {!isEditMode &&(
               <Fragment>
-                <RHFFormField control={control} name={'address'} formKey={'address'} type={'textarea'} className={'h-auto md:h-50'} disabled />
-                <Button type={'button'} variant={'ghost'} onClick={handleEditToggle} className={'rounded-lg transition ease-in-out'}>{'Use a different address'}</Button>
-              </Fragment>)}
+                <Textarea key={`${fullName || ''}|${formattedAddress || ''}|${selectedCountry || ''}`} defaultValue={[fullName, formattedAddress, selectedCountry].filter(Boolean).join(', ')} className={'h-auto md:h-50 border-none shadow-none'} readOnly disabled />
+                <Button type={'button'} variant={'ghost'} onClick={handleEditToggle} className={'rounded-lg transition ease-in-out'}>{transl('use_different_address.label')}</Button>
+              </Fragment>
+            )}
 
-            <TapeBtn label={isPending ? <EllipsisLoader /> : isEdit ? transl('save_and_continue.label') : transl('continue.label')} className={'w-full texture-4-bg'} />
+            <TapeBtn label={isPending ? <EllipsisLoader /> : isEditMode ? transl('save_and_continue.label') : transl('continue.label')} className={'w-full texture-4-bg'} />
           </form>
         </Form>
       </div>
