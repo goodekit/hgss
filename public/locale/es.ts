@@ -821,6 +821,7 @@ export const es = {
     account_locked            : 'Account temporarily locked. Contact support.',
     bag_empty                 : 'Bag is empty',
     bag_not_found             : 'Bag not found',
+    clear_form_errors         : `Clear form errors before submitting`,
     enquiries_max_limit       : `You have already hit the max limit for enquiries, you have {time} til you can send an enquiry again`,
     exists_reset_password     : `Valid reset password request already exists in your mailbox`,
     expired_token             : `Token expired`,
