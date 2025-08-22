@@ -3,13 +3,14 @@
 import { Fragment, useState, useTransition } from 'react'
 import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
 import { User as UserPrisma } from '@prisma/client'
 import { useToast } from 'hook'
 import { updateUserAccount } from 'lib/action'
 import { UpdateUserSchema, userAccountUpdateDefaultValue } from 'lib/schema'
-import { Button } from 'component/ui'
-import { RHFFormField, RHFGoogleAddressAutocomplete } from 'component/shared/rhf'
+import { Button, Textarea } from 'component/ui'
+import { Form } from 'component/ui/form'
+import { RHFFormField, RHFGoogleAddressAutocomplete, RHFFormCountrySelect } from 'component/shared/rhf'
 import { EllipsisLoader } from 'component/shared/loader'
 import { TapeBtn } from 'component/shared/btn'
 import { transl } from 'lib/util'
@@ -32,13 +33,25 @@ const AccountForm = ({ user }: { user: UserPrisma }) => {
   const { toast }   = useToast()
   const { control } = form
 
+  const [formattedAddress, selectedCountry] = useWatch({ control, name: ['address.formattedAddress', 'address.country'] })
+
   const handleEditToggle = () => {
     setIsEditMode(!isEditMode)
   }
 
+  const handleCancel = () => {
+    form.reset()
+    setIsEditMode(false)
+  }
+
+  console.log(form.formState.errors)
+
   const onSubmit: SubmitHandler<UpdateUser> = async (data) => {
-    startTransition(async (): Promise<void> => {
-      const response = await updateUserAccount(data)
+    console.log('data: ', data)
+    startTransition(async () => {
+      const response = await updateUserAccount({ ...data, address: { ...data.address, formattedAddress: formattedAddress ?? data.address?.formattedAddress, country: selectedCountry ?? data.address?.country }})
+
+      console.log('response: ', response)
       if (!response.success) {
         toast({ variant: 'destructive', description: response.message })
         return
@@ -51,25 +64,26 @@ const AccountForm = ({ user }: { user: UserPrisma }) => {
   }
 
   return (
-    <FormProvider {...form}>
+    <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className={"space-y-5"}>
           <RHFFormField control={control} name={FORM_KEY.email} type={'input'} formKey={FORM_KEY.email} disabled />
           <RHFFormField control={control} name={FORM_KEY.name} type={'input'} formKey={FORM_KEY.name} />
-          <RHFFormField control={control} name={'formattedAddress'} formKey={'address'} type={'textarea'} className={'h-auto md:h-30'} disabled />
+          <Textarea key={`${formattedAddress || ''}|${selectedCountry || ''}`} defaultValue={[formattedAddress, selectedCountry].filter(Boolean).join(', ')} className={'h-auto md:h-50 border-none shadow-none'} readOnly disabled />
             {isEditMode && (
               <Fragment>
-                <RHFGoogleAddressAutocomplete control={control} name={FORM_KEY.address} label={transl('form.address.label')} country={'AU'} form={form} />
-                <Button type={'button'} variant={'ghost'} onClick={handleEditToggle} className={'rounded-sm transition ease-in-out px-0 place-content-start w-[100px]'}>{transl('cancel.label')}</Button>
+                <RHFFormCountrySelect control={control} name={`address.country`} formKey={'country'} />
+                <RHFGoogleAddressAutocomplete control={control} name={`address.formattedAddress`} label={transl('form.address.label')} country={selectedCountry} form={form} />
+                <Button type={'button'} variant={'ghost'} onClick={handleCancel} className={'rounded-sm transition ease-in-out px-0 place-content-start w-[100px]'}>{transl('cancel.label')}</Button>
               </Fragment>
             )}
             {!isEditMode && <Button type={'button'} variant={'ghost'} onClick={handleEditToggle} className={'hover:bg-transparent rounded-lg transition ease-in-out px-0 place-content-start w-[100px]'}>{transl('update_your_address.label')}</Button>}
             <div className={'relative'}>
-              <TapeBtn isPending={form.formState.isSubmitting} label={isPending ? <EllipsisLoader/> : transl('update_account.label')} className={'w-full texture-bg'} />
+              <TapeBtn type={'submit'} label={isPending ? <EllipsisLoader/> : transl('update_account.label')} className={'w-full texture-bg'} />
             </div>
         </div>
       </form>
-    </FormProvider>
+    </Form>
   )
 }
 
