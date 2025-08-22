@@ -158,7 +158,7 @@ function RHFGoogleAddressAutocomplete<TSchema extends ZodSchema, TName extends P
                     requested-language={'en'}
                     requested-region={country ? country : undefined}
                     style={{ width: '100%', borderRadius: '2px' }}
-                    autofocus={!readonly}></GmpPlaceAutocomplete>
+                    ></GmpPlaceAutocomplete>
                 </FormControl>
                 <FormMessage>{fieldState.error?.message}</FormMessage>
               </FormItem>
