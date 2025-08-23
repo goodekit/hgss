@@ -47,7 +47,6 @@ function RHFGoogleAddressAutocomplete<TSchema extends ZodSchema, TName extends P
       const route            = get('route')
       const city             = get('locality') || get('postal_town') || get('administrative_area_level_2') || get('administrative_area_level_1')
       const postalCode       = get('postal_code')
-      const countryVal       = get('country')
       const countryComp      = place.addressComponents?.find((_c: any) => _c.types.includes('country'))
       const countryLong      = countryComp?.longText || ''
       const countryShort     = countryComp?.shortText || ''
@@ -64,21 +63,17 @@ function RHFGoogleAddressAutocomplete<TSchema extends ZodSchema, TName extends P
           latitude  = String((loc as any).lat)
           longitude = String((loc as any).lng)
         } else if ('latitude' in loc && 'longitude' in loc) {
-          latitude = String((loc as any).latitude)
+          latitude  = String((loc as any).latitude)
           longitude = String((loc as any).longitude)
         }
       }
-      const streetAddress = [streetNumber, route].filter(Boolean).join(' ')
-      const fullAddress   = [streetAddress ||  formattedAddress, city, postalCode, countryVal]
-        .filter(Boolean)
-        .join(', ')
 
       setFormatted(formattedAddress)
       const currentCountry = (form.getValues('country' as TName) as unknown as string) || ''
       if (!currentCountry && (countryShort || countryLong)) {
         setValue('country', countryShort || countryLong, { shouldValidate: true })
       }
-      setValue('address', fullAddress, { shouldDirty: true })
+
       setValue('streetAddress', `${streetNumber} ${route}`, { shouldDirty: true })
       setValue('city', city)
       setValue('postalCode', postalCode, { shouldDirty: true })
@@ -113,7 +108,6 @@ function RHFGoogleAddressAutocomplete<TSchema extends ZodSchema, TName extends P
       fieldRef.current?.(val)
       onChange?.()
     }
-
 
     const handleFocus = () => onFocus?.()
     const handleBlur  = ()  => onBlur?.()
