@@ -2,6 +2,7 @@
 
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
+import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
 import { Prisma } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
@@ -12,8 +13,6 @@ import { signIn, signOut, auth } from 'auth'
 import { sendResetPasswordLink } from 'mailer'
 import { prisma } from 'db/prisma'
 import { cache, invalidateCache } from 'lib/cache'
-import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
-import { hash } from 'lib/encrypt'
 import { checkSignInThrottle, incrementSignInAttempts, resetSignInAttempts } from 'lib/throttle'
 import { ShippingAddressSchema, PaymentMethodSchema } from 'lib/schema'
 import { SystemLogger } from 'lib/app-logger'
@@ -116,7 +115,7 @@ export async function signUpUser(data: SignUp) {
       const encodedName      = encodeURIComponent(name || 'Anonymous')
       const avatarUrl        = GLOBAL.AVATAR_API + `${encodedName}`
       const unhashedPassword = password
-      const hashedPassword   = await hash(password)
+      const hashedPassword   = await bcrypt.hash(password, GLOBAL.HASH.SALT_ROUNDS)
       await prisma.user.create({ data: { name, email, password: hashedPassword, avatar: avatarUrl } })
       await signIn('credentials', { email, password: unhashedPassword, redirect: false })
       // TODO: count the sign-in logs /last time logged in
@@ -414,7 +413,7 @@ export async function resetPasswordWithToken(data: { token: string, password: st
       throw new Error(transl('error.not_found'))
     }
 
-    const hashedPassword = await hash(password)
+    const hashedPassword = await bcrypt.hash(password, GLOBAL.HASH.SALT_ROUNDS)
 
     await prisma.user.update({ where: { id: user.id }, data: { password: hashedPassword }})
     await prisma.passwordResetToken.delete({ where: { token }})
