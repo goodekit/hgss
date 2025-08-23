@@ -44,24 +44,15 @@ const AccountForm = ({ user }: { user: UserPrisma }) => {
     setIsEditMode(false)
   }
 
-  // console.log('selectedCountry:', selectedCountry)
-
   useEffect(() => {
     if (user) {
-      form.reset(user as UserPrisma, { keepDefaultValues: false })
+      form.reset(user as User, { keepDefaultValues: false })
     }
-  }, [address, form])
+  }, [user, form])
 
   const onSubmit: SubmitHandler<UpdateUser> = async (data) => {
     startTransition(async () => {
-      let response
-      if (typeof data.address === 'object') {
-        response = await updateUserAccount({ ...data, address: { ...data.address, formattedAddress: formattedAddress ?? data.address?.formattedAddress, country: selectedCountry ?? data.address?.country }})
-      } else {
-        response = await updateUserAccount({ ...data, address: { country: selectedCountry ?? selectedCountry, formattedAddress: data.address ?? '' } })
-      }
-
-      console.log('response: ', response)
+      const response = await updateUserAccount({ ...data, address: { ...data.address, formattedAddress: formattedAddress ?? data.address?.formattedAddress, country: selectedCountry ?? data.address?.country }})
       if (!response.success) {
         toast({ variant: 'destructive', description: response.message })
         return
