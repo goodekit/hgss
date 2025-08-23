@@ -7,6 +7,7 @@ export const UpdateUserSchema = z.object({
   name   : z.string().min(3, transl(`validation.min_default`, { field: 'Name', value: 3 })),
   email  : z.string().email(transl(`validation.required_default`, { field: 'Email' })),
   address: ShippingAddressSchema.optional()
+  // address: z.union([ShippingAddressSchema.optional(), z.string()]).optional(),
 })
 
 export const UpdateUserAccountSchema = UpdateUserSchema.extend({
