@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState, useTransition } from 'react'
+import { Fragment, useState, useTransition, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
@@ -44,12 +44,22 @@ const AccountForm = ({ user }: { user: UserPrisma }) => {
     setIsEditMode(false)
   }
 
-  console.log(form.formState.errors)
+  // console.log('selectedCountry:', selectedCountry)
+
+  useEffect(() => {
+    if (user) {
+      form.reset(user as UserPrisma, { keepDefaultValues: false })
+    }
+  }, [address, form])
 
   const onSubmit: SubmitHandler<UpdateUser> = async (data) => {
-    console.log('data: ', data)
     startTransition(async () => {
-      const response = await updateUserAccount({ ...data, address: { ...data.address, formattedAddress: formattedAddress ?? data.address?.formattedAddress, country: selectedCountry ?? data.address?.country }})
+      let response
+      if (typeof data.address === 'object') {
+        response = await updateUserAccount({ ...data, address: { ...data.address, formattedAddress: formattedAddress ?? data.address?.formattedAddress, country: selectedCountry ?? data.address?.country }})
+      } else {
+        response = await updateUserAccount({ ...data, address: { country: selectedCountry ?? selectedCountry, formattedAddress: data.address ?? '' } })
+      }
 
       console.log('response: ', response)
       if (!response.success) {
@@ -58,8 +68,15 @@ const AccountForm = ({ user }: { user: UserPrisma }) => {
       }
       const newSession = { ...session, user: { ...session?.user, name: data.name } }
       await update(newSession)
-      toast({ description: transl('update_account.toast') })
-      setIsEditMode(false)
+
+      const isValid = await form.trigger()
+      form.reset(response.data ?? user, { keepDefaultValues: false })
+      if (isValid) {
+        setIsEditMode(false)
+        toast({ description: transl('update_account.toast') })
+      } else {
+        toast({ variant: 'destructive', description: transl(`error.clear_form_errors`) })
+      }
     })
   }
 
