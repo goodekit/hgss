@@ -18,8 +18,6 @@ export { default as DeleteDialg } from './dialg/delete-dialg'
 export { default as ProtectNavDialg } from './protect/protect-nav-dialg'
 // ⎿ drwr
 export { default as CategoryDrwr } from './drwr/category-drwr'
-// ⎿ form
-export { default as AccountForm } from './form/account-form'
 // ⎿header
 export { Header } from './header/header'
 export { MobileMenu } from './header/mobile-menu'

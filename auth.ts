@@ -65,16 +65,17 @@ export const config = {
         }
       }
 
-      session.user.id   = token.id
-      session.user.role = token.role
-      session.user.name = token.name
+      session.user.id       = token.id
+      session.user.role     = token.role
+      session.user.name     = token.name
+      session.user.provider = token.provider
       if (trigger === 'update') {
         session.user.name = user.name
       }
       return session
     },
 
-    async jwt({ token, user, trigger, session }: any) {
+    async jwt({ token, user, trigger, session, account }: any) {
       if (user) {
         let newOrExistingUser = await prisma.user.findUnique({
           where: { email: user.email! }
@@ -83,8 +84,8 @@ export const config = {
           newOrExistingUser = await prisma.user.create({
             data: {
               email: user.email!,
-              name: user.name ?? user.email!.split('@')[0],
-              role: 'user'
+              name : user.name ?? user.email!.split('@')[0],
+              role : 'user'
             }
           })
         }
@@ -93,6 +94,10 @@ export const config = {
         token.role              = newOrExistingUser.role
         token.name              = newOrExistingUser.name
         token.lastInvalidatedAt = newOrExistingUser.lastInvalidatedAt.getTime()
+
+        if (account) {
+          token.provider = account.provider
+        }
 
         if (token?.id) {
           const userFromToken = await prisma.user.findUnique({
