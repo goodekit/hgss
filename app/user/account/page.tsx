@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { auth } from 'auth'
 import { Badge } from 'component/ui'
 import { getUserById } from 'lib/action'
-import { transl, formatDateTime } from 'lib/util'
+import { transl, formatDateTime, cn } from 'lib/util'
 
 import AccountForm from './account-form'
 import AccountChangePasswordForm from './account-change-password-form'
@@ -15,6 +15,8 @@ const UserAccountPage = async () => {
   const userId   = session?.user?.id
   const authFlow = session?.user?.provider
 
+  const isCredentialsAuthFlow = authFlow === 'credentials'
+
   if (!userId) throw new Error(transl('error.user_not_found'))
   const user = await getUserById(userId)
 
@@ -23,16 +25,16 @@ const UserAccountPage = async () => {
       <div className={'min-w-xl mx-auto space-y-4'}>
         <h2 className={'h2-bold permanent-marker-regular'}>{transl('navigation.account.label')}</h2>
         <div className={'flex flex-col md:flex-row justify-start w-full md:w-[1200px] gap-5 space-y-5'}>
-          <div className={"w-full md:w-[500px]"}>
+          <div className={cn("w-full md:w-[500px] my-10")}>
             <AccountForm user={user} />
           </div>
-          {authFlow === 'credentials' && (
+          {isCredentialsAuthFlow && (
             <div className={'w-auto md:w-[500px] p-5 rounded-md'}>
               <AccountChangePasswordForm />
             </div>
           )}
         </div>
-        <div className={"flex justify-end align-center items-center gap-2 mt-5"}>
+        <div className={"flex justify-start align-center items-center gap-2"}>
           <p className={'text-muted-foreground'}>{transl('last_updated_at.label')}</p><span><Badge variant={'outline'} className={'w-auto'}>{formatDateTime(user?.updatedAt).dateTime}</Badge></span>
         </div>
       </div>
