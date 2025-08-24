@@ -9,11 +9,11 @@ import { useToast } from 'hook'
 import { updateUserAccount } from 'lib/action'
 import { UpdateUserSchema, userAccountUpdateDefaultValue } from 'lib/schema'
 import { Button, Textarea } from 'component/ui'
-import { Form } from 'component/ui/form'
+import { Form, FormLabel } from 'component/ui/form'
 import { RHFFormField, RHFGoogleAddressAutocomplete, RHFFormCountrySelect } from 'component/shared/rhf'
 import { EllipsisLoader } from 'component/shared/loader'
 import { TapeBtn } from 'component/shared/btn'
-import { transl } from 'lib/util'
+import { transl, cn } from 'lib/util'
 
 enum FORM_KEY {
   name    = 'name',
@@ -77,7 +77,10 @@ const AccountForm = ({ user }: { user: UserPrisma }) => {
         <div className={"space-y-5"}>
           <RHFFormField control={control} name={FORM_KEY.email} type={'input'} formKey={FORM_KEY.email} disabled />
           <RHFFormField control={control} name={FORM_KEY.name} type={'input'} formKey={FORM_KEY.name} />
-          <Textarea key={`${formattedAddress || ''}|${selectedCountry || ''}`} defaultValue={[formattedAddress, selectedCountry].filter(Boolean).join(', ')} className={'h-auto md:h-50 border-none shadow-none'} readOnly disabled />
+          <div>
+            <FormLabel className={cn('text-muted-foreground opacity-25')}>{transl('form.address.label')}</FormLabel>
+            <Textarea key={`${formattedAddress || ''}|${selectedCountry || ''}`} defaultValue={[formattedAddress, selectedCountry].filter(Boolean).join(', ')} className={'h-auto md:h-50 border-none shadow-none'} readOnly disabled />
+          </div>
             {isEditMode && (
               <Fragment>
                 <RHFFormCountrySelect control={control} name={`address.country`} formKey={'country'} />
