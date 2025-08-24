@@ -1,4 +1,5 @@
-import { ASSET_DIR } from "config/dir"
+import { ASSET_DIR } from "hgss-dir"
+import { User } from '@prisma/client'
 
 export const signInDefaultValue = {
   email   : '',
@@ -12,12 +13,29 @@ export const signUpDefaultValue = {
   confirmPassword: ''
 }
 
+export const userAccountUpdateDefaultValue = (user: User) => {
+  return {
+    name            : user.name || '',
+    email           : user.email || '',
+    address         : user?.address || null,
+    formattedAddress: (user?.address as ShippingAddress)?.formattedAddress || null
+  }
+}
+
+export const userUpdatePasswordDefaultValue = {
+  oldPassword    : '',
+  password       : '',
+  confirmPassword: ''
+}
+
 export const shippingAddressDefaultValue = {
-  fullName     : '',
-  streetAddress: '',
-  city         : '',
-  postalCode   : '',
-  country      : '',
+  fullName        : '',
+  formattedAddress: '',
+  address         : '',
+  streetAddress   : '',
+  city            : '',
+  postalCode      : '',
+  country         : '',
 }
 
 export const contactAndEnquiryDefaultValue = (user?: UserBase) => {

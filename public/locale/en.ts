@@ -548,6 +548,9 @@ export const en = {
   sales: {
     label: 'Sales'
   },
+  save_this_address: {
+    label: `Save this address`
+  },
   search: {
     label      : 'Search',
     placeholder: 'Looking for something?'
@@ -659,6 +662,9 @@ export const en = {
     label      : 'Update Product',
     description: 'Complete the form with your product information'
   },
+  update_your_address: {
+    label: `Update your address`
+  },
   update_user: {
     label      : 'Update User',
     description: 'Complete the form with your user information'
@@ -684,6 +690,9 @@ export const en = {
   uploaded: {
     label      : 'Uploaded',
     description: 'File Uploaded'
+  },
+  use_different_address: {
+    label: 'Use a different address'
   },
   user: {
     label      : 'User',
@@ -812,6 +821,7 @@ export const en = {
     account_locked            : 'Account temporarily locked. Contact support.',
     bag_empty                 : 'Bag is empty',
     bag_not_found             : 'Bag not found',
+    clear_form_errors         : `Clear form errors before submitting`,
     enquiries_max_limit       : `You have already hit the max limit for enquiries, you have {time} til you can send an enquiry again`,
     exists_reset_password     : `Valid reset password request already exists in your mailbox`,
     expired_token             : `Token expired`,

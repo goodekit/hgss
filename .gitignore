@@ -43,3 +43,5 @@ yarn-error.log*
 next-env.d.ts
 
 stripe_backup_code.txt
+migration/export.sql
+migration/migration.sh

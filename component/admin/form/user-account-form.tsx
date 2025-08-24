@@ -1,18 +1,17 @@
 'use client'
 
-import { FC } from 'react'
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
+import { User as UserPrisma } from '@prisma/client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useToast } from 'hook'
 import { Check } from 'lucide-react'
-import { updateUser } from 'lib/action'
-import { UpdateUserAccountSchema } from 'lib/schema'
+import { updateUserAccount } from 'lib/action'
+import { userAccountUpdateDefaultValue, UpdateUserSchema } from 'lib/schema'
 import { Form, Badge } from 'component/ui'
 import { RHFFormField, RHFFormSelect } from 'component/shared/rhf'
 import { TapeBtn } from 'component/shared/btn'
-import { delay, formatDateTime } from 'lib/util'
+import { delay, formatDateTime, transl } from 'lib/util'
 
 enum FORM_KEY {
     name  = 'name',
@@ -21,21 +20,21 @@ enum FORM_KEY {
 }
 
 interface UpdateAccountFormProps {
-    user: UpdateUserAccount
+    user: UserPrisma
 }
 
-const UserAccountForm: FC<UpdateAccountFormProps> = ({ user }) => {
+const UserAccountForm = ({ user }: UpdateAccountFormProps) => {
   const { toast } = useToast()
-  const form                      = useForm<UpdateUserAccount>({
-    resolver     : zodResolver(UpdateUserAccountSchema),
-    defaultValues: user
+  const form      = useForm<UpdateUser>({
+    resolver     : zodResolver(UpdateUserSchema),
+    defaultValues: userAccountUpdateDefaultValue(user) as never
   })
   const { control, handleSubmit, formState } = form
 
-  const onSubmit = async (values: UpdateUserAccount) => {
+  const onSubmit: SubmitHandler<UpdateUser> = async (data) => {
       await delay(500)
     try {
-      const response = await updateUser({...values, id:user.id })
+      const response = await updateUserAccount({ ...data })
       if (!response.success) {
         toast({ variant: 'destructive', description: response.message })
       }
@@ -54,9 +53,9 @@ const UserAccountForm: FC<UpdateAccountFormProps> = ({ user }) => {
                   <RHFFormField control={control} name={FORM_KEY.name} type={'input'} formKey={FORM_KEY.name} />
                   <RHFFormSelect control={control} name={FORM_KEY.role} formKey={FORM_KEY.role} options={GLOBAL.USER_ROLES} defaultOption={user.role} disabled={formState.isSubmitting} />
                 <div className={'relative'}>
-                  <TapeBtn isPending={formState.isSubmitting} label={en.update_account.label} className={'w-full'} icon={<Check size={15}/>} />
+                  <TapeBtn isPending={formState.isSubmitting} label={transl('update_account.label')} className={'w-full'} icon={<Check size={15}/>} />
                 <div className="flex justify-end align-center items-center gap-2 mt-5">
-                  <p className={'text-muted-foreground'}>{en.last_updated_at.label}</p><span><Badge variant={'secondary'} className={'w-auto'}>{user?.updatedAt && formatDateTime(user?.updatedAt).dateTime}</Badge></span>
+                  <p className={'text-muted-foreground'}>{transl('last_updated_at.label')}</p><span><Badge variant={'secondary'} className={'w-auto'}>{user?.updatedAt && formatDateTime(user?.updatedAt).dateTime}</Badge></span>
                 </div>
                 </div>
             </div>

@@ -1,0 +1,1 @@
+  psql "DATABASE_URL" < migration/export.sql

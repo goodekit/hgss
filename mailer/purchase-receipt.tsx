@@ -1,9 +1,8 @@
-import { en } from 'public/locale'
 import { PATH_DIR, ASSET_DIR } from 'hgss-dir'
 import { IMAGE } from 'hgss-design'
 import { _mockData } from '_mock'
 import { Body, Column, Container, Head, Heading, Html, Img, Preview, Row, Section, Tailwind, Hr, Text } from '@react-email/components'
-import { formatCurrency } from 'lib/util'
+import { formatCurrency, transl } from 'lib/util'
 
 PurchaseReceiptEmail.PreviewProps = {
     order: {
@@ -15,11 +14,12 @@ PurchaseReceiptEmail.PreviewProps = {
         },
         paymentMethod: 'Stripe',
         shippingAddress:{
-            fullName     : 'John Doe',
-            streetAddress: '123 Main St',
-            city         : 'Arlen',
-            postalCode   : '94123',
-            country      : 'US',
+            fullName        : 'John Doe',
+            formattedAddress: '123 Main St, Arlen, 94123, USA',
+            streetAddress   : '123 Main St',
+            city            : 'Arlen',
+            postalCode      : '94123',
+            country         : 'US',
         },
         createdAt    : new Date(),
         totalPrice   : '100',
@@ -57,21 +57,21 @@ type OrderInformationProps = {
 export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
   return (
     <Html>
-      <Preview>{en.view_order_receipt.label}</Preview>
+      <Preview>{transl('view_order_receipt.label')}</Preview>
       <Tailwind>
         <Head />
         <Body className={'font-sans bg-white'}>
           <Container className={'max-w-4xl'}>
           <Img src={ASSET_DIR.LOGO_PRODUCTION_PNG} width={45} height={30} className={'rounded-sm'} alt={'logo'} />
-            <Heading>{en.purchase_receipt.label}</Heading>
+            <Heading>{transl('purchase_receipt.label')}</Heading>
             <Section>
               <Row>
                 <Column>
-                  <Text className={'text-sm mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap'}>{en.order_id.label}</Text>
+                  <Text className={'text-sm mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap'}>{transl('order_id.label')}</Text>
                   <Text className={'text-sm font-bold mt-0 mr-4'}>{order.id.toString()}</Text>
                 </Column>
                 <Column align={'right'}>
-                  <Text className={'text-sm mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap'}>{en.purchase_date.label}</Text>
+                  <Text className={'text-sm mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap'}>{transl('purchase_date.label')}</Text>
                   <Text className={'text-sm font-bold mt-0 mr-4'}>{dateFormatter.format(order.createdAt)}</Text>
                 </Column>
               </Row>
@@ -92,10 +92,10 @@ export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
                 ))}
                 <Hr className={'my-4'} />
                 {[
-                  {name: en.item.items.label, price: order.itemsPrice},
-                  {name: en.tax.label, price: order.taxPrice},
-                  {name: en.shipping.label, price: order.shippingPrice},
-                  {name: en.total.label, price: order.totalPrice},
+                  {name: transl('item.items.label'), price: order.itemsPrice},
+                  {name: transl('tax.label'), price: order.taxPrice},
+                  {name: transl('shipping.label'), price: order.shippingPrice},
+                  {name: transl('total.label'), price: order.totalPrice},
                   ].map(({ name, price}, index) => (
                     <Row key={index} className={'py-1'}>
                         <Column align={'right'}>{name}:</Column>

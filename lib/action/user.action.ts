@@ -1,19 +1,18 @@
 'use server'
 
-import { en } from 'public/locale'
 import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
+import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
 import { Prisma } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
+import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import { isRedirectError } from 'next/dist/client/components/redirect-error'
 import { signIn, signOut, auth } from 'auth'
 import { sendResetPasswordLink } from 'mailer'
 import { prisma } from 'db/prisma'
 import { cache, invalidateCache } from 'lib/cache'
-import { CACHE_KEY, CACHE_TTL } from 'config/cache.config'
-import { hash } from 'lib/encrypt'
 import { checkSignInThrottle, incrementSignInAttempts, resetSignInAttempts } from 'lib/throttle'
 import { ShippingAddressSchema, PaymentMethodSchema } from 'lib/schema'
 import { SystemLogger } from 'lib/app-logger'
@@ -22,7 +21,6 @@ import { transl } from 'lib/util'
 
 const TAG = 'USER.ACTION'
 /**
- * TODO: Cleanup
  * Signs in a user with the provided credentials.
  *
  * @param prevState - The previous state, which is currently not used.
@@ -117,7 +115,7 @@ export async function signUpUser(data: SignUp) {
       const encodedName      = encodeURIComponent(name || 'Anonymous')
       const avatarUrl        = GLOBAL.AVATAR_API + `${encodedName}`
       const unhashedPassword = password
-      const hashedPassword   = await hash(password)
+      const hashedPassword   = await bcrypt.hash(password, GLOBAL.HASH.SALT_ROUNDS)
       await prisma.user.create({ data: { name, email, password: hashedPassword, avatar: avatarUrl } })
       await signIn('credentials', { email, password: unhashedPassword, redirect: false })
       // TODO: count the sign-in logs /last time logged in
@@ -173,7 +171,7 @@ export async function getUserById(userId: string) {
     ttl    : CACHE_TTL.userById,
     fetcher: async () => {
       const user = await prisma.user.findFirst({ where: { id: userId }})
-      if (!user) throw new Error(en.error.user_not_found)
+      if (!user) throw new Error(transl('error.user_not_found'))
       return user
     }
   })
@@ -188,12 +186,15 @@ export async function getUserById(userId: string) {
  */
 export async function updateUserAddress(address: ShippingAddress) {
   try {
-    const session = await auth()
-    const currentUser = await prisma.user.findFirst({where: {id:session?.user?.id}})
-    if (!currentUser) throw new Error(en.error.user_not_found)
+    const session     = await auth()
+    const currentUser = await prisma.user.findFirst({ where: {id:session?.user?.id }})
+    if (!currentUser) throw new Error(transl('error.user_not_found'))
 
-    const parsedAddress = ShippingAddressSchema.parse(address)
-    await prisma.user.update({where: {id: currentUser.id},data: {address: parsedAddress}})
+    const parsedAddress = ShippingAddressSchema.parse({ ...address, address: `${currentUser.name}, ${address?.formattedAddress}` })
+
+    await prisma.user.update({ where: { id: currentUser.id }, data: { address: parsedAddress }})
+    await invalidateCache(CACHE_KEY.userById(currentUser.id))
+    revalidatePath(PATH_DIR.SHIPPING)
     return SystemLogger.response(`${currentUser.name} address updated`, CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
@@ -211,10 +212,10 @@ export async function updateUserPaymentMethod(paymentType: PaymentMethod) {
   try {
     const session =  await auth()
     const currentUser = await prisma.user.findFirst({ where:{ id:session?.user?.id }})
-    if (!currentUser) throw new Error(en.error.user_not_found)
+    if (!currentUser) throw new Error(transl('error.user_not_found'))
     const { type } = PaymentMethodSchema.parse(paymentType)
     await prisma.user.update({ where: { id: currentUser.id }, data: { paymentMethod: type } })
-    return SystemLogger.response(en.success.user_updated, CODE.OK, TAG)
+    return SystemLogger.response(transl('success.user_updated'), CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -228,16 +229,16 @@ export async function updateUserPaymentMethod(paymentType: PaymentMethod) {
  *
  * @throws {Error} If the current user is not found.
  */
-export async function updateUserAccount(user: UserBase) {
+export async function updateUserAccount(user: UpdateUser) {
   try {
     const session     = await auth()
     const userId      = session?.user?.id
     const currentUser = await prisma.user.findFirst({ where: { id: userId }})
-    if (!currentUser) throw new Error(en.error.user_not_found)
-    const updatedUser = await prisma.user.update({ where:{ id: currentUser.id }, data: { name: user.name, email: user.email }})
+    if (!currentUser) throw new Error(transl('error.user_not_found'))
+    const updatedUser = await prisma.user.update({ where:{ id: currentUser.id }, data: { name: user.name, email: user.email, address: user?.address as ShippingAddress }})
     await invalidateCache(CACHE_KEY.userById(currentUser.id))
     revalidatePath(PATH_DIR.USER.ACCOUNT)
-    return SystemLogger.response(en.success.user_updated, CODE.OK, TAG, '', updatedUser)
+    return SystemLogger.response(transl('success.user_updated'), CODE.OK, TAG, '', updatedUser)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -253,12 +254,12 @@ export async function updateUserAccount(user: UserBase) {
 export async function updateUser(data: UpdateUserAccount) {
   try {
     const user = await prisma.user.findFirst({ where: { id: data.id }})
-    if (!user) throw new Error(en.error.user_not_found)
+    if (!user) throw new Error(transl('error.user_not_found'))
 
     const updatedUser = await prisma.user.update({ where:{ id: user.id }, data: { name: data.name, role: data.role }})
     await invalidateCache(CACHE_KEY.userById(user.id))
     revalidatePath(PATH_DIR.ADMIN.USER_VIEW(user.id))
-    return SystemLogger.response(en.success.user_updated, CODE.OK, TAG, '', updatedUser)
+    return SystemLogger.response(transl('success.user_updated'), CODE.OK, TAG, '', updatedUser)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -283,7 +284,7 @@ export async function deleteUser(userId: string) {
     await prisma.user.delete({ where: { id: userId } })
     await invalidateCache(CACHE_KEY.userById(userId))
     revalidatePath(PATH_DIR.ADMIN.USER)
-    return SystemLogger.response(en.success.user_deleted, CODE.OK, TAG)
+    return SystemLogger.response(transl('success.user_deleted'), CODE.OK, TAG)
   } catch (error) {
     return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
   }
@@ -320,6 +321,35 @@ export async function sendPasswordResetEmail(data: { email: string }) {
     return SystemLogger.errorResponse((error as AppError).message, CODE.BAD_REQUEST, TAG)
   }
 }
+
+/**
+ * Updates the password of the current user.
+ *
+ * @param {UpdateUserPassword} data - Object containing the passwords.
+ * @returns {Promise<{AppResponse}>} - A promise that resolves when the password is successfully updated.
+ * @throws {Error} - Throws an error if the user is not found or if there is an issue with updating the password.
+ */
+export async function updateUserPassword(data: UpdateUserPassword) {
+  try {
+    const session     = await auth()
+    const userId      = session?.user?.id
+    const currentUser = await prisma.user.findFirst({ where: { id: userId } })
+    if (!currentUser) throw new Error(transl('error.user_not_found'))
+
+    const isMatch = await bcrypt.compare(data.oldPassword || '', currentUser.password || '')
+    if (!isMatch) {
+      return SystemLogger.response(transl('validation.password.invalid_old'))
+    }
+
+    const newPassword = await bcrypt.hash(data.password || '', GLOBAL.HASH.SALT_ROUNDS)
+    await prisma.user.update({ where: { id: currentUser.id }, data: { password: newPassword } })
+    revalidatePath(PATH_DIR.USER.ACCOUNT)
+    return SystemLogger.response(transl('success.password_updated'), CODE.OK, TAG)
+  } catch (error) {
+    return SystemLogger.errorResponse(error as AppError, CODE.BAD_REQUEST, TAG)
+  }
+}
+
 
 /**
  * Validates the token, and return the user in response
@@ -383,7 +413,7 @@ export async function resetPasswordWithToken(data: { token: string, password: st
       throw new Error(transl('error.not_found'))
     }
 
-    const hashedPassword = await hash(password)
+    const hashedPassword = await bcrypt.hash(password, GLOBAL.HASH.SALT_ROUNDS)
 
     await prisma.user.update({ where: { id: user.id }, data: { password: hashedPassword }})
     await prisma.passwordResetToken.delete({ where: { token }})
