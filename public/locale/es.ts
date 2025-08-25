@@ -1,873 +1,872 @@
 export const es = {
-  account: {
-    label: 'Account'
+  "account": {
+    "label": "Cuenta"
   },
-  action: {
-    label: 'Action'
+  "action": {
+    "label": "Acción"
   },
-  all: {
-    label: 'All'
+  "all": {
+    "label": "Toda"
   },
-  add_to_bag   : 'Add to Bag',
-  archived_user: {
-    label: 'Archived User'
+  "add_to_bag": "Agregar a la bolsa",
+  "archived_user": {
+    "label": "Usuario archivada"
   },
-  admin: {
-    label: 'Admin'
+  "admin": {
+    "label": "Administradora"
   },
-  all_day_support: {
-    label      : '24/7 Support',
-    description: 'Get support whenever you need it'
+  "all_day_support": {
+    "label": "Soporte 24/7",
+    "description": "Obtenga apoyo siempre que lo necesite"
   },
-  already_have_account: {
-    label: 'Already have an account?'
+  "already_have_account": {
+    "label": "¿Ya tienes una cuenta?"
   },
-  any: {
-    label: 'Any'
+  "any": {
+    "label": "Cualquier"
   },
-  appearance: {
-    label: 'Appearance'
+  "appearance": {
+    "label": "Apariencia"
   },
-  bag: {
-    label      : 'Bag',
-    description: 'Complete the form with your bag information',
-    bag        : {
-      label: 'Bag'
+  "bag": {
+    "label": "Bolsa",
+    "description": "Complete el formulario con la información de su bolsa",
+    "bag": {
+      "label": "Bolsa"
     }
   },
-  bag_empty: 'Bag is empty',
-  cancel   : {
-    label: 'Cancel'
+  "bag_empty": "La bolsa está vacía",
+  "cancel": {
+    "label": "Cancelar"
   },
-  category: {
-    label     : 'Category',
-    categories: {
-      label: 'Categories'
+  "category": {
+    "label": "Categoría",
+    "categories": {
+      "label": "Categorías"
     }
   },
-  change_file: {
-    label: 'Change File'
+  "change_file": {
+    "label": "Cambiar archivo"
   },
-  change_password: {
-    label      : 'Change Password',
-    description: "Change your account's Password"
+  "change_password": {
+    "label": "Cambiar la contraseña",
+    "description": "Cambiar la contraseña de su cuenta"
   },
-  checkout: {
-    label      : 'Checkout',
-    description: 'Complete the form with your information'
+  "checkout": {
+    "label": "Verificar",
+    "description": "Complete el formulario con su información"
   },
-  clear: {
-    label: 'Clear'
+  "clear": {
+    "label": "Clara"
   },
-  create: {
-    label: 'Create'
+  "create": {
+    "label": "Crear"
   },
-  create_gallery: {
-    label      : 'Create Gallery',
-    description: 'Complete the form with your gallery information'
+  "create_gallery": {
+    "label": "Crear galería",
+    "description": "Complete el formulario con la información de su galería"
   },
-  create_product: {
-    label      : 'Create Product',
-    description: 'Complete the form with your product information'
+  "create_product": {
+    "label": "Crear productos",
+    "description": "Complete el formulario con la información de su producto"
   },
-  confirm: {
-    label: 'Confirm'
+  "confirm": {
+    "label": "Confirmar"
   },
-  contact: {
-    label      : 'Contact',
-    description: 'Contact us for any enquiries'
+  "contact": {
+    "label": "Contacto",
+    "description": "Contáctenos para cualquier consulta"
   },
-  contact_and_custom_enquiries: {
-    label      : 'Contact & Custom Enquiries',
-    description: 'Need something you don’t see on our product line?'
+  "contact_and_custom_enquiries": {
+    "label": "Consultas de contacto y personalizaciones",
+    "description": "¿Necesitas algo que no ves en nuestra línea de productos?"
   },
-  continue: {
-    label      : 'Continue',
-    description: 'Continue to the next step'
+  "continue": {
+    "label": "Continuar",
+    "description": "Continuar al siguiente paso"
   },
-  custom_enquiry: {
-    label           : 'Custom Enquiry',
-    description     : 'Contact us for custom enquiries',
-    custom_enquiries: {
-      label: 'Custom Enquiries'
+  "custom_enquiry": {
+    "label": "Consulta personalizada",
+    "description": "Contáctenos para consultas personalizadas",
+    "custom_enquiries": {
+      "label": "Consultas personalizadas"
     }
   },
-  customer: {
-    label    : 'Customer',
-    customers: {
-      label: 'Customers'
+  "customer": {
+    "label": "Cliente",
+    "customers": {
+      "label": "Clientes"
     }
   },
-  customer_review: {
-    label           : 'Customer Review',
-    customer_reviews: {
-      label: 'Customer Reviews'
+  "customer_review": {
+    "label": "Revisión del cliente",
+    "customer_reviews": {
+      "label": "Revisiones de clientes"
     }
   },
-  dashboard: {
-    label: 'Dashboard'
+  "dashboard": {
+    "label": "Panel"
   },
-  date: {
-    label: 'Date'
+  "date": {
+    "label": "Fecha"
   },
-  day: {
-    label: 'Day',
-    days : {
-      label: 'Days'
+  "day": {
+    "label": "Día",
+    "days": {
+      "label": "Días"
     }
   },
-  deal_has_ended: {
-    label      : 'Deal has ended',
-    description: "This deal has ended. Don't worry, we have more deals for you!"
+  "deal_has_ended": {
+    "label": "El trato ha terminado",
+    "description": "Este acuerdo ha terminado. ¡No te preocupes, tenemos más ofertas para ti!"
   },
-  deal_of_the_month: {
-    label      : 'Deal of the Month',
-    description:
-      "Every purchase comes with exclusive perks and offers, making this month a celebration of savvy choices and smart deals. Don't miss out!"
+  "deal_of_the_month": {
+    "label": "Deal del mes",
+    "description": "Cada compra viene con ventajas y ofertas exclusivas, lo que hace de este mes una celebración de opciones inteligentes y ofertas inteligentes. ¡No te pierdas!"
   },
-  delete: {
-    label: 'Delete'
+  "delete": {
+    "label": "Borrar"
   },
-  delete_gallery_item: {
-    label      : 'Delete Gallery Item',
-    description: 'Are you sure you want to delete this Gallery Item?'
+  "delete_gallery_item": {
+    "label": "Eliminar el artículo de la galería",
+    "description": "¿Estás seguro de que quieres eliminar este artículo de la galería?"
   },
-  delete_image: {
-    label                 : 'Delete Image',
-    description           : 'Are you sure you want to delete this image?',
-    description_last_image: 'This is the last image in the Album, deleting this will delete the album, are you sure you want to continue?'
+  "delete_image": {
+    "label": "Eliminar imagen",
+    "description": "¿Estás seguro de que quieres eliminar esta imagen?",
+    "description_last_image": "Esta es la última imagen del álbum, eliminando esto eliminará el álbum, ¿estás seguro de que quieres continuar?"
   },
-  delete_album: {
-    label               : 'Delete Album',
-    description         : 'Are you sure you want to delete this Album?',
-    description_multiple: 'There are multiple images in the album, are you sure you want to delete this album?'
+  "delete_album": {
+    "label": "Eliminar el álbum",
+    "description": "¿Estás segura de que quieres eliminar este álbum?",
+    "description_multiple": "Hay varias imágenes en el álbum, ¿estás seguro de que quieres eliminar este álbum?"
   },
-  delivered_at: {
-    label: 'Delivered At'
+  "delivered_at": {
+    "label": "Entregado en"
   },
-  department: {
-    label: 'Department'
+  "department": {
+    "label": "Departamento"
   },
-  description      : 'This is an example of i18n with Next.js',
-  dont_have_account: {
-    label: "Don't have an account?"
+  "description": "Este es un ejemplo de i18n con next.js",
+  "dont_have_account": {
+    "label": "¿No tienes una cuenta?"
   },
-  edit: {
-    label: 'Edit'
+  "edit": {
+    "label": "Editar"
   },
-  edit_review: {
-    label      : 'Edit Your Review',
-    description: 'Edit your review'
+  "edit_review": {
+    "label": "Edite su reseña",
+    "description": "Edite su reseña"
   },
-  flexible_payment: {
-    label      : 'Flexible Payment',
-    description: 'Pay with Credit Card, PayPal or Cash on Delivery'
+  "flexible_payment": {
+    "label": "Pago flexible",
+    "description": "Pagar con tarjeta de crédito, PayPal o efectivo en la entrega"
   },
-  filtered_by: {
-    label: 'Filtered by'
+  "filtered_by": {
+    "label": "Filtrado por"
   },
-  form: {
-    ship_to: {
-      label      : `Ship to`,
-      placeholder: `Add the Shipping Address`
+  "form": {
+    "ship_to": {
+      "label": "Envie a",
+      "placeholder": "Agregue la dirección de envío"
     },
-    old_password: {
-      label      : 'Old Password',
-      placeholder: 'Enter your Old Password'
+    "old_password": {
+      "label": "Contraseña anterior",
+      "placeholder": "Ingrese su contraseña anterior"
     },
-    attachments: {
-      label      : 'Attachments',
-      placeholder: `Upload attachments in JPEG, PNG, or JPG format`
+    "attachments": {
+      "label": "Accesorios",
+      "placeholder": "Cargar archivos adjuntos en formato JPEG, PNG o JPG"
     },
-    reset_password: {
-      label      : 'Reset Password',
-      placeholder: 'We will send you an email to reset your password'
+    "reset_password": {
+      "label": "Restablecer contraseña",
+      "placeholder": "Le enviaremos un correo electrónico para restablecer su contraseña"
     },
-    forgot_password: {
-      label      : 'Forgot Password',
-      placeholder: 'Forgot Password?'
+    "forgot_password": {
+      "label": "Has olvidado tu contraseña",
+      "placeholder": "¿Has olvidado tu contraseña?"
     },
-    image: {
-      label      : 'Image',
-      placeholder: 'Add Image'
+    "image": {
+      "label": "Imagen",
+      "placeholder": "Agregar imagen"
     },
-    gallery_item: {
-      label      : 'Gallery Item',
-      placeholder: 'Add Gallery Item'
+    "gallery_item": {
+      "label": "Artículo de la galería",
+      "placeholder": "Agregar artículo de la galería"
     },
-    cover: {
-      label      : 'Cover',
-      placeholder: 'Add cover'
+    "cover": {
+      "label": "Cubrir",
+      "placeholder": "Agregar cubierta"
     },
-    specifications: {
-      label      : 'Specifications',
-      placeholder: 'Add Specification'
+    "specifications": {
+      "label": "Presupuesto",
+      "placeholder": "Agregar especificación"
     },
-    model: {
-      label      : 'Model',
-      placeholder: 'Add the Model'
+    "model": {
+      "label": "Modelo",
+      "placeholder": "Agregar el modelo"
     },
-    message: {
-      label      : 'Message',
-      placeholder: 'Compose your message'
+    "message": {
+      "label": "Mensaje",
+      "placeholder": "Componga tu mensaje"
     },
-    password: {
-      label      : 'Password',
-      placeholder: 'Enter your password'
+    "password": {
+      "label": "Contraseña",
+      "placeholder": "Ingrese su contraseña"
     },
-    confirm_password: {
-      label      : 'Confirm Password',
-      placeholder: 'Confirm your password'
+    "confirm_password": {
+      "label": "confirmar Contraseña",
+      "placeholder": "Confirma tu contraseña"
     },
-    rating: {
-      label      : 'Rating',
-      placeholder: 'Enter the rating'
+    "rating": {
+      "label": "Clasificación",
+      "placeholder": "Ingrese la calificación"
     },
-    title: {
-      label      : 'Title',
-      placeholder: 'Enter the title'
+    "title": {
+      "label": "Título",
+      "placeholder": "Ingrese el título"
     },
-    name: {
-      label      : 'Name',
-      placeholder: 'Enter name'
+    "name": {
+      "label": "Nombre",
+      "placeholder": "Ingrese el nombre"
     },
-    slug: {
-      label      : 'Slug',
-      placeholder: 'Enter the slug or generate'
+    "slug": {
+      "label": "Babosa",
+      "placeholder": "Ingrese la babosa o genere"
     },
-    category: {
-      label      : 'Category',
-      placeholder: 'Enter the category'
+    "category": {
+      "label": "Categoría",
+      "placeholder": "Ingrese la categoría"
     },
-    banner: {
-      label      : 'Banner',
-      placeholder: 'Upload the banner'
+    "banner": {
+      "label": "Bandera",
+      "placeholder": "Subir el banner"
     },
-    brand: {
-      label      : 'Brand',
-      placeholder: 'Enter the brand'
+    "brand": {
+      "label": "Marca",
+      "placeholder": "Ingrese la marca"
     },
-    price: {
-      label      : 'Price',
-      placeholder: 'Enter the price'
+    "price": {
+      "label": "Precio",
+      "placeholder": "Ingrese el precio"
     },
-    role: {
-      label      : 'Role',
-      placeholder: 'Enter the role'
+    "role": {
+      "label": "Role",
+      "placeholder": "Ingrese el rol"
     },
-    stock: {
-      label      : 'Stock',
-      placeholder: 'Enter the stock count'
+    "stock": {
+      "label": "Existencias",
+      "placeholder": "Ingrese el recuento de acciones"
     },
-    images: {
-      label      : 'Images',
-      placeholder: 'Upload the images'
+    "images": {
+      "label": "Imágenes",
+      "placeholder": "Sube las imágenes"
     },
-    featured: {
-      label      : 'Featured Product',
-      placeholder: 'Set as a featured product'
+    "featured": {
+      "label": "Producto destacado",
+      "placeholder": "Establecido como un producto destacado"
     },
-    description: {
-      label      : 'Description',
-      placeholder: 'Enter the description'
+    "description": {
+      "label": "Descripción",
+      "placeholder": "Ingrese la descripción"
     },
-    first_name: {
-      label      : 'First Name',
-      placeholder: 'Enter your first name'
+    "first_name": {
+      "label": "Nombre de pila",
+      "placeholder": "Ingrese su primer nombre"
     },
-    last_name: {
-      label      : 'Last Name',
-      placeholder: 'Enter your last name'
+    "last_name": {
+      "label": "Apellido",
+      "placeholder": "Ingrese su apellido"
     },
-    full_name: {
-      label      : 'Full Name',
-      placeholder: 'Enter your full name'
+    "full_name": {
+      "label": "Nombre completo",
+      "placeholder": "Ingrese su nombre completo"
     },
-    email: {
-      label      : 'Email',
-      placeholder: 'Enter your email'
+    "email": {
+      "label": "Correo electrónico",
+      "placeholder": "Ingrese su correo electrónico"
     },
-    phone: {
-      label      : 'Phone',
-      placeholder: 'Enter your phone'
+    "phone": {
+      "label": "Teléfono",
+      "placeholder": "Ingrese su teléfono"
     },
-    address: {
-      label      : 'Address',
-      placeholder: 'Enter your address'
+    "address": {
+      "label": "DIRECCIÓN",
+      "placeholder": "Ingrese su dirección"
     },
-    street: {
-      label      : 'Street',
-      placeholder: 'Enter your street'
+    "street": {
+      "label": "Calle",
+      "placeholder": "Entra tu calle"
     },
-    city: {
-      label      : 'City',
-      placeholder: 'Enter your city'
+    "city": {
+      "label": "Ciudad",
+      "placeholder": "Entra en tu ciudad"
     },
-    state: {
-      label      : 'State',
-      placeholder: 'Enter your state'
+    "state": {
+      "label": "Estado",
+      "placeholder": "Ingrese a su estado"
     },
-    postal_code: {
-      label      : 'Postal Code',
-      placeholder: 'Enter your postal code'
+    "postal_code": {
+      "label": "Código Postal",
+      "placeholder": "Ingrese su código postal"
     },
-    country: {
-      label      : 'Country',
-      placeholder: 'Enter your country'
+    "country": {
+      "label": "País",
+      "placeholder": "Entra en tu país"
     }
   },
-  free_shipping: {
-    label      : 'Free Shipping',
-    description: 'Free shipping on orders above '
+  "free_shipping": {
+    "label": "Envío gratis",
+    "description": "Envío gratis en los pedidos anteriores"
   },
-  gallery: {
-    label: 'Gallery'
+  "gallery": {
+    "label": "Galería"
   },
-  generate: {
-    label: 'Generate'
+  "generate": {
+    "label": "Generar"
   },
-  go_back: 'Go Back',
-  go_to  : {
-    label: 'Go to'
+  "go_back": "Volver",
+  "go_to": {
+    "label": "Ir a"
   },
-  go_to_bag  : 'Go to Bag',
-  go_shopping: 'Go Shopping',
-  home       : {
-    label: 'Home'
+  "go_to_bag": "Ir a la bolsa",
+  "go_shopping": "Hacer compras",
+  "home": {
+    "label": "Hogar"
   },
-  hour: {
-    label: 'Hour',
-    hours: {
-      label: 'Hours'
+  "hour": {
+    "label": "Hora",
+    "hours": {
+      "label": "Horas"
     }
   },
-  image: {
-    label : 'Image',
-    images: {
-      label: 'Images'
+  "image": {
+    "label": "Imagen",
+    "images": {
+      "label": "Imágenes"
     }
   },
-  in_stock: {
-    label: 'In Stock'
+  "in_stock": {
+    "label": "En stock"
   },
-  item: {
-    label: 'Item',
-    items: {
-      label: 'Items'
+  "item": {
+    "label": "Artículo",
+    "items": {
+      "label": "Elementos"
     }
   },
-  last_updated_at: {
-    label: 'Last Updated at: '
+  "last_updated_at": {
+    "label": "Última actualización en:"
   },
-  leave: {
-    label: 'Leave'
+  "leave": {
+    "label": "Dejar"
   },
-  loading: {
-    delete_order     : 'Deleting Order',
-    processing       : 'Processing',
-    leaving          : 'Leaving',
-    loading          : 'Loading',
-    loading_countdown: 'Loading Countdown',
-    saving           : 'Saving',
-    updating         : 'Updating',
-    uploading        : 'Uploading'
+  "loading": {
+    "delete_order": "Orden de eliminación",
+    "processing": "Tratamiento",
+    "leaving": "Partida",
+    "loading": "Cargando",
+    "loading_countdown": "Carga de cuenta regresiva",
+    "saving": "Ahorro",
+    "updating": "Actualización",
+    "uploading": "Carga"
   },
-  mark_paid: {
-    label: 'Mark as Paid'
+  "mark_paid": {
+    "label": "Marcar como pagada"
   },
-  mark_delivered: {
-    label: 'Mark as Delivered'
+  "mark_delivered": {
+    "label": "Marca como se entrega"
   },
-  minute: {
-    label  : 'Minute',
-    minutes: {
-      label: 'Minutes'
+  "minute": {
+    "label": "Minuto",
+    "minutes": {
+      "label": "Minutos"
     }
   },
-  money_back_guarantee: {
-    label      : 'Money Back Guarantee',
-    description: ' days money back guarantee'
+  "money_back_guarantee": {
+    "label": "Garantía de devolución de dinero",
+    "description": "Día de la garantía de devolución de dinero"
   },
-  my_order: {
-    label : `My Order`,
-    plural: `My Orders`
+  "my_order": {
+    "label": "Mi pedido",
+    "plural": "Mis pedidos"
   },
-  navigation: {
-    account: {
-      label: 'Account'
+  "navigation": {
+    "account": {
+      "label": "Cuenta"
     },
-    bag: {
-      label: 'Bag'
+    "bag": {
+      "label": "Bolsa"
     },
-    order: {
-      label : 'Order',
-      orders: {
-        label: 'Orders'
+    "order": {
+      "label": "Orden",
+      "orders": {
+        "label": "Órdenes"
       }
     }
   },
-  next: {
-    label: 'Next'
+  "next": {
+    "label": "Próxima"
   },
-  no_data: {
-    label: 'No Data'
+  "no_data": {
+    "label": "Sin datos"
   },
-  not_delivered: {
-    label: 'Not Delivered'
+  "not_delivered": {
+    "label": "No entregado"
   },
-  not_paid: {
-    label: 'Not Paid'
+  "not_paid": {
+    "label": "No pagada"
   },
-  or: {
-    label: 'or'
+  "or": {
+    "label": "o"
   },
-  order: {
-    label      : 'Order',
-    description: 'Complete the form with your order information',
-    orders     : {
-      label: 'Orders'
+  "order": {
+    "label": "Orden",
+    "description": "Complete el formulario con su información de pedido",
+    "orders": {
+      "label": "Órdenes"
     }
   },
-  order_history: {
-    label: 'Order History'
+  "order_history": {
+    "label": "Historial de pedidos"
   },
-  order_id: {
-    label: 'Order ID'
+  "order_id": {
+    "label": "ID de pedido"
   },
-  order_items: {
-    label: 'Order Items'
+  "order_items": {
+    "label": "Ordenar artículos"
   },
-  order_overview: {
-    label: 'Order Overview'
+  "order_overview": {
+    "label": "Descripción general del pedido"
   },
-  overview: {
-    label: 'Overview'
+  "overview": {
+    "label": "Descripción general"
   },
-  out_of_stock: {
-    label: 'Out of Stock'
+  "out_of_stock": {
+    "label": "Agotado"
   },
-  paid_at: {
-    label: 'Paid At'
+  "paid_at": {
+    "label": "Pagado a"
   },
-  password: {
-    label: 'Password'
+  "password": {
+    "label": "Contraseña"
   },
-  payment: {
-    label: 'Payment'
+  "payment": {
+    "label": "Pago"
   },
-  payment_method: {
-    label      : 'Payment Method',
-    description: 'Select your preferred payment method'
+  "payment_method": {
+    "label": "Método de pago",
+    "description": "Seleccione su método de pago preferido"
   },
-  place_order: {
-    label      : 'Place Order',
-    description: 'Place your order',
-    pending    : 'Placing Order'
+  "place_order": {
+    "label": "Orden",
+    "description": "Haga su pedido",
+    "pending": "Orden de colocación"
   },
-  please: {
-    label: 'Please'
+  "please": {
+    "label": "Por favor"
   },
-  previous: {
-    label: 'Previous'
+  "previous": {
+    "label": "Previa"
   },
-  price: {
-    label : 'Price',
-    prices: {
-      label: 'Prices'
+  "price": {
+    "label": "Precio",
+    "prices": {
+      "label": "Precios"
     }
   },
-  price_paid: {
-    label: 'Price Paid'
+  "price_paid": {
+    "label": "Precio pagado"
   },
-  proceed_to_checkout: {
-    label: 'Proceed to Checkout'
+  "proceed_to_checkout": {
+    "label": "Pasar por la caja"
   },
-  product: {
-    label   : 'Product',
-    products: {
-      label: 'Products'
+  "product": {
+    "label": "Producto",
+    "products": {
+      "label": "Productos"
     }
   },
-  purchase: {
-    label: 'Purchase'
+  "purchase": {
+    "label": "Compra"
   },
-  purchase_date: {
-    label: 'Purchase Date'
+  "purchase_date": {
+    "label": "Fecha de compra"
   },
-  purchase_flow: {
-    user_sign_in: {
-      label      : 'User Sign In',
-      description: 'Complete the form with your user information',
-      completed  : 'User Signed in'
+  "purchase_flow": {
+    "user_sign_in": {
+      "label": "Iniciar sesión de usuario",
+      "description": "Complete el formulario con su información de usuario",
+      "completed": "Usuario iniciado"
     },
-    shipping: {
-      label      : 'Shipping',
-      description: 'Complete the form with your shipping information',
-      completed  : 'Shipping Filled'
+    "shipping": {
+      "label": "Envío",
+      "description": "Complete el formulario con su información de envío",
+      "completed": "Envío lleno"
     },
-    payment: {
-      label      : 'Payment',
-      description: 'Complete the form with your payment information',
-      completed  : 'Payment Filled'
+    "payment": {
+      "label": "Pago",
+      "description": "Complete el formulario con su información de pago",
+      "completed": "Pago lleno"
     },
-    place_order: {
-      label      : 'Place Order',
-      description: 'Place your order',
-      completed  : 'Order Placed'
+    "place_order": {
+      "label": "Orden",
+      "description": "Haga su pedido",
+      "completed": "Pedido realizado"
     }
   },
-  purchase_order: {
-    label: 'Purchase Order'
+  "purchase_order": {
+    "label": "Orden de compra"
   },
-  purchase_receipt: {
-    label: 'Purchase Receipt'
+  "purchase_receipt": {
+    "label": "Recibo de compra"
   },
-  query: {
-    label: 'Query'
+  "query": {
+    "label": "Consulta"
   },
-  save_and_continue: {
-    label: 'Save & Continue'
+  "save_and_continue": {
+    "label": "Guardar y continuar"
   },
-  rating: {
-    label: 'Rating'
+  "rating": {
+    "label": "Clasificación"
   },
-  remove: {
-    label: 'Remove'
+  "remove": {
+    "label": "Eliminar"
   },
-  reset_password: {
-    label      : 'Reset Password',
-    description: 'We will send you an email to reset your password',
-    button     : 'Send Password Reset Email'
+  "reset_password": {
+    "label": "Restablecer contraseña",
+    "description": "Le enviaremos un correo electrónico para restablecer su contraseña",
+    "button": "Enviar el correo electrónico de restablecimiento de contraseña"
   },
-  review: {
-    label  : 'Review',
-    reviews: {
-      label: 'Reviews'
+  "review": {
+    "label": "Revisar",
+    "reviews": {
+      "label": "Reseñas"
     }
   },
-  sales: {
-    label: 'Sales'
+  "sales": {
+    "label": "Ventas"
   },
-  save_this_address: {
-    label: `Save this address`
+  "save_this_address": {
+    "label": "Guardar esta dirección"
   },
-  search: {
-    label      : 'Search',
-    placeholder: 'Looking for something?'
+  "search": {
+    "label": "Buscar",
+    "placeholder": "¿Buscas algo?"
   },
-  search_product: {
-    label: 'Search Product'
+  "search_product": {
+    "label": "Producto de búsqueda"
   },
-  second: {
-    label  : 'Second',
-    seconds: {
-      label: 'Seconds'
+  "second": {
+    "label": "Segunda",
+    "seconds": {
+      "label": "Artículos de segunda clase"
     }
   },
-  select_by_category: {
-    label: 'Select by Category'
+  "select_by_category": {
+    "label": "Seleccionar por categoría"
   },
-  send_message: {
-    label: 'Send Message'
+  "send_message": {
+    "label": "Enviar un mensaje"
   },
-  shipping: {
-    label      : 'Shipping',
-    description: 'Complete the form with your shipping information'
+  "shipping": {
+    "label": "Envío",
+    "description": "Complete el formulario con su información de envío"
   },
-  shipping_address: {
-    label      : 'Shipping Address',
-    description: 'Complete the form with your preferred shipping address'
+  "shipping_address": {
+    "label": "Dirección de envío",
+    "description": "Complete el formulario con su dirección de envío preferida"
   },
-  shop_itb_kit: {
-    label        : 'In The Bag Kit',
-    description  : 'Get the In The Bag Kit for free with every purchase',
-    shop_itb_kits: {
-      label: 'Shop ITB Kits'
+  "shop_itb_kit": {
+    "label": "En el kit de la bolsa",
+    "description": "Obtenga el kit de bolsas gratis con cada compra",
+    "shop_itb_kits": {
+      "label": "Compre kits itb"
     }
   },
-  shop_part: {
-    label      : 'Shop Part',
-    description: 'Shop this part',
-    shop_parts : {
-      label: 'Shop Parts'
+  "shop_part": {
+    "label": "Parte de la tienda",
+    "description": "Compre esta parte",
+    "shop_parts": {
+      "label": "Piezas de tiendas"
     }
   },
-  sign_in: {
-    label      : 'Sign in',
-    description: 'Sign in to your account',
-    google     : 'Sign in with Google'
+  "sign_in": {
+    "label": "Iniciar sesión",
+    "description": "Inicie sesión en su cuenta",
+    "google": "Inicie sesión con Google"
   },
-  sign_up: {
-    label      : 'Sign up',
-    description: 'Complete the form with your information'
+  "sign_up": {
+    "label": "Inscribirse",
+    "description": "Complete el formulario con su información"
   },
-  sign_out: {
-    label      : 'Sign out',
-    description: 'Complete the form with your information'
+  "sign_out": {
+    "label": "desconectar",
+    "description": "Complete el formulario con su información"
   },
-  sort_by: {
-    label: 'Sort by'
+  "sort_by": {
+    "label": "Ordenar por"
   },
-  stats: {
-    label: 'Stats'
+  "stats": {
+    "label": "Estadísticas"
   },
-  status: {
-    label: 'Status'
+  "status": {
+    "label": "Estado"
   },
-  stay: {
-    label: 'Stay'
+  "stay": {
+    "label": "Permanecer"
   },
-  stripe_checkout: {
-    label      : 'Stripe Checkout',
-    description: 'Complete the form with your payment information'
+  "stripe_checkout": {
+    "label": "Caja de rayas",
+    "description": "Complete el formulario con su información de pago"
   },
-  submit: {
-    label: 'Submit'
+  "submit": {
+    "label": "Entregar"
   },
-  subtotal: {
-    label: 'Subtotal'
+  "subtotal": {
+    "label": "Total parcial"
   },
-  recent_sales: {
-    label: 'Recent Sales'
+  "recent_sales": {
+    "label": "Ventas recientes"
   },
-  tax: {
-    label: 'Tax'
+  "tax": {
+    "label": "Impuesto"
   },
-  toolbar: {
-    label: 'Toolbar'
+  "toolbar": {
+    "label": "Barra de herramientas"
   },
-  total: {
-    label: 'Total'
+  "total": {
+    "label": "Total"
   },
-  total_revenue: {
-    label: 'Total Revenue'
+  "total_revenue": {
+    "label": "Ingresos totales"
   },
-  update: {
-    label: 'Update'
+  "update": {
+    "label": "Actualizar"
   },
-  update_account: {
-    label      : 'Update Account',
-    description: 'Complete the form with your information',
-    toast      : 'User name updated'
+  "update_account": {
+    "label": "Cuenta de actualización",
+    "description": "Complete el formulario con su información",
+    "toast": "Nombre de usuario actualizado"
   },
-  update_gallery: {
-    label      : 'Update Gallery',
-    description: 'Complete the form with your gallery information'
+  "update_gallery": {
+    "label": "Galería de actualización",
+    "description": "Complete el formulario con la información de su galería"
   },
-  update_password: {
-    label      : 'Update Password',
-    description: "Update your account's password"
+  "update_password": {
+    "label": "Actualizar contraseña",
+    "description": "Actualice la contraseña de su cuenta"
   },
-  update_product: {
-    label      : 'Update Product',
-    description: 'Complete the form with your product information'
+  "update_product": {
+    "label": "Actualización del producto",
+    "description": "Complete el formulario con la información de su producto"
   },
-  update_your_address: {
-    label: `Update your address`
+  "update_your_address": {
+    "label": "Actualice su dirección"
   },
-  update_user: {
-    label      : 'Update User',
-    description: 'Complete the form with your user information'
+  "update_user": {
+    "label": "Actualizar el usuario",
+    "description": "Complete el formulario con su información de usuario"
   },
-  upload: {
-    label      : 'Upload',
-    description: 'Click to Upload'
+  "upload": {
+    "label": "Subir",
+    "description": "Haga clic para cargar"
   },
-  upload_image: {
-    label: 'Upload Image'
+  "upload_image": {
+    "label": "Cargar imagen"
   },
-  upload_images: {
-    label: 'Upload Image/s'
+  "upload_images": {
+    "label": "Cargar imagen/s"
   },
-  upload_banner: {
-    label      : 'Upload Banner',
-    description: 'Drag and drop an image here or click to upload'
+  "upload_banner": {
+    "label": "Banner de carga",
+    "description": "Arrastre y suelte una imagen aquí o haga clic para cargar"
   },
-  upload_cover: {
-    label      : 'Upload Cover',
-    description: 'Click to upload cover'
+  "upload_cover": {
+    "label": "Subir cubierta",
+    "description": "Haga clic para cargar cubierta"
   },
-  uploaded: {
-    label      : 'Uploaded',
-    description: 'File Uploaded'
+  "uploaded": {
+    "label": "Cargada",
+    "description": "Archivo cargado"
   },
-  use_different_address: {
-    label: 'Use a different address'
+  "use_different_address": {
+    "label": "Utilice una dirección diferente"
   },
-  user: {
-    label      : 'User',
-    description: 'Complete the form with your user information',
-    users      : {
-      label: 'Users'
+  "user": {
+    "label": "Usuaria",
+    "description": "Complete el formulario con su información de usuario",
+    "users": {
+      "label": "Usuarias"
     }
   },
-  view: {
-    label: 'View'
+  "view": {
+    "label": "Vista"
   },
-  view_order: {
-    label: 'View Order'
+  "view_order": {
+    "label": "Ver orden"
   },
-  view_order_receipt: {
-    label: 'View Order Receipt'
+  "view_order_receipt": {
+    "label": "Ver recibo de pedido"
   },
-  view_product: {
-    label        : 'View Product',
-    view_products: {
-      label: 'View Products'
+  "view_product": {
+    "label": "Ver producto",
+    "view_products": {
+      "label": "Ver productos"
     }
   },
-  view_all_products: {
-    label: 'View All Products'
+  "view_all_products": {
+    "label": "Ver todos los productos"
   },
-  welcome : 'Welcome to our site',
-  your_bag: {
-    label: 'Your Bag'
+  "welcome": "Bienvenido a nuestro sitio",
+  "your_bag": {
+    "label": "Tu bolso"
   },
-  zero_results: {
-    label: 'No results found'
+  "zero_results": {
+    "label": "No se encontraron resultados"
   },
-  write_review: {
-    label      : 'Write a Review',
-    description: 'Share your thoughts on this product with other customers'
+  "write_review": {
+    "label": "Escribe una reseña",
+    "description": "Comparta sus pensamientos sobre este producto con otros clientes"
   },
-  legal: {
-    copyright_notice: `All rights reserved.`
+  "legal": {
+    "copyright_notice": "Reservados todos los derechos."
   },
-  smtp: {
-    contact_and_enquiry: {
-      title  : `Enquiry`,
-      subject: `New Enquiry from {name}`
+  "smtp": {
+    "contact_and_enquiry": {
+      "title": "Consulta",
+      "subject": "Nueva consulta de {nombre}"
     },
-    reset_password: {
-      subject: `Your Password Reset Request`,
-      title  : `Homegrown-Speedshop Password Reset`,
-      body_1 : `We received a request to reset your password. Click the button below to choose a new password: `,
-      body_2 : `If you don't use this link within 3 hours, it will expire.`,
-      button : `Reset Password`
+    "reset_password": {
+      "subject": "Su solicitud de restablecimiento de contraseña",
+      "title": "Restablecimiento de contraseña de SpedeShop de cosecha propia",
+      "body_1": "Recibimos una solicitud para restablecer su contraseña. Haga clic en el botón de abajo para elegir una nueva contraseña:",
+      "body_2": "Si no usa este enlace dentro de las 3 horas, caducará.",
+      "button": "Restablecer contraseña"
     }
   },
-  message: {
-    default: {
-      title      : 'Are you sure?',
-      description: 'This is a message'
+  "message": {
+    "default": {
+      "title": "Estas segura",
+      "description": "Este es un mensaje"
     },
-    confirm_delete_order: {
-      title      : 'Confirm Delete Order',
-      description: 'This action cannot be undone and is irreversible.'
+    "confirm_delete_order": {
+      "title": "Confirmar el orden de eliminación",
+      "description": "Esta acción no puede deshacerse y es irreversible."
     },
-    unsaved_changes: {
-      title      : 'Are you sure?',
-      description: 'You have unsaved changes. Are you sure you want to leave?'
+    "unsaved_changes": {
+      "title": "Estas segura",
+      "description": "Tienes cambios no salvos. ¿Estás seguro de que quieres irte?"
     },
-    currently_no_reviews: {
-      title      : 'No Reviews',
-      description: 'There are currently no reviews for this product.'
+    "currently_no_reviews": {
+      "title": "Sin reseñas",
+      "description": "Actualmente no hay revisiones para este producto."
     },
-    to_write_review: {
-      title      : 'Write a Review',
-      description: ' to write a review.'
+    "to_write_review": {
+      "title": "Escribe una reseña",
+      "description": "para escribir una reseña."
     },
-    thanks_for_purchase: {
-      title            : 'Thank you for your purchase',
-      description      : 'Your order has been placed successfully.',
-      we_are_processing: 'We are processing your order and will send you a confirmation email shortly.'
+    "thanks_for_purchase": {
+      "title": "Gracias por su compra",
+      "description": "Su pedido ha sido realizado con éxito.",
+      "we_are_processing": "Estamos procesando su pedido y le enviaremos un correo electrónico de confirmación en breve."
     },
-    password_reset_sent: {
-      description: 'Password Reset link has been sent to your Email',
-      check_email: `You have a valid reset link sent in your email account, please check before requesting for a new one.`
+    "password_reset_sent": {
+      "description": "El enlace de reinicio de contraseña se ha enviado a su correo electrónico",
+      "check_email": "Tiene un enlace de reinicio válido enviado en su cuenta de correo electrónico, verifique antes de solicitar uno nuevo."
     }
   },
-  validation: {
-    price_format         : 'Price must have exactly 2 decimal places',
-    gallery_item_required: `At least one gallery item is required`,
-    invalid_email_format : `Invalid email format`,
-    min_default          : `{field} must be at least {value} characters`,
-    max_default          : `{field} must not be over {value} characters`,
-    min_image_default    : `{module} should have at least {value} image`,
-    password             : {
-      invalid_old: 'Invalid old password',
-      not_match  : 'Passwords do not match'
+  "validation": {
+    "price_format": "El precio debe tener exactamente 2 decimales",
+    "gallery_item_required": "Se requiere al menos un artículo de la galería",
+    "invalid_email_format": "Formato de correo electrónico no válido",
+    "min_default": "{campo} debe ser al menos {valor} caracteres",
+    "max_default": "{campo} no debe haber terminado {valor} caracteres",
+    "min_image_default": "{módulo} debería tener al menos {valor} imagen",
+    "password": {
+      "invalid_old": "Contraseña antigua inválida",
+      "not_match": "Las contraseñas no coinciden"
     },
-    required_default: `{field} is required`
+    "required_default": "{campo} es necesario"
   },
-  success: {
-    contact_and_enquiry_sent: 'Contact and Enquiry sent',
-    created                 : 'Document created',
-    deleted                 : 'Document deleted',
-    enquiry_sent            : `Enquiry sent`,
-    updated                 : 'Document updated',
-    file_deleted            : 'File deleted',
-    order_created           : 'Order created',
-    order_deleted           : 'Order deleted',
-    order_delivered         : 'Order delivered',
-    order_paid              : 'Your order has been paid',
-    password_updated        : `Successful, password updated`,
-    product_created         : 'Product created',
-    product_deleted         : 'Product deleted',
-    product_updated         : 'Product updated',
-    password_reset_sent     : 'Password reset token sent',
-    review_updated          : 'Review updated',
-    sign_in_welcome_back    : `Welcome back, {name}!`,
-    sign_in_welcome         : `Welcome, {name}!`,
-    update_order_paid       : 'updateOrderToPaid was successful',
-    user_created            : 'User created',
-    user_deleted            : 'User deleted',
-    user_updated            : 'User updated',
-    user_signed_up          : 'User signed up',
-    user_signed_in          : 'User signed in',
-    valid_token             : `Successful, Token valid`
+  "success": {
+    "contact_and_enquiry_sent": "Contacto y consulta enviada",
+    "created": "Documento creado",
+    "deleted": "Documento eliminado",
+    "enquiry_sent": "Consulta enviada",
+    "updated": "Documento actualizado",
+    "file_deleted": "Archivo eliminado",
+    "order_created": "Orden creado",
+    "order_deleted": "Pedido eliminado",
+    "order_delivered": "Orden entregada",
+    "order_paid": "Su pedido ha sido pagado",
+    "password_updated": "Exitoso, contraseña actualizada",
+    "product_created": "Producto creado",
+    "product_deleted": "Producto eliminado",
+    "product_updated": "Producto actualizado",
+    "password_reset_sent": "Token de restablecimiento de contraseña enviado",
+    "review_updated": "Revisión actualizada",
+    "sign_in_welcome_back": "Bienvenido de nuevo, {nombre}!",
+    "sign_in_welcome": "Bienvenido, {nombre}!",
+    "update_order_paid": "UpdateOrderToPaid fue exitosa",
+    "user_created": "Usuario creada",
+    "user_deleted": "Usuario eliminada",
+    "user_updated": "__MISSING__",
+    "user_signed_up": "Usuario registrado",
+    "user_signed_in": "Usuario iniciado",
+    "valid_token": "Exitosa, Token válida"
   },
-  error: {
-    account_locked            : 'Account temporarily locked. Contact support.',
-    bag_empty                 : 'Bag is empty',
-    bag_not_found             : 'Bag not found',
-    clear_form_errors         : `Clear form errors before submitting`,
-    enquiries_max_limit       : `You have already hit the max limit for enquiries, you have {time} til you can send an enquiry again`,
-    exists_reset_password     : `Valid reset password request already exists in your mailbox`,
-    expired_token             : `Token expired`,
-    failed_extraction_file_key: 'Failed extracting the file key, [ERR]: ',
-    gallery_save              : 'An error occurred while saving the gallery',
-    images_allowed            : `only image types are allowed`,
-    images_max_exceeded       : `Max limit ({limit}) exceeded`,
-    invalid_cache_key         : `invalid cache key:{key}`,
-    invalid_credentials       : 'Invalid credentials',
-    invalid_file_key          : 'Invalid file key',
-    invalid_input             : `Invalid input`,
-    invalid_token             : 'Invalid token',
-    invalid_payment_method    : 'Invalid payment method',
-    item_not_found            : 'Item not found',
-    failed_create_product     : 'An error occurred while creating the product',
-    failed_extract_file_key   : 'Failed extracting the file key',
-    failed_sign_up            : `Error occurred while signing-up`,
-    failed_delete_file        : 'Failed to delete file',
-    fix_form_errors           : 'Please fix form errors before submitting.',
-    form                      : 'Please fix form errors before submitting.',
-    no_file                   : 'No file',
-    no_existing_item          : 'No existing item to add on',
-    no_shipping_address       : 'No shipping address',
-    no_payment_method         : 'No payment method selected',
-    not_found                 : 'Document not found',
-    order_paid                : 'Order is already paid',
-    order_not_created         : 'Order not created',
-    order_not_found           : 'Order not found',
-    order_not_paid            : 'Order not paid',
-    password_mismatch         : `Password mismatch`,
-    paypal_default            : "PayPal: Error Occured'",
-    paypal_payment_error      : 'Error occurred while processing PayPal payment',
-    price_min                 : 'Price must be greater than {amount}',
-    product_not_found         : 'Product not found',
-    send_email                : `Error occured while sending email`,
-    sesssion_not_found        : 'Session bag id not found',
-    session_stale             : 'Session is stale, please sign-in again',
-    too_many_attempt          : `Too many attempts, try again in {min}m {sec}s`,
-    unable_delete             : 'Unable to delete file',
-    unable_upload             : 'Unable to upload file',
-    unknown_error             : 'Unknown error occurred',
-    unknown_error_sign_in     : `Unknown error occurred: {error}`,
-    update_order_paid         : 'updateOrderToPaid failed',
-    user_not_authenticated    : 'User not authenticated',
-    user_not_authorized       : 'User not authorized',
-    user_not_found            : 'User not found',
-    user_not_found_reauth     : 'User not found, sign-in again'
+  "error": {
+    "account_locked": "Cuenta temporalmente bloqueada. Contactar soporte.",
+    "bag_empty": "La bolsa está vacía",
+    "bag_not_found": "Bolsa no encontrada",
+    "clear_form_errors": "Borrar errores de formulario antes de enviar",
+    "enquiries_max_limit": "Ya ha alcanzado el límite máximo para consultas, tiene {tiempo} hasta que puede enviar una consulta nuevamente",
+    "exists_reset_password": "La solicitud de contraseña de reinicio válida ya existe en su buzón",
+    "expired_token": "Token expirado",
+    "failed_extraction_file_key": "Falló en extraer la clave de archivo, [err]:",
+    "gallery_save": "Se produjo un error al guardar la galería",
+    "images_allowed": "Solo se permiten los tipos de imágenes",
+    "images_max_exceeded": "Límite máximo ({límite}) excedido",
+    "invalid_cache_key": "Clave de caché no válido: {clave}",
+    "invalid_credentials": "Credenciales no válidas",
+    "invalid_file_key": "Clave de archivo no válida",
+    "invalid_input": "Entrada no válida",
+    "invalid_token": "Token inválido",
+    "invalid_payment_method": "Método de pago no válido",
+    "item_not_found": "Artículo no encontrado",
+    "failed_create_product": "Se produjo un error al crear el producto",
+    "failed_extract_file_key": "Falló extraer la clave de archivo",
+    "failed_sign_up": "Se produjo un error al registrar",
+    "failed_delete_file": "No se pudo eliminar el archivo",
+    "fix_form_errors": "Soldea los errores de formulario antes de enviar.",
+    "form": "Soldea los errores de formulario antes de enviar.",
+    "no_file": "Sin archivo",
+    "no_existing_item": "No hay elemento existente para agregar",
+    "no_shipping_address": "Sin dirección de envío",
+    "no_payment_method": "No hay método de pago seleccionado",
+    "not_found": "Documento no encontrado",
+    "order_paid": "El pedido ya está pagado",
+    "order_not_created": "Orden no creado",
+    "order_not_found": "Orden no encontrado",
+    "order_not_paid": "Pedido no pagado",
+    "password_mismatch": "Desajuste de contraseña",
+    "paypal_default": "PayPal: ocurrió un error '",
+    "paypal_payment_error": "Se produjo un error al procesar el pago de PayPal",
+    "price_min": "El precio debe ser mayor que {cantidad}",
+    "product_not_found": "Producto no encontrado",
+    "send_email": "Se produjo un error al enviar correo electrónico",
+    "sesssion_not_found": "ID de bolsa de sesión no encontrado",
+    "session_stale": "La sesión está obsoleta, inicie sesión nuevamente",
+    "too_many_attempt": "Demasiados intentos, intente nuevamente en {min} m {sec} s",
+    "unable_delete": "No se puede eliminar el archivo",
+    "unable_upload": "No se puede cargar archivo",
+    "unknown_error": "Ocurrió un error desconocido",
+    "unknown_error_sign_in": "Se produjo un error desconocido: {error}",
+    "update_order_paid": "UpdateRoRoPaid falló",
+    "user_not_authenticated": "Usuario no autenticada",
+    "user_not_authorized": "Usuario no autorizada",
+    "user_not_found": "Usuario no encontrado",
+    "user_not_found_reauth": "Usuario no encontrado, inicie sesión nuevamente"
   }
-}
+} as const
