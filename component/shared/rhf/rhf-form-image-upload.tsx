@@ -113,7 +113,7 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
                         : 'text-muted-foreground flex flex-col items-center justify-center text-center gap-2 min-h-32'
                     )}>
                     {!image && (
-                      <div className="flex flex-col items-center justify-center">
+                      <div className={"flex flex-col items-center justify-center"}>
                         <ImageUp size={40} />
                         {transl('upload.description')}
                       </div>
@@ -124,7 +124,7 @@ const RHFFormImageUpload = <TSchema extends ZodSchema>({ control, name, image, f
 
               <div className={'ease-in-out transition-opacity'}>
                 {Object.entries(uploadProgress).map(([filename, progress]) => (
-                  <div key={filename} className="w-full mt-2">
+                  <div key={filename} className={"w-full mt-2"}>
                     <div className="text-xs">
                       {filename} - {progress}%
                     </div>
