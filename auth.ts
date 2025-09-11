@@ -7,7 +7,7 @@ import { cookies } from 'next/headers'
 import { prisma } from 'db/prisma'
 import { invalidateCache } from 'lib/cache'
 import { CACHE_KEY } from 'config/cache.config'
-import { compare } from 'lib/encrypt'
+import bcrypt from 'bcryptjs'
 import { KEY } from 'lib/constant'
 import { authConfig } from './auth.config'
 import { transl } from 'lib'
@@ -41,7 +41,7 @@ export const config = {
           }
         })
         if (user && user.password) {
-          const isMatch = await compare(credentials.password as string, user.password)
+          const isMatch = await bcrypt.compare(credentials.password as string, user.password)
           if (isMatch) {
             return {
               id   : user.id,
