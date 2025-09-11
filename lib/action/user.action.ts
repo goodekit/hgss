@@ -32,18 +32,20 @@ const TAG = 'USER.ACTION'
 export async function signInBasic(data: SignIn) {
       const { email, password } = data
       const user                = await prisma.user.findUnique({ where: { email }})
+
+      if (!user || !user.password) {
+        return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.NOT_FOUND, TAG)
+      }
       const clientCookies       = cookies()
       const rawIp               = (await clientCookies).get('client-ip')?.value || 'unknown'
       const ipHash              = crypto.createHash('sha256').update(rawIp).digest('hex')
       const REDIS_KEY           = `${GLOBAL.REDIS.KEY}${email}:${ipHash}`
 
+      await bcrypt.compare(password, user.password)
+
       const { SIGNIN_TTL, SIGNIN_ATTEMPT_MAX } = GLOBAL.LIMIT
       const now                                = new Date()
       const blockThreshold                     = SIGNIN_ATTEMPT_MAX * 4
-
-      if (!user) {
-        return SystemLogger.errorMessage(transl('error.invalid_credentials'), CODE.NOT_FOUND, TAG)
-      }
 
       if (user.isBlocked) {
         return SystemLogger.errorMessage(transl('error.account_locked'), CODE.FORBIDDEN, TAG)
@@ -73,13 +75,16 @@ export async function signInBasic(data: SignIn) {
         }
         return SystemLogger.errorMessage(transl('error.account_locked'), CODE.TOO_MANY_REQUESTS, TAG)
       }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password: _password, ...safeUSer } = user
       try {
         await signIn('credentials', { email, password, redirect: false })
         await resetSignInAttempts(REDIS_KEY)
         if (user) {
           await prisma.user.update({ where: { email }, data: { failedSignInAttempts: 0, lastFailedAttempt: null }})
         }
-        return SystemLogger.response(transl('success.sign_in_welcome_back', { name: user?.name || 'Mate' }), CODE.OK, TAG)
+        return SystemLogger.response(transl('success.sign_in_welcome_back', { name: safeUSer?.name ?? 'Mate' }), CODE.OK, TAG, '', safeUSer)
       } catch (error) {
         await incrementSignInAttempts(REDIS_KEY)
         if (user) {
