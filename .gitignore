@@ -45,3 +45,4 @@ next-env.d.ts
 stripe_backup_code.txt
 migration/export.sql
 migration/migration.sh
+migration/export-11092025.sql
