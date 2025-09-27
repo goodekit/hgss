@@ -1,6 +1,6 @@
 export * from './capitalize'
 export * from './char-at'
-export * from './connect'
+export * from './combine'
 export * from './converter'
 export * from './delay'
 export * from './float2'
