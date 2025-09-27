@@ -62,6 +62,8 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
         } else {
           localStorage.removeItem(LOCAL_STORAGE_KEY.productCreate)
           toast({ description: response.message })
+          form.setValue('__submitted', true)
+          router.push(PATH_DIR.ADMIN.PRODUCT)
         }
       }
 
@@ -72,10 +74,10 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
         } else {
           localStorage.removeItem(LOCAL_STORAGE_KEY.productUpdate)
           toast({ description: response.message })
+          form.setValue('__submitted', true)
+          router.push(PATH_DIR.ADMIN.PRODUCT)
         }
       }
-      form.setValue('__submitted', true)
-      router.push(PATH_DIR.ADMIN.PRODUCT)
     } catch (error) {
       toast({
         variant    : 'destructive',
