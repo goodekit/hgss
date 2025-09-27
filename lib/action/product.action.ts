@@ -189,7 +189,7 @@ export async function createProduct(data: CreateProduct) {
  */
 export async function updateProduct(data:UpdateProduct) {
   try {
-    const product       = UpdateProductSchema.parse(data)
+    const product       = UpdateProductSchema.omit({ __submitted: true }).parse(data)
     const productExists = await prisma.product.findFirst({ where: { id: product.id }})
     if (!productExists) throw new Error(transl('error.product_not_found'))
 
