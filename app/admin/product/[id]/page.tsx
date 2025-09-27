@@ -11,7 +11,7 @@ export const metadata: Metadata = { title: generateTitle(transl('update_product.
 
 interface AdminProductUpdatePageProps { params: Promise<{ id: string }> }
 const AdminProductUpdatePage: FC<AdminProductUpdatePageProps> = async ({ params }) => {
-  const { id } = await params
+  const { id }  = await params
   const product = await getProductById(id)
   if (!product) return notFound()
   return (
