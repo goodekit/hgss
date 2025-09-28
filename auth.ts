@@ -57,14 +57,6 @@ export const config = {
   ],
   callbacks: {
     async session({ session, user, trigger, token }: any) {
-      if (session?.user?.id) {
-        const exists = await prisma.user.findUnique({ where: { id: session.user.id } })
-        if (!exists) {
-          (await cookies()).delete('next-auth.session-token')
-          throw new Error('Session is stale, please log in again')
-        }
-      }
-
       session.user.id       = token.id
       session.user.role     = token.role
       session.user.name     = token.name
@@ -89,53 +81,40 @@ export const config = {
             }
           })
         }
-        token.id                = newOrExistingUser.id
-        token.sub               = newOrExistingUser.id
-        token.role              = newOrExistingUser.role
-        token.name              = newOrExistingUser.name
-        token.lastInvalidatedAt = newOrExistingUser.lastInvalidatedAt.getTime()
 
-        if (account) {
+        token.id   = newOrExistingUser.id
+        token.sub  = newOrExistingUser.id
+        token.role = newOrExistingUser.role
+        token.name = newOrExistingUser.name
+        token.lastInvalidatedAt = newOrExistingUser.lastInvalidatedAt?.getTime?.() ?? 0
+
+        if (account?.provider) {
           token.provider = account.provider
         }
 
-        if (token?.id) {
-          const userFromToken = await prisma.user.findUnique({
-            where : { id: token.id },
-            select: { lastInvalidatedAt: true }
-          })
+        if (newOrExistingUser.name === 'NO_NAME') {
+          const derivedName = newOrExistingUser.email!.split('@')[0]
+          await prisma.user.update({ where: { id: newOrExistingUser.id }, data: { name: derivedName } })
+          token.name = derivedName
+        }
 
-          if (!userFromToken) {
-            throw new Error(transl('error.user_not_found_reauth'))
-          }
-
-          const tokenIssuedAt   = (token.iat as number) * 1000
-          const lastInvalidated = userFromToken.lastInvalidatedAt.getTime()
-
-          if (tokenIssuedAt < lastInvalidated) {
-            throw new Error('error.session_stale')
-          }
-
-          if (newOrExistingUser.name === 'NO_NAME') {
-            const name = newOrExistingUser.email!.split('@')[0]
-            await prisma.user.update({ where: { id: newOrExistingUser.id }, data: { name } })
-            token.name = name
-          }
-
-          if (trigger === 'signIn' || trigger === 'signUp') {
-            const cookiesObject = await cookies()
-            const sessionBagId  = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
-            if (sessionBagId) {
-              const sessionBag = await prisma.bag.findFirst({ where: { sessionBagId } })
-              if (sessionBag && !sessionBag.userId) {
-              // only update the session bag if it is not already associated with a user
-              // ensures that bags already linked to a user are intentionally left unchanged
-                await prisma.bag.deleteMany({ where: { userId: newOrExistingUser.id } })
-                await prisma.bag.update({ where: { id: sessionBag.id }, data: { userId: newOrExistingUser.id } })
-                await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
-              }
+        if (trigger === 'signIn' || trigger === 'signUp') {
+          const cookiesObject = await cookies()
+          const sessionBagId  = cookiesObject.get(KEY.SESSION_BAG_ID)?.value
+          if (sessionBagId) {
+            const sessionBag = await prisma.bag.findFirst({ where: { sessionBagId } })
+            if (sessionBag && !sessionBag.userId) {
+              await prisma.bag.deleteMany({ where: { userId: newOrExistingUser.id } })
+              await prisma.bag.update({ where: { id: sessionBag.id }, data: { userId: newOrExistingUser.id } })
+              await invalidateCache(CACHE_KEY.myBagId(sessionBagId))
             }
           }
+        }
+      } else {
+        const lastInvalidatedAt = token.lastInvalidatedAt as number | undefined
+        const issuedAt          = typeof token.iat === 'number' ? token.iat * 1000 : undefined
+        if (lastInvalidatedAt && issuedAt && issuedAt < lastInvalidatedAt) {
+          throw new Error('error.session_stale')
         }
       }
 
