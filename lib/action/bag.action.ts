@@ -5,6 +5,7 @@ import { GLOBAL } from 'hgss'
 import { PATH_DIR } from 'hgss-dir'
 import { CACHE_KEY } from 'config/cache.config'
 import { revalidatePath } from 'next/cache'
+import { Session } from 'next-auth'
 import { auth } from 'auth'
 import { Prisma } from '@prisma/client'
 import { prisma } from 'db/prisma'
@@ -66,7 +67,7 @@ export async function addItemToBag(data: BagItem) {
     const session = await auth()
     const userId = session?.user?.id ? (session.user.id as string) : undefined
 
-    const bag     = await getMyBag()
+    const bag     = await getMyBag(session)
     const item    = BagItemSchema.parse(data)
     const product = await prisma.product.findFirst({ where: { id: item.productId } })
     if (!product) throw new Error(transl('error.product_not_found'))
@@ -114,10 +115,10 @@ export async function addItemToBag(data: BagItem) {
   }
 }
 
-export async function getMyBag() {
+export async function getMyBag(providedSession?: Session | null) {
   const sessionBagId = (await cookies()).get(KEY.SESSION_BAG_ID)?.value
   if (!sessionBagId) throw new Error(transl('error.sesssion_not_found'))
-  const session      = await auth()
+  const session      = providedSession === undefined ? await auth() : providedSession
   const userId       = session?.user?.id ? (session.user.id as string) : undefined
   const bag          = await prisma.bag.findFirst({ where: userId ? { userId } : { sessionBagId } })
    if (!bag) return undefined
@@ -141,9 +142,15 @@ export async function getMyBag() {
  *
  * @returns {Promise<number>} A promise that resolves to the total count of items in the bag.
  */
-export async function getMyBagCount() {
-  const bag = await getMyBag()
-  if (!bag) return 0
+export async function getMyBagCount(providedSession?: Session | null) {
+  const sessionBagCookie = await cookies()
+  const sessionBagId     = sessionBagCookie.get(KEY.SESSION_BAG_ID)?.value
+  if (!sessionBagId) throw new Error(transl('error.sesssion_not_found'))
+
+  const session = providedSession === undefined ? await auth() : providedSession
+  const where   = session?.user?.id ? { userId: session.user.id as string } : { sessionBagId }
+  const bag = await prisma.bag.findFirst({ where, select: { items: true } })
+  if (!bag?.items) return 0
   return (bag.items as BagItem[]).reduce((acc, item) => acc + item.qty, 0)
 }
 
