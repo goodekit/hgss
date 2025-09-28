@@ -1,4 +1,3 @@
-import { ASSET_DIR } from "hgss-dir"
 import { User } from '@prisma/client'
 
 export const signInDefaultValue = {
@@ -72,7 +71,7 @@ export const productDefaultValue = {
 export const galleryDefaultValue = {
  title       : '',
  description : '',
- cover       : ASSET_DIR.GALLERY_COVER_DEFAULT,
+ cover       : '/asset/image/default.jpg',
  galleryItems: []
 }
 
