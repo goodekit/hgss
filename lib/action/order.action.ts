@@ -239,7 +239,7 @@ return cache({
       * count
       */
       const [orders, products, users] = await Promise.all([ prisma.order.count(), prisma.product.count(), prisma.user.count() ])
-      const count = { orders, products, users }
+      const count                     = { orders, products, users }
 
       const [totalSales, rawSalesData, latestSales] = await Promise.all([
         prisma.order.aggregate({ _sum: { totalPrice: true } }),
