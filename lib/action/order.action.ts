@@ -238,22 +238,18 @@ return cache({
       /**
       * count
       */
-      const orders   = await prisma.order.count()
-      const products = await prisma.product.count()
-      const users    = await prisma.user.count()
-      const count    = { orders, products, users }
-      /**
-       * data
-       */
-      const totalSales           = await prisma.order.aggregate({ _sum: { totalPrice: true } })
-      const rawSalesData         = await prisma.$queryRaw<Array<{month:string; totalSales: Prisma.Decimal}>>`SELECT to_char("createdAt", 'MM/YY') as "month", sum("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM/YY')`
-      const salesData: SalesData = rawSalesData.map(entry => ({ month: entry.month, totalSales: Number(entry.totalSales) }))
-      /**
-       * latest sales
-       */
-      const latestSales          = await prisma.order.findMany({ orderBy: { createdAt: 'desc' }, include: { user: { select: { name: true }}}, take: 6 })
+      const [orders, products, users] = await Promise.all([ prisma.order.count(), prisma.product.count(), prisma.user.count() ])
+      const count = { orders, products, users }
 
-      const summary = { count, totalSales, salesData, latestSales }
+      const [totalSales, rawSalesData, latestSales] = await Promise.all([
+        prisma.order.aggregate({ _sum: { totalPrice: true } }),
+        prisma.$queryRaw<Array<{ month: string; totalSales: Prisma.Decimal }>>`
+          SELECT to_char("createdAt", 'MM/YY') as "month", sum("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM/YY')
+        `,
+        prisma.order.findMany({ orderBy: { createdAt: 'desc' }, include : { user: { select: { name: true } } }, take    : 6 })])
+
+      const salesData: SalesData = rawSalesData.map((entry) => ({  month     : entry.month, totalSales: Number(entry.totalSales) }))
+      const summary              = { count, totalSales, salesData, latestSales }
       return summary
       }
   })
