@@ -1,9 +1,9 @@
 /** @jest-environment jsdom */
 
 import { createElement } from 'react'
+import type { UseFormReturn } from 'react-hook-form'
 import { act, render } from '@testing-library/react'
 import { useCleanupUnsubmittedImages } from 'hook/use-cleanup-unsubmitted-images'
-import type { UseFormReturn } from 'react-hook-form'
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn()
