@@ -41,7 +41,7 @@ export const CACHE_TTL = {
 
 export const LOCAL_STORAGE_KEY = {
   productCreate: `draft:productform:create`,
-  productUpdate: `draft:productform:update`,
+  productUpdate: (id: string) => `draft:productform:update:${id}`,
   authSignIn   : `draft:authform:signin`,
   authSignUp   : `draft:authform:signup`
 }

@@ -8,7 +8,7 @@ type LocaleStorageKey = (typeof LOCAL_STORAGE_KEY)[keyof typeof LOCAL_STORAGE_KE
 export function useFormDraft<T extends FieldValues>(watch: UseFormWatch<T>, setValue: UseFormSetValue<T>, key: LocaleStorageKey, options?: { shouldRestore?: boolean, excludeKeys: (keyof T)[]}) {
   useEffect(() => {
     if (options?.shouldRestore === false) return
-    const cached = localStorage.getItem(key)
+    const cached = localStorage.getItem(key as string)
     if (!cached) return
 
     try {
@@ -19,7 +19,7 @@ export function useFormDraft<T extends FieldValues>(watch: UseFormWatch<T>, setV
         }})
     } catch (error) {
       console.warn('invalid cache draft', error)
-      localStorage.removeItem(key)
+      localStorage.removeItem(key as string)
     }
   }, [key, setValue, options?.shouldRestore, options?.excludeKeys])
 
@@ -29,6 +29,6 @@ export function useFormDraft<T extends FieldValues>(watch: UseFormWatch<T>, setV
   useEffect(() => {
     const valuesToSave = { ...debouncedValues }
     options?.excludeKeys?.forEach((k) => delete valuesToSave[k as string])
-    localStorage.setItem(key, JSON.stringify(valuesToSave))
+    localStorage.setItem(key as string, JSON.stringify(valuesToSave))
   }, [debouncedValues, key, options?.excludeKeys])
 }

@@ -41,7 +41,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
     setDirty(formState.isDirty)
   }, [formState.isDirty, setDirty])
 
-  useFormDraft(watch, setValue, LOCAL_STORAGE_KEY[type === 'create' ? 'productCreate' : 'productUpdate'])
+  useFormDraft(watch, setValue, type === 'create' ? LOCAL_STORAGE_KEY.productCreate : LOCAL_STORAGE_KEY.productUpdate(productId || ''))
   useCleanupUnsubmittedImages(form, 'images', '__submitted')
 
   const handleSlugify = () => {
@@ -72,7 +72,7 @@ const ProductForm: FC<ProductForm> = ({ type, product, productId }) => {
         if (!response.success) {
           toast({ variant: 'destructive', description: response.message })
         } else {
-          localStorage.removeItem(LOCAL_STORAGE_KEY.productUpdate)
+          localStorage.removeItem(LOCAL_STORAGE_KEY.productUpdate(productId))
           toast({ description: response.message })
           form.setValue('__submitted', true)
           router.push(PATH_DIR.ADMIN.PRODUCT)

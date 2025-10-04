@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { PATH_DIR } from 'hgss-dir'
-import { en } from 'public/locale'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllProducts, deleteProduct } from 'lib/action'
@@ -23,9 +22,9 @@ const AdminProductsPage: FC<AdminProductsPageProps> = async ({ searchParams }) =
 
     const MENU_ITEMS = (item: Product) =>  {
        return ([
-            { label: en.view.label, icon: <SquareArrowOutUpRight />, href: PATH_DIR.ADMIN.PRODUCT_VIEW(item.id.toString()) },
-            { label: en.edit.label, icon: <FilePenLine />, href: PATH_DIR.ADMIN.PRODUCT_VIEW(item.id.toString()) },
-            { label: <DeleteDialg id={item.id.toString()} action={deleteProduct}><p className={'text-sm'}>{en.delete.label}</p></DeleteDialg>, icon: <ListMinus />, href: PATH_DIR.ADMIN.PRODUCT }
+            { label: transl('view.label'), icon: <SquareArrowOutUpRight />, href: PATH_DIR.ADMIN.PRODUCT_VIEW(item.id.toString()) },
+            { label: transl('edit.label'), icon: <FilePenLine />, href: PATH_DIR.ADMIN.PRODUCT_VIEW(item.id.toString()) },
+            { label: <DeleteDialg id={item.id.toString()} action={deleteProduct}><p className={'text-sm'}>{transl('delete.label')}</p></DeleteDialg>, icon: <ListMinus />, href: PATH_DIR.ADMIN.PRODUCT }
         ])
     }
 
@@ -44,20 +43,20 @@ const AdminProductsPage: FC<AdminProductsPageProps> = async ({ searchParams }) =
 
     const BODY = (item: Product): SevenCellType => ({
         cells: [
-            { id: 'productId',  value: <TooltpGoBadge trigger={formatId(item.id.toString())} href={PATH_DIR.PRODUCT_VIEW(item.slug.toString())} content={`${en.go_to.label} this Product`} />, align: 'left', className: '' },
+            { id: 'productId',  value: <TooltpGoBadge trigger={formatId(item.id.toString())} href={PATH_DIR.PRODUCT_VIEW(item.slug.toString())} content={`${transl('go_to.label')} this Product`} />, align: 'left', className: '' },
             { id: 'name',  value: item.name, align: 'left', className: '' },
             { id: 'price',  value: formatCurrency(item.price), align: 'left', className: '' },
             { id: 'category',  value: item.category, align: 'center', className: '' },
             { id: 'stock',  value: <p className={`${item.stock <= 0 ? 'text-red-500' : item.stock <= 3 ? 'text-red-500' : '' }` }>{item.stock}</p>, align: 'center' },
             { id: 'rating',  value: item.rating, align: 'center' },
-            { id: 'action',  value: (<Tooltp content={en.action.label}><DDMenu title={<Ellipsis size={10} />} menuItems={MENU_ITEMS(item)}/></Tooltp>), align: 'right', className: '' }
+            { id: 'action',  value: (<Tooltp content={transl('action.label')}><DDMenu title={<Ellipsis size={10} />} menuItems={MENU_ITEMS(item)}/></Tooltp>), align: 'right', className: '' }
         ]
     })
 
     return (
     <div className={'space-y-2'} suppressHydrationWarning>
         <div className={'flex-between'}>
-            <AdminPageTitle query={query} title={en.product.products.label} href={PATH_DIR.ADMIN.PRODUCT} />
+            <AdminPageTitle query={query} title={transl('product.products.label')} href={PATH_DIR.ADMIN.PRODUCT} />
             <Button asChild className={'bg-punkpink text-black hover:bg-pink-500 hover:font-bold'}>
                 <Link href={PATH_DIR.ADMIN.PRODUCT_CREATE}>{transl('create_product.label')}</Link>
             </Button>

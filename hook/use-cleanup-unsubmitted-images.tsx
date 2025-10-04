@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { Path, UseFormReturn } from 'react-hook-form'
 import { z, ZodSchema } from 'zod'
@@ -28,31 +28,45 @@ import { deleteImage } from 'lib/action'
  * - Cleanup is skipped if the form is marked as submitted.
  */
 export function useCleanupUnsubmittedImages<TSchema extends ZodSchema>(form:UseFormReturn<z.infer<TSchema>>, name: Path<z.infer<TSchema>>, submittedFieldName: Path<z.infer<TSchema>> = '__submitted' as  Path<z.infer<TSchema>>) {
-    const pathname = usePathname()
+    const pathname         = usePathname()
+    const initialImagesRef = useRef<Set<string>>(new Set())
 
     useEffect(() => {
+        const toArray = (value: unknown): string[] => {
+            if (Array.isArray(value)) {
+                return value.filter((item): item is string => typeof item === 'string' && Boolean(item))
+            }
+            return typeof value === 'string' && value ? [value] : []
+        }
+
+        if (initialImagesRef.current.size === 0) {
+            const initialImages            = toArray(form.getValues(name))
+                  initialImagesRef.current = new Set(initialImages)
+        }
+
         const cleanup = async () => {
             const isSubmitted = form.getValues(submittedFieldName)
             if (isSubmitted) return
 
-            const images = form.getValues(name)
-            if (Array.isArray(images)) {
-                for (let i = 0; i < images.length; i++) {
-                    await deleteImage({ currentImages: images, index: i })
-                }
-            } else if (typeof images === 'string') {
-                await deleteImage({ currentImages: images })
+            const images = toArray(form.getValues(name))
+            if (!images.length) return
+
+            const initialImages  = initialImagesRef.current
+            const imagesToDelete = images.filter((image) => !initialImages.has(image))
+
+            for (const image of imagesToDelete) {
+                await deleteImage({ currentImages: image })
             }
         }
         const handleBeforeUnload = () => {
-            cleanup()
+            void cleanup()
         }
 
         window.addEventListener('beforeunload', handleBeforeUnload)
 
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload)
-            cleanup()
+            void cleanup()
         }
     }, [pathname, form, name, submittedFieldName])
 }
